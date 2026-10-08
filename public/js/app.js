@@ -577,6 +577,73 @@
     wrap.appendChild(noteField(k(Y, viewing, 'intencion'), 'La semana que viene quiero…', 2));
   }
 
+  // Ánimo del año: la misma rama, pero cada semana es un árbol que se pinta de abajo hacia arriba
+  // según el promedio de ánimo (1 a 5). Árbol completo = semana genial.
+  const CROWN = 'M5 14 C3 8 8 3 13 4 C15 1.5 20 2 21.5 5 C27 4.5 30 10 27.5 14.5 C28.5 19 24 22 20 21 L12 21 C8 22 4 19 5 14 Z';
+  function moodTreeSVG(week, ink, avg) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 32 32');
+    svg.setAttribute('aria-hidden', 'true');
+    const frac = avg == null ? 0 : Math.max(0, Math.min(1, avg / 5));
+    const add = function (tag, attrs, parent) {
+      const n = document.createElementNS(ns, tag);
+      Object.keys(attrs).forEach((x) => n.setAttribute(x, attrs[x]));
+      (parent || svg).appendChild(n);
+      return n;
+    };
+    const defs = add('defs', {});
+    const cp = add('clipPath', { id: 'mt' + week }, defs);
+    add('rect', { x: 0, y: 22 - 21 * frac, width: 32, height: 21 * frac + 1 }, cp);
+    // tronco y ramas
+    add('path', { d: 'M16 31 L16 21 M16 26 L11.5 22 M16 25 L20.5 21.5', fill: 'none', stroke: 'rgba(255,255,255,.62)', 'stroke-width': 1.8, 'stroke-linecap': 'round' });
+    // copa: contorno + relleno pintado
+    add('path', { d: CROWN, fill: 'rgba(255,255,255,.07)', stroke: 'rgba(255,255,255,' + (avg == null ? '.28' : '.55') + ')', 'stroke-width': 1, 'stroke-dasharray': avg == null ? '2 2' : 'none' });
+    if (frac > 0) {
+      const g = add('g', { 'clip-path': 'url(#mt' + week + ')' });
+      add('path', { d: CROWN, fill: ink[0] }, g);
+      add('circle', { cx: 11, cy: 12, r: 3.4, fill: ink[1], opacity: .85 }, g);
+      add('circle', { cx: 21, cy: 9, r: 3.2, fill: ink[1], opacity: .85 }, g);
+      add('circle', { cx: 17, cy: 16, r: 3.6, fill: ink[1], opacity: .75 }, g);
+    }
+    return svg;
+  }
+  function renderMoodYear() {
+    const wrap = $('moodGrid');
+    wrap.innerHTML = '';
+    const per = wrap.clientWidth && wrap.clientWidth < 560 ? 7 : 13;
+    for (let start = 0; start < Y.weeks.length; start += per) {
+      const row = el('div', 'branch');
+      row.style.setProperty('--per', per);
+      const ns = 'http://www.w3.org/2000/svg';
+      const line = document.createElementNS(ns, 'svg');
+      line.setAttribute('class', 'branch-line');
+      line.setAttribute('viewBox', '0 0 100 10');
+      line.setAttribute('preserveAspectRatio', 'none');
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', 'M0 6 C 20 3, 35 8, 50 5 S 80 3, 100 6');
+      path.setAttribute('vector-effect', 'non-scaling-stroke');
+      line.appendChild(path);
+      row.appendChild(line);
+      Y.weeks.slice(start, start + per).forEach(function (wk) {
+        const m = weekMood(Y, wk.week);
+        const ink = treeOf(Y.themes[wk.col].name).ink;
+        const b = el('button', 'yw mt');
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Semana ' + wk.week + ': ' + (m.n ? 'ánimo promedio ' + fmt1(m.avg) + ' de 5' : 'sin ánimo registrado'));
+        b.title = 'Semana ' + wk.week + (m.n ? ' · ánimo ' + fmt1(m.avg) + '/5' : ' · sin registrar');
+        b.appendChild(moodTreeSVG(wk.week, ink, m.n ? m.avg : null));
+        b.appendChild(el('span', null, String(wk.week)));
+        if (wk.week === viewing) b.classList.add('is-viewing');
+        if (TODAY.inRange && Y === TODAY.Y && wk.week === TODAY.week) b.classList.add('is-current');
+        b.addEventListener('click', function () { goTo(Y, wk.week); });
+        row.appendChild(b);
+      });
+      wrap.appendChild(row);
+    }
+  }
+  $('moodFold').addEventListener('toggle', function () { if (this.open) renderMoodYear(); });
+
   // Progreso del año: ramas con una flor por semana. La flor se abre según lo respondido.
   function renderYear() {
     const wrap = $('yearGrid');
@@ -611,29 +678,7 @@
       });
       wrap.appendChild(row);
     }
-    wrap.appendChild(el('div', 'field-label mood-year-label', 'Ánimo semana a semana'));
-    wrap.appendChild(el('p', 'field-hint', 'Cada barra es el promedio de una semana (más alta = mejor ánimo, de 1 bajo a 5 genial) con el color de esa semana. Tocá una para ir a ella.'));
-    for (let start = 0; start < Y.weeks.length; start += per) {
-      const row = el('div', 'mood-year');
-      row.style.setProperty('--per', per);
-      Y.weeks.slice(start, start + per).forEach(function (wk) {
-        const m = weekMood(Y, wk.week);
-        const b = el('button', 'my' + (wk.week === viewing ? ' is-viewing' : ''));
-        b.type = 'button';
-        b.setAttribute('aria-label', 'Semana ' + wk.week + ': ' + (m.n ? 'ánimo promedio ' + fmt1(m.avg) + ' de 5' : 'sin ánimo registrado'));
-        b.title = 'Semana ' + wk.week + (m.n ? ' · ánimo ' + fmt1(m.avg) + '/5' : ' · sin registrar');
-        const bar = el('div', 'mood-bar' + (m.n ? '' : ' is-empty'));
-        const fill = el('i');
-        fill.style.height = m.n ? (m.avg * 20) + '%' : '0%';
-        fill.style.background = treeOf(Y.themes[wk.col].name).ink[1];
-        bar.appendChild(fill);
-        b.appendChild(bar);
-        b.appendChild(el('span', null, String(wk.week)));
-        b.addEventListener('click', function () { goTo(Y, wk.week); });
-        row.appendChild(b);
-      });
-      wrap.appendChild(row);
-    }
+    renderMoodYear();
   }
   $('yearFold').addEventListener('toggle', function () { if (this.open) renderYear(); });
 
