@@ -1,24 +1,23 @@
-// Paisaje de la semana: cielo al atardecer, sol con franjas (como el logo) y el árbol
-// en flor del color de la semana. Se dibuja con canvas para que la app siga liviana
-// y funcione sin conexión. Los pétalos que caen respetan "reducir movimiento".
+// HERRAMIENTA (no se publica): dibuja el paisaje de cada semana y el logo en un canvas.
+// Lo usa tools/render_trees.js para generar las imágenes fijas de public/images.
 (function () {
   'use strict';
 
   // Árbol de cada color. form define la arquitectura de la copa.
   const TREES = {
-    Lila: { ink: ['#B565C9', '#D58AD8'], name: 'Lapacho morado', sci: 'Handroanthus impetiginosus', form: 'lapacho',
+    Lila: { form: 'lapacho',
       flowers: ['#B565C9', '#D58AD8', '#E9B6E6', '#9B4FB8'], leaves: ['#7E3A93', '#93489F'] },
-    Azul: { ink: ['#6A6CC9', '#9AA0EC'], name: 'Jacarandá', sci: 'Jacaranda mimosifolia', form: 'jacaranda',
+    Azul: { form: 'jacaranda',
       flowers: ['#7B83E0', '#9AA0EC', '#6A6CC9', '#B7B9F2'], leaves: ['#4B4FA8', '#5A60B8'] },
-    Rojo: { ink: ['#D42A18', '#EF5A44'], name: 'Flamboyán', sci: 'Delonix regia', form: 'flamboyan',
+    Rojo: { form: 'flamboyan',
       flowers: ['#E2341D', '#D42A18', '#C81E14', '#EF4B2A'], leaves: ['#8E1410', '#A81C12'] },
-    Amarillo: { ink: ['#E8A90C', '#F5C518'], name: 'Lapacho amarillo', sci: 'Handroanthus albus', form: 'lapacho',
+    Amarillo: { form: 'lapacho',
       flowers: ['#F5C518', '#FFD84D', '#E8A90C', '#FFE58A'], leaves: ['#B8840A', '#C9940C'] },
-    Blanco: { ink: ['#E9CFDB', '#FBF1F5'], name: 'Lapacho blanco', sci: 'Tabebuia roseoalba', form: 'lapacho',
+    Blanco: { form: 'lapacho',
       flowers: ['#FFFFFF', '#FBF4F6', '#F3DCE6', '#FFF6E8'], leaves: ['#D9C3CC', '#E6D3DA'] },
-    Verde: { ink: ['#4E9A3B', '#86C25A'], name: 'Árbol en hoja nueva', sci: '', form: 'leafy',
+    Verde: { form: 'leafy',
       flowers: ['#4E9A3B', '#79B84E', '#A9D46F', '#2F6E2C'], leaves: ['#2C5E24', '#3A7330'] },
-    Negro: { ink: ['#2A2420', '#5A4C42'], name: 'Silueta al atardecer', sci: '', form: 'silhouette',
+    Negro: { form: 'silhouette',
       flowers: ['#0D0705', '#140B07', '#1C120C', '#24170F'], leaves: ['#060302', '#0A0504'] },
   };
 
@@ -175,9 +174,6 @@
     return tips;
   }
 
-  // Estado de la animación de pétalos.
-  let anim = null;
-
   function render(canvas, colorName, seed) {
     const tree = TREES[colorName] || TREES.Lila;
     const form = FORMS[tree.form];
@@ -289,87 +285,8 @@
     }
     ctx.globalAlpha = 1;
 
-    startPetals(canvas, layer, blossoms, tree, horizon, dpr, w, h, form);
+    canvas.getContext('2d').drawImage(layer, 0, 0);
     return tree;
-  }
-
-  function startPetals(canvas, layer, blossoms, tree, horizon, dpr, w, h, form) {
-    if (anim) cancelAnimationFrame(anim.raf);
-    const out = canvas.getContext('2d');
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    out.setTransform(1, 0, 0, 1, 0, 0);
-    out.drawImage(layer, 0, 0);
-    if (reduce || !blossoms.length) { anim = null; return; }
-
-    const count = w < 500 ? 9 : 16;
-    const petals = [];
-    function spawn(p, initial) {
-      const b = blossoms[Math.floor(Math.random() * blossoms.length)];
-      p.x = b[0]; p.y = initial ? b[1] + Math.random() * (horizon - b[1]) : b[1];
-      p.vy = 0.18 + Math.random() * 0.3; p.sway = Math.random() * Math.PI * 2;
-      p.r = 1.6 + Math.random() * 1.8; p.c = b[3]; p.rot = Math.random() * 3;
-      return p;
-    }
-    for (let i = 0; i < count; i++) petals.push(spawn({}, true));
-
-    let visible = true;
-    const io = 'IntersectionObserver' in window ? new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }) : null;
-    if (io) io.observe(canvas);
-
-    anim = { raf: 0 };
-    let last = 0;
-    function frame(t) {
-      anim.raf = requestAnimationFrame(frame);
-      if (!visible || document.hidden || t - last < 33) return;
-      last = t;
-      out.setTransform(1, 0, 0, 1, 0, 0);
-      out.drawImage(layer, 0, 0);
-      out.setTransform(dpr, 0, 0, dpr, 0, 0);
-      out.globalAlpha = 0.85;
-      petals.forEach(function (p) {
-        p.sway += 0.03; p.y += p.vy; p.x += Math.sin(p.sway) * 0.35 + 0.08; p.rot += 0.02;
-        if (p.y > horizon + 6) spawn(p, false);
-        if (form.leaf) drawLeaf(out, p.x, p.y, p.r * 1.3, p.c, p.rot);
-        else drawFlower(out, p.x, p.y, p.r, p.c, p.rot);
-      });
-      out.globalAlpha = 1;
-    }
-    anim.raf = requestAnimationFrame(frame);
-  }
-
-  // Flor sola en SVG, para el progreso del año y el tablero.
-  function flowerSVG(colors, open, crown) {
-    const ns = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(ns, 'svg');
-    svg.setAttribute('viewBox', '-12 -12 24 24');
-    svg.setAttribute('aria-hidden', 'true');
-    const g = document.createElementNS(ns, 'g');
-    const s = open <= 0 ? 1 : 0.5 + 0.5 * open;
-    g.setAttribute('transform', 'scale(' + s.toFixed(3) + ')');
-    if (open <= 0) {
-      const bud = document.createElementNS(ns, 'circle');
-      bud.setAttribute('r', '3.6'); bud.setAttribute('fill', colors[0]); bud.setAttribute('opacity', '0.55');
-      bud.setAttribute('stroke', 'rgba(60,30,10,.35)'); bud.setAttribute('stroke-width', '0.8');
-      g.appendChild(bud);
-    } else {
-      for (let i = 0; i < 5; i++) {
-        const p = document.createElementNS(ns, 'ellipse');
-        p.setAttribute('stroke', 'rgba(60,30,10,.25)'); p.setAttribute('stroke-width', '0.6');
-        const a = -90 + i * 72;
-        p.setAttribute('cx', '0'); p.setAttribute('cy', '-5.6');
-        p.setAttribute('rx', '4.2'); p.setAttribute('ry', '5.8');
-        p.setAttribute('fill', colors[i % 2 ? 1 : 0]);
-        p.setAttribute('transform', 'rotate(' + (a + 90) + ')');
-        g.appendChild(p);
-      }
-      const c = document.createElementNS(ns, 'circle');
-      c.setAttribute('r', crown ? '3.4' : '2.4');
-      c.setAttribute('fill', crown ? '#E8B04A' : '#fff6dc');
-      if (crown) { c.setAttribute('stroke', '#7a4a00'); c.setAttribute('stroke-width', '0.8'); }
-      g.appendChild(c);
-    }
-    svg.appendChild(g);
-    return svg;
   }
 
   // Marca del logo: sol con franjas y árbol de bronce sin hojas, con raíces que salen del círculo.
@@ -440,5 +357,5 @@
     });
   }
 
-  window.SunsetTree = { TREES: TREES, render: render, flowerSVG: flowerSVG, logo: logo };
+  window.SunsetTreeRender = { render: render, logo: logo };
 })();

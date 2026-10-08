@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Convierte las planillas de contenido anuales en data/sunset-data.js.
+"""Convierte las planillas de contenido anuales en netlify/content/data.mjs.
 
 Uso:  python3 tools/build_data.py
 
-Procesa cada data/planillas/sunset-contenido-AAAA.xlsx. De cada una lee las hojas "Frases" (52 semanas), "Preguntas" (49 palabras × 5 preguntas)
+Procesa cada content/planillas/sunset-contenido-AAAA.xlsx. De cada una lee las hojas "Frases" (52 semanas), "Preguntas" (49 palabras × 5 preguntas)
 y, si existe, "Mapeo Puente" (referencia interna de El Puente Relacional),
 ubica las 3 palabras principales de cada semana en el tablero 7×7 (fila de
-inicio y columna/color) y escribe un único archivo JS que la app carga con <script>.
+inicio y columna/color) y escribe un módulo que solo lee el servidor (función /api/content): el contenido
+nunca queda en la carpeta pública del sitio.
 """
 import json
 import re
@@ -16,8 +17,8 @@ from pathlib import Path
 import openpyxl
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC_DIR = ROOT / "data" / "planillas"
-OUT = ROOT / "data" / "sunset-data.js"
+SRC_DIR = ROOT / "content" / "planillas"
+OUT = ROOT / "netlify" / "content" / "data.mjs"
 
 MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
           "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
@@ -197,8 +198,8 @@ def main():
     assert sources, f"No hay planillas en {SRC_DIR.relative_to(ROOT)}"
     years = [build_year(src) for src in sources]
     OUT.write_text(
-        "// Generado por tools/build_data.py desde data/planillas/ — no editar a mano.\n"
-        "window.SUNSET_DATA = " + json.dumps({"years": years}, ensure_ascii=False, indent=1) + ";\n",
+        "// Generado por tools/build_data.py desde content/planillas/ — no editar a mano.\n"
+        "export default " + json.dumps({"years": years}, ensure_ascii=False, indent=1) + ";\n",
         encoding="utf-8",
     )
     print(f"OK → {OUT.relative_to(ROOT)}")

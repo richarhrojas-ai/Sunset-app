@@ -1,16 +1,31 @@
 // Service worker: guarda la app para abrirla sin conexión.
 // Red primero (así siempre ves la última versión publicada), caché si no hay red.
-const CACHE = 'sunset-v14';
+// Nunca se guarda /api/: el contenido y los registros viajan con la clave y se guardan en la app.
+const CACHE = 'sunset-v15';
 const SHELL = [
   './',
   'index.html',
   'css/app.css',
   'js/tree.js',
   'js/app.js',
-  'data/sunset-data.js',
   'manifest.webmanifest',
   'icons/icon-192.png',
   'icons/icon-512.png',
+  'images/logo.png',
+  'images/trees/Lila-wide.webp',
+  'images/trees/Lila-tall.webp',
+  'images/trees/Verde-wide.webp',
+  'images/trees/Verde-tall.webp',
+  'images/trees/Amarillo-wide.webp',
+  'images/trees/Amarillo-tall.webp',
+  'images/trees/Blanco-wide.webp',
+  'images/trees/Blanco-tall.webp',
+  'images/trees/Negro-wide.webp',
+  'images/trees/Negro-tall.webp',
+  'images/trees/Rojo-wide.webp',
+  'images/trees/Rojo-tall.webp',
+  'images/trees/Azul-wide.webp',
+  'images/trees/Azul-tall.webp',
 ];
 
 self.addEventListener('install', (e) => {

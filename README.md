@@ -1,75 +1,83 @@
 # Sunset App
 
-Dashboard semanal del Sistema Sunset (Richarh Rojas), de 2027 en adelante.
+Dashboard semanal del Sistema Sunset (Richarh Rojas), de 2027 en adelante. Uso personal, protegido con clave.
 
 ## Estructura
 
 ```
-index.html                         Página de la app
-css/app.css                        Estilos
-js/app.js                          Lógica (rotación, autoevaluación, tablero, respaldo)
-data/planillas/                    Una planilla por año: sunset-contenido-AAAA.xlsx
-data/sunset-data.js                Datos generados desde las planillas — no editar a mano
-tools/build_data.py                Generador de data/sunset-data.js
-manifest.webmanifest, sw.js, icons/   Instalación como app (PWA) y uso sin conexión
-netlify/functions/sync.mjs         Sincronización del progreso (Netlify Blobs)
-tests/                             Pruebas de la función (`npm test`)
+public/                       Lo único que se publica en la web
+  index.html, css/, js/       La app (js/app.js = lógica, js/tree.js = árboles del progreso)
+  images/trees/               Paisaje de cada color: <Color>-wide.webp y <Color>-tall.webp
+  images/logo.png, icons/     Logo e íconos de la app instalada
+  sw.js, manifest.webmanifest Instalación como app y uso sin conexión
+content/planillas/            Una planilla por año: sunset-contenido-AAAA.xlsx (NO se publica)
+netlify/content/data.mjs      Contenido generado desde las planillas (NO se publica, lo lee el servidor)
+netlify/functions/            /api/content (entrega el contenido con clave) y /api/sync (registros)
+netlify/lib/auth.mjs          Verificación de la clave
+tools/                        Generadores (datos, imágenes, clave)
+tests/                        Pruebas de las funciones: `npm test`
 ```
+
+## Clave de acceso
+
+Una sola clave abre la app y autoriza la sincronización. Sin ella, el sitio solo muestra la pantalla
+de clave: el contenido de las semanas no está en los archivos públicos, lo entrega `/api/content`.
+
+1. Generar una clave: `npm run clave`
+2. Netlify → *Site configuration → Environment variables* → crear `SUNSET_KEY` con esa clave
+   y volver a publicar el sitio.
+3. En cada dispositivo, escribirla una vez. Después la app abre sola, también sin conexión.
+
+Cambiar la clave: cambiar `SUNSET_KEY` y volver a publicar. Los dispositivos piden la nueva clave.
+
+> **El repositorio debe ser privado.** El contenido y las planillas están en el repositorio; si fuera
+> público, cualquiera podría leerlos en GitHub aunque el sitio tenga clave.
 
 ## Agregar o actualizar un año
 
-1. Guardar la planilla en `data/planillas/sunset-contenido-AAAA.xlsx`
-   (el año en el nombre del archivo es obligatorio).
-2. Correr `python3 tools/build_data.py` (requiere `openpyxl`).
-3. Subir la versión de caché en `sw.js` (`sunset-vN`) para que los dispositivos
-   con la app instalada tomen los cambios.
+1. Guardar la planilla en `content/planillas/sunset-contenido-AAAA.xlsx` (el año en el nombre es obligatorio).
+2. `npm run build:data` (requiere `python3` y `openpyxl`).
+3. Subir la versión de caché en `public/sw.js` (`sunset-vN`).
 
-La app elige el año según la fecha y permite pasar de la última semana de un año
-a la primera del siguiente.
+La app elige el año según la fecha y pasa de la última semana de un año a la primera del siguiente.
 
-## Cómo se leen las planillas
+### Cómo se leen las planillas
 
-- **Frases**: una fila por semana (domingo a sábado). La fecha de la semana 1 define
-  el primer domingo del año.
-- **Preguntas**: las 49 palabras (7 dimensiones × 7 palabras) con sus 5 preguntas.
-  El orden de las filas arma el tablero 7×7.
-- **Mapeo Puente** (opcional): referencia interna; se muestra en "Historia interna".
+- **Frases**: una fila por semana (domingo a sábado). La fecha de la semana 1 define el primer domingo.
+- **Preguntas**: las 49 palabras (7 dimensiones × 7 palabras) con sus 5 preguntas; el orden arma el tablero 7×7.
+- **Mapeo Puente** (opcional): referencia interna, se muestra en "Historia interna".
 
-Para cada semana, el script ubica las 3 palabras principales en el tablero:
+Para cada semana, el script ubica las 3 palabras principales en el tablero y se detiene si no forman una
+columna o si el color no avanza de a uno:
 
 ```
 palabra_k = tablero[(fila + k) % 7][columna]     // k = 0,1,2 activas; 3..6 "en juego"
 ```
 
-Si no forman una columna del tablero, o si el color no avanza de a uno respecto de la
-semana anterior, el script se detiene y avisa la semana con el problema.
-La columna define el color: Negro, Rojo, Azul, Lila, Verde, Amarillo, Blanco.
+## Imágenes de los árboles
+
+Cada color tiene dos imágenes fijas (ancha y para celular). Por defecto son ilustraciones generadas con
+`npm run render:images` (requiere Playwright y Pillow), que también regenera el logo y los íconos.
+
+Para usar una **foto real**:
+
+```
+python3 tools/hero_from_photo.py mi-lapacho.jpg Lila --x 0.6 --y 0.5
+```
+
+Recorta la foto a los dos formatos y reemplaza las imágenes de ese color. Los consejos para elegir la foto
+están en el encabezado de `tools/hero_from_photo.py`. Después subir la versión de caché en `sw.js`.
 
 ## Datos del usuario
 
-Lo que se registra en la app:
-
-- **Registro diario** (domingo a sábado) en cada tarjeta del día.
-- **Autoevaluación**: 5 respuestas del 1 al 5 por cada palabra activa, más un comentario.
-- **Cierre de la semana**: maestría confirmada (la app sugiere la palabra de mayor
-  puntaje), qué funcionó / qué mejorar e intención para la próxima semana.
-
-Todo se guarda primero en el navegador (`localStorage`, clave `sunset_v2`) como
-`{ clave: { v: valor, t: fecha } }`; al combinar dos copias gana el dato más reciente.
-
-### Sincronización
-
-Con una clave, la app envía los cambios a `/api/sync` (función de Netlify) y recibe los
-de otros dispositivos. Los datos quedan en Netlify Blobs (almacén `sunset`):
+Todo lo que se registra se guarda primero en el dispositivo (`localStorage`) como `{ clave: { v, t } }`,
+y al sincronizar gana, dato por dato, la versión más reciente. En Netlify Blobs (almacén `sunset`):
 
 - `progreso`: el estado actual.
-- `backups/AAAA-MM-DD`: una copia por día, para volver a una versión anterior.
-
-Configuración en Netlify: **Site configuration → Environment variables →** `SUNSET_KEY`
-con la clave que se escribe en la app.
+- `backups/AAAA-MM-DD`: cómo estaba todo antes del primer cambio de cada día.
 
 ### Recuperar los datos
 
-- **Descargar planilla**: CSV con una fila por semana (abre en Excel o Google Sheets).
-- **Descargar respaldo / Importar respaldo**: JSON completo; importar suma al estado actual.
-- Desde Netlify: las copias diarias en Blobs.
+- **Volver a una copia**: *Respaldo y sincronización → Ver copias diarias → Restaurar* (se puede deshacer).
+- **Descargar planilla**: CSV con una fila por semana (Excel / Google Sheets).
+- **Descargar respaldo / Importar respaldo**: JSON completo; al importar se elige combinar o reemplazar.

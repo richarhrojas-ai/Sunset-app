@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>SUNSET — Richarh Rojas</title>
+<meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#2a1a08">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SUNSET">
@@ -17,11 +18,14 @@
 </head>
 <body>
 <div class="frame">
-  <header class="hero">
-    <canvas class="hero-canvas" id="sky" aria-hidden="true"></canvas>
+  <header class="hero" id="hero">
+    <picture class="hero-pic">
+      <source id="heroWide" media="(min-width: 561px)">
+      <img id="heroImg" alt="" width="480" height="430" decoding="async">
+    </picture>
     <div class="hero-top">
       <div class="logo">
-        <canvas class="logo-mark" id="logoTree" aria-hidden="true"></canvas>
+        <img class="logo-mark" src="images/logo.png" width="54" height="54" alt="">
         <div>
           <div class="logo-word">Sunset</div>
           <div class="logo-slogan">Soluciones Prácticas</div>
@@ -85,7 +89,7 @@
       <summary><svg class="ico"><use href="#i-board"/></svg>Tablero de maestría<svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
         <p class="fold-hint">Las 49 palabras: cada fila es una dimensión y cada columna un color. Cuanto más abierta la flor, más dominada la palabra en lo que va del año. La última fila y la última columna muestran la campeona de cada línea, y la esquina la campeona general. Tocá una palabra para ir a su próxima semana de evaluación.</p>
-        <div class="board" id="board"></div>
+        <div class="board-scroll"><div class="board" id="board"></div></div>
         <div class="board-legend" id="boardLegend"></div>
       </div>
     </details>
@@ -93,23 +97,22 @@
     <details class="fold">
       <summary><svg class="ico"><use href="#i-save"/></svg>Respaldo y sincronización<span class="sync-status" id="syncStatus"></span><svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
-        <div class="field-label">Sincronizar entre dispositivos</div>
-        <div id="syncOff">
-          <p class="fold-hint">Escribí tu clave de Sunset para guardar todo en línea y verlo igual en el celular y en la computadora. Sin clave, lo que registres queda solo en este dispositivo.</p>
-          <div class="sync-row">
-            <input type="password" id="syncInput" class="sync-input" placeholder="Clave de Sunset" autocomplete="current-password">
-            <button class="btn primary" id="syncConnect">Conectar</button>
-          </div>
-        </div>
-        <div id="syncOn" hidden>
-          <p class="fold-hint">Conectado: cada cambio se guarda en línea a los pocos segundos.</p>
-          <div class="backup">
-            <button class="btn" id="syncNow"><svg class="ico"><use href="#i-sync"/></svg>Sincronizar ahora</button>
-            <button class="btn" id="syncDisconnect">Desconectar este dispositivo</button>
-          </div>
+        <div class="field-label">Sincronización</div>
+        <p class="fold-hint" id="syncHint"></p>
+        <div class="backup">
+          <button class="btn" id="syncNow"><svg class="ico"><use href="#i-sync"/></svg>Sincronizar ahora</button>
+          <button class="btn" id="logoutBtn">Cerrar sesión en este dispositivo</button>
         </div>
 
-        <div class="field-label">Copias</div>
+        <div class="field-label">Volver a una copia anterior</div>
+        <p class="fold-hint">Cada día, antes del primer cambio, se guarda una copia de cómo estaba todo. Si borraste algo por error, elegí la copia de ese día. La restauración se puede deshacer.</p>
+        <div class="backup">
+          <button class="btn" id="backupsBtn"><svg class="ico"><use href="#i-sync"/></svg>Ver copias diarias</button>
+          <button class="btn" id="undoBtn" hidden>Deshacer la última restauración</button>
+        </div>
+        <ul class="backup-list" id="backupList" hidden></ul>
+
+        <div class="field-label">Copias en archivo</div>
         <p class="fold-hint">La planilla tiene una fila por semana con tus registros, respuestas, comentarios y maestría, y se abre en Excel o Google Sheets. El respaldo completo sirve para recuperar todo en la app.</p>
         <div class="backup">
           <button class="btn" id="exportCsvBtn"><svg class="ico"><use href="#i-download"/></svg>Descargar planilla</button>
@@ -140,6 +143,27 @@
   </div>
 </div>
 
+<div class="lock" id="lock" hidden role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+  <form class="lock-box" id="lockForm" autocomplete="on">
+    <img class="lock-logo" src="images/logo.png" width="96" height="96" alt="">
+    <h1 id="lockTitle">Sunset</h1>
+    <p class="lock-hint" id="lockHint">Escribí tu clave para abrir la app.</p>
+    <input type="text" name="username" value="sunset" autocomplete="username" hidden>
+    <label class="sr-only" for="lockInput">Clave</label>
+    <input type="password" id="lockInput" class="sync-input" placeholder="Clave" autocomplete="current-password" required>
+    <button class="btn primary" id="lockBtn" type="submit">Entrar</button>
+    <p class="lock-error" id="lockError" role="alert"></p>
+  </form>
+</div>
+
+<div class="modal" id="ask" hidden role="dialog" aria-modal="true" aria-labelledby="askTitle">
+  <div class="modal-box">
+    <h2 id="askTitle"></h2>
+    <p id="askText"></p>
+    <div class="ask-actions" id="askActions"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast" hidden></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -163,7 +187,6 @@
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
 </svg>
 
-<script src="data/sunset-data.js"></script>
 <script src="js/tree.js"></script>
 <script src="js/app.js"></script>
 </body>

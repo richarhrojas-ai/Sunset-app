@@ -1,5 +1,5 @@
-// Generado por tools/build_data.py desde data/planillas/ — no editar a mano.
-window.SUNSET_DATA = {
+// Generado por tools/build_data.py desde content/planillas/ — no editar a mano.
+export default {
  "years": [
   {
    "year": 2027,

@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "build:data": "python3 tools/build_data.py",
+    "render:images": "node tools/render_trees.cjs",
+    "clave": "python3 tools/new_key.py",
     "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {

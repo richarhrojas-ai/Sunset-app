@@ -1,9 +1,11 @@
 (function () {
   'use strict';
 
-  const YEARS = window.SUNSET_DATA.years;
+  let YEARS = [];
   const STORE_KEY = 'sunset_v2';
-  const SYNC_KEY = 'sunset_sync_key';
+  const SYNC_KEY = 'sunset_sync_key';       // la clave de acceso; también autoriza la sincronización
+  const CONTENT_KEY = 'sunset_content';     // contenido del año guardado en el dispositivo (para abrir sin conexión)
+  const UNDO_KEY = 'sunset_undo';           // estado anterior a la última restauración
   const DAY_MS = 864e5;
   const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const WEEKDAYS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -41,7 +43,8 @@
     const [r, g, b] = hexToRgb(hex).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
   }
-  function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  // Días enteros desde una fecha de referencia, sin que el horario de verano cambie el resultado.
+  const utcDay = (d) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
   function fmtDate(d) { return d.getDate() + ' de ' + MONTHS[d.getMonth()]; }
   function debounce(fn, ms) {
     let t = null;
@@ -52,6 +55,8 @@
   // Cada año trae su planilla: semanas, tablero 7×7, preguntas y colores.
   // Colores: el de la columna, con contraste suficiente sobre fondo claro.
   // Negro usa negro real; Blanco usa su gris pizarra (el blanco no se lee sobre crema).
+  function prepare(data) {
+  YEARS = data.years;
   YEARS.forEach(function (Y) {
     Y.start = new Date(Y.firstSunday + 'T00:00:00');
     Y.themes = Y.colors.map(function (c) {
@@ -66,18 +71,19 @@
       activeWords(Y, wk.week).forEach(function (a) { (Y.evalWeeks[a.word] = Y.evalWeeks[a.word] || []).push(wk.week); });
     });
   });
+  }
   const yearIndex = (year) => YEARS.findIndex((Y) => Y.year === year);
   function dateOf(Y, week, day) { const d = new Date(Y.start); d.setDate(d.getDate() + (week - 1) * 7 + day); return d; }
 
   // Año y semana de una fecha. Antes del primer año → su semana 1; después del último → su última semana.
   function locateDate(d) {
-    const t = startOfDay(d);
+    const t = utcDay(d);
     for (const Y of YEARS) {
-      const week = Math.floor((t - Y.start) / DAY_MS / 7 + 1e-9) + 1;
+      const week = Math.floor((t - utcDay(Y.start)) / DAY_MS / 7) + 1;
       if (week >= 1 && week <= Y.weeks.length) return { Y: Y, week: week, inRange: true };
     }
     const first = YEARS[0], last = YEARS[YEARS.length - 1];
-    return t < first.start ? { Y: first, week: 1, inRange: false, before: true }
+    return t < utcDay(first.start) ? { Y: first, week: 1, inRange: false, before: true }
       : { Y: last, week: last.weeks.length, inRange: false };
   }
 
@@ -177,10 +183,7 @@
   }
 
   // ── Vista ──
-  const now = new Date();
-  const TODAY = locateDate(now);
-  let Y = TODAY.Y;
-  let viewing = TODAY.week;
+  let now, TODAY, Y, viewing;
   let openWord = null;
 
   const isCurrent = () => TODAY.inRange && Y === TODAY.Y && viewing === TODAY.week;
@@ -199,22 +202,24 @@
   }
 
   const treeOf = (colorName) => window.SunsetTree.TREES[colorName] || window.SunsetTree.TREES.Lila;
-  let drawn = '';
-  function applyTheme(force) {
+  let shown = '';
+  function applyTheme() {
     const col = Y.weeks[viewing - 1].col;
     const t = Y.themes[col];
     const root = document.documentElement.style;
     root.setProperty('--wk', t.strong);
     root.setProperty('--wk-mid', t.mid);
     root.setProperty('--wk-soft', t.soft);
-    // El paisaje solo se redibuja cuando cambia el color (o el tamaño de la pantalla).
-    const id = Y.year + '-' + col;
-    if (force || id !== drawn) {
-      drawn = id;
-      window.SunsetTree.render($('sky'), t.name, Y.year * 10 + col);
+    // Paisaje de la semana: una imagen fija por color (ancha para pantallas grandes, alta para celulares).
+    if (shown !== t.name) {
+      shown = t.name;
+      const base = 'images/trees/' + t.name;
+      $('hero').style.backgroundColor = t.name === 'Negro' ? '#120a0e' : '#4a2238';
+      $('heroWide').srcset = base + '-wide.webp';
+      $('heroImg').src = base + '-tall.webp';
     }
   }
-  window.addEventListener('resize', debounce(function () { applyTheme(true); renderYear(); }, 200));
+  window.addEventListener('resize', debounce(function () { if (Y) renderYear(); }, 200));
 
   function renderHeader() {
     const h = $('headerDate');
@@ -536,27 +541,31 @@
     toastTimer = setTimeout(function () { t.hidden = true; }, 2600);
   }
 
-  // ── Sincronización (Netlify) ──
+  // ── Acceso y sincronización (Netlify) ──
+  // Una sola clave: abre la app (entrega el contenido del año) y autoriza la sincronización.
   function syncKey() { try { return localStorage.getItem(SYNC_KEY) || ''; } catch (e) { return ''; } }
   function setSyncStatus(text, kind) {
-    const s = $('syncStatus');
-    s.textContent = text;
-    s.className = 'sync-status' + (kind ? ' is-' + kind : '');
+    const st = $('syncStatus');
+    st.textContent = text;
+    st.className = 'sync-status' + (kind ? ' is-' + kind : '');
   }
+  const authHeaders = () => ({ 'x-sunset-key': syncKey() });
+
   let syncing = false, syncAgain = false;
   async function sync() {
     const key = syncKey();
-    if (!key || location.protocol === 'file:') return;
+    if (!key || !Y || location.protocol === 'file:') return;
     if (syncing) { syncAgain = true; return; }
     syncing = true;
     setSyncStatus('Sincronizando…');
     try {
       const resp = await fetch('/api/sync', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-sunset-key': key },
+        headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders()),
         body: JSON.stringify({ entries: state.entries }),
       });
       const body = await resp.json().catch(() => ({}));
+      if (resp.status === 401) { logout('La clave cambió. Escríbela de nuevo.'); return; }
       if (!resp.ok) throw new Error(body.error || 'Error ' + resp.status);
       const res = mergeEntries(state.entries, body.entries);
       state.entries = res.entries;
@@ -575,9 +584,157 @@
 
   function renderSyncPanel() {
     const on = !!syncKey();
-    $('syncOff').hidden = on;
-    $('syncOn').hidden = !on;
+    $('syncHint').textContent = on
+      ? 'Cada cambio se guarda en línea a los pocos segundos y aparece igual en tus otros dispositivos.'
+      : 'Esta copia no está conectada: lo que registres queda solo en este dispositivo.';
+    $('syncNow').hidden = !on;
+    $('logoutBtn').hidden = !on;
+    $('backupsBtn').hidden = !on;
     if (!on) setSyncStatus('Solo en este dispositivo');
+  }
+
+  // ── Pantalla de clave ──
+  function readCached() {
+    try { return JSON.parse(localStorage.getItem(CONTENT_KEY)); } catch (e) { return null; }
+  }
+  async function fetchContent(key) {
+    let resp;
+    try { resp = await fetch('/api/content', { headers: { 'x-sunset-key': key } }); }
+    catch (e) { throw new Error(location.protocol === 'file:' ? 'Abrí la app desde su dirección en internet.' : 'No hay conexión con el servidor.'); }
+    if (resp.status === 401) { const err = new Error('Clave incorrecta.'); err.code = 401; throw err; }
+    if (!resp.ok) throw new Error('El servidor respondió ' + resp.status + '.');
+    return resp.json();
+  }
+  function showLock(message) {
+    $('lock').hidden = false;
+    $('lockError').textContent = message || '';
+    $('lockInput').value = '';
+    setTimeout(function () { $('lockInput').focus(); }, 50);
+  }
+  function logout(message) {
+    try { localStorage.removeItem(SYNC_KEY); localStorage.removeItem(CONTENT_KEY); } catch (e) { /* sin persistencia */ }
+    renderSyncPanel();
+    showLock(message);
+  }
+  $('lockForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const key = $('lockInput').value.trim();
+    if (!key) return;
+    const btn = $('lockBtn');
+    btn.disabled = true; btn.textContent = 'Abriendo…'; $('lockError').textContent = '';
+    try {
+      const data = await fetchContent(key);
+      try { localStorage.setItem(SYNC_KEY, key); localStorage.setItem(CONTENT_KEY, JSON.stringify(data)); } catch (err) { /* sin persistencia */ }
+      $('lock').hidden = true;
+      boot(data);
+    } catch (err) {
+      $('lockError').textContent = err.message;
+      $('lockInput').select();
+    } finally {
+      btn.disabled = false; btn.textContent = 'Entrar';
+    }
+  });
+  // Con la clave y el contenido ya guardados, la app abre sin conexión y actualiza el contenido por detrás.
+  async function refreshContent() {
+    try {
+      const data = await fetchContent(syncKey());
+      const text = JSON.stringify(data);
+      if (text === localStorage.getItem(CONTENT_KEY)) return;
+      try { localStorage.setItem(CONTENT_KEY, text); } catch (e) { /* sin persistencia */ }
+      const year = Y.year;
+      prepare(data);
+      TODAY = locateDate(now);
+      Y = YEARS[yearIndex(year)] || TODAY.Y;
+      if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') return;
+      render();
+    } catch (e) {
+      if (e.code === 401) logout('La clave cambió. Escríbela de nuevo.');
+    }
+  }
+
+  // ── Confirmaciones dentro de la página ──
+  // actions: [{ label, value, primary }] → resuelve con el value elegido (o null si se cancela)
+  function ask(title, text, actions) {
+    return new Promise(function (resolve) {
+      $('askTitle').textContent = title;
+      $('askText').textContent = text;
+      const box = $('askActions');
+      box.innerHTML = '';
+      const close = (value) => { $('ask').hidden = true; resolve(value); };
+      actions.concat([{ label: 'Cancelar', value: null }]).forEach(function (a) {
+        const b = el('button', 'btn' + (a.primary ? ' primary' : ''), a.label);
+        b.addEventListener('click', () => close(a.value));
+        box.appendChild(b);
+      });
+      $('ask').hidden = false;
+      box.firstChild.focus();
+    });
+  }
+
+  // ── Restaurar ──
+  // Una restauración escribe cada dato con la hora actual (y borra los que no estaban en la copia),
+  // así gana también sobre otros dispositivos al sincronizar. Antes se guarda el estado actual para poder deshacer.
+  function readUndo() { try { return JSON.parse(localStorage.getItem(UNDO_KEY)); } catch (e) { return null; } }
+  function renderUndo() { $('undoBtn').hidden = !readUndo(); }
+  function applySnapshot(entries, isUndo) {
+    const prev = state.entries;
+    try {
+      if (isUndo) localStorage.removeItem(UNDO_KEY);
+      else localStorage.setItem(UNDO_KEY, JSON.stringify(prev));
+    } catch (e) { /* sin persistencia */ }
+    const t = Date.now(), next = {};
+    Object.keys(entries).forEach(function (key) { next[key] = { v: entries[key].v, t: t }; });
+    Object.keys(prev).forEach(function (key) {
+      if (key in next) return;
+      next[key] = prev[key].v != null ? { v: null, t: t } : prev[key];
+    });
+    state.entries = next;
+    save();
+    render();
+    renderUndo();
+    sync();
+  }
+  const longDate = (iso) => { const d = new Date(iso + 'T00:00:00'); return d.getDate() + ' de ' + MONTHS[d.getMonth()] + ' de ' + d.getFullYear(); };
+
+  async function loadBackups() {
+    const list = $('backupList');
+    list.hidden = false;
+    list.innerHTML = '';
+    list.appendChild(el('li', null, 'Buscando copias…'));
+    try {
+      const resp = await fetch('/api/sync?list=backups', { headers: authHeaders() });
+      const body = await resp.json().catch(() => ({}));
+      if (resp.status === 401) { logout('La clave cambió. Escríbela de nuevo.'); return; }
+      if (!resp.ok) throw new Error(body.error || 'Error ' + resp.status);
+      list.innerHTML = '';
+      if (!body.dates.length) { list.appendChild(el('li', null, 'Todavía no hay copias: se crea la primera con el primer cambio de un día.')); return; }
+      body.dates.forEach(function (day) {
+        const li = el('li');
+        li.appendChild(el('span', null, 'Cómo estaba al empezar el ' + longDate(day)));
+        const b = el('button', 'btn', 'Restaurar');
+        b.addEventListener('click', () => restoreBackup(day));
+        li.appendChild(b);
+        list.appendChild(li);
+      });
+    } catch (e) {
+      list.innerHTML = '';
+      list.appendChild(el('li', null, 'No se pudieron buscar las copias: ' + e.message));
+    }
+  }
+  async function restoreBackup(day) {
+    const choice = await ask('¿Volver al ' + longDate(day) + '?',
+      'Todo vuelve a como estaba al empezar ese día. Lo que escribiste después se reemplaza, en todos tus dispositivos. Podés deshacerlo desde esta misma sección.',
+      [{ label: 'Restaurar esa copia', value: 'yes', primary: true }]);
+    if (choice !== 'yes') return;
+    try {
+      const resp = await fetch('/api/sync?backup=' + encodeURIComponent(day), { headers: authHeaders() });
+      const copy = await resp.json();
+      if (!resp.ok) throw new Error(copy.error || 'Error ' + resp.status);
+      applySnapshot(copy.entries);
+      toast('Copia restaurada');
+    } catch (e) {
+      toast('No se pudo restaurar: ' + e.message);
+    }
   }
 
   // ── Respaldo ──
@@ -625,20 +782,28 @@
     toast('Planilla descargada');
   }
 
-  // Importar suma el respaldo a lo que ya hay: por cada dato gana la versión más reciente.
+  // Importar: se puede combinar con lo que hay (gana el dato más reciente) o reemplazar todo.
   function importData(file) {
     const reader = new FileReader();
-    reader.onload = function () {
+    reader.onload = async function () {
+      let data;
       try {
-        const data = JSON.parse(reader.result);
+        data = JSON.parse(reader.result);
         if (!data || data.app !== 'sunset' || typeof data.entries !== 'object') throw new Error('formato');
-        state.entries = mergeEntries(state.entries, data.entries).entries;
-        save();
-        render();
-        sync();
-        toast('Respaldo importado');
       } catch (e) {
         toast('El archivo no es un respaldo válido de Sunset');
+        return;
+      }
+      const choice = await ask('¿Cómo importar este respaldo?',
+        'Combinar suma el respaldo a lo que ya tenés y, si hay un mismo dato en los dos, queda el más reciente. Reemplazar deja todo exactamente como estaba en el respaldo.',
+        [{ label: 'Combinar', value: 'merge', primary: true }, { label: 'Reemplazar todo', value: 'replace' }]);
+      if (choice === 'merge') {
+        state.entries = mergeEntries(state.entries, data.entries).entries;
+        save(); render(); sync();
+        toast('Respaldo combinado');
+      } else if (choice === 'replace') {
+        applySnapshot(data.entries);
+        toast('Respaldo restaurado');
       }
     };
     reader.readAsText(file);
@@ -673,39 +838,80 @@
     if (this.files[0]) importData(this.files[0]);
     this.value = '';
   });
-  $('syncConnect').addEventListener('click', function () {
-    const v = $('syncInput').value.trim();
-    if (!v) return;
-    try { localStorage.setItem(SYNC_KEY, v); } catch (e) { /* sin persistencia */ }
-    $('syncInput').value = '';
-    renderSyncPanel();
-    sync();
-  });
   $('syncNow').addEventListener('click', sync);
-  $('syncDisconnect').addEventListener('click', function () {
-    try { localStorage.removeItem(SYNC_KEY); } catch (e) { /* sin persistencia */ }
-    renderSyncPanel();
+  $('logoutBtn').addEventListener('click', async function () {
+    const choice = await ask('¿Cerrar sesión en este dispositivo?',
+      'Se borra de este dispositivo la clave y el contenido. Tus registros siguen guardados en línea y vuelven al entrar de nuevo.',
+      [{ label: 'Cerrar sesión', value: 'yes', primary: true }]);
+    if (choice === 'yes') logout('');
+  });
+  $('backupsBtn').addEventListener('click', loadBackups);
+  $('undoBtn').addEventListener('click', function () {
+    const undo = readUndo();
+    if (undo) { applySnapshot(undo, true); toast('Restauración deshecha'); }
   });
   window.addEventListener('online', sync);
-  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') sync(); });
+
+  // Si la app queda abierta de un día para otro, "hoy" se actualiza al volver a ella.
+  function refreshToday() {
+    if (!Y) return;
+    const n = new Date();
+    if (n.toDateString() === now.toDateString()) return;
+    if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') return;
+    const followToday = isCurrent();
+    now = n;
+    TODAY = locateDate(now);
+    if (followToday) { Y = TODAY.Y; viewing = TODAY.week; }
+    renderHeader();
+    render();
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState !== 'visible') return;
+    refreshToday();
+    sync();
+  });
   document.addEventListener('keydown', function (e) {
     if (e.target.closest('input,textarea') || !$('welcome').hidden) return;
     if (e.key === 'ArrowLeft') step(-1);
     if (e.key === 'ArrowRight') step(1);
   });
 
-  if (!state.welcomed) {
-    $('welcome').hidden = false;
-    $('welcomeOk').addEventListener('click', function () {
-      $('welcome').hidden = true;
-      state.welcomed = true;
-      save();
-    });
+  $('welcomeOk').addEventListener('click', function () {
+    $('welcome').hidden = true;
+    state.welcomed = true;
+    save();
+  });
+
+  // Arranque con el contenido ya disponible.
+  function boot(data) {
+    prepare(data);
+    now = new Date();
+    TODAY = locateDate(now);
+    Y = TODAY.Y;
+    viewing = TODAY.week;
+    openWord = null;
+    renderHeader();
+    renderSyncPanel();
+    renderUndo();
+    render();
+    if (!state.welcomed) $('welcome').hidden = false;
+    sync();
   }
 
-  window.SunsetTree.logo($('logoTree'));
-  renderHeader();
-  renderSyncPanel();
-  render();
-  sync();
+  // Sin clave no hay contenido: la app pide la clave. Con clave y contenido guardados abre directo.
+  async function start() {
+    if (window.SUNSET_DATA) { boot(window.SUNSET_DATA); return; }   // vista previa con datos incluidos
+    const key = syncKey(), cached = readCached();
+    if (key && cached) { boot(cached); refreshContent(); return; }
+    if (!key) { showLock(''); return; }
+    try {
+      const data = await fetchContent(key);
+      try { localStorage.setItem(CONTENT_KEY, JSON.stringify(data)); } catch (e) { /* sin persistencia */ }
+      boot(data);
+    } catch (e) {
+      if (e.code === 401) logout('La clave cambió. Escríbela de nuevo.');
+      else showLock(e.message);
+    }
+  }
+  start();
 })();
