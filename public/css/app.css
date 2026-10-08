@@ -375,3 +375,13 @@ main>section,main>details,#days .card{scroll-margin-top:60px;}
 .record-tab.has-text{background:linear-gradient(135deg,color-mix(in srgb,var(--rc) 40%,rgba(22,10,40,.9)),color-mix(in srgb,var(--rc) 20%,rgba(22,10,40,.9)));border-color:color-mix(in srgb,var(--rc) 70%,transparent);font-weight:400;}
 .record-tab .count{color:#fff;opacity:.85;}
 .expand-btn{border-color:var(--gold);color:var(--gold-hi);background:rgba(255,215,0,.08);}
+
+/* Más discreto: la frase es el centro de cada tarjeta */
+.record-tab{width:auto;align-self:flex-start;display:inline-flex;gap:8px;padding:7px 12px 7px 8px;border-radius:20px;font-size:12px;font-weight:400;letter-spacing:.06em;box-shadow:none;background:color-mix(in srgb,var(--rc) 22%,rgba(22,10,40,.85));border-color:color-mix(in srgb,var(--rc) 60%,transparent);}
+.record-tab:hover{box-shadow:0 0 12px rgba(255,215,0,.25);transform:none;}
+.record-tab>.ico:first-child{width:20px;height:20px;padding:4px;}
+.record-tab .count{margin-left:6px;font-size:11px;}
+.record-tab .go{display:none;}
+.record-tab.has-text{background:color-mix(in srgb,var(--rc) 14%,rgba(22,10,40,.85));}
+.days .card .card-text{font-size:17px;font-weight:300;line-height:1.6;color:#fff;margin-bottom:16px;}
+.days .card .sat-list li{font-size:16px;}
