@@ -37,7 +37,6 @@
     const n = parseInt(hex.slice(1), 16);
     return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
   }
-  function rgba(hex, a) { return 'rgba(' + hexToRgb(hex).join(',') + ',' + a + ')'; }
   function luminance(hex) {
     const [r, g, b] = hexToRgb(hex).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
@@ -199,13 +198,23 @@
     return ta;
   }
 
-  function applyTheme() {
-    const t = Y.themes[Y.weeks[viewing - 1].col];
+  const treeOf = (colorName) => window.SunsetTree.TREES[colorName] || window.SunsetTree.TREES.Lila;
+  let drawn = '';
+  function applyTheme(force) {
+    const col = Y.weeks[viewing - 1].col;
+    const t = Y.themes[col];
     const root = document.documentElement.style;
     root.setProperty('--wk', t.strong);
     root.setProperty('--wk-mid', t.mid);
     root.setProperty('--wk-soft', t.soft);
+    // El paisaje solo se redibuja cuando cambia el color (o el tamaño de la pantalla).
+    const id = Y.year + '-' + col;
+    if (force || id !== drawn) {
+      drawn = id;
+      window.SunsetTree.render($('sky'), t.name, Y.year * 10 + col);
+    }
   }
+  window.addEventListener('resize', debounce(function () { applyTheme(true); renderYear(); }, 200));
 
   function renderHeader() {
     const h = $('headerDate');
@@ -220,8 +229,12 @@
     const wk = Y.weeks[viewing - 1];
     const t = Y.themes[wk.col];
     const yi = yearIndex(Y.year);
+    const tree = treeOf(t.name);
     $('weekNum').textContent = 'Semana ' + viewing + (YEARS.length > 1 ? ' · ' + Y.year : '');
-    $('weekSub').textContent = t.emoji + ' ' + t.name + ' · ' + wk.dates;
+    $('weekSub').textContent = t.name + ' · ' + wk.dates;
+    const tn = $('treeName');
+    tn.textContent = tree.name;
+    if (tree.sci) tn.appendChild(el('i', null, tree.sci));
     $('prevWeek').disabled = viewing <= 1 && yi === 0;
     $('nextWeek').disabled = viewing >= Y.weeks.length && yi === YEARS.length - 1;
     $('todayBtn').hidden = !TODAY.inRange || isCurrent();
@@ -389,27 +402,42 @@
     wrap.appendChild(noteField(k(Y, viewing, 'intencion'), 'La semana que viene quiero…', 2));
   }
 
+  // Progreso del año: ramas con una flor por semana. La flor se abre según lo respondido.
   function renderYear() {
-    const grid = $('yearGrid');
-    grid.innerHTML = '';
-    Y.weeks.forEach(function (wk) {
-      const t = Y.themes[wk.col];
-      const done = weekCompletion(Y, wk.week);
-      const m = getV(k(Y, wk.week, 'maestria'), '');
-      const b = el('button', 'yw', String(wk.week));
-      b.title = 'Semana ' + wk.week + ' · ' + wk.dates + ' · ' + Math.round(done * 100) + '% respondido' + (m ? ' · Maestría: ' + m : '');
-      if (done > 0) {
-        b.style.background = rgba(t.strong, 0.15 + done * 0.85);
-        b.style.borderColor = t.strong;
-        if (done > 0.5) b.style.color = '#fff';
-      }
-      if (m) b.appendChild(icon('crown', 'yw-crown'));
-      if (wk.week === viewing) b.classList.add('is-viewing');
-      if (TODAY.inRange && Y === TODAY.Y && wk.week === TODAY.week) b.classList.add('is-current');
-      b.addEventListener('click', function () { goTo(Y, wk.week); });
-      grid.appendChild(b);
-    });
+    const wrap = $('yearGrid');
+    wrap.innerHTML = '';
+    const per = wrap.clientWidth && wrap.clientWidth < 560 ? 7 : 13;
+    for (let start = 0; start < Y.weeks.length; start += per) {
+      const row = el('div', 'branch');
+      row.style.setProperty('--per', per);
+      const ns = 'http://www.w3.org/2000/svg';
+      const line = document.createElementNS(ns, 'svg');
+      line.setAttribute('class', 'branch-line');
+      line.setAttribute('viewBox', '0 0 100 10');
+      line.setAttribute('preserveAspectRatio', 'none');
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', 'M0 6 C 20 3, 35 8, 50 5 S 80 3, 100 6');
+      path.setAttribute('vector-effect', 'non-scaling-stroke');
+      line.appendChild(path);
+      row.appendChild(line);
+      Y.weeks.slice(start, start + per).forEach(function (wk) {
+        const t = Y.themes[wk.col];
+        const done = weekCompletion(Y, wk.week);
+        const m = getV(k(Y, wk.week, 'maestria'), '');
+        const b = el('button', 'yw');
+        b.setAttribute('aria-label', 'Semana ' + wk.week + ', ' + wk.dates + ', ' + Math.round(done * 100) + '% respondido' + (m ? ', maestría ' + m : ''));
+        b.title = 'Semana ' + wk.week + ' · ' + treeOf(t.name).name + ' · ' + Math.round(done * 100) + '%' + (m ? ' · Maestría: ' + m : '');
+        b.appendChild(window.SunsetTree.flowerSVG(treeOf(t.name).ink, done, !!m));
+        b.appendChild(el('span', null, String(wk.week)));
+        if (wk.week === viewing) b.classList.add('is-viewing');
+        if (TODAY.inRange && Y === TODAY.Y && wk.week === TODAY.week) b.classList.add('is-current');
+        b.addEventListener('click', function () { goTo(Y, wk.week); });
+        row.appendChild(b);
+      });
+      wrap.appendChild(row);
+    }
   }
+  $('yearFold').addEventListener('toggle', function () { if (this.open) renderYear(); });
 
   function champion(words) {
     let best = null;
@@ -439,12 +467,11 @@
           const n = crowns(Y, word);
           const t = Y.themes[c];
           const sq = el('button', 'sq ' + ((r + c) % 2 ? 'dark' : 'light'));
-          const fill = el('span', 'fill');
-          fill.style.background = rgba(t.strong, m * 0.9);
-          sq.appendChild(fill);
+          const bloom = el('span', 'bloom');
+          bloom.appendChild(window.SunsetTree.flowerSVG(treeOf(t.name).ink, m, n > 0));
+          sq.appendChild(bloom);
           const lbl = el('span', 'lbl', word);
-          if (m > 0 || n > 0) lbl.appendChild(el('small', null, (m > 0 ? Math.round(m * 100) + '%' : '') + (n > 0 ? ' ' + '♛'.repeat(n) : '')));
-          if (m > 0.55) sq.style.color = '#fff';
+          if (m > 0) lbl.appendChild(el('small', null, (m > 0 ? Math.round(m * 100) + '%' : '') + (n > 1 ? ' ×' + n : '')));
           sq.appendChild(lbl);
           const next = nextEvalWeek(Y, word, viewing);
           sq.title = word + ' · ' + Y.dimensions[r] + ' · ' + t.name + (n ? ' · maestría ' + n + ' vez/veces' : '') + ' · próxima evaluación: semana ' + next;
@@ -464,12 +491,12 @@
     Y.themes.forEach(function (t) {
       const s = el('span');
       const i = el('i');
-      i.style.background = t.strong;
+      i.style.background = treeOf(t.name).ink[0];
       s.appendChild(i);
-      s.appendChild(document.createTextNode(t.name));
+      s.appendChild(document.createTextNode(t.name + ' · ' + treeOf(t.name).name));
       legend.appendChild(s);
     });
-    legend.appendChild(el('span', null, '♛ = maestría de la semana'));
+    legend.appendChild(el('span', null, 'Centro dorado = fue maestría de la semana'));
   }
 
   function render() {

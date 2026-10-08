@@ -17,39 +17,44 @@
 </head>
 <body>
 <div class="frame">
-  <header class="header">
-    <div class="logo">
-      <div class="logo-sun" aria-hidden="true">
-        <div class="logo-stripes"><span></span><span></span><span></span><span></span></div>
-        <svg class="logo-tree" viewBox="0 0 90 78" fill="none">
-          <rect x="41" y="48" width="8" height="30" rx="3" fill="#6a3418"/>
-          <path d="M45 70 Q34 75 24 78M45 70 Q56 75 66 78" stroke="#6a3418" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M41 48 C36 40 28 30 20 22M49 48 C54 40 62 30 70 22" stroke="#5a2c14" stroke-width="3" stroke-linecap="round"/>
-          <g fill="#4a2010">
-            <ellipse cx="45" cy="28" rx="20" ry="16"/><ellipse cx="24" cy="22" rx="14" ry="11"/>
-            <ellipse cx="66" cy="22" rx="14" ry="11"/><ellipse cx="45" cy="16" rx="17" ry="13"/>
-            <ellipse cx="32" cy="10" rx="11" ry="9"/><ellipse cx="58" cy="10" rx="11" ry="9"/>
-            <ellipse cx="45" cy="5" rx="13" ry="9"/>
-          </g>
-        </svg>
+  <header class="hero">
+    <canvas class="hero-canvas" id="sky" aria-hidden="true"></canvas>
+    <div class="hero-top">
+      <div class="logo">
+        <div class="logo-sun" aria-hidden="true">
+          <div class="logo-stripes"><span></span><span></span><span></span><span></span></div>
+          <svg class="logo-tree" viewBox="0 0 90 78" fill="none">
+            <rect x="41" y="48" width="8" height="30" rx="3" fill="#6a3418"/>
+            <path d="M45 70 Q34 75 24 78M45 70 Q56 75 66 78" stroke="#6a3418" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M41 48 C36 40 28 30 20 22M49 48 C54 40 62 30 70 22" stroke="#5a2c14" stroke-width="3" stroke-linecap="round"/>
+            <g fill="#4a2010">
+              <ellipse cx="45" cy="28" rx="20" ry="16"/><ellipse cx="24" cy="22" rx="14" ry="11"/>
+              <ellipse cx="66" cy="22" rx="14" ry="11"/><ellipse cx="45" cy="16" rx="17" ry="13"/>
+              <ellipse cx="32" cy="10" rx="11" ry="9"/><ellipse cx="58" cy="10" rx="11" ry="9"/>
+              <ellipse cx="45" cy="5" rx="13" ry="9"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-word">Sunset</div>
+          <div class="logo-slogan">Soluciones Prácticas</div>
+        </div>
       </div>
-      <div>
-        <div class="logo-word">Sunset</div>
-        <div class="logo-slogan">Soluciones Prácticas</div>
-      </div>
+      <div class="header-date" id="headerDate"></div>
     </div>
-    <div class="header-date" id="headerDate"></div>
+    <nav class="hero-bottom" aria-label="Semana">
+      <div class="week-info">
+        <div class="week-eyebrow" id="weekSub"></div>
+        <h2 class="week-num" id="weekNum"></h2>
+        <div class="tree-name" id="treeName"></div>
+      </div>
+      <div class="week-controls">
+        <button class="nav-btn" id="prevWeek" aria-label="Semana anterior"><svg class="ico"><use href="#i-left"/></svg></button>
+        <button class="today-btn" id="todayBtn" hidden>Hoy</button>
+        <button class="nav-btn" id="nextWeek" aria-label="Semana siguiente"><svg class="ico"><use href="#i-right"/></svg></button>
+      </div>
+    </nav>
   </header>
-
-  <nav class="week-bar" aria-label="Semana">
-    <button class="nav-btn" id="prevWeek" aria-label="Semana anterior"><svg class="ico"><use href="#i-left"/></svg></button>
-    <div class="week-info">
-      <div class="week-num" id="weekNum"></div>
-      <div class="week-sub" id="weekSub"></div>
-    </div>
-    <button class="today-btn" id="todayBtn" hidden>Hoy</button>
-    <button class="nav-btn" id="nextWeek" aria-label="Semana siguiente"><svg class="ico"><use href="#i-right"/></svg></button>
-  </nav>
 
   <main>
     <section>
@@ -83,15 +88,15 @@
     <details class="fold" id="yearFold">
       <summary><svg class="ico"><use href="#i-grid"/></svg><span id="yearTitle">Progreso del año</span><svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
-        <p class="fold-hint">Cada casilla es una semana, pintada según cuánto de la autoevaluación respondiste. Tocá una para ir a esa semana.</p>
-        <div class="year-grid" id="yearGrid"></div>
+        <p class="fold-hint">Cada flor es una semana: se abre a medida que respondés la autoevaluación, y lleva centro dorado si confirmaste la maestría. Tocá una para ir a esa semana.</p>
+        <div class="branches" id="yearGrid"></div>
       </div>
     </details>
 
     <details class="fold" id="boardFold">
       <summary><svg class="ico"><use href="#i-board"/></svg>Tablero de maestría<svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
-        <p class="fold-hint">Las 49 palabras: cada fila es una dimensión y cada columna un color. Cuanto más intenso el color, más dominada la palabra en lo que va del año. La última fila y la última columna muestran la campeona de cada línea, y la esquina la campeona general. Tocá una palabra para ir a su próxima semana de evaluación.</p>
+        <p class="fold-hint">Las 49 palabras: cada fila es una dimensión y cada columna un color. Cuanto más abierta la flor, más dominada la palabra en lo que va del año. La última fila y la última columna muestran la campeona de cada línea, y la esquina la campeona general. Tocá una palabra para ir a su próxima semana de evaluación.</p>
         <div class="board" id="board"></div>
         <div class="board-legend" id="boardLegend"></div>
       </div>
@@ -171,6 +176,7 @@
 </svg>
 
 <script src="data/sunset-data.js"></script>
+<script src="js/tree.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
