@@ -12,11 +12,11 @@ vocabulario de la radio.
 |---|---|
 | Semana con color + título + hook | Semana con **color + Tema + Enfoque** y su número de semana |
 | Árbol fijo por color | **Escena por tema** (paisaje SVG, sin íconos), pintada con la gama del color de la semana |
-| Franja de 7 íconos / dimensiones | **Rotación de los 7 temas** en texto; al tocar uno se ve su enfoque en la misma ronda |
+| Franja de 7 íconos / dimensiones | **7 íconos de temas** en el cielo de la portada; al tocar uno se abren todas sus semanas del año, con la activa resaltada y la próxima marcada |
 | Domingo: título, frase, historia | **Historia ilustrativa** de la semana |
 | Lunes–sábado: @ del día | **7 versículos** con sus 3 puntos, sin día fijo |
 | Autoevaluación de 3 palabras | **3 subtemas**: desarrollo, nota para el locutor, frase célebre |
-| Ficha / maestría | **Programa responsable + locutor** y **Valor ADN** con su guía interna |
+| Ficha / maestría | **Apoyamos al programa** (programa + locutor) y **Valor de Mensajero** con su guía interna |
 | Cierre / progreso | **Preparación de la semana** (lista + notas de producción) y avance en el mapa del año |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
 
