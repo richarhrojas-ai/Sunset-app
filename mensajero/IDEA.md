@@ -18,6 +18,7 @@ vocabulario de la radio.
 | Autoevaluación de 3 palabras | **3 subtemas**: desarrollo, nota para el locutor, frase célebre |
 | Ficha / maestría | **Apoyamos al programa** (programa + locutor) y **Valor de Mensajero** con su guía interna |
 | Cierre / progreso | **Preparación de la semana** (lista + notas de producción) y avance en el mapa del año |
+| — | **Registro al aire** por mes: versículos y subtemas al aire, con lista y totales del año |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
 
 Sin días fijos: cada locutor tiene su programa (de lunes a viernes o un solo día; los domingos casi no hay programas en vivo),
@@ -35,7 +36,10 @@ Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden cor
 ## Claves del usuario (`AAAA/wN/...`, valor `{v,t}`)
 
 - `vr0..vr6` versículo revisado
-- `aire0..aire6` versículo usado al aire
+- `aire0..aire6` versículo al aire (cuenta en el mes de su fecha)
+- `vn0..vn6` nota de cada versículo
+- `st0..st2/aire` subtema al aire (cuenta en el día en que se marcó, nunca antes del inicio de su semana)
+- `st0..st2/nota` nota de cada subtema
 - `prep/0..7` lista de preparación
 - `notas` notas de producción
 

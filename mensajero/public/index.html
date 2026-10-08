@@ -174,6 +174,26 @@ details.fold[open]>summary::after{content:"–"}
 .prep button[aria-pressed="true"] i{background:var(--gold);border-color:var(--gold);box-shadow:0 0 8px var(--gold)}
 .barra{height:4px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:4px}
 .barra i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--gold));transition:width .4s}
+details.mi-nota{margin-top:12px}
+details.mi-nota summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);min-height:32px}
+details.mi-nota summary::-webkit-details-marker{display:none}
+details.mi-nota summary::before{content:"+";color:var(--gold);font-size:15px;letter-spacing:0}
+details.mi-nota[open] summary::before{content:"–"}
+details.mi-nota.tiene summary{color:var(--gold)}
+details.mi-nota textarea{min-height:72px;margin-top:6px;font-size:14px}
+.st .acc{display:flex;gap:6px;margin-top:14px;max-width:360px}
+.reg-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.reg-top select{min-height:42px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--ink);font:inherit;font-size:14px;padding:0 16px;text-transform:capitalize}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0;background:rgba(0,0,0,.15)}
+.tile b{display:block;font-size:clamp(24px,7vw,34px);font-weight:200;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tile b small{font-size:14px;color:var(--ink3);font-weight:300}
+.tile span{font-size:10px;letter-spacing:.14em;line-height:1.3;display:block;text-transform:uppercase;color:var(--ink3)}
+.reg-list{list-style:none;display:grid;gap:4px;font-size:14px}
+.reg-list li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.reg-list li time{color:var(--ink3);font-variant-numeric:tabular-nums;font-size:13px}
+.reg-list button{text-align:left;color:var(--ink2)}
+.reg-list button:hover{color:var(--ink)}
 textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.2);color:var(--ink);font:inherit;font-size:15px;padding:12px}
 
 /* año */
@@ -228,7 +248,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 
 <nav class="bar" aria-label="Atajos"><div class="in">
   <a href="#s-ficha">Ficha</a><a href="#s-subtemas">Subtemas</a><a href="#s-dias">Versículos</a>
-  <a href="#s-historia">Historia</a><a href="#s-marco">Marco</a><a href="#s-prep">Preparación</a>
+  <a href="#s-historia">Historia</a><a href="#s-marco">Marco</a><a href="#s-prep">Preparación</a><a href="#s-reg">Registro</a>
   <a href="#s-anio">Año</a><a href="#s-buscar">Buscar</a>
 </div></nav>
 
@@ -257,6 +277,12 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   <details class="fold" id="s-prep" open><summary>Preparación de la semana <span id="prep-pct" class="muted" style="letter-spacing:.1em"></span></summary>
     <div class="fold-body"><div class="barra"><i id="prep-bar"></i></div><div class="prep" id="prep"></div>
       <div><h4>Notas de producción</h4><textarea id="notas" placeholder="Ideas, invitados, cambios para esta semana…"></textarea></div></div></details>
+  <details class="fold" id="s-reg" open><summary>Registro al aire</summary><div class="fold-body">
+    <div class="reg-top"><label for="mes" class="kicker">Mes</label><select id="mes"></select></div>
+    <div class="tiles" id="tiles"></div>
+    <div><h4>Versículos al aire</h4><ul class="reg-list" id="reg-v"></ul></div>
+    <div><h4>Subtemas al aire</h4><ul class="reg-list" id="reg-s"></ul></div>
+    <p class="muted" style="font-size:13px" id="reg-anio"></p></div></details>
   <details class="fold" id="s-anio"><summary>Edificando una Cultura · 2027</summary><div class="fold-body"><div class="anio" id="anio"></div><div class="leyenda" id="leyenda"></div></div></details>
   <details class="fold buscar" id="s-buscar"><summary>Buscar</summary><div class="fold-body">
     <input type="search" id="q" placeholder="Tema, subtema, versículo, frase…" aria-label="Buscar en el año">
@@ -386,6 +412,13 @@ const get = k => entries[k]?.v;
 const set = (k, v) => { entries[k] = {v, t: Date.now()}; try { localStorage.setItem(LS, JSON.stringify(entries)); } catch {} };
 const key = (w, k) => `${DATA.anio}/w${w.n}/${k}`;
 
+const notaBox = (w, k, ph) => { const v = get(key(w, k)) || '';
+  return `<details class="mi-nota${v ? ' tiene' : ''}"${v ? ' open' : ''}><summary>${v ? 'Mi nota' : 'Agregar nota'}</summary>
+    <textarea id="n-${w.n}-${k.replace('/', '-')}" data-n="${k}" placeholder="${ph}" aria-label="Nota">${esc(v)}</textarea></details>`; };
+const botonAire = (w, k) => { const e = entries[key(w, k)], on = !!e?.v;
+  return `<button class="chk" data-k="${k}" aria-pressed="${on}">${on ? 'Al aire ✓ · ' + fcorta(new Date(Math.max(e.t, +dateOf(w.inicio)))).slice(0, -5) : 'Al aire'}</button>`; };
+const fcorta = d => `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+
 /* ── Semana actual ── */
 const sem = DATA.semanas;
 const hoyD = new Date(); hoyD.setHours(0,0,0,0);
@@ -446,6 +479,8 @@ function render() {
     <h3>${esc(s.titulo)}</h3><p>${esc(s.desarrollo)}</p>
     ${s.nota ? `<div class="nota"><b>Nota para el locutor</b>${esc(s.nota)}</div>` : ''}
     ${s.frase.texto ? `<blockquote class="frase">“${esc(s.frase.texto)}”<cite>— ${esc(s.frase.autor)}</cite></blockquote>` : ''}
+    <div class="acc">${botonAire(w, 'st'+i+'/aire')}</div>
+    ${notaBox(w, 'st'+i+'/nota', 'Cómo lo abordé, invitados, reacciones de la audiencia…')}
   </article>`).join('');
 
   // un versículo por día con su fecha (sirve para el aire y para ubicar los flyers de redes)
@@ -458,8 +493,11 @@ function render() {
       <div class="cuerpo"><p class="vtxt">${esc(d.texto)}</p>
       <ul>${d.puntos.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
       <div class="acc"><button class="chk rev" data-k="vr${i}" aria-pressed="${rev}">${rev ? 'Revisado' : 'Revisar versículo'}</button>
-        <button class="chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button></div></div>
+        <button class="chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button></div>
+      ${notaBox(w, 'vn'+i, 'Programa donde salió, flyer, comentarios…')}</div>
     </article>`; }).join('');
+
+  renderRegistro(ini.getMonth());
 
   // marco
   const m = w.marco;
@@ -478,6 +516,35 @@ function render() {
   $('anio').innerHTML = sem.map((s, i) => { const c = PAL[s.color].sw, claro = ['Blanco','Amarillo'].includes(s.color);
     return `<button data-i="${i}" aria-current="${i === cur}" title="Semana ${s.n} · ${esc(TEMA_TXT[s.tema]||s.tema)}: ${esc(s.enfoque)}"
       style="background:${c};color:${claro ? '#1d1a14' : '#fff'}">${s.n}<span class="p"><i style="width:${prepPct(s)}%"></i></span></button>`; }).join('');
+}
+
+/* registro: versículos por su fecha, subtemas por el día en que se marcaron */
+const MESES = Array.from({length: 12}, (_, m) => new Date(DATA.anio, m, 1).toLocaleDateString('es-PY', {month: 'long'}));
+$('mes').innerHTML = MESES.map((m, i) => `<option value="${i}">${m} ${DATA.anio}</option>`).join('');
+function registro() {
+  const vs = [], ss = []; let rev = 0;
+  for (const w of sem) {
+    const ini = dateOf(w.inicio);
+    w.dias.forEach((d, i) => { const f = new Date(ini); f.setDate(ini.getDate()+i);
+      if (get(key(w, 'aire'+i))) vs.push({f, w, txt: d.ref});
+      if (get(key(w, 'vr'+i))) rev++; });
+    w.subtemas.forEach((s, i) => { const e = entries[key(w, 'st'+i+'/aire')]; if (e?.v) ss.push({f: new Date(Math.max(e.t, +ini)), w, txt: s.titulo}); });  // si se marcó antes, cuenta desde el inicio de su semana
+  }
+  return {vs, ss, rev};
+}
+function renderRegistro(m) {
+  $('mes').value = m;
+  const {vs, ss, rev} = registro(), del = x => x.f.getMonth() === m && x.f.getFullYear() === DATA.anio;
+  const v = vs.filter(del).sort((a, b) => a.f - b.f), st = ss.filter(del).sort((a, b) => a.f - b.f);
+  const total = new Date(DATA.anio, m+1, 0).getDate();
+  $('tiles').innerHTML = `<div class="tile"><b>${v.length} <small>de ${total}</small></b><span>Versículos al aire</span></div>
+    <div class="tile"><b>${st.length}</b><span>Subtemas al aire</span></div>
+    <div class="tile"><b>${Math.round(v.length / total * 100)}%</b><span>Días con versículo</span></div>`;
+  const fila = x => `<li><time>${fcorta(x.f).slice(0, -5)}</time><button data-i="${x.w.n-1}">${esc(x.txt)} <span class="muted">· semana ${x.w.n}</span></button></li>`;
+  $('reg-v').innerHTML = v.map(fila).join('') || `<li class="muted" style="display:block">Ningún versículo marcado al aire en ${MESES[m]}.</li>`;
+  $('reg-s').innerHTML = st.map(fila).join('') || `<li class="muted" style="display:block">Ningún subtema marcado al aire en ${MESES[m]}.</li>`;
+  const n = (k, a, b) => `${k} ${k === 1 ? a : b}`;
+  $('reg-anio').textContent = `En ${DATA.anio}: ${n(vs.length, 'versículo', 'versículos')} y ${n(ss.length, 'subtema', 'subtemas')} al aire · ${n(rev, 'versículo revisado', 'versículos revisados')}.`;
 }
 
 function pintarPrep() {
@@ -526,9 +593,17 @@ function marcar() {
 }
 addEventListener('scroll', () => { cancelAnimationFrame(espia); espia = requestAnimationFrame(marcar); }, {passive: true});
 
-$('dias').onclick = e => { const b = e.target.closest('.chk'); if (!b) return;
+const marcarChk = e => { const b = e.target.closest('.chk'); if (!b) return;
   const w = sem[cur], k = b.dataset.k, v = !get(key(w, k)); set(key(w, k), v); b.setAttribute('aria-pressed', v);
-  b.textContent = k.startsWith('vr') ? (v ? 'Revisado' : 'Revisar versículo') : (v ? 'Al aire ✓' : 'Al aire'); };
+  if (k.startsWith('st')) b.outerHTML = botonAire(w, k);
+  else b.textContent = k.startsWith('vr') ? (v ? 'Revisado' : 'Revisar versículo') : (v ? 'Al aire ✓' : 'Al aire');
+  renderRegistro(+$('mes').value); };
+$('dias').onclick = marcarChk;
+$('subtemas').onclick = marcarChk;
+document.addEventListener('input', e => { const t = e.target.closest('textarea[data-n]'); if (!t) return;
+  set(key(sem[cur], t.dataset.n), t.value); const d = t.closest('details'); d.classList.toggle('tiene', !!t.value); d.querySelector('summary').textContent = t.value ? 'Mi nota' : 'Agregar nota'; });
+$('mes').onchange = e => renderRegistro(+e.target.value);
+document.querySelectorAll('.reg-list').forEach(l => l.onclick = e => { const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } });
 $('prep').onclick = e => { const b = e.target.closest('button'); if (!b) return;
   const k = key(sem[cur], 'prep/'+b.dataset.p), v = !get(k); set(k, v); b.setAttribute('aria-pressed', v); pintarPrep();
   const cel = $('anio').children[cur].querySelector('.p i'); if (cel) cel.style.width = prepPct(sem[cur]) + '%'; };
