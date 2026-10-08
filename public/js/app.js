@@ -626,7 +626,7 @@
     $('capWord').textContent = word;
     $('capTag').textContent = evaluated ? 'Principal' : 'En juego';
     $('capTag').classList.toggle('is-main', evaluated);
-    $('capGo').textContent = evaluated ? 'Autoevaluar' : 'Ver preguntas';
+    $('capGo').textContent = evaluated ? 'Abrir' : 'Ver preguntas';
     $('capGo').onclick = function () { accessWord(d, word, evaluated); };
     const cap = $('dimCap');
     cap.hidden = false;
