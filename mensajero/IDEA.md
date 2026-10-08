@@ -1,4 +1,6 @@
-# Mensajero · Tema Macro: la idea
+# Mensajero · Edificando una Cultura (2027): la idea
+
+En 2027 los «Temas Macro» pasan a llamarse **Edificando una Cultura**.
 
 App de uso diario para el equipo de Mensajero 100.9 FM. Usa el mismo molde que Sunset
 (PWA estática, color por semana, tarjetas de vidrio, esquema `{v,t}`), con contenido y
