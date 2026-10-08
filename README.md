@@ -12,6 +12,8 @@ data/planillas/                    Una planilla por año: sunset-contenido-AAAA.
 data/sunset-data.js                Datos generados desde las planillas — no editar a mano
 tools/build_data.py                Generador de data/sunset-data.js
 manifest.webmanifest, sw.js, icons/   Instalación como app (PWA) y uso sin conexión
+netlify/functions/sync.mjs         Sincronización del progreso (Netlify Blobs)
+tests/                             Pruebas de la función (`npm test`)
 ```
 
 ## Agregar o actualizar un año
@@ -45,5 +47,29 @@ La columna define el color: Negro, Rojo, Azul, Lila, Verde, Amarillo, Blanco.
 
 ## Datos del usuario
 
-El progreso se guarda en el navegador (`localStorage`, clave `sunset_v1`), separado
-por año. Para pasarlo a otro dispositivo: *Respaldo de datos → Exportar / Importar*.
+Lo que se registra en la app:
+
+- **Registro diario** (domingo a sábado) en cada tarjeta del día.
+- **Autoevaluación**: 5 respuestas del 1 al 5 por cada palabra activa, más un comentario.
+- **Cierre de la semana**: maestría confirmada (la app sugiere la palabra de mayor
+  puntaje), qué funcionó / qué mejorar e intención para la próxima semana.
+
+Todo se guarda primero en el navegador (`localStorage`, clave `sunset_v2`) como
+`{ clave: { v: valor, t: fecha } }`; al combinar dos copias gana el dato más reciente.
+
+### Sincronización
+
+Con una clave, la app envía los cambios a `/api/sync` (función de Netlify) y recibe los
+de otros dispositivos. Los datos quedan en Netlify Blobs (almacén `sunset`):
+
+- `progreso`: el estado actual.
+- `backups/AAAA-MM-DD`: una copia por día, para volver a una versión anterior.
+
+Configuración en Netlify: **Site configuration → Environment variables →** `SUNSET_KEY`
+con la clave que se escribe en la app.
+
+### Recuperar los datos
+
+- **Descargar planilla**: CSV con una fila por semana (abre en Excel o Google Sheets).
+- **Descargar respaldo / Importar respaldo**: JSON completo; importar suma al estado actual.
+- Desde Netlify: las copias diarias en Blobs.

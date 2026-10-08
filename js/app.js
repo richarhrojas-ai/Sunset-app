@@ -2,7 +2,8 @@
   'use strict';
 
   const YEARS = window.SUNSET_DATA.years;
-  const STORE_KEY = 'sunset_v1';
+  const STORE_KEY = 'sunset_v2';
+  const SYNC_KEY = 'sunset_sync_key';
   const DAY_MS = 864e5;
   const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const WEEKDAYS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -43,6 +44,10 @@
   }
   function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
   function fmtDate(d) { return d.getDate() + ' de ' + MONTHS[d.getMonth()]; }
+  function debounce(fn, ms) {
+    let t = null;
+    return function () { clearTimeout(t); t = setTimeout(fn, ms); };
+  }
 
   // ── Años ──
   // Cada año trae su planilla: semanas, tablero 7×7, preguntas y colores.
@@ -92,27 +97,47 @@
   function activeWords(Y, week) { return rotation(Y, week).slice(0, 3); }
 
   // ── Estado ──
-  // answers[año]['w' + semana][palabra] = [5 respuestas de 1 a 5, o null]
-  let state = { answers: {}, welcomed: false };
+  // Todo lo que registra el usuario vive en entries[clave] = { v: valor, t: milisegundos }.
+  // Claves (por año y semana):
+  //   AAAA/wN/a/Palabra   respuestas [5 valores de 1 a 5 o null]
+  //   AAAA/wN/c/Palabra   comentario sobre la palabra
+  //   AAAA/wN/d0..d6      registro del día (0 = domingo)
+  //   AAAA/wN/maestria    palabra confirmada como maestría de la semana
+  //   AAAA/wN/funciono    ¿qué funcionó? ¿qué mejorar?
+  //   AAAA/wN/intencion   intención para la próxima semana
+  // Al sincronizar, por cada clave gana la entrada más reciente.
+  let state = { entries: {}, welcomed: false };
   try {
     const raw = localStorage.getItem(STORE_KEY);
     if (raw) state = Object.assign(state, JSON.parse(raw));
   } catch (e) { /* almacenamiento no disponible */ }
+
+  const k = (Y, week, rest) => Y.year + '/w' + week + '/' + rest;
+  function getV(key, fallback) { const e = state.entries[key]; return e && e.v != null ? e.v : fallback; }
+  function setV(key, value) {
+    state.entries[key] = { v: value, t: Date.now() };
+    save();
+    scheduleSync();
+  }
   function save() {
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* sin persistencia */ }
   }
-  function getAnswers(Y, week, word) {
-    const y = state.answers[Y.year];
-    const w = y && y['w' + week];
-    return (w && w[word]) || [null, null, null, null, null];
+  function mergeEntries(base, incoming) {
+    const out = Object.assign({}, base);
+    let changed = false;
+    Object.keys(incoming || {}).forEach(function (key) {
+      const e = incoming[key];
+      if (!e || typeof e.t !== 'number') return;
+      if (!out[key] || e.t > out[key].t) { out[key] = e; changed = true; }
+    });
+    return { entries: out, changed: changed };
   }
+
+  function getAnswers(Y, week, word) { return getV(k(Y, week, 'a/' + word), [null, null, null, null, null]); }
   function setAnswer(Y, week, word, qi, value) {
-    const y = (state.answers[Y.year] = state.answers[Y.year] || {});
-    const w = (y['w' + week] = y['w' + week] || {});
     const a = getAnswers(Y, week, word).slice();
     a[qi] = a[qi] === value ? null : value;
-    w[word] = a;
-    save();
+    setV(k(Y, week, 'a/' + word), a);
   }
 
   // Puntaje de una palabra en una semana: suma / 25 (las no respondidas cuentan 0).
@@ -134,6 +159,19 @@
     if (!scored.length) return 0;
     return scored.reduce((s, w) => s + wordScore(Y, w, word), 0) / scored.length;
   }
+  // Semanas en que la palabra fue confirmada como maestría de la semana.
+  function crowns(Y, word) {
+    return (Y.evalWeeks[word] || []).filter((w) => getV(k(Y, w, 'maestria'), '') === word).length;
+  }
+  // Sugerencia: la palabra activa con mayor puntaje esa semana.
+  function suggestedMastery(Y, week) {
+    let best = null;
+    activeWords(Y, week).forEach(function (a) {
+      const s = wordScore(Y, week, a.word);
+      if (s > 0 && (!best || s > best.s)) best = { word: a.word, s: s };
+    });
+    return best && best.word;
+  }
   function nextEvalWeek(Y, word, from) {
     const list = Y.evalWeeks[word] || [];
     return list.find((w) => w >= from) || list[0];
@@ -148,6 +186,18 @@
 
   const isCurrent = () => TODAY.inRange && Y === TODAY.Y && viewing === TODAY.week;
   const todayIndex = () => (isCurrent() ? now.getDay() : -1);
+
+  // Área de texto que guarda sola mientras se escribe.
+  function noteField(key, placeholder, rows) {
+    const ta = el('textarea', 'note');
+    ta.rows = rows || 2;
+    ta.placeholder = placeholder;
+    ta.value = getV(key, '');
+    const commit = debounce(function () { setV(key, ta.value); }, 500);
+    ta.addEventListener('input', commit);
+    ta.addEventListener('blur', function () { if (ta.value !== getV(key, '')) setV(key, ta.value); });
+    return ta;
+  }
 
   function applyTheme() {
     const t = Y.themes[Y.weeks[viewing - 1].col];
@@ -214,6 +264,7 @@
     });
     card.appendChild(btn);
     card.appendChild(story);
+    card.appendChild(noteField(k(Y, viewing, 'd0'), 'Registro del domingo…'));
   }
 
   function renderDays() {
@@ -231,6 +282,7 @@
       } else {
         card.appendChild(el('p', 'card-text', wk[d.key]));
       }
+      card.appendChild(noteField(k(Y, viewing, 'd' + d.day), 'Registro del ' + WEEKDAYS[d.day].toLowerCase() + '…'));
       wrap.appendChild(card);
     });
   }
@@ -274,8 +326,9 @@
     const qs = $('questions');
     qs.innerHTML = '';
     if (!openWord) return;
-    const answers = getAnswers(Y, viewing, openWord);
-    (Y.questions[openWord] || []).forEach(function (q, qi) {
+    const word = openWord;
+    const answers = getAnswers(Y, viewing, word);
+    (Y.questions[word] || []).forEach(function (q, qi) {
       const box = el('div', 'q');
       box.appendChild(el('p', 'q-text', q));
       const scale = el('div', 'q-scale');
@@ -284,8 +337,9 @@
         b.setAttribute('aria-pressed', String(answers[qi] === v));
         b.setAttribute('aria-label', v + ' de 5');
         b.addEventListener('click', function () {
-          setAnswer(Y, viewing, openWord, qi, v);
+          setAnswer(Y, viewing, word, qi, v);
           renderEvaluation();
+          renderClosing();
           renderYear();
           renderBoard();
         });
@@ -298,6 +352,41 @@
       box.appendChild(ends);
       qs.appendChild(box);
     });
+    qs.appendChild(noteField(k(Y, viewing, 'c/' + word), 'Comentario sobre ' + word + '…', 3));
+  }
+
+  function renderClosing() {
+    const wrap = $('closing');
+    wrap.innerHTML = '';
+    const confirmed = getV(k(Y, viewing, 'maestria'), '');
+    const suggested = suggestedMastery(Y, viewing);
+
+    wrap.appendChild(el('div', 'field-label', 'Maestría de la semana'));
+    wrap.appendChild(el('p', 'field-hint', confirmed ? 'Confirmada. Tocá otra palabra para cambiarla, o la misma para quitarla.'
+      : suggested ? 'Sugerida: ' + suggested + ' (la de mayor puntaje). Tocá una palabra para confirmarla.'
+        : 'Respondé la autoevaluación para ver la sugerencia, o elegí directamente.'));
+    const opts = el('div', 'mastery-opts');
+    activeWords(Y, viewing).forEach(function (a) {
+      const b = el('button', 'mastery-opt');
+      b.setAttribute('aria-pressed', String(confirmed === a.word));
+      if (!confirmed && suggested === a.word) b.classList.add('is-suggested');
+      if (confirmed === a.word) b.appendChild(icon('crown'));
+      b.appendChild(document.createTextNode(a.word));
+      b.appendChild(el('span', 'chip-pct', Math.round(wordScore(Y, viewing, a.word) * 100) + '%'));
+      b.addEventListener('click', function () {
+        setV(k(Y, viewing, 'maestria'), confirmed === a.word ? '' : a.word);
+        renderClosing();
+        renderYear();
+        renderBoard();
+      });
+      opts.appendChild(b);
+    });
+    wrap.appendChild(opts);
+
+    wrap.appendChild(el('div', 'field-label', '¿Qué funcionó? ¿Qué mejorar?'));
+    wrap.appendChild(noteField(k(Y, viewing, 'funciono'), 'Mirando la semana completa…', 3));
+    wrap.appendChild(el('div', 'field-label', 'Intención para la próxima semana'));
+    wrap.appendChild(noteField(k(Y, viewing, 'intencion'), 'La semana que viene quiero…', 2));
   }
 
   function renderYear() {
@@ -306,13 +395,15 @@
     Y.weeks.forEach(function (wk) {
       const t = Y.themes[wk.col];
       const done = weekCompletion(Y, wk.week);
+      const m = getV(k(Y, wk.week, 'maestria'), '');
       const b = el('button', 'yw', String(wk.week));
-      b.title = 'Semana ' + wk.week + ' · ' + wk.dates + ' · ' + Math.round(done * 100) + '% respondido';
+      b.title = 'Semana ' + wk.week + ' · ' + wk.dates + ' · ' + Math.round(done * 100) + '% respondido' + (m ? ' · Maestría: ' + m : '');
       if (done > 0) {
         b.style.background = rgba(t.strong, 0.15 + done * 0.85);
         b.style.borderColor = t.strong;
         if (done > 0.5) b.style.color = '#fff';
       }
+      if (m) b.appendChild(icon('crown', 'yw-crown'));
       if (wk.week === viewing) b.classList.add('is-viewing');
       if (TODAY.inRange && Y === TODAY.Y && wk.week === TODAY.week) b.classList.add('is-current');
       b.addEventListener('click', function () { goTo(Y, wk.week); });
@@ -345,17 +436,18 @@
         if (r < 7 && c < 7) {
           const word = Y.board[r][c];
           const m = mastery(Y, word);
+          const n = crowns(Y, word);
           const t = Y.themes[c];
           const sq = el('button', 'sq ' + ((r + c) % 2 ? 'dark' : 'light'));
           const fill = el('span', 'fill');
           fill.style.background = rgba(t.strong, m * 0.9);
           sq.appendChild(fill);
           const lbl = el('span', 'lbl', word);
-          if (m > 0) lbl.appendChild(el('small', null, Math.round(m * 100) + '%'));
+          if (m > 0 || n > 0) lbl.appendChild(el('small', null, (m > 0 ? Math.round(m * 100) + '%' : '') + (n > 0 ? ' ' + '♛'.repeat(n) : '')));
           if (m > 0.55) sq.style.color = '#fff';
           sq.appendChild(lbl);
           const next = nextEvalWeek(Y, word, viewing);
-          sq.title = word + ' · ' + Y.dimensions[r] + ' · ' + t.name + ' · próxima evaluación: semana ' + next;
+          sq.title = word + ' · ' + Y.dimensions[r] + ' · ' + t.name + (n ? ' · maestría ' + n + ' vez/veces' : '') + ' · próxima evaluación: semana ' + next;
           sq.addEventListener('click', function () { goTo(Y, next); });
           board.appendChild(sq);
         } else if (r < 7) {
@@ -377,6 +469,7 @@
       s.appendChild(document.createTextNode(t.name));
       legend.appendChild(s);
     });
+    legend.appendChild(el('span', null, '♛ = maestría de la semana'));
   }
 
   function render() {
@@ -385,6 +478,7 @@
     renderSunday();
     renderDays();
     renderEvaluation();
+    renderClosing();
     renderYear();
     renderBoard();
   }
@@ -415,30 +509,107 @@
     toastTimer = setTimeout(function () { t.hidden = true; }, 2600);
   }
 
+  // ── Sincronización (Netlify) ──
+  function syncKey() { try { return localStorage.getItem(SYNC_KEY) || ''; } catch (e) { return ''; } }
+  function setSyncStatus(text, kind) {
+    const s = $('syncStatus');
+    s.textContent = text;
+    s.className = 'sync-status' + (kind ? ' is-' + kind : '');
+  }
+  let syncing = false, syncAgain = false;
+  async function sync() {
+    const key = syncKey();
+    if (!key || location.protocol === 'file:') return;
+    if (syncing) { syncAgain = true; return; }
+    syncing = true;
+    setSyncStatus('Sincronizando…');
+    try {
+      const resp = await fetch('/api/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-sunset-key': key },
+        body: JSON.stringify({ entries: state.entries }),
+      });
+      const body = await resp.json().catch(() => ({}));
+      if (!resp.ok) throw new Error(body.error || 'Error ' + resp.status);
+      const res = mergeEntries(state.entries, body.entries);
+      state.entries = res.entries;
+      save();
+      // No redibujar mientras se escribe: se perdería el foco del campo.
+      if (res.changed && !(document.activeElement && document.activeElement.tagName === 'TEXTAREA')) render();
+      setSyncStatus('Sincronizado ' + new Date().toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' }), 'ok');
+    } catch (e) {
+      setSyncStatus(navigator.onLine === false ? 'Sin conexión: se guardó en este dispositivo' : 'No se pudo sincronizar: ' + e.message, 'error');
+    } finally {
+      syncing = false;
+      if (syncAgain) { syncAgain = false; sync(); }
+    }
+  }
+  const scheduleSync = debounce(sync, 1500);
+
+  function renderSyncPanel() {
+    const on = !!syncKey();
+    $('syncOff').hidden = on;
+    $('syncOn').hidden = !on;
+    if (!on) setSyncStatus('Solo en este dispositivo');
+  }
+
   // ── Respaldo ──
-  function exportData() {
-    const payload = { app: 'sunset', version: 1, exported: new Date().toISOString(), answers: state.answers };
-    const blob = new Blob([JSON.stringify(payload, null, 1)], { type: 'application/json' });
+  function download(name, content, type) {
+    const blob = new Blob([content], { type: type });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'sunset-progreso-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.download = name;
     document.body.appendChild(a);
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    toast('Progreso exportado');
   }
+  const stamp = () => new Date().toISOString().slice(0, 10);
+
+  function exportJson() {
+    const payload = { app: 'sunset', version: 2, exported: new Date().toISOString(), entries: state.entries };
+    download('sunset-respaldo-' + stamp() + '.json', JSON.stringify(payload, null, 1), 'application/json');
+    toast('Respaldo descargado');
+  }
+
+  // Una fila por semana, lista para abrir en Excel o Google Sheets.
+  function exportCsv() {
+    const cell = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+    const head = ['Año', 'Semana', 'Fechas', 'Color'];
+    WEEKDAYS.forEach((d) => head.push('Registro ' + d));
+    for (let i = 1; i <= 3; i++) head.push('Palabra ' + i, 'Respuestas ' + i, '% ' + i, 'Comentario ' + i);
+    head.push('% semana', 'Maestría', 'Qué funcionó / mejorar', 'Intención');
+    const rows = [head];
+    YEARS.forEach(function (YY) {
+      YY.weeks.forEach(function (wk) {
+        const w = wk.week;
+        const row = [YY.year, w, wk.dates, YY.themes[wk.col].name];
+        for (let d = 0; d < 7; d++) row.push(getV(k(YY, w, 'd' + d), ''));
+        activeWords(YY, w).forEach(function (a) {
+          row.push(a.word, getAnswers(YY, w, a.word).map((v) => v || '-').join(' '),
+            Math.round(wordScore(YY, w, a.word) * 100), getV(k(YY, w, 'c/' + a.word), ''));
+        });
+        row.push(Math.round(weekScore(YY, w) * 100), getV(k(YY, w, 'maestria'), ''),
+          getV(k(YY, w, 'funciono'), ''), getV(k(YY, w, 'intencion'), ''));
+        rows.push(row);
+      });
+    });
+    download('sunset-registro-' + stamp() + '.csv', '﻿' + rows.map((r) => r.map(cell).join(';')).join('\r\n'), 'text/csv;charset=utf-8');
+    toast('Planilla descargada');
+  }
+
+  // Importar suma el respaldo a lo que ya hay: por cada dato gana la versión más reciente.
   function importData(file) {
     const reader = new FileReader();
     reader.onload = function () {
       try {
         const data = JSON.parse(reader.result);
-        if (!data || data.app !== 'sunset' || typeof data.answers !== 'object') throw new Error('formato');
-        if (!confirm('Esto reemplaza el progreso guardado en este dispositivo. ¿Continuar?')) return;
-        state.answers = data.answers;
+        if (!data || data.app !== 'sunset' || typeof data.entries !== 'object') throw new Error('formato');
+        state.entries = mergeEntries(state.entries, data.entries).entries;
         save();
         render();
-        toast('Progreso importado');
+        sync();
+        toast('Respaldo importado');
       } catch (e) {
         toast('El archivo no es un respaldo válido de Sunset');
       }
@@ -468,12 +639,28 @@
   $('prevWeek').addEventListener('click', () => step(-1));
   $('nextWeek').addEventListener('click', () => step(1));
   $('todayBtn').addEventListener('click', () => goTo(TODAY.Y, TODAY.week));
-  $('exportBtn').addEventListener('click', exportData);
+  $('exportJsonBtn').addEventListener('click', exportJson);
+  $('exportCsvBtn').addEventListener('click', exportCsv);
   $('importBtn').addEventListener('click', () => $('importFile').click());
   $('importFile').addEventListener('change', function () {
     if (this.files[0]) importData(this.files[0]);
     this.value = '';
   });
+  $('syncConnect').addEventListener('click', function () {
+    const v = $('syncInput').value.trim();
+    if (!v) return;
+    try { localStorage.setItem(SYNC_KEY, v); } catch (e) { /* sin persistencia */ }
+    $('syncInput').value = '';
+    renderSyncPanel();
+    sync();
+  });
+  $('syncNow').addEventListener('click', sync);
+  $('syncDisconnect').addEventListener('click', function () {
+    try { localStorage.removeItem(SYNC_KEY); } catch (e) { /* sin persistencia */ }
+    renderSyncPanel();
+  });
+  window.addEventListener('online', sync);
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') sync(); });
   document.addEventListener('keydown', function (e) {
     if (e.target.closest('input,textarea') || !$('welcome').hidden) return;
     if (e.key === 'ArrowLeft') step(-1);
@@ -490,5 +677,7 @@
   }
 
   renderHeader();
+  renderSyncPanel();
   render();
+  sync();
 })();
