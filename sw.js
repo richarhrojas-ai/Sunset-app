@@ -1,6 +1,6 @@
 // Service worker: guarda la app para abrirla sin conexión.
 // Red primero (así siempre ves la última versión publicada), caché si no hay red.
-const CACHE = 'sunset-v11';
+const CACHE = 'sunset-v12';
 const SHELL = [
   './',
   'index.html',

@@ -201,7 +201,7 @@
     drawSun(ctx, narrow ? w * 0.5 : w * 0.66, horizon, Math.min(w, h) * (narrow ? 0.34 : 0.3), dark);
 
     const rand = rng(seed);
-    const scale = Math.min(h * (narrow ? 0.135 : 0.155), w * (narrow ? 0.15 : 0.11)) * (form.flat && narrow ? 0.85 : 1);
+    const scale = Math.min(h * (narrow ? 0.12 : 0.135), w * (narrow ? 0.15 : 0.11)) * (form.flat && narrow ? 0.85 : 1);
     const bark = dark ? '#070403' : '#2a150a';
     const tips = growTree(ctx, rand, treeX, horizon + 2, scale, form, bark);
 
@@ -218,6 +218,23 @@
         blossoms.push([x, y, r, c, rand() * Math.PI]);
       }
     });
+    // Cúpula: más flores por encima de la copa para que crezca en alto (como en el logo).
+    let minX = Infinity, maxX = -Infinity, minY = Infinity;
+    tips.forEach(function (t) { minX = Math.min(minX, t[0]); maxX = Math.max(maxX, t[0]); minY = Math.min(minY, t[1]); });
+    const domeRx = (maxX - minX) / 2 * 0.88, domeRy = scale * 1.25, domeCx = (minX + maxX) / 2, domeCy = minY + scale * 0.45;
+    const domeN = Math.round(tips.length * form.bloom * 0.55);
+    for (let i = 0; i < domeN; i++) {
+      const a = Math.PI + rand() * Math.PI, d = Math.sqrt(rand());
+      const useDark = tree.leaves && rand() < 0.22;
+      const pal = useDark ? tree.leaves : tree.flowers;
+      blossoms.push([domeCx + Math.cos(a) * domeRx * d, domeCy + Math.sin(a) * domeRy * d,
+        (2.4 + rand() * 2.8) * form.petal * (w < 400 ? 0.85 : 1), pal[Math.floor(rand() * pal.length)], rand() * Math.PI]);
+    }
+    // Las flores oscuras van primero (al fondo) para dar volumen.
+    if (tree.leaves) {
+      const deep = new Set(tree.leaves);
+      blossoms.sort(function (a, b) { return (deep.has(b[3]) ? 1 : 0) - (deep.has(a[3]) ? 1 : 0); });
+    }
     if (tree.leaves) {
       tips.forEach(function (t) {
         for (let i = 0; i < 4; i++) {
