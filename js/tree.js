@@ -44,39 +44,40 @@
   function drawSky(ctx, w, h, horizon, dark) {
     const sky = ctx.createLinearGradient(0, 0, 0, horizon);
     if (dark) {
-      sky.addColorStop(0, '#0b0609'); sky.addColorStop(0.5, '#2e0f12');
-      sky.addColorStop(0.85, '#7a2812'); sky.addColorStop(1, '#b8561c');
+      sky.addColorStop(0, '#120a0e'); sky.addColorStop(0.6, '#3a1614'); sky.addColorStop(1, '#8a3a1c');
     } else {
-      sky.addColorStop(0, '#3b1d36'); sky.addColorStop(0.4, '#8c3a2c');
-      sky.addColorStop(0.78, '#e07a2c'); sky.addColorStop(1, '#f6c46a');
+      sky.addColorStop(0, '#4a2238'); sky.addColorStop(0.55, '#b8502e'); sky.addColorStop(1, '#f2b45e');
     }
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, horizon);
   }
 
+  // Sol como el del logo: disco con franjas en la mitad de abajo.
   function drawSun(ctx, cx, horizon, r, dark) {
     const g = ctx.createLinearGradient(0, horizon - r, 0, horizon);
-    if (dark) { g.addColorStop(0, '#d9823a'); g.addColorStop(0.6, '#a8441a'); g.addColorStop(1, '#6e200e'); }
-    else { g.addColorStop(0, '#ffd27a'); g.addColorStop(0.6, '#f59a32'); g.addColorStop(1, '#e0561c'); }
+    if (dark) { g.addColorStop(0, '#c9773a'); g.addColorStop(1, '#7a2a12'); }
+    else { g.addColorStop(0, '#ffd27a'); g.addColorStop(0.55, '#f7a646'); g.addColorStop(1, '#ec6a2c'); }
     ctx.save();
     ctx.beginPath(); ctx.rect(0, 0, ctx.canvas.width, horizon); ctx.clip();
-    ctx.fillStyle = dark ? 'rgba(200,90,40,0.10)' : 'rgba(255,210,130,0.18)';
-    ctx.beginPath(); ctx.arc(cx, horizon, r * 1.55, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, horizon, r, 0, Math.PI * 2); ctx.clip();
     ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(cx, horizon, r, 0, Math.PI * 2); ctx.fill();
+    ctx.fillRect(cx - r, horizon - r, r * 2, r);
+    // Franjas: líneas del color del cielo, cada vez más gruesas hacia el horizonte.
+    ctx.fillStyle = dark ? '#5a2416' : '#e08a44';
+    for (let i = 0; i < 4; i++) {
+      const y = horizon - r * (0.42 - i * 0.1);
+      ctx.fillRect(cx - r, y, r * 2, r * (0.018 + i * 0.012));
+    }
     ctx.restore();
   }
 
-  // Franjas del horizonte, como las del logo.
   function drawGround(ctx, w, h, horizon) {
-    const bands = [0.18, 0.38, 0.58, 0.78];
-    const bh = (h - horizon) / (bands.length + 1);
-    bands.forEach(function (o, i) {
-      ctx.fillStyle = 'rgba(12,6,3,' + o + ')';
-      ctx.fillRect(0, horizon + i * bh * 0.55, w, bh * 0.4);
-    });
-    ctx.fillStyle = '#140904';
-    ctx.fillRect(0, horizon + bands.length * bh * 0.55, w, h);
+    const g = ctx.createLinearGradient(0, horizon, 0, h);
+    g.addColorStop(0, '#24110a'); g.addColorStop(1, '#0e0604');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, horizon, w, h - horizon);
+    ctx.fillStyle = 'rgba(255,190,120,0.18)';
+    ctx.fillRect(0, horizon, w, 1);
   }
 
   function drawFlower(ctx, x, y, r, color, rot) {
@@ -234,10 +235,10 @@
     drawGround(ctx, w, h, horizon);
 
     // Pétalos caídos en el suelo.
-    for (let i = 0; i < 26; i++) {
-      const x = treeX + (rand() - 0.5) * scale * 4.2;
-      const y = horizon + 4 + rand() * (h - horizon) * 0.35;
-      ctx.globalAlpha = 0.55;
+    for (let i = 0; i < 10; i++) {
+      const x = treeX + (rand() - 0.5) * scale * 2.6;
+      const y = horizon + 3 + rand() * (h - horizon) * 0.12;
+      ctx.globalAlpha = 0.45;
       drawFlower(ctx, x, y, 1.6 + rand() * 1.2, tree.flowers[i % tree.flowers.length], rand() * 3);
     }
     ctx.globalAlpha = 1;
@@ -356,16 +357,22 @@
     const form = { spread: 0.5, decay: 0.75, depth: S > 120 ? 8 : 7, lift: 0.75, bloom: 0, petal: 1, wide: 0.62 };
     const rand = rng(11);
     const base = cy + R * 0.93;
-    const len = R * 0.42;
+    const len = R * 0.37;
     const tips = growTree(ctx, rand, cx, base, len, form, '#6E4222');
-    // Ramitas finas en las puntas, para la copa sin hojas.
-    ctx.strokeStyle = '#7A4A26'; ctx.lineCap = 'round';
-    ctx.lineWidth = Math.max(0.35, S * 0.004);
+    // Copa tupida: hojas en tonos de bronce, primero las oscuras (fondo) y luego las claras.
+    const leaves = [];
+    const lf = S < 120 ? 1.9 : 1;   // a tamaño chico, hojas más grandes para que la copa se vea llena
     tips.forEach(function (t) {
-      for (let i = 0; i < 3; i++) {
-        const a = -Math.PI / 2 + (rand() - 0.5) * 2.6, l = t[2] * (0.35 + rand() * 0.4);
-        ctx.beginPath(); ctx.moveTo(t[0], t[1]); ctx.lineTo(t[0] + Math.cos(a) * l, t[1] + Math.sin(a) * l); ctx.stroke();
+      const n = 6 + Math.floor(rand() * 5);
+      for (let i = 0; i < n; i++) {
+        const spread = Math.max(R * 0.04, t[2] * 0.75);
+        leaves.push([t[0] + (rand() - 0.5) * spread * 1.6, t[1] + (rand() - 0.5) * spread * 1.2 - spread * 0.2,
+          R * (0.028 + rand() * 0.03) * lf, rand() * Math.PI, rand()]);
       }
+    });
+    const shades = ['#4A2A14', '#5E3519', '#71431F', '#865327', '#9A6431'];
+    leaves.sort(function (a, b) { return a[4] - b[4]; }).forEach(function (l) {
+      drawLeaf(ctx, l[0], l[1], l[2], shades[Math.min(4, Math.floor(l[4] * 5))], l[3]);
     });
     // Raíces largas que se extienden fuera del círculo.
     ctx.strokeStyle = '#6E4222';
