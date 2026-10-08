@@ -1,7 +1,7 @@
 // Service worker: guarda la app para abrirla sin conexión.
 // Red primero (así siempre ves la última versión publicada), caché si no hay red.
 // Nunca se guarda /api/: el contenido y los registros viajan con la clave y se guardan en la app.
-const CACHE = 'sunset-v26';
+const CACHE = 'sunset-v27';
 const SHELL = [
   './',
   'index.html',

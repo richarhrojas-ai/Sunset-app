@@ -197,7 +197,7 @@
   const countWords = (text) => (text.trim() ? text.trim().split(/\s+/).length : 0);
 
   // Ánimo del día (1 a 5, cinco puntos que se encienden) y gratitud corta. Claves AAAA/wN/m0..m6 y g0..g6.
-  const MOOD_NAMES = ['Muy bajo', 'Bajo', 'Normal', 'Bien', 'Muy bien'];
+  const MOOD_NAMES = ['Bajo', 'Algo bajo', 'Normal', 'Bien', 'Genial'];
   function moodRow(day, onChange) {
     const key = k(Y, viewing, 'm' + day);
     const row = el('div', 'mood');
@@ -205,6 +205,7 @@
     row.setAttribute('aria-label', 'Ánimo del día');
     row.appendChild(el('span', 'mood-label', 'Ánimo'));
     const dots = [];
+    row.appendChild(el('span', 'mood-end', 'bajo'));
     const paint = function () {
       const v = getV(key, 0);
       dots.forEach((b, i) => { b.classList.toggle('on', i < v); b.setAttribute('aria-pressed', String(v === i + 1)); });
@@ -216,6 +217,7 @@
       b.addEventListener('click', function () { setV(key, getV(key, 0) === i ? null : i); paint(); if (onChange) onChange(); });
       dots.push(b); row.appendChild(b);
     }
+    row.appendChild(el('span', 'mood-end', 'genial'));
     paint();
     return row;
   }
