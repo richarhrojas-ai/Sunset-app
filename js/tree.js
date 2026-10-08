@@ -7,29 +7,29 @@
   // Árbol de cada color. form define la arquitectura de la copa.
   const TREES = {
     Lila: { ink: ['#B565C9', '#D58AD8'], name: 'Lapacho morado', sci: 'Handroanthus impetiginosus', form: 'lapacho',
-      flowers: ['#B565C9', '#D58AD8', '#E9B6E6', '#9B4FB8'] },
+      flowers: ['#B565C9', '#D58AD8', '#E9B6E6', '#9B4FB8'], leaves: ['#7E3A93', '#93489F'] },
     Azul: { ink: ['#6A6CC9', '#9AA0EC'], name: 'Jacarandá', sci: 'Jacaranda mimosifolia', form: 'jacaranda',
-      flowers: ['#7B83E0', '#9AA0EC', '#6A6CC9', '#B7B9F2'] },
+      flowers: ['#7B83E0', '#9AA0EC', '#6A6CC9', '#B7B9F2'], leaves: ['#4B4FA8', '#5A60B8'] },
     Rojo: { ink: ['#D42A18', '#EF5A44'], name: 'Flamboyán', sci: 'Delonix regia', form: 'flamboyan',
       flowers: ['#E2341D', '#D42A18', '#C81E14', '#EF4B2A'], leaves: ['#8E1410', '#A81C12'] },
     Amarillo: { ink: ['#E8A90C', '#F5C518'], name: 'Lapacho amarillo', sci: 'Handroanthus albus', form: 'lapacho',
-      flowers: ['#F5C518', '#FFD84D', '#E8A90C', '#FFE58A'] },
+      flowers: ['#F5C518', '#FFD84D', '#E8A90C', '#FFE58A'], leaves: ['#B8840A', '#C9940C'] },
     Blanco: { ink: ['#E9CFDB', '#FBF1F5'], name: 'Lapacho blanco', sci: 'Tabebuia roseoalba', form: 'lapacho',
-      flowers: ['#FFFFFF', '#FBF4F6', '#F3DCE6', '#FFF6E8'] },
+      flowers: ['#FFFFFF', '#FBF4F6', '#F3DCE6', '#FFF6E8'], leaves: ['#D9C3CC', '#E6D3DA'] },
     Verde: { ink: ['#4E9A3B', '#86C25A'], name: 'Árbol en hoja nueva', sci: '', form: 'leafy',
-      flowers: ['#4E9A3B', '#79B84E', '#A9D46F', '#2F6E2C'] },
+      flowers: ['#4E9A3B', '#79B84E', '#A9D46F', '#2F6E2C'], leaves: ['#2C5E24', '#3A7330'] },
     Negro: { ink: ['#2A2420', '#5A4C42'], name: 'Silueta al atardecer', sci: '', form: 'silhouette',
-      flowers: ['#0D0705', '#140B07', '#1C120C', '#24170F'] },
+      flowers: ['#0D0705', '#140B07', '#1C120C', '#24170F'], leaves: ['#060302', '#0A0504'] },
   };
 
   const FORMS = {
     // spread: apertura entre ramas · decay: acortamiento por nivel · depth: niveles
     // lift: cuánto tienden a subir · trunk: largo del tronco relativo · bloom: densidad de flores
-    lapacho: { spread: 0.42, decay: 0.74, depth: 7, lift: 0.9, trunk: 0.30, bloom: 9, petal: 1 },
-    jacaranda: { spread: 0.58, decay: 0.76, depth: 7, lift: 0.55, trunk: 0.26, bloom: 7, petal: 0.9 },
+    lapacho: { spread: 0.72, decay: 0.77, depth: 7, lift: 0.4, trunk: 0.30, bloom: 9, petal: 1.05, wide: 0.88 },
+    jacaranda: { spread: 0.82, decay: 0.78, depth: 7, lift: 0.28, trunk: 0.26, bloom: 8, petal: 1, wide: 0.92 },
     flamboyan: { spread: 0.95, decay: 0.79, depth: 6, lift: 0.18, trunk: 0.22, bloom: 8, petal: 1.05, flat: true },
-    leafy: { spread: 0.5, decay: 0.74, depth: 7, lift: 0.7, trunk: 0.28, bloom: 10, petal: 1.2, leaf: true },
-    silhouette: { spread: 0.52, decay: 0.75, depth: 7, lift: 0.6, trunk: 0.28, bloom: 10, petal: 1.25, leaf: true },
+    leafy: { spread: 0.74, decay: 0.77, depth: 7, lift: 0.4, trunk: 0.28, bloom: 10, petal: 1.25, leaf: true, wide: 0.86 },
+    silhouette: { spread: 0.76, decay: 0.77, depth: 7, lift: 0.38, trunk: 0.28, bloom: 10, petal: 1.3, leaf: true, wide: 0.9 },
   };
 
   function rng(seed) {
@@ -114,7 +114,9 @@
         // Tendencia a subir (lapacho) o a abrirse en horizontal (flamboyán).
         const k = form.lift * 0.15;
         na = na * (1 - k) + (-Math.PI / 2) * k;
-        if (form.flat) na = Math.max(-Math.PI + 0.25, Math.min(-0.25, na));
+        // Ninguna rama cae por debajo de la horizontal: copa ancha, no llorona.
+        const lim = form.flat ? 0.25 : 0.4;
+        na = Math.max(-Math.PI + lim, Math.min(-lim, na));
         branch(x1, y1, l * (form.decay + (rand() - 0.5) * 0.12), na, wdt * 0.66, d - 1);
       }
     }
@@ -167,7 +169,7 @@
     ctx.restore();
 
     const firstLen = len * (form.flat ? 0.95 : 0.8);
-    const starts = form.flat ? [-Math.PI / 2 - 0.85, -Math.PI / 2 + 0.85, -Math.PI / 2] : [-Math.PI / 2 - form.spread * 0.7, -Math.PI / 2 + form.spread * 0.7];
+    const starts = form.flat ? [-Math.PI / 2 - 0.85, -Math.PI / 2 + 0.85, -Math.PI / 2] : [-Math.PI / 2 - (form.wide || 0.7), -Math.PI / 2 + (form.wide || 0.7), -Math.PI / 2 + (rand() - 0.5) * 0.3];
     starts.forEach(function (a) { branch(top[0], top[1], firstLen, a + lean, topW * 0.74, form.depth - 1); });
     return tips;
   }
