@@ -358,24 +358,34 @@
     const rand = rng(11);
     const base = cy + R * 0.93;
     const len = R * 0.37;
-    const tips = growTree(ctx, rand, cx, base, len, form, '#6E4222');
+    const tips = growTree(ctx, rand, cx, base, len, form, '#55301A');
     // Copa tupida: hojas en tonos de bronce, primero las oscuras (fondo) y luego las claras.
     const leaves = [];
     const lf = S < 120 ? 1.9 : 1;   // a tamaño chico, hojas más grandes para que la copa se vea llena
     tips.forEach(function (t) {
-      const n = 6 + Math.floor(rand() * 5);
+      const n = 8 + Math.floor(rand() * 6);
       for (let i = 0; i < n; i++) {
         const spread = Math.max(R * 0.04, t[2] * 0.75);
-        leaves.push([t[0] + (rand() - 0.5) * spread * 1.6, t[1] + (rand() - 0.5) * spread * 1.2 - spread * 0.2,
+        // Más hojas hacia arriba: la copa crece en alto.
+        leaves.push([t[0] + (rand() - 0.5) * spread * 1.5, t[1] - rand() * spread * 2.4 + spread * 0.3,
           R * (0.028 + rand() * 0.03) * lf, rand() * Math.PI, rand()]);
       }
     });
-    const shades = ['#4A2A14', '#5E3519', '#71431F', '#865327', '#9A6431'];
+    // Cúpula de hojas sobre la copa, para que gane altura.
+    let minX = Infinity, maxX = -Infinity, minY = Infinity;
+    tips.forEach(function (t) { minX = Math.min(minX, t[0]); maxX = Math.max(maxX, t[0]); minY = Math.min(minY, t[1]); });
+    const domeCx = (minX + maxX) / 2, domeRx = (maxX - minX) / 2 * 0.9, domeRy = R * 0.5, domeCy = minY + R * 0.18;
+    for (let i = 0; i < (S < 120 ? 90 : 380); i++) {
+      const a = Math.PI + rand() * Math.PI, d = Math.sqrt(rand());
+      leaves.push([domeCx + Math.cos(a) * domeRx * d, domeCy + Math.sin(a) * domeRy * d,
+        R * (0.028 + rand() * 0.03) * lf, rand() * Math.PI, rand()]);
+    }
+    const shades = ['#2E180B', '#3D2210', '#4D2C15', '#5E381B', '#704422'];
     leaves.sort(function (a, b) { return a[4] - b[4]; }).forEach(function (l) {
       drawLeaf(ctx, l[0], l[1], l[2], shades[Math.min(4, Math.floor(l[4] * 5))], l[3]);
     });
     // Raíces largas que se extienden fuera del círculo.
-    ctx.strokeStyle = '#6E4222';
+    ctx.strokeStyle = '#55301A';
     [[-1, 0.85, 0.06], [1, 0.82, 0.06], [-1, 0.55, 0.04], [1, 0.6, 0.04]].forEach(function (r) {
       ctx.lineWidth = Math.max(0.6, len * r[2]);
       ctx.beginPath(); ctx.moveTo(cx, base - len * 0.04);
