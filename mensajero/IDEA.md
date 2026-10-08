@@ -14,14 +14,14 @@ vocabulario de la radio.
 | Árbol fijo por color | **Escena por tema** (paisaje SVG, sin íconos), pintada con la gama del color de la semana |
 | Franja de 7 íconos / dimensiones | **7 íconos de temas** en el cielo de la portada; al tocar uno se abren todas sus semanas del año, con la activa resaltada y la próxima marcada |
 | Domingo: título, frase, historia | **Historia ilustrativa** de la semana |
-| Lunes–sábado: @ del día | **7 versículos** con sus 3 puntos, sin día fijo |
+| Lunes–sábado: @ del día | **7 versículos, domingo a sábado, con fecha** (para el aire y para ubicar los flyers de redes) |
 | Autoevaluación de 3 palabras | **3 subtemas**: desarrollo, nota para el locutor, frase célebre |
 | Ficha / maestría | **Apoyamos al programa** (programa + locutor) y **Valor de Mensajero** con su guía interna |
 | Cierre / progreso | **Preparación de la semana** (lista + notas de producción) y avance en el mapa del año |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
 
 Sin días fijos: cada locutor tiene su programa (de lunes a viernes o un solo día; los domingos casi no hay programas en vivo),
-así que los subtemas y los 7 versículos sirven para cualquier día y cada uno usa el que le corresponde.
+así que los subtemas sirven para cualquier día. Los versículos sí llevan día y fecha: así se sabe cuándo se compartió cada uno.
 
 ## Flujo de contenido
 

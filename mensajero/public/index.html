@@ -144,7 +144,8 @@ details.valor dd{color:var(--ink2)}
 .dia .t small{font-weight:400;font-size:10px;letter-spacing:.18em;color:var(--ink3)}
 .dia .stt{font-size:12px;color:var(--ink3);margin-top:2px;letter-spacing:.04em}
 .dia .ref{display:block;text-align:left;line-height:1.5}
-.dia .num{font-size:11px;letter-spacing:.24em;color:var(--ink3);display:block;margin-bottom:4px}
+.dia .dianom{display:block;font-weight:600;font-size:13px;letter-spacing:.26em;text-transform:uppercase}
+.dia .num{font-size:11px;letter-spacing:.08em;color:var(--ink3);display:block;margin:2px 0 10px}
 .dia .cuerpo{min-width:0}
 @media(max-width:560px){.dia{grid-template-columns:1fr}}
 .dia .vtxt{font-size:16px;font-style:italic;margin:0 0 8px;color:var(--ink)}
@@ -246,7 +247,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   <div class="subtemas" id="subtemas"></div>
 
   <h2 class="sec" id="s-dias">Versículos de la semana</h2>
-  <p class="muted" style="font-size:14px;margin:-4px 0 14px">Siete versículos para usar en el día que te toque al aire.</p>
+  <p class="muted" style="font-size:14px;margin:-4px 0 14px">Un versículo por día, con su fecha, para el aire y para los flyers de redes.</p>
   <div class="dias-grid" id="dias"></div>
 
   <h2 class="sec" id="s-historia">Historia ilustrativa</h2>
@@ -284,6 +285,7 @@ const PAL = {
   Azul:    {top:'#06142a',mid:'#163e6e',low:'#4f86b8',warm:'#f5c27a',h1:'#183659',h2:'#0f2540',h3:'#071426',acc:'#9fd0ff',sw:'#2e6aa8'},
 };
 const TEMAS = ['Vida Cristiana','Liderazgo','Familia','Finanzas','Crecimiento Personal','Produccion y Desarrollo','Salud'];
+const DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const TEMA_TXT = {'Produccion y Desarrollo':'Producción y Desarrollo'};
 const TEMA_CORTO = {'Vida Cristiana':'Vida Cristiana','Crecimiento Personal':'Crecimiento','Produccion y Desarrollo':'Producción'};
 const ICONO = {  // línea blanca, 24×24
@@ -446,11 +448,13 @@ function render() {
     ${s.frase.texto ? `<blockquote class="frase">“${esc(s.frase.texto)}”<cite>— ${esc(s.frase.autor)}</cite></blockquote>` : ''}
   </article>`).join('');
 
-  // siete versículos, sin día fijo: cada locutor usa el que le toque
+  // un versículo por día con su fecha (sirve para el aire y para ubicar los flyers de redes)
+  const hoyIdx = (hoyD >= ini && hoyD <= fin) ? hoyD.getDay() : -1;
   $('dias').innerHTML = w.dias.map((d, i) => {
+    const f = new Date(ini); f.setDate(ini.getDate()+i);
     const rev = !!get(key(w, 'vr'+i)), aire = !!get(key(w, 'aire'+i));
-    return `<article class="dia" style="--k:${8+i*11}%">
-      <div><span class="num">${i+1} de 7</span><span class="ref">${esc(d.ref)}</span></div>
+    return `<article class="dia${i === hoyIdx ? ' hoy' : ''}" style="--k:${8+i*11}%">
+      <div><span class="dianom">${DIAS[i]}${i === hoyIdx ? ' · hoy' : ''}</span><span class="num">${f.toLocaleDateString('es-PY', {day: 'numeric', month: 'long', year: 'numeric'})}</span><span class="ref">${esc(d.ref)}</span></div>
       <div class="cuerpo"><p class="vtxt">${esc(d.texto)}</p>
       <ul>${d.puntos.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
       <div class="acc"><button class="chk rev" data-k="vr${i}" aria-pressed="${rev}">${rev ? 'Revisado' : 'Revisar versículo'}</button>
@@ -537,7 +541,7 @@ $('leyenda').innerHTML = Object.entries(PAL).map(([n, p]) => { const t = sem.fin
 const norm = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const idx = sem.map(w => ({w, campos: [
   ['Enfoque', w.enfoque], ['Tema', w.tema], ...w.subtemas.flatMap(s => [['Subtema', s.titulo], ['Frase', `${s.frase.texto} — ${s.frase.autor}`]]),
-  ...w.dias.map(d => ['Versículo', `${d.ref} — ${d.texto}`]), ['Historia', w.historia], ['Programa', `${w.programa} · ${w.locutor}`]]}));
+  ...w.dias.map((d, i) => [DIAS[i], `${d.ref} — ${d.texto}`]), ['Historia', w.historia], ['Programa', `${w.programa} · ${w.locutor}`]]}));
 $('q').oninput = e => {
   const q = norm(e.target.value.trim());
   if (q.length < 2) { $('res').innerHTML = ''; return; }
