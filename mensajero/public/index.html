@@ -181,7 +181,12 @@ details.mi-nota summary::before{content:"+";color:var(--gold);font-size:15px;let
 details.mi-nota[open] summary::before{content:"–"}
 details.mi-nota.tiene summary{color:var(--gold)}
 details.mi-nota textarea{min-height:72px;margin-top:6px;font-size:14px}
-.st .acc{display:flex;gap:6px;margin-top:14px;max-width:360px}
+.st-pie{position:relative;margin-top:12px;min-height:32px}
+.st-pie details.mi-nota{margin-top:0}
+.st-pie details.mi-nota summary{margin-right:130px}
+.chk.aire-mini{position:absolute;top:0;right:0;flex:none;min-height:30px;padding:0 12px;font-size:9.5px;letter-spacing:.16em;background:transparent;color:var(--ink3);border-color:rgba(255,255,255,.18)}
+.chk.aire-mini:hover{color:var(--ink);border-color:rgba(255,255,255,.35)}
+.chk.aire-mini[aria-pressed="true"]{background:var(--gold);color:#2a1a08;border-color:var(--gold);font-weight:500}
 .reg-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .reg-top select{min-height:42px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--ink);font:inherit;font-size:14px;padding:0 16px;text-transform:capitalize}
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
@@ -416,7 +421,7 @@ const notaBox = (w, k, ph) => { const v = get(key(w, k)) || '';
   return `<details class="mi-nota${v ? ' tiene' : ''}"${v ? ' open' : ''}><summary>${v ? 'Mi nota' : 'Agregar nota'}</summary>
     <textarea id="n-${w.n}-${k.replace('/', '-')}" data-n="${k}" placeholder="${ph}" aria-label="Nota">${esc(v)}</textarea></details>`; };
 const botonAire = (w, k) => { const e = entries[key(w, k)], on = !!e?.v;
-  return `<button class="chk" data-k="${k}" aria-pressed="${on}">${on ? 'Al aire ✓ · ' + fcorta(new Date(Math.max(e.t, +dateOf(w.inicio)))).slice(0, -5) : 'Al aire'}</button>`; };
+  return `<button class="chk aire-mini" data-k="${k}" aria-pressed="${on}">${on ? 'Al aire ✓ · ' + fcorta(new Date(Math.max(e.t, +dateOf(w.inicio)))).slice(0, -5) : 'Al aire'}</button>`; };
 const fcorta = d => `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
 
 /* ── Semana actual ── */
@@ -479,8 +484,7 @@ function render() {
     <h3>${esc(s.titulo)}</h3><p>${esc(s.desarrollo)}</p>
     ${s.nota ? `<div class="nota"><b>Nota para el locutor</b>${esc(s.nota)}</div>` : ''}
     ${s.frase.texto ? `<blockquote class="frase">“${esc(s.frase.texto)}”<cite>— ${esc(s.frase.autor)}</cite></blockquote>` : ''}
-    <div class="acc">${botonAire(w, 'st'+i+'/aire')}</div>
-    ${notaBox(w, 'st'+i+'/nota', 'Cómo lo abordé, invitados, reacciones de la audiencia…')}
+    <div class="st-pie">${notaBox(w, 'st'+i+'/nota', 'Cómo lo abordé, invitados, reacciones de la audiencia…')}${botonAire(w, 'st'+i+'/aire')}</div>
   </article>`).join('');
 
   // un versículo por día con su fecha (sirve para el aire y para ubicar los flyers de redes)
