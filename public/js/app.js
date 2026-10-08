@@ -743,8 +743,25 @@
     }
   }
 
+  // Lo que se anotó como intención la semana pasada, como recordatorio sutil al empezar esta.
+  function renderIntent() {
+    const p = $('intent');
+    let text = '';
+    if (viewing > 1) text = String(getV(k(Y, viewing - 1, 'intencion'), '')).trim();
+    else {
+      const prev = YEARS[yearIndex(Y.year) - 1];
+      if (prev) text = String(getV(k(prev, prev.weeks.length, 'intencion'), '')).trim();
+    }
+    p.textContent = '';
+    p.hidden = !text;
+    if (!text) return;
+    p.appendChild(el('span', 'intent-label', 'Esta semana quiero…'));
+    p.appendChild(document.createTextNode(' ' + text));
+  }
+
   function render() {
     applyTheme();
+    renderIntent();
     renderWeekBar();
     renderDims();
     renderToday();
