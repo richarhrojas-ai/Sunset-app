@@ -105,20 +105,21 @@ details.valor dd{color:var(--ink2)}
 .frase cite{display:block;font-style:normal;font-size:12px;letter-spacing:.14em;color:var(--ink3);margin-top:2px}
 
 /* ── DÍAS ── */
-.dias-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:760px){.dias-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.dias-grid{grid-template-columns:1fr}}
-.dia{border-radius:var(--r);border:1px solid var(--line);padding:18px 16px 14px;display:flex;flex-direction:column;
+.dias-grid{display:grid;gap:10px}
+.dia{border-radius:var(--r);border:1px solid var(--line);padding:16px 18px;display:grid;grid-template-columns:150px minmax(0,1fr);gap:4px 20px;align-items:start;
   background:linear-gradient(170deg,color-mix(in srgb,var(--low) var(--k),var(--mid)) 0%,color-mix(in srgb,var(--h2) 80%,transparent) 100%)}
 .dia.hoy{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 8px 30px rgba(255,215,0,.12)}
 .dia .t{font-weight:600;font-size:13px;letter-spacing:.28em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:baseline}
 .dia .t small{font-weight:400;font-size:10px;letter-spacing:.18em;color:var(--ink3)}
 .dia .stt{font-size:12px;color:var(--ink3);margin-top:2px;letter-spacing:.04em}
-.dia .ref{margin-top:14px;display:block;text-align:center}
-.dia .vtxt{font-size:15px;font-style:italic;text-align:center;margin:6px 0 10px;color:var(--ink)}
+.dia .ref{display:block;text-align:left;line-height:1.5}
+.dia .num{font-size:11px;letter-spacing:.24em;color:var(--ink3);display:block;margin-bottom:4px}
+.dia .cuerpo{min-width:0}
+@media(max-width:560px){.dia{grid-template-columns:1fr}}
+.dia .vtxt{font-size:16px;font-style:italic;margin:0 0 8px;color:var(--ink)}
 .dia ul{list-style:none;font-size:13px;color:var(--ink2);display:grid;gap:4px;margin-bottom:12px}
 .dia ul li::before{content:"·";color:var(--gold);margin-right:8px;font-weight:600}
-.dia .acc{margin-top:auto;display:flex;gap:6px;flex-wrap:wrap}
+.dia .acc{display:flex;gap:6px;flex-wrap:wrap;max-width:360px}
 .chk{flex:1;min-height:40px;border-radius:999px;border:1px solid var(--line);font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:0 10px;color:var(--ink2);background:rgba(0,0,0,.15)}
 .chk[aria-pressed="true"]{background:var(--gold);color:#2a1a08;border-color:var(--gold);font-weight:500}
 .chk.rev[aria-pressed="false"]{border-style:dashed;color:var(--amber)}
@@ -193,8 +194,8 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 </header>
 
 <nav class="bar" aria-label="Atajos"><div class="in">
-  <a href="#s-ficha">Ficha</a><a href="#s-domingo">Domingo</a><a href="#s-subtemas">Subtemas</a>
-  <a href="#s-dias">Semana</a><a href="#s-marco">Marco</a><a href="#s-prep">Preparación</a>
+  <a href="#s-ficha">Ficha</a><a href="#s-subtemas">Subtemas</a><a href="#s-dias">Versículos</a>
+  <a href="#s-historia">Historia</a><a href="#s-marco">Marco</a><a href="#s-prep">Preparación</a>
   <a href="#s-anio">Año</a><a href="#s-buscar">Buscar</a>
 </div></nav>
 
@@ -209,14 +210,15 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
       <details class="valor"><summary>Guía interna ▾</summary><dl id="f-guia"></dl></details></div>
   </div>
 
-  <h2 class="sec" id="s-domingo">Domingo · Apertura</h2>
-  <section class="domingo" id="domingo"></section>
-
   <h2 class="sec" id="s-subtemas">Tres subtemas</h2>
   <div class="subtemas" id="subtemas"></div>
 
-  <h2 class="sec" id="s-dias">Lunes a sábado</h2>
+  <h2 class="sec" id="s-dias">Versículos de la semana</h2>
+  <p class="muted" style="font-size:14px;margin:-4px 0 14px">Siete versículos para usar en el día que te toque al aire.</p>
   <div class="dias-grid" id="dias"></div>
+
+  <h2 class="sec" id="s-historia">Historia ilustrativa</h2>
+  <section class="domingo" id="domingo"></section>
 
   <details class="fold" id="s-marco"><summary>Historia bíblica y marcos</summary><div class="fold-body" id="marco"></div></details>
   <details class="fold" id="s-prep" open><summary>Preparación de la semana <span id="prep-pct" class="muted" style="letter-spacing:.1em"></span></summary>
@@ -251,10 +253,8 @@ const PAL = {
 };
 const TEMAS = ['Vida Cristiana','Liderazgo','Familia','Finanzas','Crecimiento Personal','Produccion y Desarrollo','Salud'];
 const TEMA_TXT = {'Produccion y Desarrollo':'Producción y Desarrollo'};
-const DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-const SUB_DE_DIA = [null,0,0,1,1,2,2];            // Lun-Mar subtema 1 · Mié-Jue 2 · Vie-Sáb 3
 const PREP = ['Guion de la semana listo','Versículos revisados (RVC)','Frases célebres verificadas','Historia bíblica preparada',
-              'Datos de Paraguay con fuentes','Meditaciones lunes a viernes','Documento enviado a locutores','Audios en la carpeta'];
+              'Datos de Paraguay con fuentes','Meditaciones de la semana','Documento enviado a locutores','Audios en la carpeta'];
 
 /* ── Escenas por tema (paisaje, sin íconos) ── */
 function escena(tema, p) {
@@ -373,15 +373,15 @@ function render() {
   $('h-anio').textContent = DATA.anio;
   $('h-tema').textContent = TEMA_TXT[w.tema] || w.tema;
   $('h-enfoque').textContent = w.enfoque;
-  $('h-meta').innerHTML = `<span><span class="dot"></span><b>${esc(w.color)}</b></span><span>Semana <b>${w.n}</b> de ${sem.length}</span><span>Ronda <b>${w.ronda}</b></span>`;
+  $('h-meta').innerHTML = `<span><span class="dot"></span><b>${esc(w.color)}</b></span><span>Semana <b>${w.n}</b></span>`;
   $('h-subs').innerHTML = w.subtemas.map((s, i) => `<li><span>${i+1}</span>${esc(s.titulo)}</li>`).join('');
   const antes = hoyD < dateOf(sem[0].inicio);
   $('h-aviso').hidden = !(antes && cur === 0);
-  if (antes) $('h-aviso').textContent = `El año arranca el domingo ${fmt(dateOf(sem[0].inicio))} de ${DATA.anio} · faltan ${Math.ceil((dateOf(sem[0].inicio)-hoyD)/864e5)} días`;
+  if (antes) $('h-aviso').textContent = `El año arranca el ${fmt(dateOf(sem[0].inicio))} de ${DATA.anio} · faltan ${Math.ceil((dateOf(sem[0].inicio)-hoyD)/864e5)} días`;
   $('prev').disabled = cur === 0; $('next').disabled = cur === sem.length-1;
   document.title = `${w.enfoque} · Edificando una Cultura`;
 
-  // rotación de los 7 temas: el de la semana resaltado; al tocar otro, su enfoque en esta ronda
+  // rotación de los 7 temas: el de la semana resaltado; al tocar otro, su enfoque en el mismo ciclo
   $('rot').innerHTML = TEMAS.map(t => {
     const x = sem.find(s => s.tema === t && s.ronda === w.ronda) || sem.find(s => s.tema === t);
     return `<button data-t="${esc(t)}" aria-current="${t === w.tema}"><i style="background:${PAL[x.color].sw}"></i>${esc(TEMA_TXT[t] || t)}</button>`;
@@ -395,32 +395,26 @@ function render() {
   $('f-guia').innerHTML = [['Definición', g.definicion], ['En el contenido', g.contenido], ['Pregunta guía', g.pregunta], ['Ejemplo', g.ejemplo]]
     .map(([a, b]) => `<div><dt>${a}</dt><dd>${esc(b)}</dd></div>`).join('');
 
-  // domingo
-  const d0 = w.dias[0];
-  $('domingo').innerHTML = `<div class="kicker">Versículo de la semana</div><p class="vers">${esc(d0.texto)}</p><div class="ref">${esc(d0.ref)} · RVC</div>
-    <ul class="pts">${d0.puntos.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
-    <div class="historia"><b>Historia ilustrativa</b>${esc(w.historia)}</div>`;
+  // historia ilustrativa
+  $('domingo').innerHTML = `<p class="vers" style="font-style:normal;font-size:17px">${esc(w.historia)}</p>`;
 
   // subtemas
   $('subtemas').innerHTML = w.subtemas.map((s, i) => `<article class="card st">
-    <div class="n">Subtema ${i+1} <span class="dias">· ${['Lunes y martes','Miércoles y jueves','Viernes y sábado'][i]}</span></div>
+    <div class="n">Subtema ${i+1}</div>
     <h3>${esc(s.titulo)}</h3><p>${esc(s.desarrollo)}</p>
     ${s.nota ? `<div class="nota"><b>Nota para el locutor</b>${esc(s.nota)}</div>` : ''}
     ${s.frase.texto ? `<blockquote class="frase">“${esc(s.frase.texto)}”<cite>— ${esc(s.frase.autor)}</cite></blockquote>` : ''}
   </article>`).join('');
 
-  // lunes a sábado: cada día con su matiz dentro de la gama del color
-  const hoyIdx = (hoyD >= ini && hoyD <= fin) ? hoyD.getDay() : -1;
-  $('dias').innerHTML = w.dias.slice(1).map((d, j) => { const i = j+1, s = w.subtemas[SUB_DE_DIA[i]];
-    const fecha = new Date(ini); fecha.setDate(ini.getDate()+i);
+  // siete versículos, sin día fijo: cada locutor usa el que le toque
+  $('dias').innerHTML = w.dias.map((d, i) => {
     const rev = !!get(key(w, 'vr'+i)), aire = !!get(key(w, 'aire'+i));
-    return `<article class="dia${i === hoyIdx ? ' hoy' : ''}" style="--k:${12+j*13}%">
-      <div class="t">${DIAS[i]}<small>${fecha.getDate()}/${fecha.getMonth()+1}${i === hoyIdx ? ' · hoy' : ''}</small></div>
-      <div class="stt">${esc(s.titulo)}</div>
-      <span class="ref">${esc(d.ref)}</span><p class="vtxt">${esc(d.texto)}</p>
+    return `<article class="dia" style="--k:${8+i*11}%">
+      <div><span class="num">${i+1} de 7</span><span class="ref">${esc(d.ref)}</span></div>
+      <div class="cuerpo"><p class="vtxt">${esc(d.texto)}</p>
       <ul>${d.puntos.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
       <div class="acc"><button class="chk rev" data-k="vr${i}" aria-pressed="${rev}">${rev ? 'Revisado' : 'Revisar versículo'}</button>
-        <button class="chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button></div>
+        <button class="chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button></div></div>
     </article>`; }).join('');
 
   // marco
@@ -454,7 +448,7 @@ $('next').onclick = () => ir(cur+1);
 $('hoy').onclick = () => ir(semanaHoy());
 $('rot').onclick = e => { const b = e.target.closest('button'); if (!b) return;
   const t = b.dataset.t, w = sem[cur], x = sem.find(s => s.tema === t && s.ronda === w.ronda);
-  $('rot-info').textContent = x ? `${TEMA_TXT[t]||t} · ronda ${x.ronda}: ${x.enfoque} (semana ${x.n})` : `${t}: sin semana en esta ronda`; };
+  $('rot-info').textContent = x ? `${TEMA_TXT[t]||t}: ${x.enfoque} (semana ${x.n})` : `${t}: sin semana en este ciclo`; };
 $('dias').onclick = e => { const b = e.target.closest('.chk'); if (!b) return;
   const w = sem[cur], k = b.dataset.k, v = !get(key(w, k)); set(key(w, k), v); b.setAttribute('aria-pressed', v);
   b.textContent = k.startsWith('vr') ? (v ? 'Revisado' : 'Revisar versículo') : (v ? 'Al aire ✓' : 'Al aire'); };
@@ -470,7 +464,7 @@ $('leyenda').innerHTML = Object.entries(PAL).map(([n, p]) => { const t = sem.fin
 const norm = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const idx = sem.map(w => ({w, campos: [
   ['Enfoque', w.enfoque], ['Tema', w.tema], ...w.subtemas.flatMap(s => [['Subtema', s.titulo], ['Frase', `${s.frase.texto} — ${s.frase.autor}`]]),
-  ...w.dias.map((d, i) => [DIAS[i], `${d.ref} — ${d.texto}`]), ['Historia', w.historia], ['Locutor', `${w.programa} · ${w.locutor}`]]}));
+  ...w.dias.map(d => ['Versículo', `${d.ref} — ${d.texto}`]), ['Historia', w.historia], ['Locutor', `${w.programa} · ${w.locutor}`]]}));
 $('q').oninput = e => {
   const q = norm(e.target.value.trim());
   if (q.length < 2) { $('res').innerHTML = ''; return; }

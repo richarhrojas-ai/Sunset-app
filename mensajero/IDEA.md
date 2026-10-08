@@ -10,17 +10,18 @@ vocabulario de la radio.
 
 | Sunset | Mensajero |
 |---|---|
-| Semana con color + título + hook | Semana con **color + Tema + Enfoque** y la ronda (1–8) |
+| Semana con color + título + hook | Semana con **color + Tema + Enfoque** y su número de semana |
 | Árbol fijo por color | **Escena por tema** (paisaje SVG, sin íconos), pintada con la gama del color de la semana |
 | Franja de 7 íconos / dimensiones | **Rotación de los 7 temas** en texto; al tocar uno se ve su enfoque en la misma ronda |
-| Domingo: título, frase, historia | Domingo: **versículo de la semana + 3 puntos + historia ilustrativa** |
-| Lunes–sábado: @ del día | Lunes–sábado: **versículo + 3 puntos**, con el subtema que le corresponde |
+| Domingo: título, frase, historia | **Historia ilustrativa** de la semana |
+| Lunes–sábado: @ del día | **7 versículos** con sus 3 puntos, sin día fijo |
 | Autoevaluación de 3 palabras | **3 subtemas**: desarrollo, nota para el locutor, frase célebre |
 | Ficha / maestría | **Programa responsable + locutor** y **Valor ADN** con su guía interna |
 | Cierre / progreso | **Preparación de la semana** (lista + notas de producción) y avance en el mapa del año |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
 
-Reparto de subtemas: lunes–martes → subtema 1 · miércoles–jueves → 2 · viernes–sábado → 3.
+Sin días fijos: cada locutor tiene su programa (de lunes a viernes o un solo día; los domingos casi no hay programas en vivo),
+así que los subtemas y los 7 versículos sirven para cualquier día y cada uno usa el que le corresponde.
 
 ## Flujo de contenido
 
@@ -33,8 +34,8 @@ Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden cor
 
 ## Claves del usuario (`AAAA/wN/...`, valor `{v,t}`)
 
-- `vr1..vr6` versículo del día revisado
-- `aire1..aire6` día emitido
+- `vr0..vr6` versículo revisado
+- `aire0..aire6` versículo usado al aire
 - `prep/0..7` lista de preparación
 - `notas` notas de producción
 
