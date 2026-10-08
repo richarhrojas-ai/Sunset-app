@@ -335,6 +335,11 @@
     const root = document.documentElement.style;
     root.setProperty('--wk', t.strong);
     root.setProperty('--wk-mid', t.mid);
+    // Cada día de la semana toma su propio matiz dentro de la gama del color de la semana.
+    const tr = treeOf(t.name);
+    const dayTints = [tr.accent, tr.mid, tr.ink[0], tr.ink[1],
+      'color-mix(in srgb,' + tr.accent + ' 55%,#ffffff)', 'color-mix(in srgb,' + tr.mid + ' 70%,#000000)'];
+    dayTints.forEach((v, i) => root.setProperty('--d' + (i + 1), v));
     const bg = treeOf(t.name).bg;
     root.setProperty('--bg-top', bg.top);
     root.setProperty('--bg-mid', bg.mid);
