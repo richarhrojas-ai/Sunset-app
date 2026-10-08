@@ -825,6 +825,7 @@
   function render() {
     applyTheme();
     renderVerse();
+    renderAgenda();
     renderIntent();
     renderWeekBar();
     renderDims();
@@ -907,6 +908,139 @@
   $('searchBtn').addEventListener('click', openSearch);
   $('searchDone').addEventListener('click', closeSearch);
   $('searchInput').addEventListener('input', debounce(renderSearch, 150));
+
+  // ── Diario en documento, agenda de Google y recordatorio diario ──
+  const gcal = (mode, d) => 'https://calendar.google.com/calendar/r/' + mode + '/' + d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+  const fullDate = (d) => WEEKDAYS[d.getDay()] + ' ' + d.getDate() + ' de ' + MONTHS[d.getMonth()] + ' de ' + d.getFullYear();
+  function renderAgenda() {
+    const wk = Y.weeks[viewing - 1];
+    const day = todayIndex();
+    const base = day >= 0 ? dateOf(Y, viewing, day) : dateOf(Y, viewing, 0);
+    $('agendaDay').href = gcal('day', base);
+    $('agendaDay').textContent = day >= 0 ? 'Agenda de hoy' : 'Agenda del domingo ' + base.getDate();
+    $('agendaWeek').href = gcal('week', dateOf(Y, viewing, 0));
+    const link = $('agendaLink');
+    link.href = gcal(day >= 0 ? 'day' : 'week', base);
+    link.textContent = day >= 0 ? 'Ver mi agenda de hoy ↗' : 'Ver la agenda de esta semana ↗';
+    void wk;
+  }
+
+  // Estructura común del diario: [{ title, lines: [...] }] por semana con contenido.
+  function diaryWeeks(YY, onlyWeek) {
+    const out = [];
+    YY.weeks.forEach(function (wk) {
+      const w = wk.week;
+      if (onlyWeek && w !== onlyWeek) return;
+      const lines = [];
+      for (let d = 0; d < 7; d++) {
+        const rec = String(getV(k(YY, w, 'd' + d), '')).trim();
+        const grat = String(getV(k(YY, w, 'g' + d), '')).trim();
+        const mood = getV(k(YY, w, 'm' + d), null);
+        const pct = getV(k(YY, w, 'p' + d), null);
+        if (!rec && !grat && mood == null && pct == null) continue;
+        const date = dateOf(YY, w, d);
+        const meta = [mood != null ? 'Ánimo ' + mood + '/5 (' + MOOD_NAMES[mood - 1] + ')' : '', pct != null ? 'Cumplimiento ' + pct + '%' : ''].filter(Boolean).join(' · ');
+        lines.push({ h: WEEKDAYS[d] + ' ' + date.getDate() + ' de ' + MONTHS[date.getMonth()], meta: meta, text: rec, grat: grat });
+      }
+      const notes = [];
+      activeWords(YY, w).forEach(function (a) {
+        const c = String(getV(k(YY, w, 'c/' + a.word), '')).trim();
+        if (c) notes.push({ label: 'Comentario · ' + a.word, text: c });
+      });
+      const f = String(getV(k(YY, w, 'funciono'), '')).trim();
+      const i = String(getV(k(YY, w, 'intencion'), '')).trim();
+      if (f) notes.push({ label: 'Qué funcionó y qué mejorar', text: f });
+      if (i) notes.push({ label: 'Intención para la semana siguiente', text: i });
+      if (!lines.length && !notes.length) return;
+      out.push({ title: 'Semana ' + w + ' · ' + YY.themes[wk.col].name + ' · ' + wk.dates + ' · ' + YY.year, subtitle: wk.title, days: lines, notes: notes });
+    });
+    return out;
+  }
+  let diaryCache = null;
+  function openDiary(scope) {
+    const only = scope === 'week' ? viewing : 0;
+    const weeks = diaryWeeks(Y, only);
+    diaryCache = { weeks: weeks, name: scope === 'week' ? 'semana-' + viewing + '-' + Y.year : 'diario-' + Y.year };
+    $('diaryEyebrow').textContent = scope === 'week' ? 'Semana ' + viewing + ' · ' + Y.year : 'Año ' + Y.year;
+    $('diaryTitle').textContent = 'Tu diario';
+    const doc = $('diaryDoc');
+    doc.textContent = '';
+    doc.appendChild(el('h1', null, 'Sunset ' + Y.year + ' · Diario'));
+    doc.appendChild(el('p', 'diary-sub', 'Richarh Rojas · generado el ' + fullDate(new Date())));
+    if (!weeks.length) doc.appendChild(el('p', null, scope === 'week' ? 'Todavía no escribiste nada en esta semana.' : 'Todavía no escribiste nada este año.'));
+    weeks.forEach(function (wk) {
+      const sec = el('section', 'diary-week');
+      sec.appendChild(el('h2', null, wk.title));
+      if (wk.subtitle) sec.appendChild(el('p', 'diary-sub', wk.subtitle));
+      wk.days.forEach(function (d) {
+        const box = el('div', 'diary-day');
+        box.appendChild(el('h3', null, d.h));
+        if (d.meta) box.appendChild(el('p', 'diary-meta', d.meta));
+        if (d.text) box.appendChild(el('p', 'diary-text', d.text));
+        if (d.grat) box.appendChild(el('p', 'diary-grat', 'Gratitud: ' + d.grat));
+        sec.appendChild(box);
+      });
+      wk.notes.forEach(function (n) {
+        const box = el('div', 'diary-day');
+        box.appendChild(el('h3', null, n.label));
+        box.appendChild(el('p', 'diary-text', n.text));
+        sec.appendChild(box);
+      });
+      doc.appendChild(sec);
+    });
+    $('diary').hidden = false;
+    document.documentElement.classList.add('no-scroll');
+    $('diaryClose').focus();
+  }
+  function closeDiary() {
+    $('diary').hidden = true;
+    document.documentElement.classList.remove('no-scroll');
+  }
+  function diaryAsText() {
+    const lines = ['SUNSET ' + Y.year + ' · DIARIO', 'Richarh Rojas', ''];
+    diaryCache.weeks.forEach(function (wk) {
+      lines.push('## ' + wk.title);
+      if (wk.subtitle) lines.push('_' + wk.subtitle + '_');
+      lines.push('');
+      wk.days.forEach(function (d) {
+        lines.push('### ' + d.h);
+        if (d.meta) lines.push(d.meta);
+        if (d.text) lines.push('', d.text);
+        if (d.grat) lines.push('', 'Gratitud: ' + d.grat);
+        lines.push('');
+      });
+      wk.notes.forEach(function (n) { lines.push('### ' + n.label, '', n.text, ''); });
+    });
+    return lines.join('\n');
+  }
+  $('diaryWeekBtn').addEventListener('click', () => openDiary('week'));
+  $('diaryYearBtn').addEventListener('click', () => openDiary('year'));
+  $('diaryClose').addEventListener('click', closeDiary);
+  $('diaryPrint').addEventListener('click', () => window.print());
+  $('diaryText').addEventListener('click', function () {
+    if (!diaryCache) return;
+    download('sunset-' + diaryCache.name + '.md', diaryAsText(), 'text/markdown;charset=utf-8');
+    toast('Diario descargado');
+  });
+
+  // Recordatorio diario: un evento que se repite cada día, con aviso, para abrir en cualquier agenda (.ics).
+  try { const t = localStorage.getItem('sunset_rem_time'); if (t) $('remTime').value = t; } catch (e) { /* sin almacenamiento */ }
+  $('remBtn').addEventListener('click', function () {
+    const time = $('remTime').value || '21:00';
+    try { localStorage.setItem('sunset_rem_time', time); } catch (e) { /* sin almacenamiento */ }
+    const hh = time.slice(0, 2), mm = time.slice(3, 5);
+    const n = new Date();
+    const ymd = n.getFullYear() + String(n.getMonth() + 1).padStart(2, '0') + String(n.getDate()).padStart(2, '0');
+    const utc = n.toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Sunset//Diario//ES', 'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT', 'UID:sunset-registro-diario@sunset.app', 'DTSTAMP:' + utc,
+      'DTSTART:' + ymd + 'T' + hh + mm + '00', 'DURATION:PT10M', 'RRULE:FREQ=DAILY',
+      'SUMMARY:Sunset · Mi registro del día', 'DESCRIPTION:Escribe tu registro, tu gratitud y cómo te sentiste hoy.',
+      'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Sunset · Mi registro del día', 'TRIGGER:PT0M', 'END:VALARM',
+      'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    download('sunset-recordatorio.ics', ics, 'text/calendar;charset=utf-8');
+    toast('Recordatorio descargado: ábrelo para agregarlo a tu agenda');
+  });
 
   function goTo(year, week) {
     Y = year;
@@ -1275,6 +1409,7 @@
     sync();
   });
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !$('diary').hidden) { closeDiary(); return; }
     if (e.key === 'Escape' && !$('search').hidden) { closeSearch(); return; }
     if (e.key === 'Escape' && editing) { closeEditor(); return; }
     if (e.key === 'Escape' && !$('wordModal').hidden) { closeWord(); return; }

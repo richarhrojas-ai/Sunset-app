@@ -89,6 +89,10 @@ qué funcionó y la intención. El registro de hoy se escribe en la tarjeta
 y se lee abriéndola. El porcentaje es el promedio de las preguntas **respondidas**, y la maestría es automática:
 cuando las 7 palabras de un color ya pasaron por evaluación, la de mejor calificación acumulada queda como su maestría.
 
+Además: **Buscar** (todo lo escrito), ánimo y gratitud por día, la línea «Esta semana quiero…», el versículo fijo de la semana
+(el @Regalo del lunes), el **diario en documento** (imprimir/PDF o texto .md), enlaces a la **agenda de Google** del día y la semana, y un
+**recordatorio diario** (.ics) que se abre en cualquier agenda. Los eventos de la agenda dentro de la app requieren autorización de Google y no están incluidos.
+
 Todo lo que se registra se guarda primero en el dispositivo (`localStorage`) como `{ clave: { v, t } }`,
 y al sincronizar gana, dato por dato, la versión más reciente (si dos dispositivos guardan a la vez, el
 servidor reintenta y combina). En Netlify Blobs (almacén `sunset`):

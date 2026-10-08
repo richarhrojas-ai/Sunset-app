@@ -63,6 +63,7 @@
     <p class="today-text" id="todayText"></p>
     <button type="button" class="today-more" id="todayMore">Leer completo</button>
     <div class="meter" id="meter"></div>
+    <a class="agenda-link" id="agendaLink" target="_blank" rel="noopener noreferrer"></a>
   </aside>
 
   <nav class="jump" aria-label="Ir a una sección">
@@ -120,6 +121,33 @@
         <p class="fold-hint">Las 49 palabras: cada fila es una dimensión y cada columna un color. Cuanto más abierta la flor, más dominada la palabra en lo que va del año. La última fila y la última columna muestran la campeona de cada línea, y la esquina la campeona general. Tocá una palabra para ir a su próxima semana de evaluación.</p>
         <div class="board-scroll"><div class="board" id="board"></div></div>
         <div class="board-legend" id="boardLegend"></div>
+      </div>
+    </details>
+
+    <details class="fold" id="diaryFold">
+      <summary><svg class="ico"><use href="#i-pen"/></svg>Diario, agenda y recordatorio<svg class="ico chev"><use href="#i-down"/></svg></summary>
+      <div class="fold-body">
+        <div class="field-label">Diario en documento</div>
+        <p class="fold-hint">Reúne tus registros, gratitudes, ánimo y cierres en un documento para leer, imprimir o guardar como PDF.</p>
+        <div class="backup">
+          <button class="btn" id="diaryWeekBtn" type="button">Esta semana</button>
+          <button class="btn" id="diaryYearBtn" type="button">Todo el año</button>
+        </div>
+
+        <div class="field-label">Agenda de Google</div>
+        <p class="fold-hint">Abre tu agenda de Google en el día o la semana que estás viendo.</p>
+        <div class="backup">
+          <a class="btn" id="agendaDay" target="_blank" rel="noopener noreferrer">Agenda del día</a>
+          <a class="btn" id="agendaWeek" target="_blank" rel="noopener noreferrer">Agenda de la semana</a>
+        </div>
+
+        <div class="field-label">Recordatorio diario</div>
+        <p class="fold-hint">Elige la hora y descarga el recordatorio. Al abrir el archivo, tu agenda (Google Calendar, Apple, Outlook) crea un evento que se repite cada día y te avisa para escribir tu registro.</p>
+        <div class="backup">
+          <label class="sr-only" for="remTime">Hora del recordatorio</label>
+          <input type="time" id="remTime" class="sync-input rem-time" value="21:00">
+          <button class="btn" id="remBtn" type="button">Descargar recordatorio</button>
+        </div>
       </div>
     </details>
 
@@ -237,6 +265,25 @@
       <input type="search" id="searchInput" class="grat" placeholder="Una palabra o frase…" autocomplete="off">
     </div>
     <ul class="results" id="searchResults"></ul>
+  </div>
+</div>
+
+<div class="sheet" id="diary" hidden role="dialog" aria-modal="true" aria-labelledby="diaryTitle">
+  <div class="sheet-box">
+    <div class="sheet-head no-print">
+      <div>
+        <div class="sheet-eyebrow" id="diaryEyebrow">Diario</div>
+        <h2 id="diaryTitle">Tu diario</h2>
+      </div>
+      <button class="btn primary" id="diaryClose" type="button">Cerrar</button>
+    </div>
+    <div class="sheet-extra no-print">
+      <div class="backup">
+        <button class="btn" id="diaryPrint" type="button">Imprimir o guardar PDF</button>
+        <button class="btn" id="diaryText" type="button">Descargar texto</button>
+      </div>
+    </div>
+    <article class="diary-doc" id="diaryDoc"></article>
   </div>
 </div>
 

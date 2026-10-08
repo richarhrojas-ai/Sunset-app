@@ -392,3 +392,33 @@ main>section,main>details,#days .card{scroll-margin-top:60px;}
 .days .card .sat-list{flex:1;justify-content:center;margin-bottom:14px;}
 .days .card .record-tab{align-self:center;margin-top:auto;}
 .days .card .record{margin-top:auto;}
+
+/* Agenda, diario y recordatorio */
+.agenda-link{display:inline-block;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi);text-decoration:none;border-bottom:1px solid rgba(255,215,0,.4);padding-bottom:1px;}
+.agenda-link:hover{border-bottom-color:var(--gold-hi);}
+.agenda-link:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;}
+a.btn{text-decoration:none;}
+.rem-time{flex:none;min-width:0;width:130px;}
+.diary-doc{flex:1;overflow-y:auto;padding:18px 24px 28px;color:var(--txt);}
+.diary-doc h1{font-size:26px;font-weight:200;letter-spacing:.06em;margin-bottom:4px;}
+.diary-doc h2{font-size:17px;font-weight:500;letter-spacing:.08em;margin:26px 0 2px;color:var(--wk);}
+.diary-doc h3{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px;}
+.diary-sub{font-size:13px;font-style:italic;color:var(--txt2);margin-bottom:8px;}
+.diary-day{padding:10px 0;border-top:1px solid var(--line);}
+.diary-meta{font-size:12px;color:var(--txt2);margin-bottom:6px;}
+.diary-text{font-size:15.5px;line-height:1.75;white-space:pre-wrap;}
+.diary-grat{margin-top:6px;font-size:14px;font-style:italic;color:var(--txt2);}
+@media print{
+  body>*:not(#diary){display:none!important;}
+  html,body{background:#fff!important;}
+  #diary{position:static!important;display:block!important;background:#fff!important;padding:0!important;}
+  #diary[hidden]{display:none!important;}
+  #diary .sheet-box{display:block!important;height:auto!important;max-width:none!important;background:#fff!important;border:0!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important;}
+  #diary .no-print{display:none!important;}
+  .diary-doc{overflow:visible!important;padding:0!important;color:#000!important;}
+  .diary-doc h1,.diary-doc h2,.diary-doc h3,.diary-text,.diary-meta,.diary-grat,.diary-sub{color:#000!important;}
+  .diary-day{border-color:#bbb!important;break-inside:avoid;}
+  .diary-week{break-before:page;}
+  .diary-week:first-of-type{break-before:auto;}
+}
+#sunday .record-tab{display:flex;width:fit-content;}
