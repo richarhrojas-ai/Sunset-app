@@ -149,6 +149,9 @@ main{padding:18px;display:flex;flex-direction:column;gap:20px;flex:1;}
 .card-text{font-size:15px;font-weight:300;line-height:1.65;}
 
 /* ── DOMINGO ── */
+.verse{margin:-4px 4px 0;font-size:13.5px;font-weight:200;font-style:italic;line-height:1.6;color:var(--txt2);}
+.verse[hidden]{display:none;}
+.verse cite{display:block;margin-top:2px;font-size:10.5px;font-style:normal;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--wk);}
 .intent{margin:-4px 4px 0;font-size:14px;font-weight:300;font-style:italic;line-height:1.6;color:var(--txt2);white-space:pre-line;}
 .intent[hidden]{display:none;}
 .intent.is-edit{font-style:normal;}

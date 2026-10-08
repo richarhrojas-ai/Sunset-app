@@ -745,6 +745,18 @@
     }
   }
 
+  // El versículo de la semana: el @Regalo del lunes, fijo y discreto durante toda la semana.
+  function renderVerse() {
+    const p = $('verse');
+    const raw = String(Y.weeks[viewing - 1].regalo || '').trim();
+    const m = raw.match(/^(.*?)\s+—\s+(.+)$/s);
+    p.textContent = '';
+    p.hidden = !raw;
+    if (!raw) return;
+    p.appendChild(document.createTextNode(m ? m[1] : raw));
+    if (m) p.appendChild(el('cite', null, m[2]));
+  }
+
   // Lo que se anotó como intención la semana pasada, como recordatorio sutil al empezar esta.
   // La semana 1 del primer año cargado no tiene semana anterior: ahí se escribe a mano (clave AAAA/w0/intencion).
   // Si existe el año anterior, la semana 1 continúa la última semana de ese año.
@@ -766,6 +778,7 @@
 
   function render() {
     applyTheme();
+    renderVerse();
     renderIntent();
     renderWeekBar();
     renderDims();
