@@ -1,26 +1,26 @@
 #!/usr/bin/env python3
-"""Convierte la planilla de contenido en data/sunset-2027.js.
+"""Convierte las planillas de contenido anuales en data/sunset-data.js.
 
-Uso:  python3 tools/build_data.py [ruta.xlsx]
+Uso:  python3 tools/build_data.py
 
-Lee las hojas "Frases" (52 semanas), "Preguntas" (49 palabras × 5 preguntas)
+Procesa cada data/planillas/sunset-contenido-AAAA.xlsx. De cada una lee las hojas "Frases" (52 semanas), "Preguntas" (49 palabras × 5 preguntas)
 y, si existe, "Mapeo Puente" (referencia interna de El Puente Relacional),
-valida que las 3 palabras principales de cada semana coincidan con la rotación
-calculada y escribe un único archivo JS que la app carga con <script>.
+ubica las 3 palabras principales de cada semana en el tablero 7×7 (fila de
+inicio y columna/color) y escribe un único archivo JS que la app carga con <script>.
 """
 import json
 import re
-import sys
+from datetime import date
 from pathlib import Path
 
 import openpyxl
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "data" / "sunset-contenido-2027.xlsx"
-OUT = ROOT / "data" / "sunset-2027.js"
+SRC_DIR = ROOT / "data" / "planillas"
+OUT = ROOT / "data" / "sunset-data.js"
 
-YEAR = 2027
-FIRST_SUNDAY = "2027-01-03"
+MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
+          "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 
 DIMENSIONS = ["Regalo de Dios", "Prioridades", "Temas de Interés", "Desafío",
               "Valores", "Estrategia", "Sistema"]
@@ -70,6 +70,28 @@ def parse_image(design):
     return m.group(1).strip() if m else ""
 
 
+def first_sunday(dates, year):
+    """Fecha del domingo de la semana 1. Ej.: "3 al 9 · enero" → 2027-01-03
+    ("27 diciembre al 2 enero" cae en el año anterior)."""
+    day = int(re.search(r"\d+", dates).group())
+    found = [(dates.find(m), i + 1) for i, m in enumerate(MONTHS) if m in dates]
+    month = min(found)[1]
+    if month == 12:
+        year -= 1
+    d = date(year, month, day)
+    assert d.weekday() == 6, f"La semana 1 ({dates}) no empieza en domingo"
+    return d.isoformat()
+
+
+def locate(board, words):
+    """Fila de inicio (phase) y columna de las 3 palabras: board[(phase+k) % 7][col]."""
+    for phase in range(7):
+        for col in range(7):
+            if [board[(phase + k) % 7][col] for k in range(3)] == words:
+                return phase, col
+    return None
+
+
 def read_puente(wb):
     """Hoja opcional: semana → etapa, eje, factor y nota de uso."""
     if "Mapeo Puente" not in wb.sheetnames:
@@ -93,8 +115,11 @@ def read_puente(wb):
     return out
 
 
-def main():
-    wb = openpyxl.load_workbook(SRC, data_only=True)
+def build_year(src):
+    m = re.search(r"(\d{4})", src.stem)
+    assert m, f"{src.name}: el nombre debe incluir el año (sunset-contenido-AAAA.xlsx)"
+    year = int(m.group(1))
+    wb = openpyxl.load_workbook(src, data_only=True)
     puente = read_puente(wb)
 
     # ── Tablero 7×7 ──
@@ -121,10 +146,12 @@ def main():
             continue
         w = int(row[idx["week"]])
         get = lambda k: clean(row[idx[k]])
-        phase, col = (w - 1) // 7, (3 + (w - 1) % 7) % 7
-        expected = [board[(phase + k) % 7][col] for k in range(3)]
         principal = [canon[norm(get(k))] for k in ("p1", "p2", "p3")]
-        assert principal == expected, f"Semana {w}: {principal} ≠ {expected}"
+        found = locate(board, principal)
+        assert found, f"{year} semana {w}: {principal} no forman una columna del tablero"
+        phase, col = found
+        if weeks:
+            assert col == (weeks[-1]["col"] + 1) % 7, f"{year} semana {w}: el color no sigue la rotación"
 
         emoji, _, color_name = get("color").partition(" ")
         design = get("design")
@@ -134,6 +161,7 @@ def main():
         weeks.append({
             "week": w,
             "dates": get("dates"),
+            "phase": phase,
             "col": col,
             "title": get("title"),
             "story": get("story"),
@@ -147,25 +175,33 @@ def main():
             "image": parse_image(design),
             "puente": puente.get(w),
         })
-    assert len(weeks) == 52, f"Se esperaban 52 semanas, hay {len(weeks)}"
-    assert all(col_colors), "Faltan colores de columna"
+    assert weeks and [w["week"] for w in weeks] == list(range(1, len(weeks) + 1)), \
+        f"{year}: las semanas deben ser consecutivas desde 1"
+    assert all(col_colors), f"{year}: faltan colores de columna"
 
-    data = {
-        "year": YEAR,
-        "firstSunday": FIRST_SUNDAY,
+    print(f"{year}: {len(weeks)} semanas, {sum(map(len, board))} palabras, "
+          f"{len(puente)} semanas con Mapeo Puente")
+    return {
+        "year": year,
+        "firstSunday": first_sunday(weeks[0]["dates"], year),
         "dimensions": DIMENSIONS,
         "board": board,
         "colors": col_colors,
         "questions": questions,
         "weeks": weeks,
     }
+
+
+def main():
+    sources = sorted(SRC_DIR.glob("sunset-contenido-*.xlsx"))
+    assert sources, f"No hay planillas en {SRC_DIR.relative_to(ROOT)}"
+    years = [build_year(src) for src in sources]
     OUT.write_text(
-        "// Generado por tools/build_data.py desde " + SRC.name + " — no editar a mano.\n"
-        "window.SUNSET_DATA = " + json.dumps(data, ensure_ascii=False, indent=1) + ";\n",
+        "// Generado por tools/build_data.py desde data/planillas/ — no editar a mano.\n"
+        "window.SUNSET_DATA = " + json.dumps({"years": years}, ensure_ascii=False, indent=1) + ";\n",
         encoding="utf-8",
     )
-    print(f"OK: {len(weeks)} semanas, {sum(map(len, board))} palabras, "
-          f"{len(puente)} semanas con Mapeo Puente → {OUT.relative_to(ROOT)}")
+    print(f"OK → {OUT.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

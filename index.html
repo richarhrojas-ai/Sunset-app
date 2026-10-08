@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>SUNSET 2027 — Richarh Rojas</title>
+<title>SUNSET — Richarh Rojas</title>
 <meta name="theme-color" content="#2a1a08">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SUNSET">
@@ -76,7 +76,7 @@
     </section>
 
     <details class="fold" id="yearFold">
-      <summary><svg class="ico"><use href="#i-grid"/></svg>Progreso del año<svg class="ico chev"><use href="#i-down"/></svg></summary>
+      <summary><svg class="ico"><use href="#i-grid"/></svg><span id="yearTitle">Progreso del año</span><svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
         <p class="fold-hint">Cada casilla es una semana, pintada según cuánto de la autoevaluación respondiste. Tocá una para ir a esa semana.</p>
         <div class="year-grid" id="yearGrid"></div>
@@ -86,7 +86,7 @@
     <details class="fold" id="boardFold">
       <summary><svg class="ico"><use href="#i-board"/></svg>Tablero de maestría<svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
-        <p class="fold-hint">Las 49 palabras: cada fila es una dimensión y cada columna un color. Cuanto más intenso el color, más dominada la palabra en el año. La última fila y la última columna muestran la campeona de cada línea, y la esquina la campeona general. Tocá una palabra para ir a su próxima semana de evaluación.</p>
+        <p class="fold-hint">Las 49 palabras: cada fila es una dimensión y cada columna un color. Cuanto más intenso el color, más dominada la palabra en lo que va del año. La última fila y la última columna muestran la campeona de cada línea, y la esquina la campeona general. Tocá una palabra para ir a su próxima semana de evaluación.</p>
         <div class="board" id="board"></div>
         <div class="board-legend" id="boardLegend"></div>
       </div>
@@ -111,7 +111,7 @@
 
 <div class="modal" id="welcome" hidden role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
   <div class="modal-box">
-    <h2 id="welcomeTitle">Bienvenido a Sunset 2027</h2>
+    <h2 id="welcomeTitle">Bienvenido a Sunset</h2>
     <p>Cada semana tiene un color y 3 palabras activas.</p>
     <ul>
       <li><b>Domingo:</b> el título y la frase de la semana.</li>
@@ -144,7 +144,7 @@
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
 </svg>
 
-<script src="data/sunset-2027.js"></script>
+<script src="data/sunset-data.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

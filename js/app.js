@@ -1,8 +1,8 @@
 (function () {
   'use strict';
 
-  const D = window.SUNSET_DATA;
-  const STORE_KEY = 'sunset_2027_v1';
+  const YEARS = window.SUNSET_DATA.years;
+  const STORE_KEY = 'sunset_v1';
   const DAY_MS = 864e5;
   const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const WEEKDAYS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -41,38 +41,58 @@
     const [r, g, b] = hexToRgb(hex).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
     return 0.2126 * r + 0.7152 * g + 0.0722 * b;
   }
-
-  // ── Calendario ──
-  const START = new Date(D.firstSunday + 'T00:00:00');
   function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
-  function weekOfDate(d) { return Math.floor((startOfDay(d) - START) / DAY_MS / 7 + 1e-9) + 1; }
-  function dateOf(week, day) { const d = new Date(START); d.setDate(d.getDate() + (week - 1) * 7 + day); return d; }
   function fmtDate(d) { return d.getDate() + ' de ' + MONTHS[d.getMonth()]; }
 
+  // ── Años ──
+  // Cada año trae su planilla: semanas, tablero 7×7, preguntas y colores.
+  // Colores: el de la columna, con contraste suficiente sobre fondo claro.
+  // Negro usa negro real; Blanco usa su gris pizarra (el blanco no se lee sobre crema).
+  YEARS.forEach(function (Y) {
+    Y.start = new Date(Y.firstSunday + 'T00:00:00');
+    Y.themes = Y.colors.map(function (c) {
+      const [p0, p1, p2] = c.palette;
+      const strong = luminance(p0) > 0.6 ? p1 : p0;
+      const soft = luminance(p2) > 0.75 && c.name !== 'Negro' ? p2 : '#EFEDE8';
+      return { name: c.name, emoji: c.emoji, strong: strong, mid: p1, soft: soft };
+    });
+    // Semanas en que se evalúa cada palabra.
+    Y.evalWeeks = {};
+    Y.weeks.forEach(function (wk) {
+      activeWords(Y, wk.week).forEach(function (a) { (Y.evalWeeks[a.word] = Y.evalWeeks[a.word] || []).push(wk.week); });
+    });
+  });
+  const yearIndex = (year) => YEARS.findIndex((Y) => Y.year === year);
+  function dateOf(Y, week, day) { const d = new Date(Y.start); d.setDate(d.getDate() + (week - 1) * 7 + day); return d; }
+
+  // Año y semana de una fecha. Antes del primer año → su semana 1; después del último → su última semana.
+  function locateDate(d) {
+    const t = startOfDay(d);
+    for (const Y of YEARS) {
+      const week = Math.floor((t - Y.start) / DAY_MS / 7 + 1e-9) + 1;
+      if (week >= 1 && week <= Y.weeks.length) return { Y: Y, week: week, inRange: true };
+    }
+    const first = YEARS[0], last = YEARS[YEARS.length - 1];
+    return t < first.start ? { Y: first, week: 1, inRange: false, before: true }
+      : { Y: last, week: last.weeks.length, inRange: false };
+  }
+
   // ── Rotación ──
-  // phase = floor((semana-1)/7); col = (3 + (semana-1) % 7) % 7; palabra_k = board[(phase+k) % 7][col]
-  function rotation(week) {
-    const phase = Math.floor((week - 1) / 7);
-    const col = (3 + (week - 1) % 7) % 7;
+  // Cada semana trae su fila de inicio (phase) y columna/color (col): palabra_k = board[(phase+k) % 7][col].
+  // k = 0..2 son las 3 palabras activas; k = 3..6 completan las 7 en juego.
+  function rotation(Y, week) {
+    const wk = Y.weeks[week - 1];
     const words = [];
     for (let k = 0; k < 7; k++) {
-      const dim = (phase + k) % 7;
-      words.push({ word: D.board[dim][col], dim: dim, col: col });
+      const dim = (wk.phase + k) % 7;
+      words.push({ word: Y.board[dim][wk.col], dim: dim, col: wk.col });
     }
     return words;
   }
-  function activeWords(week) { return rotation(week).slice(0, 3); }
-
-  // Colores de la semana: el color de la columna, con contraste suficiente sobre fondo claro.
-  // Negro usa negro real; Blanco usa su gris pizarra (el blanco no se lee sobre crema).
-  const THEMES = D.colors.map(function (c) {
-    const [p0, p1, p2] = c.palette;
-    const strong = luminance(p0) > 0.6 ? p1 : p0;
-    const soft = luminance(p2) > 0.75 && c.name !== 'Negro' ? p2 : '#EFEDE8';
-    return { name: c.name, emoji: c.emoji, strong: strong, mid: p1, soft: soft };
-  });
+  function activeWords(Y, week) { return rotation(Y, week).slice(0, 3); }
 
   // ── Estado ──
+  // answers[año]['w' + semana][palabra] = [5 respuestas de 1 a 5, o null]
   let state = { answers: {}, welcomed: false };
   try {
     const raw = localStorage.getItem(STORE_KEY);
@@ -81,58 +101,56 @@
   function save() {
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* sin persistencia */ }
   }
-  function getAnswers(week, word) {
-    const w = state.answers['w' + week];
+  function getAnswers(Y, week, word) {
+    const y = state.answers[Y.year];
+    const w = y && y['w' + week];
     return (w && w[word]) || [null, null, null, null, null];
   }
-  function setAnswer(week, word, qi, value) {
-    const key = 'w' + week;
-    state.answers[key] = state.answers[key] || {};
-    const a = getAnswers(week, word).slice();
+  function setAnswer(Y, week, word, qi, value) {
+    const y = (state.answers[Y.year] = state.answers[Y.year] || {});
+    const w = (y['w' + week] = y['w' + week] || {});
+    const a = getAnswers(Y, week, word).slice();
     a[qi] = a[qi] === value ? null : value;
-    state.answers[key][word] = a;
+    w[word] = a;
     save();
   }
 
   // Puntaje de una palabra en una semana: suma / 25 (las no respondidas cuentan 0).
-  function wordScore(week, word) {
-    return getAnswers(week, word).reduce((s, v) => s + (v || 0), 0) / 25;
+  function wordScore(Y, week, word) {
+    return getAnswers(Y, week, word).reduce((s, v) => s + (v || 0), 0) / 25;
   }
-  function wordAnswered(week, word) {
-    return getAnswers(week, word).filter((v) => v != null).length;
+  function wordAnswered(Y, week, word) {
+    return getAnswers(Y, week, word).filter((v) => v != null).length;
   }
-  function weekScore(week) {
-    return activeWords(week).reduce((s, w) => s + wordScore(week, w.word), 0) / 3;
+  function weekScore(Y, week) {
+    return activeWords(Y, week).reduce((s, w) => s + wordScore(Y, week, w.word), 0) / 3;
   }
-  function weekCompletion(week) {
-    return activeWords(week).reduce((s, w) => s + wordAnswered(week, w.word), 0) / 15;
+  function weekCompletion(Y, week) {
+    return activeWords(Y, week).reduce((s, w) => s + wordAnswered(Y, week, w.word), 0) / 15;
   }
-
-  // Semanas en que se evalúa cada palabra.
-  const EVAL_WEEKS = {};
-  for (let w = 1; w <= 52; w++) {
-    activeWords(w).forEach(function (a) { (EVAL_WEEKS[a.word] = EVAL_WEEKS[a.word] || []).push(w); });
-  }
-  // Maestría acumulada: promedio del puntaje en las semanas en que la palabra tuvo respuestas.
-  function mastery(word) {
-    const scored = (EVAL_WEEKS[word] || []).filter((w) => wordAnswered(w, word) > 0);
+  // Maestría acumulada en el año: promedio del puntaje en las semanas en que la palabra tuvo respuestas.
+  function mastery(Y, word) {
+    const scored = (Y.evalWeeks[word] || []).filter((w) => wordAnswered(Y, w, word) > 0);
     if (!scored.length) return 0;
-    return scored.reduce((s, w) => s + wordScore(w, word), 0) / scored.length;
+    return scored.reduce((s, w) => s + wordScore(Y, w, word), 0) / scored.length;
   }
-  function nextEvalWeek(word, from) {
-    const list = EVAL_WEEKS[word] || [];
+  function nextEvalWeek(Y, word, from) {
+    const list = Y.evalWeeks[word] || [];
     return list.find((w) => w >= from) || list[0];
   }
 
   // ── Vista ──
   const now = new Date();
-  const CURRENT_WEEK = weekOfDate(now);
-  const IN_YEAR = CURRENT_WEEK >= 1 && CURRENT_WEEK <= 52;
-  let viewing = Math.min(52, Math.max(1, CURRENT_WEEK));
+  const TODAY = locateDate(now);
+  let Y = TODAY.Y;
+  let viewing = TODAY.week;
   let openWord = null;
 
-  function applyTheme(week) {
-    const t = THEMES[D.weeks[week - 1].col];
+  const isCurrent = () => TODAY.inRange && Y === TODAY.Y && viewing === TODAY.week;
+  const todayIndex = () => (isCurrent() ? now.getDay() : -1);
+
+  function applyTheme() {
+    const t = Y.themes[Y.weeks[viewing - 1].col];
     const root = document.documentElement.style;
     root.setProperty('--wk', t.strong);
     root.setProperty('--wk-mid', t.mid);
@@ -142,35 +160,34 @@
   function renderHeader() {
     const h = $('headerDate');
     h.textContent = WEEKDAYS[now.getDay()] + ' ' + fmtDate(now);
-    const sub = el('small', null, IN_YEAR ? 'Semana ' + CURRENT_WEEK + ' de 52'
-      : CURRENT_WEEK < 1 ? 'Sunset ' + D.year + ' empieza el ' + fmtDate(START) : 'Sunset ' + D.year + ' terminado');
-    h.appendChild(sub);
+    const sub = TODAY.inRange ? 'Sunset ' + TODAY.Y.year + ' · semana ' + TODAY.week + ' de ' + TODAY.Y.weeks.length
+      : TODAY.before ? 'Sunset ' + TODAY.Y.year + ' empieza el ' + fmtDate(TODAY.Y.start)
+        : 'Falta cargar la planilla del año siguiente';
+    h.appendChild(el('small', null, sub));
   }
 
   function renderWeekBar() {
-    const wk = D.weeks[viewing - 1];
-    const t = THEMES[wk.col];
-    $('weekNum').textContent = 'Semana ' + viewing;
+    const wk = Y.weeks[viewing - 1];
+    const t = Y.themes[wk.col];
+    const yi = yearIndex(Y.year);
+    $('weekNum').textContent = 'Semana ' + viewing + (YEARS.length > 1 ? ' · ' + Y.year : '');
     $('weekSub').textContent = t.emoji + ' ' + t.name + ' · ' + wk.dates;
-    $('prevWeek').disabled = viewing <= 1;
-    $('nextWeek').disabled = viewing >= 52;
-    $('todayBtn').hidden = !IN_YEAR || viewing === CURRENT_WEEK;
-  }
-
-  function todayIndex() {
-    return viewing === CURRENT_WEEK ? now.getDay() : -1;
+    $('prevWeek').disabled = viewing <= 1 && yi === 0;
+    $('nextWeek').disabled = viewing >= Y.weeks.length && yi === YEARS.length - 1;
+    $('todayBtn').hidden = !TODAY.inRange || isCurrent();
+    $('yearTitle').textContent = 'Progreso ' + Y.year;
   }
 
   function dayHead(day, label, iconName) {
     const head = el('div', 'card-day');
     head.appendChild(icon(iconName));
-    head.appendChild(document.createTextNode(WEEKDAYS[day] + ' ' + dateOf(viewing, day).getDate() + ' · ' + label));
+    head.appendChild(document.createTextNode(WEEKDAYS[day] + ' ' + dateOf(Y, viewing, day).getDate() + ' · ' + label));
     if (todayIndex() === day) head.appendChild(el('span', 'badge', 'Hoy'));
     return head;
   }
 
   function renderSunday() {
-    const wk = D.weeks[viewing - 1];
+    const wk = Y.weeks[viewing - 1];
     const card = $('sunday');
     card.innerHTML = '';
     card.classList.toggle('is-today', todayIndex() === 0);
@@ -200,7 +217,7 @@
   }
 
   function renderDays() {
-    const wk = D.weeks[viewing - 1];
+    const wk = Y.weeks[viewing - 1];
     const wrap = $('days');
     wrap.innerHTML = '';
     DAY_CARDS.forEach(function (d) {
@@ -219,15 +236,15 @@
   }
 
   function renderEvaluation() {
-    const score = weekScore(viewing);
-    const done = weekCompletion(viewing);
+    const score = weekScore(Y, viewing);
+    const done = weekCompletion(Y, viewing);
     const pct = $('evalPct');
     pct.textContent = Math.round(score * 100);
     pct.appendChild(el('small', null, '%'));
     $('evalPctLabel').textContent = done === 0 ? 'Sin responder todavía'
       : done === 1 ? 'Autoevaluación completa' : Math.round(done * 15) + ' de 15 preguntas respondidas';
 
-    const rot = rotation(viewing);
+    const rot = rotation(Y, viewing);
     const inPlay = $('inPlay');
     inPlay.innerHTML = '';
     inPlay.appendChild(document.createTextNode('En juego esta semana: '));
@@ -242,11 +259,11 @@
       const c = el('button', 'chip');
       c.setAttribute('aria-expanded', String(openWord === r.word));
       const label = el('span');
-      label.appendChild(el('span', 'chip-dim', D.dimensions[r.dim]));
+      label.appendChild(el('span', 'chip-dim', Y.dimensions[r.dim]));
       label.appendChild(document.createElement('br'));
       label.appendChild(document.createTextNode(r.word));
       c.appendChild(label);
-      c.appendChild(el('span', 'chip-pct', Math.round(wordScore(viewing, r.word) * 100) + '%'));
+      c.appendChild(el('span', 'chip-pct', Math.round(wordScore(Y, viewing, r.word) * 100) + '%'));
       c.addEventListener('click', function () {
         openWord = openWord === r.word ? null : r.word;
         renderEvaluation();
@@ -257,8 +274,8 @@
     const qs = $('questions');
     qs.innerHTML = '';
     if (!openWord) return;
-    const answers = getAnswers(viewing, openWord);
-    (D.questions[openWord] || []).forEach(function (q, qi) {
+    const answers = getAnswers(Y, viewing, openWord);
+    (Y.questions[openWord] || []).forEach(function (q, qi) {
       const box = el('div', 'q');
       box.appendChild(el('p', 'q-text', q));
       const scale = el('div', 'q-scale');
@@ -267,7 +284,7 @@
         b.setAttribute('aria-pressed', String(answers[qi] === v));
         b.setAttribute('aria-label', v + ' de 5');
         b.addEventListener('click', function () {
-          setAnswer(viewing, openWord, qi, v);
+          setAnswer(Y, viewing, openWord, qi, v);
           renderEvaluation();
           renderYear();
           renderBoard();
@@ -286,9 +303,9 @@
   function renderYear() {
     const grid = $('yearGrid');
     grid.innerHTML = '';
-    D.weeks.forEach(function (wk) {
-      const t = THEMES[wk.col];
-      const done = weekCompletion(wk.week);
+    Y.weeks.forEach(function (wk) {
+      const t = Y.themes[wk.col];
+      const done = weekCompletion(Y, wk.week);
       const b = el('button', 'yw', String(wk.week));
       b.title = 'Semana ' + wk.week + ' · ' + wk.dates + ' · ' + Math.round(done * 100) + '% respondido';
       if (done > 0) {
@@ -297,8 +314,8 @@
         if (done > 0.5) b.style.color = '#fff';
       }
       if (wk.week === viewing) b.classList.add('is-viewing');
-      if (wk.week === CURRENT_WEEK) b.classList.add('is-current');
-      b.addEventListener('click', function () { goTo(wk.week); });
+      if (TODAY.inRange && Y === TODAY.Y && wk.week === TODAY.week) b.classList.add('is-current');
+      b.addEventListener('click', function () { goTo(Y, wk.week); });
       grid.appendChild(b);
     });
   }
@@ -306,7 +323,7 @@
   function champion(words) {
     let best = null;
     words.forEach(function (w) {
-      const m = mastery(w);
+      const m = mastery(Y, w);
       if (m > 0 && (!best || m > best.m)) best = { word: w, m: m };
     });
     return best;
@@ -326,9 +343,9 @@
     for (let r = 0; r < 8; r++) {
       for (let c = 0; c < 8; c++) {
         if (r < 7 && c < 7) {
-          const word = D.board[r][c];
-          const m = mastery(word);
-          const t = THEMES[c];
+          const word = Y.board[r][c];
+          const m = mastery(Y, word);
+          const t = Y.themes[c];
           const sq = el('button', 'sq ' + ((r + c) % 2 ? 'dark' : 'light'));
           const fill = el('span', 'fill');
           fill.style.background = rgba(t.strong, m * 0.9);
@@ -337,34 +354,33 @@
           if (m > 0) lbl.appendChild(el('small', null, Math.round(m * 100) + '%'));
           if (m > 0.55) sq.style.color = '#fff';
           sq.appendChild(lbl);
-          const next = nextEvalWeek(word, viewing);
-          sq.title = word + ' · ' + D.dimensions[r] + ' · ' + t.name + ' · próxima evaluación: semana ' + next;
-          sq.addEventListener('click', function () { goTo(next); });
+          const next = nextEvalWeek(Y, word, viewing);
+          sq.title = word + ' · ' + Y.dimensions[r] + ' · ' + t.name + ' · próxima evaluación: semana ' + next;
+          sq.addEventListener('click', function () { goTo(Y, next); });
           board.appendChild(sq);
         } else if (r < 7) {
-          board.appendChild(champCell(champion(D.board[r]), false));
+          board.appendChild(champCell(champion(Y.board[r]), false));
         } else if (c < 7) {
-          board.appendChild(champCell(champion(D.board.map((row) => row[c])), false));
+          board.appendChild(champCell(champion(Y.board.map((row) => row[c])), false));
         } else {
-          board.appendChild(champCell(champion([].concat.apply([], D.board)), true));
+          board.appendChild(champCell(champion([].concat.apply([], Y.board)), true));
         }
       }
     }
     const legend = $('boardLegend');
-    if (!legend.childElementCount) {
-      THEMES.forEach(function (t) {
-        const s = el('span');
-        const i = el('i');
-        i.style.background = t.strong;
-        s.appendChild(i);
-        s.appendChild(document.createTextNode(t.name));
-        legend.appendChild(s);
-      });
-    }
+    legend.innerHTML = '';
+    Y.themes.forEach(function (t) {
+      const s = el('span');
+      const i = el('i');
+      i.style.background = t.strong;
+      s.appendChild(i);
+      s.appendChild(document.createTextNode(t.name));
+      legend.appendChild(s);
+    });
   }
 
   function render() {
-    applyTheme(viewing);
+    applyTheme();
     renderWeekBar();
     renderSunday();
     renderDays();
@@ -373,11 +389,20 @@
     renderBoard();
   }
 
-  function goTo(week) {
-    viewing = Math.min(52, Math.max(1, week));
+  function goTo(year, week) {
+    Y = year;
+    viewing = Math.min(Y.weeks.length, Math.max(1, week));
     openWord = null;
     render();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  // Avanza o retrocede una semana, pasando de un año al otro.
+  function step(delta) {
+    const yi = yearIndex(Y.year);
+    const target = viewing + delta;
+    if (target < 1 && yi > 0) goTo(YEARS[yi - 1], YEARS[yi - 1].weeks.length);
+    else if (target > Y.weeks.length && yi < YEARS.length - 1) goTo(YEARS[yi + 1], 1);
+    else goTo(Y, target);
   }
 
   // ── Toast ──
@@ -392,11 +417,11 @@
 
   // ── Respaldo ──
   function exportData() {
-    const payload = { app: 'sunset', year: D.year, exported: new Date().toISOString(), answers: state.answers };
+    const payload = { app: 'sunset', version: 1, exported: new Date().toISOString(), answers: state.answers };
     const blob = new Blob([JSON.stringify(payload, null, 1)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'sunset-' + D.year + '-progreso-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.download = 'sunset-progreso-' + new Date().toISOString().slice(0, 10) + '.json';
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -440,9 +465,9 @@
   }
 
   // ── Eventos ──
-  $('prevWeek').addEventListener('click', () => goTo(viewing - 1));
-  $('nextWeek').addEventListener('click', () => goTo(viewing + 1));
-  $('todayBtn').addEventListener('click', () => goTo(CURRENT_WEEK));
+  $('prevWeek').addEventListener('click', () => step(-1));
+  $('nextWeek').addEventListener('click', () => step(1));
+  $('todayBtn').addEventListener('click', () => goTo(TODAY.Y, TODAY.week));
   $('exportBtn').addEventListener('click', exportData);
   $('importBtn').addEventListener('click', () => $('importFile').click());
   $('importFile').addEventListener('change', function () {
@@ -451,8 +476,8 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.target.closest('input,textarea') || !$('welcome').hidden) return;
-    if (e.key === 'ArrowLeft') goTo(viewing - 1);
-    if (e.key === 'ArrowRight') goTo(viewing + 1);
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
   });
 
   if (!state.welcomed) {
