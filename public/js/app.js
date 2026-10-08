@@ -222,6 +222,16 @@
     return row;
   }
 
+  // Ánimo de una semana: valor por día (D a S), promedio y cuántos días se registraron.
+  const DAY_INITIALS = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
+  function weekMood(YY, w) {
+    const vals = [0, 1, 2, 3, 4, 5, 6].map((d) => getV(k(YY, w, 'm' + d), null));
+    const used = vals.filter((v) => v != null);
+    return { vals: vals, n: used.length, avg: used.length ? used.reduce((s, v) => s + v, 0) / used.length : null };
+  }
+  const fmt1 = (x) => (Math.round(x * 10) / 10).toString().replace('.', ',');
+  const refreshMood = function () { renderClosing(); renderYear(); };
+
   // Registro del día. Hoy: cuadro para escribir unas líneas, con "Ampliar" para escribir largo.
   // Otros días: solo una pestaña que abre el registro; lo escrito no se ve en la tarjeta.
   function dayRecord(day) {
@@ -233,7 +243,7 @@
       const gr = noteField(k(Y, viewing, 'g' + day), 'Hoy agradezco…', 1);
       gr.classList.add('grat-note');
       box.appendChild(gr);
-      box.appendChild(moodRow(day));
+      box.appendChild(moodRow(day, refreshMood));
       const expand = el('button', 'expand-btn');
       expand.appendChild(icon('expand'));
       expand.appendChild(document.createTextNode('Ampliar'));
@@ -308,6 +318,8 @@
     document.documentElement.classList.remove('no-scroll');
     renderSunday();
     renderDays();
+    renderClosing();
+    renderYear();
     const back = document.querySelector('.record-tab[data-day="' + day + '"]') || document.querySelector('.expand-btn');
     if (back) back.focus({ preventScroll: true });
   }
@@ -513,6 +525,37 @@
     qs.appendChild(noteField(k(Y, viewing, 'c/' + word), 'Comentario sobre ' + word + '…', 3));
   }
 
+  // Siete barras (domingo a sábado) con el ánimo de cada día y el promedio de la semana.
+  function moodChart(YY, w) {
+    const m = weekMood(YY, w);
+    const box = el('div', 'mood-week');
+    if (!m.n) {
+      box.appendChild(el('p', 'field-hint', 'Todavía no registraste tu ánimo esta semana. Se marca con los cinco puntos del registro de cada día.'));
+      return box;
+    }
+    const bars = el('div', 'mood-bars');
+    bars.setAttribute('role', 'img');
+    bars.setAttribute('aria-label', 'Ánimo por día: ' + m.vals.map((v, d) => WEEKDAYS[d] + ' ' + (v == null ? 'sin registrar' : v + ' de 5')).join(', '));
+    m.vals.forEach(function (v, d) {
+      const col = el('div', 'mood-col');
+      const bar = el('div', 'mood-bar' + (v == null ? ' is-empty' : ''));
+      const fill = el('i');
+      fill.style.height = v == null ? '0%' : (v * 20) + '%';
+      bar.appendChild(fill);
+      col.appendChild(bar);
+      col.appendChild(el('span', null, DAY_INITIALS[d]));
+      bars.appendChild(col);
+    });
+    box.appendChild(bars);
+    const known = m.vals.map((v, d) => ({ v: v, d: d })).filter((x) => x.v != null);
+    const hi = known.reduce((b, x) => (x.v > b.v ? x : b), known[0]);
+    const lo = known.reduce((b, x) => (x.v < b.v ? x : b), known[0]);
+    let text = 'Promedio ' + fmt1(m.avg) + ' de 5 · ' + m.n + ' de 7 días registrados';
+    if (m.n > 1 && hi.v !== lo.v) text += ' · mejor día: ' + WEEKDAYS[hi.d] + ' · más bajo: ' + WEEKDAYS[lo.d];
+    box.appendChild(el('p', 'mood-note', text));
+    return box;
+  }
+
   function renderClosing() {
     const wrap = $('closing');
     wrap.innerHTML = '';
@@ -524,6 +567,9 @@
     wrap.appendChild(el('p', 'field-hint', cm.complete
       ? 'Las 7 palabras ya pasaron por evaluación. La maestría de ' + Y.themes[col].name + ' es ' + cm.leader.word + ' (' + Math.round(cm.leader.m * 100) + '%), la de mejor calificación.'
       : cm.done + ' de 7 palabras evaluadas. Cuando pasen las 7, la de mejor calificación queda como maestría (' + cname + ').' + lead));
+
+    wrap.appendChild(el('div', 'field-label', 'Ánimo de la semana'));
+    wrap.appendChild(moodChart(Y, viewing));
 
     wrap.appendChild(el('div', 'field-label', '¿Qué funcionó? ¿Qué mejorar?'));
     wrap.appendChild(noteField(k(Y, viewing, 'funciono'), 'Mirando la semana completa…', 3));
@@ -560,6 +606,29 @@
         b.appendChild(el('span', null, String(wk.week)));
         if (wk.week === viewing) b.classList.add('is-viewing');
         if (TODAY.inRange && Y === TODAY.Y && wk.week === TODAY.week) b.classList.add('is-current');
+        b.addEventListener('click', function () { goTo(Y, wk.week); });
+        row.appendChild(b);
+      });
+      wrap.appendChild(row);
+    }
+    wrap.appendChild(el('div', 'field-label mood-year-label', 'Ánimo semana a semana'));
+    wrap.appendChild(el('p', 'field-hint', 'Cada barra es el promedio de una semana (más alta = mejor ánimo, de 1 bajo a 5 genial) con el color de esa semana. Tocá una para ir a ella.'));
+    for (let start = 0; start < Y.weeks.length; start += per) {
+      const row = el('div', 'mood-year');
+      row.style.setProperty('--per', per);
+      Y.weeks.slice(start, start + per).forEach(function (wk) {
+        const m = weekMood(Y, wk.week);
+        const b = el('button', 'my' + (wk.week === viewing ? ' is-viewing' : ''));
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Semana ' + wk.week + ': ' + (m.n ? 'ánimo promedio ' + fmt1(m.avg) + ' de 5' : 'sin ánimo registrado'));
+        b.title = 'Semana ' + wk.week + (m.n ? ' · ánimo ' + fmt1(m.avg) + '/5' : ' · sin registrar');
+        const bar = el('div', 'mood-bar' + (m.n ? '' : ' is-empty'));
+        const fill = el('i');
+        fill.style.height = m.n ? (m.avg * 20) + '%' : '0%';
+        fill.style.background = treeOf(Y.themes[wk.col].name).ink[1];
+        bar.appendChild(fill);
+        b.appendChild(bar);
+        b.appendChild(el('span', null, String(wk.week)));
         b.addEventListener('click', function () { goTo(Y, wk.week); });
         row.appendChild(b);
       });
