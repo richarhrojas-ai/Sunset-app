@@ -245,7 +245,7 @@
     tab.dataset.day = day;
     tab.setAttribute('aria-label', 'Abrir el registro del ' + dayName + (words ? ', ' + words + ' palabras' : ', vacío'));
     tab.appendChild(icon('pen'));
-    tab.appendChild(el('span', null, words ? 'Registro' : 'Agregar registro'));
+    tab.appendChild(el('span', null, words ? 'Registro' : 'Registro, ánimo y gratitud'));
     if (words) tab.appendChild(el('span', 'count', words + (words === 1 ? ' palabra' : ' palabras')));
     tab.appendChild(icon('right', 'go'));
     tab.addEventListener('click', () => openEditor(day));
