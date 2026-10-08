@@ -285,7 +285,7 @@
     const wrap = $('days');
     wrap.innerHTML = '';
     DAY_CARDS.forEach(function (d) {
-      const card = el('article', 'card');
+      const card = el('article', 'card day-' + d.day);
       card.classList.toggle('is-today', todayIndex() === d.day);
       card.appendChild(dayHead(d.day, d.label, d.icon));
       if (d.key === 'sabado') {
@@ -304,8 +304,8 @@
     const score = weekScore(Y, viewing);
     const done = weekCompletion(Y, viewing);
     const pct = $('evalPct');
-    pct.textContent = Math.round(score * 100);
-    pct.appendChild(el('small', null, '%'));
+    if (done === 0) pct.textContent = '—';
+    else { pct.textContent = Math.round(score * 100); pct.appendChild(el('small', null, '%')); }
     $('evalPctLabel').textContent = done === 0 ? 'Sin responder todavía'
       : done === 1 ? 'Autoevaluación completa' : Math.round(done * 15) + ' de 15 preguntas respondidas';
 
@@ -703,6 +703,7 @@
     });
   }
 
+  window.SunsetTree.logo($('logoTree'));
   renderHeader();
   renderSyncPanel();
   render();

@@ -23,17 +23,7 @@
       <div class="logo">
         <div class="logo-sun" aria-hidden="true">
           <div class="logo-stripes"><span></span><span></span><span></span><span></span></div>
-          <svg class="logo-tree" viewBox="0 0 90 78" fill="none">
-            <rect x="41" y="48" width="8" height="30" rx="3" fill="#6a3418"/>
-            <path d="M45 70 Q34 75 24 78M45 70 Q56 75 66 78" stroke="#6a3418" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M41 48 C36 40 28 30 20 22M49 48 C54 40 62 30 70 22" stroke="#5a2c14" stroke-width="3" stroke-linecap="round"/>
-            <g fill="#4a2010">
-              <ellipse cx="45" cy="28" rx="20" ry="16"/><ellipse cx="24" cy="22" rx="14" ry="11"/>
-              <ellipse cx="66" cy="22" rx="14" ry="11"/><ellipse cx="45" cy="16" rx="17" ry="13"/>
-              <ellipse cx="32" cy="10" rx="11" ry="9"/><ellipse cx="58" cy="10" rx="11" ry="9"/>
-              <ellipse cx="45" cy="5" rx="13" ry="9"/>
-            </g>
-          </svg>
+          <canvas class="logo-tree" id="logoTree"></canvas>
         </div>
         <div>
           <div class="logo-word">Sunset</div>
@@ -71,6 +61,7 @@
       <div class="section-label">Autoevaluación</div>
       <div class="eval-head">
         <div>
+          <div class="eval-pct-label">Promedio de la semana</div>
           <div class="eval-pct" id="evalPct"></div>
           <div class="eval-pct-label" id="evalPctLabel"></div>
         </div>

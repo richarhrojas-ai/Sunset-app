@@ -325,5 +325,25 @@
     return svg;
   }
 
-  window.SunsetTree = { TREES: TREES, render: render, flowerSVG: flowerSVG };
+  // Árbol del logo: la silueta oscura, del mismo tamaño que el árbol original del logo.
+  function logo(canvas) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    const size = canvas.clientWidth;
+    if (!size) return;
+    canvas.width = canvas.height = Math.round(size * dpr);
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    const form = Object.assign({}, FORMS.silhouette, { depth: 5 });
+    const rand = rng(7);
+    const len = size * 0.2;
+    const tips = growTree(ctx, rand, size / 2, size * 0.98, len, form, '#1a0c06');
+    tips.forEach(function (t) {
+      for (let i = 0; i < 5; i++) {
+        drawLeaf(ctx, t[0] + (rand() - 0.5) * len * 0.55, t[1] + (rand() - 0.5) * len * 0.35, len * (0.14 + rand() * 0.1),
+          i % 2 ? '#22120a' : '#140904', rand() * Math.PI);
+      }
+    });
+  }
+
+  window.SunsetTree = { TREES: TREES, render: render, flowerSVG: flowerSVG, logo: logo };
 })();
