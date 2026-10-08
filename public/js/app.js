@@ -705,6 +705,8 @@
     text.onclick = toCard;
     text.style.cursor = day < 0 ? 'default' : 'pointer';
     meter.innerHTML = '';
+    meter.classList.remove('is-week');
+    $('today').classList.toggle('is-phrase', day <= 0);
     if (day >= 0) {
       const v = getV(pKey(day), null);
       const head = el('div', 'meter-head');
@@ -731,15 +733,15 @@
       meter.appendChild(head); meter.appendChild(input);
     } else {
       const avg = weekFulfilment();
-      const head = el('div', 'meter-head');
-      head.appendChild(el('span', null, 'Cumplimiento de la semana'));
-      head.appendChild(el('output', null, avg == null ? '—' : avg + '%'));
-      meter.appendChild(head);
+      meter.classList.add('is-week');
+      const row = el('div', 'meter-week');
+      row.appendChild(el('span', null, 'Cumplimiento de la semana'));
       const bar = el('div', 'meter-bar');
       const fill = el('i'); fill.style.width = (avg || 0) + '%';
       bar.appendChild(fill);
-      meter.appendChild(bar);
-      meter.appendChild(el('p', 'meter-note', avg == null ? 'Se registra día a día desde la tarjeta de hoy.' : 'Promedio de los días que registraste.'));
+      row.appendChild(bar);
+      row.appendChild(el('output', null, avg == null ? '—' : avg + '%'));
+      meter.appendChild(row);
     }
   }
 
