@@ -826,6 +826,7 @@
     applyTheme();
     renderVerse();
     renderAgenda();
+    renderAgo();
     renderIntent();
     renderWeekBar();
     renderDims();
@@ -912,6 +913,46 @@
   // ── Diario en documento, agenda de Google y recordatorio diario ──
   const gcal = (mode, d) => 'https://calendar.google.com/calendar/r/' + mode + '/' + d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
   const fullDate = (d) => WEEKDAYS[d.getDay()] + ' ' + d.getDate() + ' de ' + MONTHS[d.getMonth()] + ' de ' + d.getFullYear();
+  // «Hace un año»: lo escrito en esta misma semana del año anterior (claves AAAA-1/wN/...).
+  function yearAgo(YY, week) {
+    const y = YY.year - 1;
+    const pre = y + '/w' + week + '/';
+    const prevY = YEARS[yearIndex(y)];
+    const days = [];
+    for (let d = 0; d < 7; d++) {
+      const rec = String(getV(pre + 'd' + d, '')).trim();
+      const grat = String(getV(pre + 'g' + d, '')).trim();
+      const mood = getV(pre + 'm' + d, null);
+      if (!rec && !grat && mood == null) continue;
+      days.push({ d: d, rec: rec, grat: grat, mood: mood, date: prevY ? dateOf(prevY, week, d) : null });
+    }
+    const funciono = String(getV(pre + 'funciono', '')).trim();
+    const intencion = String(getV(pre + 'intencion', '')).trim();
+    return { year: y, days: days, funciono: funciono, intencion: intencion, any: days.length > 0 || !!funciono || !!intencion };
+  }
+  function renderAgo() {
+    const box = $('ago');
+    const g = yearAgo(Y, viewing);
+    box.textContent = '';
+    box.hidden = !g.any;
+    box.open = false;
+    if (!g.any) return;
+    const sum = el('summary', null, 'Hace un año · esta misma semana (' + g.year + ')');
+    box.appendChild(sum);
+    const body = el('div', 'ago-body');
+    g.days.forEach(function (x) {
+      const item = el('div', 'ago-day');
+      const when = WEEKDAYS[x.d] + (x.date ? ' ' + x.date.getDate() + ' de ' + MONTHS[x.date.getMonth()] : '');
+      item.appendChild(el('h3', null, when + (x.mood != null ? ' · ánimo ' + x.mood + '/5' : '')));
+      if (x.rec) item.appendChild(el('p', null, x.rec));
+      if (x.grat) item.appendChild(el('p', 'ago-grat', 'Gratitud: ' + x.grat));
+      body.appendChild(item);
+    });
+    if (g.funciono) { const i = el('div', 'ago-day'); i.appendChild(el('h3', null, 'Qué funcionó y qué mejorar')); i.appendChild(el('p', null, g.funciono)); body.appendChild(i); }
+    if (g.intencion) { const i = el('div', 'ago-day'); i.appendChild(el('h3', null, 'Lo que quería para la semana siguiente')); i.appendChild(el('p', null, g.intencion)); body.appendChild(i); }
+    box.appendChild(body);
+  }
+
   function renderAgenda() {
     const wk = Y.weeks[viewing - 1];
     const day = todayIndex();

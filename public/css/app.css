@@ -394,7 +394,8 @@ main>section,main>details,#days .card{scroll-margin-top:60px;}
 .days .card .record{margin-top:auto;}
 
 /* Agenda, diario y recordatorio */
-.agenda-link{display:inline-block;margin-top:10px;font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi);text-decoration:none;border-bottom:1px solid rgba(255,215,0,.4);padding-bottom:1px;}
+.agenda-row{margin:-6px 4px 0;}
+.agenda-link{display:inline-block;margin-top:0;font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi);text-decoration:none;border-bottom:1px solid rgba(255,215,0,.4);padding-bottom:1px;}
 .agenda-link:hover{border-bottom-color:var(--gold-hi);}
 .agenda-link:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;}
 a.btn{text-decoration:none;}
@@ -422,3 +423,14 @@ a.btn{text-decoration:none;}
   .diary-week:first-of-type{break-before:auto;}
 }
 #sunday .record-tab{display:flex;width:fit-content;}
+
+.ago{margin:-4px 0 0;border:1px solid var(--line);border-radius:14px;background:var(--glass2);}
+.ago[hidden]{display:none;}
+.ago>summary{cursor:pointer;list-style:none;padding:11px 16px;font-size:11.5px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--txt2);}
+.ago>summary::-webkit-details-marker{display:none;}
+.ago>summary:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;border-radius:12px;}
+.ago-body{padding:0 16px 14px;display:flex;flex-direction:column;gap:10px;}
+.ago-day{border-top:1px solid var(--line);padding-top:10px;}
+.ago-day h3{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--wk);margin-bottom:4px;}
+.ago-day p{font-size:14.5px;line-height:1.65;color:var(--txt);white-space:pre-line;}
+.ago-day .ago-grat{font-style:italic;color:var(--txt2);margin-top:3px;}
