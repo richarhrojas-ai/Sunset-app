@@ -18,8 +18,8 @@
       flowers: ['#FFFFFF', '#FBF4F6', '#F3DCE6', '#FFF6E8'] },
     Verde: { ink: ['#4E9A3B', '#86C25A'], name: 'Árbol en hoja nueva', sci: '', form: 'leafy',
       flowers: ['#4E9A3B', '#79B84E', '#A9D46F', '#2F6E2C'] },
-    Negro: { ink: ['#2A2420', '#B8860B'], name: 'Silueta al atardecer', sci: '', form: 'silhouette',
-      flowers: ['#E8B04A', '#C8900A'] },
+    Negro: { ink: ['#2A2420', '#5A4C42'], name: 'Silueta al atardecer', sci: '', form: 'silhouette',
+      flowers: ['#0D0705', '#140B07', '#1C120C', '#24170F'] },
   };
 
   const FORMS = {
@@ -29,7 +29,7 @@
     jacaranda: { spread: 0.58, decay: 0.76, depth: 7, lift: 0.55, trunk: 0.26, bloom: 7, petal: 0.9 },
     flamboyan: { spread: 0.95, decay: 0.79, depth: 6, lift: 0.18, trunk: 0.22, bloom: 8, petal: 1.05, flat: true },
     leafy: { spread: 0.5, decay: 0.74, depth: 7, lift: 0.7, trunk: 0.28, bloom: 10, petal: 1.2, leaf: true },
-    silhouette: { spread: 0.5, decay: 0.75, depth: 7, lift: 0.6, trunk: 0.28, bloom: 1.2, petal: 0.8 },
+    silhouette: { spread: 0.52, decay: 0.75, depth: 7, lift: 0.6, trunk: 0.28, bloom: 10, petal: 1.25, leaf: true },
   };
 
   function rng(seed) {
@@ -44,8 +44,8 @@
   function drawSky(ctx, w, h, horizon, dark) {
     const sky = ctx.createLinearGradient(0, 0, 0, horizon);
     if (dark) {
-      sky.addColorStop(0, '#1d0f1f'); sky.addColorStop(0.45, '#6b1f1a');
-      sky.addColorStop(0.8, '#d0521c'); sky.addColorStop(1, '#f0a03a');
+      sky.addColorStop(0, '#0b0609'); sky.addColorStop(0.5, '#2e0f12');
+      sky.addColorStop(0.85, '#7a2812'); sky.addColorStop(1, '#b8561c');
     } else {
       sky.addColorStop(0, '#3b1d36'); sky.addColorStop(0.4, '#8c3a2c');
       sky.addColorStop(0.78, '#e07a2c'); sky.addColorStop(1, '#f6c46a');
@@ -54,12 +54,13 @@
     ctx.fillRect(0, 0, w, horizon);
   }
 
-  function drawSun(ctx, cx, horizon, r) {
+  function drawSun(ctx, cx, horizon, r, dark) {
     const g = ctx.createLinearGradient(0, horizon - r, 0, horizon);
-    g.addColorStop(0, '#ffd27a'); g.addColorStop(0.6, '#f59a32'); g.addColorStop(1, '#e0561c');
+    if (dark) { g.addColorStop(0, '#d9823a'); g.addColorStop(0.6, '#a8441a'); g.addColorStop(1, '#6e200e'); }
+    else { g.addColorStop(0, '#ffd27a'); g.addColorStop(0.6, '#f59a32'); g.addColorStop(1, '#e0561c'); }
     ctx.save();
     ctx.beginPath(); ctx.rect(0, 0, ctx.canvas.width, horizon); ctx.clip();
-    ctx.fillStyle = 'rgba(255,210,130,0.18)';
+    ctx.fillStyle = dark ? 'rgba(200,90,40,0.10)' : 'rgba(255,210,130,0.18)';
     ctx.beginPath(); ctx.arc(cx, horizon, r * 1.55, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = g;
     ctx.beginPath(); ctx.arc(cx, horizon, r, 0, Math.PI * 2); ctx.fill();
@@ -103,7 +104,7 @@
       const x1 = x0 + Math.cos(a) * l, y1 = y0 + Math.sin(a) * l;
       const mx = x0 + Math.cos(a + bend) * l * 0.5, my = y0 + Math.sin(a + bend) * l * 0.5;
       ctx.strokeStyle = barkColor;
-      ctx.lineWidth = Math.max(0.6, wdt);
+      ctx.lineWidth = Math.max(0.6, wdt); ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(mx, my, x1, y1); ctx.stroke();
       if (d <= 0 || l < 3) { tips.push([x1, y1, l]); return; }
       if (d <= 3) tips.push([x1, y1, l]);
@@ -114,22 +115,60 @@
         const k = form.lift * 0.15;
         na = na * (1 - k) + (-Math.PI / 2) * k;
         if (form.flat) na = Math.max(-Math.PI + 0.25, Math.min(-0.25, na));
-        branch(x1, y1, l * (form.decay + (rand() - 0.5) * 0.12), na, wdt * 0.68, d - 1);
+        branch(x1, y1, l * (form.decay + (rand() - 0.5) * 0.12), na, wdt * 0.66, d - 1);
       }
     }
-    // Tronco con una leve inclinación.
+    // Tronco de árbol viejo: grueso, con base ensanchada, raíces y corteza.
     const lean = (rand() - 0.5) * 0.12;
-    const trunkTop = [x + Math.sin(lean) * len, y - Math.cos(lean) * len];
+    const top = [x + Math.sin(lean) * len, y - Math.cos(lean) * len];
+    const ctrl = [x - len * 0.07 + (rand() - 0.5) * len * 0.08, y - len * 0.5];
+    const baseW = len * 0.44, topW = len * 0.25;
+    const at = function (t) {
+      const u = 1 - t;
+      return [u * u * x + 2 * u * t * ctrl[0] + t * t * top[0], u * u * y + 2 * u * t * ctrl[1] + t * t * top[1]];
+    };
+    const half = function (t) { return (baseW + (topW - baseW) * t + baseW * 0.9 * Math.exp(-t * 9)) / 2; };
+    const left = [], right = [];
+    for (let i = 0; i <= 16; i++) {
+      const t = i / 16, c = at(t), hw = half(t) * (1 + (rand() - 0.5) * 0.06);
+      left.push([c[0] - hw, c[1]]); right.push([c[0] + hw, c[1]]);
+    }
+    ctx.fillStyle = barkColor;
+    ctx.beginPath();
+    ctx.moveTo(left[0][0], left[0][1]);
+    left.forEach(function (p) { ctx.lineTo(p[0], p[1]); });
+    right.slice().reverse().forEach(function (p) { ctx.lineTo(p[0], p[1]); });
+    ctx.closePath(); ctx.fill();
+    // Raíces que se hunden en la tierra.
     ctx.strokeStyle = barkColor; ctx.lineCap = 'round';
-    ctx.lineWidth = len * 0.11;
-    ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x - len * 0.05, y - len * 0.5, trunkTop[0], trunkTop[1]); ctx.stroke();
-    // Raíces
-    ctx.lineWidth = len * 0.05;
-    ctx.beginPath(); ctx.moveTo(x, y - len * 0.08); ctx.quadraticCurveTo(x - len * 0.2, y, x - len * 0.38, y + 4); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x, y - len * 0.08); ctx.quadraticCurveTo(x + len * 0.2, y, x + len * 0.4, y + 4); ctx.stroke();
+    [[-1, 0.55], [1, 0.6], [-1, 0.3], [1, 0.28]].forEach(function (r) {
+      ctx.lineWidth = len * (r[1] > 0.4 ? 0.1 : 0.07);
+      ctx.beginPath(); ctx.moveTo(x + r[0] * baseW * 0.3, y - len * 0.06);
+      ctx.quadraticCurveTo(x + r[0] * len * r[1] * 0.6, y - len * 0.01, x + r[0] * len * r[1], y + 5);
+      ctx.stroke();
+    });
+    // Corteza: vetas y un nudo.
+    ctx.save();
+    ctx.globalAlpha = 0.28; ctx.lineWidth = Math.max(0.8, len * 0.012);
+    for (let i = 0; i < 6; i++) {
+      const off = (rand() - 0.5) * 1.4, t0 = rand() * 0.3, t1 = 0.6 + rand() * 0.4;
+      ctx.strokeStyle = i % 2 ? 'rgba(0,0,0,.9)' : 'rgba(120,80,50,.9)';
+      ctx.beginPath();
+      for (let j = 0; j <= 8; j++) {
+        const t = t0 + (t1 - t0) * j / 8, c = at(t);
+        const px = c[0] + off * half(t) * 0.8 + Math.sin(j * 1.3 + i) * len * 0.008;
+        if (j === 0) ctx.moveTo(px, c[1]); else ctx.lineTo(px, c[1]);
+      }
+      ctx.stroke();
+    }
+    const knot = at(0.45 + rand() * 0.2);
+    ctx.globalAlpha = 0.35; ctx.strokeStyle = 'rgba(0,0,0,.9)';
+    ctx.beginPath(); ctx.ellipse(knot[0] + (rand() - 0.5) * topW * 0.3, knot[1], topW * 0.12, topW * 0.2, 0, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+
     const firstLen = len * (form.flat ? 0.95 : 0.8);
     const starts = form.flat ? [-Math.PI / 2 - 0.85, -Math.PI / 2 + 0.85, -Math.PI / 2] : [-Math.PI / 2 - form.spread * 0.7, -Math.PI / 2 + form.spread * 0.7];
-    starts.forEach(function (a) { branch(trunkTop[0], trunkTop[1], firstLen, a + lean, len * 0.075, form.depth - 1); });
+    starts.forEach(function (a) { branch(top[0], top[1], firstLen, a + lean, topW * 0.74, form.depth - 1); });
     return tips;
   }
 
@@ -156,11 +195,11 @@
     const treeX = narrow ? w * 0.5 : w * 0.66;
     const dark = tree.form === 'silhouette';
     drawSky(ctx, w, h, horizon, dark);
-    drawSun(ctx, narrow ? w * 0.5 : w * 0.66, horizon, Math.min(w, h) * (narrow ? 0.34 : 0.3));
+    drawSun(ctx, narrow ? w * 0.5 : w * 0.66, horizon, Math.min(w, h) * (narrow ? 0.34 : 0.3), dark);
 
     const rand = rng(seed);
     const scale = Math.min(h * (narrow ? 0.135 : 0.155), w * (narrow ? 0.15 : 0.11)) * (form.flat && narrow ? 0.85 : 1);
-    const bark = dark ? '#0b0604' : '#2a150a';
+    const bark = dark ? '#070403' : '#2a150a';
     const tips = growTree(ctx, rand, treeX, horizon + 2, scale, form, bark);
 
     // Flores (u hojas) en las puntas.
