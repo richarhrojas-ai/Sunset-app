@@ -30,9 +30,9 @@ export async function handle(req, store, secret, delayMs) {
   if (denied) return denied;
 
   const url = new URL(req.url);
-  const saved = (await store.get(DATA_KEY, { type: 'json' })) || { entries: {} };
 
   if (req.method === 'GET') {
+    const saved = (await store.get(DATA_KEY, { type: 'json' })) || { entries: {} };
     if (url.searchParams.get('list') === 'backups') {
       const { blobs } = await store.list({ prefix: 'backups/' });
       const dates = blobs.map((b) => b.key.slice('backups/'.length)).filter((d) => DAY.test(d)).sort().reverse();
@@ -51,14 +51,20 @@ export async function handle(req, store, secret, delayMs) {
     let body;
     try { body = await req.json(); } catch (e) { return json(400, { error: 'JSON inválido' }); }
     if (!body || typeof body.entries !== 'object') return json(400, { error: 'Falta entries' });
-    const updated = new Date().toISOString();
-    const today = 'backups/' + updated.slice(0, 10);
-    if (Object.keys(saved.entries).length && !(await store.get(today, { type: 'json' }))) {
-      await store.setJSON(today, saved);
+    // Escritura condicional: si otro dispositivo guardó mientras tanto, se vuelve a leer y a combinar.
+    for (let intento = 0; intento < 5; intento++) {
+      const cur = await store.getWithMetadata(DATA_KEY, { type: 'json' });
+      const base = cur ? cur.data : { entries: {} };
+      const updated = new Date().toISOString();
+      if (Object.keys(base.entries).length) {
+        // Copia del día: el estado anterior al primer cambio. onlyIfNew evita pisar una copia ya hecha.
+        await store.setJSON('backups/' + updated.slice(0, 10), base, { onlyIfNew: true });
+      }
+      const merged = { entries: mergeEntries(base.entries, body.entries), updated };
+      const r = await store.setJSON(DATA_KEY, merged, cur ? { onlyIfMatch: cur.etag } : { onlyIfNew: true });
+      if (r.modified) return json(200, merged);
     }
-    const merged = { entries: mergeEntries(saved.entries, body.entries), updated };
-    await store.setJSON(DATA_KEY, merged);
-    return json(200, merged);
+    return json(409, { error: 'Otro dispositivo estaba guardando al mismo tiempo. Probá de nuevo.' });
   }
 
   return json(405, { error: 'Método no permitido' });

@@ -70,8 +70,15 @@ están en el encabezado de `tools/hero_from_photo.py`. Después subir la versió
 
 ## Datos del usuario
 
+Qué se registra: el registro de cada día (domingo a sábado), las 5 respuestas por palabra con su comentario,
+la maestría confirmada de la semana, qué funcionó y la intención. El registro de hoy se escribe en la tarjeta
+(con **Ampliar** para textos largos); el de los otros días solo muestra una pestaña con la cantidad de palabras
+y se lee abriéndola. El porcentaje es el promedio de las preguntas **respondidas**, y la maestría se sugiere
+solo cuando una palabra tiene al menos 3 respuestas.
+
 Todo lo que se registra se guarda primero en el dispositivo (`localStorage`) como `{ clave: { v, t } }`,
-y al sincronizar gana, dato por dato, la versión más reciente. En Netlify Blobs (almacén `sunset`):
+y al sincronizar gana, dato por dato, la versión más reciente (si dos dispositivos guardan a la vez, el
+servidor reintenta y combina). En Netlify Blobs (almacén `sunset`):
 
 - `progreso`: el estado actual.
 - `backups/AAAA-MM-DD`: cómo estaba todo antes del primer cambio de cada día.

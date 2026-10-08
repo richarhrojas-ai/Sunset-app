@@ -145,15 +145,20 @@
     setV(k(Y, week, 'a/' + word), a);
   }
 
-  // Puntaje de una palabra en una semana: suma / 25 (las no respondidas cuentan 0).
-  function wordScore(Y, week, word) {
-    return getAnswers(Y, week, word).reduce((s, v) => s + (v || 0), 0) / 25;
-  }
+  // Puntaje de una palabra en una semana: promedio de las preguntas respondidas (1 a 5 → hasta 100%).
+  // Las preguntas sin responder no cuentan: una semana a medio responder no parece una semana mala.
   function wordAnswered(Y, week, word) {
     return getAnswers(Y, week, word).filter((v) => v != null).length;
   }
+  function wordScore(Y, week, word) {
+    const a = getAnswers(Y, week, word).filter((v) => v != null);
+    return a.length ? a.reduce((s, v) => s + v, 0) / (5 * a.length) : 0;
+  }
+  const pctText = (Y, week, word) => (wordAnswered(Y, week, word) ? Math.round(wordScore(Y, week, word) * 100) + '%' : '—');
+  // Promedio de la semana: solo entre las palabras que tienen respuestas.
   function weekScore(Y, week) {
-    return activeWords(Y, week).reduce((s, w) => s + wordScore(Y, week, w.word), 0) / 3;
+    const used = activeWords(Y, week).filter((w) => wordAnswered(Y, week, w.word) > 0);
+    return used.length ? used.reduce((s, w) => s + wordScore(Y, week, w.word), 0) / used.length : 0;
   }
   function weekCompletion(Y, week) {
     return activeWords(Y, week).reduce((s, w) => s + wordAnswered(Y, week, w.word), 0) / 15;
@@ -168,12 +173,13 @@
   function crowns(Y, word) {
     return (Y.evalWeeks[word] || []).filter((w) => getV(k(Y, w, 'maestria'), '') === word).length;
   }
-  // Sugerencia: la palabra activa con mayor puntaje esa semana.
+  // Sugerencia: la palabra activa con mayor puntaje esa semana, entre las que tienen al menos 3 respuestas
+  // (con una sola respuesta alta cualquier palabra ganaría).
   function suggestedMastery(Y, week) {
     let best = null;
     activeWords(Y, week).forEach(function (a) {
-      const s = wordScore(Y, week, a.word);
-      if (s > 0 && (!best || s > best.s)) best = { word: a.word, s: s };
+      const n = wordAnswered(Y, week, a.word), sc = wordScore(Y, week, a.word);
+      if (n >= 3 && (!best || sc > best.sc || (sc === best.sc && n > best.n))) best = { word: a.word, sc: sc, n: n };
     });
     return best && best.word;
   }
@@ -200,6 +206,98 @@
     ta.addEventListener('blur', function () { if (ta.value !== getV(key, '')) setV(key, ta.value); });
     return ta;
   }
+
+  const countWords = (text) => (text.trim() ? text.trim().split(/\s+/).length : 0);
+
+  // Registro del día. Hoy: cuadro para escribir unas líneas, con "Ampliar" para escribir largo.
+  // Otros días: solo una pestaña que abre el registro; lo escrito no se ve en la tarjeta.
+  function dayRecord(day) {
+    const key = k(Y, viewing, 'd' + day);
+    const dayName = WEEKDAYS[day].toLowerCase();
+    if (todayIndex() === day) {
+      const box = el('div', 'record record-today');
+      box.appendChild(noteField(key, 'Registro de hoy…'));
+      const expand = el('button', 'expand-btn');
+      expand.appendChild(icon('expand'));
+      expand.appendChild(document.createTextNode('Ampliar'));
+      expand.setAttribute('aria-label', 'Abrir el registro de hoy en pantalla grande');
+      expand.addEventListener('click', () => openEditor(day));
+      box.appendChild(expand);
+      return box;
+    }
+    const words = countWords(getV(key, ''));
+    const tab = el('button', 'record-tab' + (words ? ' has-text' : ''));
+    tab.dataset.day = day;
+    tab.setAttribute('aria-label', 'Abrir el registro del ' + dayName + (words ? ', ' + words + ' palabras' : ', vacío'));
+    tab.appendChild(icon('pen'));
+    tab.appendChild(el('span', null, words ? 'Registro' : 'Agregar registro'));
+    if (words) tab.appendChild(el('span', 'count', words + (words === 1 ? ' palabra' : ' palabras')));
+    tab.appendChild(icon('right', 'go'));
+    tab.addEventListener('click', () => openEditor(day));
+    return tab;
+  }
+
+  // ── Editor grande del registro ──
+  let editing = null;   // { key, day, timer }
+  function dayReference(day) {
+    const wk = Y.weeks[viewing - 1];
+    if (day === 0) return wk.hook;
+    const d = DAY_CARDS.find((c) => c.day === day);
+    return d.key === 'sabado' ? wk.sabado.join('  ') : wk[d.key];
+  }
+  function openEditor(day) {
+    if (document.activeElement && document.activeElement.classList.contains('note')) document.activeElement.blur();
+    const key = k(Y, viewing, 'd' + day);
+    const date = dateOf(Y, viewing, day);
+    const wk = Y.weeks[viewing - 1];
+    editing = { key: key, day: day, timer: null };
+    $('editorEyebrow').textContent = 'Semana ' + viewing + ' · ' + Y.themes[wk.col].name;
+    $('editorTitle').textContent = WEEKDAYS[day] + ' ' + date.getDate() + ' de ' + MONTHS[date.getMonth()];
+    $('editorRefText').textContent = dayReference(day);
+    $('editorRef').open = false;
+    const ta = $('editorText');
+    ta.value = getV(key, '');
+    $('editor').hidden = false;
+    document.documentElement.classList.add('no-scroll');
+    updateEditorStatus('');
+    ta.focus();
+    ta.setSelectionRange(ta.value.length, ta.value.length);
+  }
+  function updateEditorStatus(saved) {
+    const n = countWords($('editorText').value);
+    $('editorCount').textContent = n + (n === 1 ? ' palabra' : ' palabras');
+    $('editorSaved').textContent = saved;
+  }
+  function flushEditor() {
+    if (!editing) return;
+    clearTimeout(editing.timer);
+    const text = $('editorText').value;
+    if (text !== getV(editing.key, '')) setV(editing.key, text);
+  }
+  function closeEditor() {
+    if (!editing) return;
+    flushEditor();
+    const day = editing.day;
+    editing = null;
+    $('editor').hidden = true;
+    document.documentElement.classList.remove('no-scroll');
+    renderSunday();
+    renderDays();
+    const back = document.querySelector('.record-tab[data-day="' + day + '"]') || document.querySelector('.expand-btn');
+    if (back) back.focus({ preventScroll: true });
+  }
+  $('editorText').addEventListener('input', function () {
+    if (!editing) return;
+    updateEditorStatus('Escribiendo…');
+    clearTimeout(editing.timer);
+    editing.timer = setTimeout(function () {
+      if (!editing) return;
+      setV(editing.key, $('editorText').value);
+      updateEditorStatus('Guardado');
+    }, 600);
+  });
+  $('editorDone').addEventListener('click', closeEditor);
+  window.addEventListener('pagehide', flushEditor);
 
   const treeOf = (colorName) => window.SunsetTree.TREES[colorName] || window.SunsetTree.TREES.Lila;
   let shown = '';
@@ -282,7 +380,7 @@
     });
     card.appendChild(btn);
     card.appendChild(story);
-    card.appendChild(noteField(k(Y, viewing, 'd0'), 'Registro del domingo…'));
+    card.appendChild(dayRecord(0));
   }
 
   function renderDays() {
@@ -300,7 +398,7 @@
       } else {
         card.appendChild(el('p', 'card-text', wk[d.key]));
       }
-      card.appendChild(noteField(k(Y, viewing, 'd' + d.day), 'Registro del ' + WEEKDAYS[d.day].toLowerCase() + '…'));
+      card.appendChild(dayRecord(d.day));
       wrap.appendChild(card);
     });
   }
@@ -333,7 +431,7 @@
       label.appendChild(document.createElement('br'));
       label.appendChild(document.createTextNode(r.word));
       c.appendChild(label);
-      c.appendChild(el('span', 'chip-pct', Math.round(wordScore(Y, viewing, r.word) * 100) + '%'));
+      c.appendChild(el('span', 'chip-pct', pctText(Y, viewing, r.word)));
       c.addEventListener('click', function () {
         openWord = openWord === r.word ? null : r.word;
         renderEvaluation();
@@ -381,8 +479,8 @@
 
     wrap.appendChild(el('div', 'field-label', 'Maestría de la semana'));
     wrap.appendChild(el('p', 'field-hint', confirmed ? 'Confirmada. Tocá otra palabra para cambiarla, o la misma para quitarla.'
-      : suggested ? 'Sugerida: ' + suggested + ' (la de mayor puntaje). Tocá una palabra para confirmarla.'
-        : 'Respondé la autoevaluación para ver la sugerencia, o elegí directamente.'));
+      : suggested ? 'Sugerida: ' + suggested + ' (la de mayor puntaje entre las que respondiste). Tocá una palabra para confirmarla.'
+        : 'Respondé al menos 3 preguntas de una palabra para ver la sugerencia, o elegí directamente.'));
     const opts = el('div', 'mastery-opts');
     activeWords(Y, viewing).forEach(function (a) {
       const b = el('button', 'mastery-opt');
@@ -390,7 +488,7 @@
       if (!confirmed && suggested === a.word) b.classList.add('is-suggested');
       if (confirmed === a.word) b.appendChild(icon('crown'));
       b.appendChild(document.createTextNode(a.word));
-      b.appendChild(el('span', 'chip-pct', Math.round(wordScore(Y, viewing, a.word) * 100) + '%'));
+      b.appendChild(el('span', 'chip-pct', pctText(Y, viewing, a.word)));
       b.addEventListener('click', function () {
         setV(k(Y, viewing, 'maestria'), confirmed === a.word ? '' : a.word);
         renderClosing();
@@ -566,12 +664,13 @@
       });
       const body = await resp.json().catch(() => ({}));
       if (resp.status === 401) { logout('La clave cambió. Escríbela de nuevo.'); return; }
+      if (resp.status === 409) { setSyncStatus('Otro dispositivo guardaba a la vez; reintentando…'); setTimeout(sync, 3000); return; }
       if (!resp.ok) throw new Error(body.error || 'Error ' + resp.status);
       const res = mergeEntries(state.entries, body.entries);
       state.entries = res.entries;
       save();
       // No redibujar mientras se escribe: se perdería el foco del campo.
-      if (res.changed && !(document.activeElement && document.activeElement.tagName === 'TEXTAREA')) render();
+      if (res.changed && !editing && !(document.activeElement && document.activeElement.tagName === 'TEXTAREA')) render();
       setSyncStatus('Sincronizado ' + new Date().toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' }), 'ok');
     } catch (e) {
       setSyncStatus(navigator.onLine === false ? 'Sin conexión: se guardó en este dispositivo' : 'No se pudo sincronizar: ' + e.message, 'error');
@@ -828,6 +927,16 @@
   }
 
   // ── Eventos ──
+  // Atajos: llevan a cada sección (los plegables se abren al llegar).
+  document.querySelector('.jump').addEventListener('click', function (e) {
+    const btn = e.target.closest('button[data-go]');
+    if (!btn) return;
+    const go = btn.dataset.go;
+    const target = go === 'today' ? (document.querySelector('#days .is-today, #sunday.is-today') || $('days'))
+      : go === 'closing' ? $('closingCard') : $(go);
+    if (target.tagName === 'DETAILS') target.open = true;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
   $('prevWeek').addEventListener('click', () => step(-1));
   $('nextWeek').addEventListener('click', () => step(1));
   $('todayBtn').addEventListener('click', () => goTo(TODAY.Y, TODAY.week));
@@ -857,7 +966,7 @@
     if (!Y) return;
     const n = new Date();
     if (n.toDateString() === now.toDateString()) return;
-    if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') return;
+    if (editing || (document.activeElement && document.activeElement.tagName === 'TEXTAREA')) return;
     const followToday = isCurrent();
     now = n;
     TODAY = locateDate(now);
@@ -866,12 +975,13 @@
     render();
   }
   document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState !== 'visible') return;
+    if (document.visibilityState !== 'visible') { flushEditor(); return; }
     refreshToday();
     sync();
   });
   document.addEventListener('keydown', function (e) {
-    if (e.target.closest('input,textarea') || !$('welcome').hidden) return;
+    if (e.key === 'Escape' && editing) { closeEditor(); return; }
+    if (e.target.closest('input,textarea') || !$('welcome').hidden || editing) return;
     if (e.key === 'ArrowLeft') step(-1);
     if (e.key === 'ArrowRight') step(1);
   });

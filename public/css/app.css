@@ -168,7 +168,7 @@ footer{text-align:center;padding:18px;font-family:'Dancing Script',cursive;font-
 .note{width:100%;margin-top:12px;padding:9px 11px;border:1px dashed var(--border2);border-radius:10px;background:transparent;font:inherit;font-size:13px;line-height:1.5;color:var(--txt);resize:vertical;min-height:42px;}
 .note:focus{outline:none;border-style:solid;border-color:var(--wk);background:var(--surface);}
 .note::placeholder{color:var(--txt3);}
-.days .card .note{margin-top:auto;}
+.days .card .record{margin-top:auto;}
 .days .card .card-text,.days .card .sat-list{margin-bottom:12px;}
 .field-label{font-size:12px;font-weight:700;color:var(--txt2);margin:16px 0 6px;}
 .field-label:first-child{margin-top:0;}
@@ -223,3 +223,41 @@ footer{text-align:center;padding:18px;font-family:'Dancing Script',cursive;font-
 .ask-actions{display:flex;flex-direction:column;gap:8px;margin-top:16px;}
 .ask-actions .btn{justify-content:center;}
 .btn:focus-visible,.chip:focus-visible,.mastery-opt:focus-visible,.q-scale button:focus-visible,.sq:focus-visible,summary:focus-visible,.story-btn:focus-visible,.sync-input:focus-visible{outline:2px solid var(--wk);outline-offset:2px;}
+
+/* ── Registro del día ── */
+.record{margin-top:12px;position:relative;}
+.record-today .note{margin-top:0;}
+.expand-btn{display:flex;align-items:center;gap:5px;margin:6px 0 0 auto;padding:5px 11px;border-radius:14px;border:1px solid var(--border2);background:var(--surface);font-size:11.5px;font-weight:600;color:var(--wk);cursor:pointer;}
+.expand-btn .ico{width:13px;height:13px;}
+.record-tab{display:flex;align-items:center;gap:8px;width:100%;margin-top:12px;padding:10px 12px;border:1px dashed var(--border2);border-radius:10px;background:transparent;font-size:13px;color:var(--txt2);text-align:left;cursor:pointer;}
+.record-tab:hover{border-color:var(--wk);color:var(--txt);}
+.record-tab.has-text{border-style:solid;border-color:color-mix(in srgb,var(--wk) 40%,var(--border));background:color-mix(in srgb,var(--wk) 7%,var(--surface));color:var(--txt);font-weight:600;}
+.record-tab .count{margin-left:auto;font-size:12px;font-weight:500;color:var(--txt2);font-variant-numeric:tabular-nums;}
+.record-tab .go{margin-left:auto;width:14px;height:14px;}
+.record-tab .count+.go{margin-left:0;}
+
+/* Pantalla de escritura */
+.no-scroll{overflow:hidden;}
+.sheet{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;background:rgba(26,14,4,.55);}
+.sheet[hidden]{display:none;}
+.sheet-box{display:flex;flex-direction:column;width:100%;height:100%;background:var(--surface);}
+@media (min-width:700px){.sheet{padding:24px;}.sheet-box{max-width:780px;height:min(88vh,900px);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden;}}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(14px + env(safe-area-inset-top,0px)) 18px 12px;border-bottom:1px solid var(--border);}
+@media (min-width:700px){.sheet-head{padding-top:16px;}}
+.sheet-eyebrow{font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--wk);}
+.sheet-head h2{font-family:'Playfair Display',serif;font-size:22px;line-height:1.2;margin-top:2px;}
+.sheet-ref{padding:0 18px;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--txt2);}
+.sheet-ref summary{cursor:pointer;padding:10px 0;font-size:12.5px;font-weight:600;}
+.sheet-ref p{padding:0 0 12px;line-height:1.6;}
+.sheet-text{flex:1;width:100%;min-height:0;padding:18px;border:none;background:var(--surface);color:var(--txt);font:inherit;font-size:16px;line-height:1.75;resize:none;}
+.sheet-text:focus{outline:none;}
+.sheet-text::placeholder{color:var(--txt3);}
+.sheet-foot{display:flex;justify-content:space-between;gap:12px;padding:8px 18px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border);font-size:12px;color:var(--txt2);}
+
+/* ── Atajos ── */
+.jump{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:6px;padding:8px 14px;overflow-x:auto;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border);scrollbar-width:none;}
+.jump::-webkit-scrollbar{display:none;}
+.jump button{flex:none;padding:6px 12px;border-radius:16px;border:1px solid var(--border2);background:var(--surface);font-size:12.5px;font-weight:600;color:var(--txt2);cursor:pointer;}
+.jump button:hover{border-color:var(--wk);color:var(--txt);}
+.jump button:focus-visible{outline:2px solid var(--wk);outline-offset:2px;}
+main>section,main>details,#days .card{scroll-margin-top:56px;}

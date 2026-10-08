@@ -2,16 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { handle, mergeEntries } from '../netlify/functions/sync.mjs';
 import { handleContent } from '../netlify/functions/content.mjs';
+import { memoryStore } from './helpers/memory-store.mjs';
 
-function memoryStore() {
-  const m = new Map();
-  return {
-    m,
-    async get(k) { return m.has(k) ? JSON.parse(m.get(k)) : null; },
-    async setJSON(k, v) { m.set(k, JSON.stringify(v)); },
-    async list({ prefix }) { return { blobs: [...m.keys()].filter((k) => k.startsWith(prefix)).map((key) => ({ key })) }; },
-  };
-}
 const req = (method, key, body, query = '') => new Request('http://x/api/sync' + query, {
   method, headers: key ? { 'x-sunset-key': key } : {}, body: body ? JSON.stringify(body) : undefined,
 });
@@ -85,4 +77,22 @@ test('el contenido real trae años con 52 semanas y 7×7 palabras', async () => 
     assert.equal(y.board.length, 7);
     assert.ok(y.board.every((r) => r.length === 7));
   }
+});
+
+test('dos dispositivos a la vez: si otro guarda en medio, se reintenta y no se pierde nada', async () => {
+  const s = memoryStore();
+  await call(req('POST', 'k', { entries: { base: { v: 'x', t: 1 } } }), s);
+  // Mientras el celular escribe, la computadora guarda su dato primero.
+  s.beforeWrite = async () => { await call(req('POST', 'k', { entries: { compu: { v: 'desde la computadora', t: 5 } } }), s); };
+  const r = await call(req('POST', 'k', { entries: { celu: { v: 'desde el celular', t: 6 } } }), s);
+  assert.equal(r.status, 200);
+  const final = await (await call(req('GET', 'k'), s)).json();
+  assert.deepEqual(Object.keys(final.entries).sort(), ['base', 'celu', 'compu']);
+});
+
+test('si la escritura nunca logra entrar, responde 409 en vez de perder datos en silencio', async () => {
+  const s = memoryStore();
+  await call(req('POST', 'k', { entries: { a: { v: 1, t: 1 } } }), s);
+  s.setJSON = async () => ({ modified: false });
+  assert.equal((await call(req('POST', 'k', { entries: { b: { v: 2, t: 2 } } }), s)).status, 409);
 });
