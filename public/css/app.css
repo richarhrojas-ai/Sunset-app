@@ -385,3 +385,10 @@ main>section,main>details,#days .card{scroll-margin-top:60px;}
 .record-tab.has-text{background:color-mix(in srgb,var(--rc) 14%,rgba(22,10,40,.85));}
 .days .card .card-text{font-size:17px;font-weight:300;line-height:1.6;color:#fff;margin-bottom:16px;}
 .days .card .sat-list li{font-size:16px;}
+
+/* Tarjetas de los días: título arriba en negrita, frase centrada, botón siempre al final */
+.days .card .card-day{font-weight:700;letter-spacing:.18em;margin-bottom:6px;}
+.days .card .card-text{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;margin-bottom:14px;padding:6px 4px;}
+.days .card .sat-list{flex:1;justify-content:center;margin-bottom:14px;}
+.days .card .record-tab{align-self:center;margin-top:auto;}
+.days .card .record{margin-top:auto;}
