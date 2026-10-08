@@ -325,23 +325,55 @@
     return svg;
   }
 
-  // Árbol del logo: la silueta oscura, del mismo tamaño que el árbol original del logo.
-  function logo(canvas) {
-    const dpr = Math.min(window.devicePixelRatio || 1, 3);
-    const size = canvas.clientWidth;
-    if (!size) return;
-    canvas.width = canvas.height = Math.round(size * dpr);
+  // Marca del logo: sol con franjas y árbol de bronce sin hojas, con raíces que salen del círculo.
+  // Sirve para la cabecera y para generar los íconos de la app.
+  function logo(canvas, opts) {
+    opts = opts || {};
+    const dpr = opts.dpr || Math.min(window.devicePixelRatio || 1, 3);
+    const S = opts.size || canvas.clientWidth;
+    if (!S) return;
+    canvas.width = canvas.height = Math.round(S * dpr);
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
-    const form = Object.assign({}, FORMS.silhouette, { depth: 5 });
-    const rand = rng(7);
-    const len = size * 0.2;
-    const tips = growTree(ctx, rand, size / 2, size * 0.98, len, form, '#1a0c06');
+    if (opts.background) { ctx.fillStyle = opts.background; ctx.fillRect(0, 0, S, S); }
+    const cx = S / 2, cy = S * 0.46, R = S * 0.42;
+
+    // Sol: degradé arriba y franjas separadas por líneas oscuras abajo.
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();
+    const g = ctx.createLinearGradient(0, cy - R, 0, cy + R * 0.1);
+    g.addColorStop(0, '#F5A052'); g.addColorStop(1, '#E8663C');
+    ctx.fillStyle = g; ctx.fillRect(cx - R, cy - R, R * 2, R * 1.1);
+    const bands = ['#EF7A46', '#F59A4E', '#F8C25E', '#FBE08E', '#FCEFB8'];
+    const top = cy + R * 0.1, bandH = (R * 0.9) / bands.length, gap = Math.max(0.7, R * 0.045);
+    bands.forEach(function (c, i) {
+      ctx.fillStyle = c;
+      ctx.fillRect(cx - R, top + i * bandH + gap, R * 2, bandH - gap);
+    });
+    ctx.restore();
+
+    // Árbol de bronce.
+    const form = { spread: 0.5, decay: 0.75, depth: S > 120 ? 8 : 7, lift: 0.75, bloom: 0, petal: 1, wide: 0.62 };
+    const rand = rng(11);
+    const base = cy + R * 0.93;
+    const len = R * 0.42;
+    const tips = growTree(ctx, rand, cx, base, len, form, '#6E4222');
+    // Ramitas finas en las puntas, para la copa sin hojas.
+    ctx.strokeStyle = '#7A4A26'; ctx.lineCap = 'round';
+    ctx.lineWidth = Math.max(0.35, S * 0.004);
     tips.forEach(function (t) {
-      for (let i = 0; i < 5; i++) {
-        drawLeaf(ctx, t[0] + (rand() - 0.5) * len * 0.55, t[1] + (rand() - 0.5) * len * 0.35, len * (0.14 + rand() * 0.1),
-          i % 2 ? '#22120a' : '#140904', rand() * Math.PI);
+      for (let i = 0; i < 3; i++) {
+        const a = -Math.PI / 2 + (rand() - 0.5) * 2.6, l = t[2] * (0.35 + rand() * 0.4);
+        ctx.beginPath(); ctx.moveTo(t[0], t[1]); ctx.lineTo(t[0] + Math.cos(a) * l, t[1] + Math.sin(a) * l); ctx.stroke();
       }
+    });
+    // Raíces largas que se extienden fuera del círculo.
+    ctx.strokeStyle = '#6E4222';
+    [[-1, 0.85, 0.06], [1, 0.82, 0.06], [-1, 0.55, 0.04], [1, 0.6, 0.04]].forEach(function (r) {
+      ctx.lineWidth = Math.max(0.6, len * r[2]);
+      ctx.beginPath(); ctx.moveTo(cx, base - len * 0.04);
+      ctx.quadraticCurveTo(cx + r[0] * R * r[1] * 0.45, base + R * 0.02, cx + r[0] * R * r[1], base + R * 0.07);
+      ctx.stroke();
     });
   }
 
