@@ -218,18 +218,29 @@
         blossoms.push([x, y, r, c, rand() * Math.PI]);
       }
     });
-    // Cúpula: más flores por encima de la copa para que crezca en alto (como en el logo).
-    let minX = Infinity, maxX = -Infinity, minY = Infinity;
-    tips.forEach(function (t) { minX = Math.min(minX, t[0]); maxX = Math.max(maxX, t[0]); minY = Math.min(minY, t[1]); });
-    const domeRx = (maxX - minX) / 2 * 0.88, domeRy = scale * 1.25, domeCx = (minX + maxX) / 2, domeCy = minY + scale * 0.45;
-    const domeN = Math.round(tips.length * form.bloom * 0.55);
-    for (let i = 0; i < domeN; i++) {
-      const a = Math.PI + rand() * Math.PI, d = Math.sqrt(rand());
-      const useDark = tree.leaves && rand() < 0.22;
-      const pal = useDark ? tree.leaves : tree.flowers;
-      blossoms.push([domeCx + Math.cos(a) * domeRx * d, domeCy + Math.sin(a) * domeRy * d,
-        (2.4 + rand() * 2.8) * form.petal * (w < 400 ? 0.85 : 1), pal[Math.floor(rand() * pal.length)], rand() * Math.PI]);
-    }
+    // Copa en cúpula (como en el logo): desde cada punta se rellena hacia arriba hasta una
+    // curva suave, así la parte alta nace de las ramas y no queda como una capa aparte.
+    let minX = Infinity, maxX = -Infinity;
+    tips.forEach(function (t) { minX = Math.min(minX, t[0]); maxX = Math.max(maxX, t[0]); });
+    const domeCx = (minX + maxX) / 2, domeRx = (maxX - minX) / 2;
+    const domeH = scale * (form.flat ? 0.6 : 1.0);
+    // Altura extra según la posición: máxima en el centro, nula en los bordes.
+    const lift = function (x) {
+      const u = (x - domeCx) / domeRx;
+      return domeH * Math.sqrt(Math.max(0, 1 - u * u));
+    };
+    tips.forEach(function (t) {
+      const room = lift(t[0]) * (0.7 + rand() * 0.3);
+      if (room < 2) return;
+      const k = Math.min(24, Math.round(form.bloom * 0.45 * room / (scale * 0.3)));
+      for (let i = 0; i < k; i++) {
+        const x = t[0] + (rand() - 0.5) * Math.max(8, t[2] * 1.3);
+        const y = t[1] - Math.pow(rand(), 0.85) * room;
+        const useDeep = tree.leaves && rand() < 0.2;
+        const pal = useDeep ? tree.leaves : tree.flowers;
+        blossoms.push([x, y, (2.4 + rand() * 2.8) * form.petal * (w < 400 ? 0.85 : 1), pal[Math.floor(rand() * pal.length)], rand() * Math.PI]);
+      }
+    });
     // Las flores oscuras van primero (al fondo) para dar volumen.
     if (tree.leaves) {
       const deep = new Set(tree.leaves);
