@@ -71,6 +71,7 @@
     <button type="button" data-go="closing">Cierre</button>
     <button type="button" data-go="yearFold">Progreso</button>
     <button type="button" data-go="boardFold">Tablero</button>
+    <button type="button" id="searchBtn">Buscar</button>
   </nav>
 
   <main>
@@ -185,6 +186,11 @@
       <summary>Ver el @ del día</summary>
       <p id="editorRefText"></p>
     </details>
+    <div class="sheet-extra">
+      <div class="mood" id="editorMood"></div>
+      <label class="sr-only" for="editorGrat">Gratitud del día</label>
+      <input type="text" id="editorGrat" class="grat" maxlength="200" placeholder="Hoy agradezco…" autocomplete="off">
+    </div>
     <label class="sr-only" for="editorText">Registro del día</label>
     <textarea id="editorText" class="sheet-text" placeholder="Escribí con calma. Se guarda solo."></textarea>
     <div class="sheet-foot"><span id="editorCount"></span><span id="editorSaved" aria-live="polite"></span></div>
@@ -214,6 +220,23 @@
       <button class="btn primary" id="wordGo" type="button"></button>
       <button class="btn" id="wordClose" type="button">Cerrar</button>
     </div>
+  </div>
+</div>
+
+<div class="sheet" id="search" hidden role="dialog" aria-modal="true" aria-labelledby="searchTitle">
+  <div class="sheet-box">
+    <div class="sheet-head">
+      <div>
+        <div class="sheet-eyebrow">Todo lo que escribiste</div>
+        <h2 id="searchTitle">Buscar</h2>
+      </div>
+      <button class="btn primary" id="searchDone" type="button">Cerrar</button>
+    </div>
+    <div class="sheet-extra">
+      <label class="sr-only" for="searchInput">Buscar en tus registros</label>
+      <input type="search" id="searchInput" class="grat" placeholder="Una palabra o frase…" autocomplete="off">
+    </div>
+    <ul class="results" id="searchResults"></ul>
   </div>
 </div>
 

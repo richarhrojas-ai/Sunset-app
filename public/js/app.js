@@ -196,6 +196,30 @@
 
   const countWords = (text) => (text.trim() ? text.trim().split(/\s+/).length : 0);
 
+  // Ánimo del día (1 a 5, cinco puntos que se encienden) y gratitud corta. Claves AAAA/wN/m0..m6 y g0..g6.
+  const MOOD_NAMES = ['Muy bajo', 'Bajo', 'Normal', 'Bien', 'Muy bien'];
+  function moodRow(day, onChange) {
+    const key = k(Y, viewing, 'm' + day);
+    const row = el('div', 'mood');
+    row.setAttribute('role', 'group');
+    row.setAttribute('aria-label', 'Ánimo del día');
+    row.appendChild(el('span', 'mood-label', 'Ánimo'));
+    const dots = [];
+    const paint = function () {
+      const v = getV(key, 0);
+      dots.forEach((b, i) => { b.classList.toggle('on', i < v); b.setAttribute('aria-pressed', String(v === i + 1)); });
+    };
+    for (let i = 1; i <= 5; i++) {
+      const b = el('button', 'mood-dot');
+      b.type = 'button';
+      b.setAttribute('aria-label', MOOD_NAMES[i - 1] + ', ' + i + ' de 5');
+      b.addEventListener('click', function () { setV(key, getV(key, 0) === i ? null : i); paint(); if (onChange) onChange(); });
+      dots.push(b); row.appendChild(b);
+    }
+    paint();
+    return row;
+  }
+
   // Registro del día. Hoy: cuadro para escribir unas líneas, con "Ampliar" para escribir largo.
   // Otros días: solo una pestaña que abre el registro; lo escrito no se ve en la tarjeta.
   function dayRecord(day) {
@@ -204,6 +228,10 @@
     if (todayIndex() === day) {
       const box = el('div', 'record record-today');
       box.appendChild(noteField(key, 'Registro de hoy…'));
+      const gr = noteField(k(Y, viewing, 'g' + day), 'Hoy agradezco…', 1);
+      gr.classList.add('grat-note');
+      box.appendChild(gr);
+      box.appendChild(moodRow(day));
       const expand = el('button', 'expand-btn');
       expand.appendChild(icon('expand'));
       expand.appendChild(document.createTextNode('Ampliar'));
@@ -244,6 +272,12 @@
     $('editorRef').open = false;
     const ta = $('editorText');
     ta.value = getV(key, '');
+    const mood = $('editorMood');
+    mood.textContent = '';
+    mood.appendChild(moodRow(day));
+    const grat = $('editorGrat');
+    grat.value = getV(k(Y, viewing, 'g' + day), '');
+    editing.gKey = k(Y, viewing, 'g' + day);
     $('editor').hidden = false;
     document.documentElement.classList.add('no-scroll');
     updateEditorStatus('');
@@ -260,6 +294,8 @@
     clearTimeout(editing.timer);
     const text = $('editorText').value;
     if (text !== getV(editing.key, '')) setV(editing.key, text);
+    const g = $('editorGrat').value;
+    if (editing.gKey && g !== getV(editing.gKey, '')) setV(editing.gKey, g);
   }
   function closeEditor() {
     if (!editing) return;
@@ -283,6 +319,9 @@
       updateEditorStatus('Guardado');
     }, 600);
   });
+  $('editorGrat').addEventListener('input', debounce(function () {
+    if (editing && editing.gKey) setV(editing.gKey, $('editorGrat').value);
+  }, 500));
   $('editorDone').addEventListener('click', closeEditor);
   window.addEventListener('pagehide', flushEditor);
 
@@ -791,6 +830,77 @@
     renderBoard();
   }
 
+  // ── Buscador: todo lo escrito (registros, gratitud, comentarios, cierre e intención) ──
+  const fold = (s) => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  function entryLabel(rest) {
+    let m;
+    if ((m = rest.match(/^d(\d)$/))) return WEEKDAYS[Number(m[1])] + ' · Registro';
+    if ((m = rest.match(/^g(\d)$/))) return WEEKDAYS[Number(m[1])] + ' · Gratitud';
+    if ((m = rest.match(/^c\/(.+)$/))) return 'Comentario · ' + m[1];
+    if (rest === 'funciono') return 'Cierre · Qué funcionó';
+    if (rest === 'intencion') return 'Intención para la semana siguiente';
+    return null;
+  }
+  function searchEntries(q) {
+    const needle = fold(q.trim());
+    const out = [];
+    if (needle.length < 2) return out;
+    Object.keys(state.entries).forEach(function (key) {
+      const e = state.entries[key];
+      if (!e || typeof e.v !== 'string' || !e.v.trim()) return;
+      const m = key.match(/^(\d{4})\/w(\d+)\/(.+)$/);
+      if (!m) return;
+      const label = Number(m[2]) === 0 ? (m[3] === 'intencion' ? 'Intención inicial' : null) : entryLabel(m[3]);
+      if (!label) return;
+      const at = fold(e.v).indexOf(needle);
+      if (at < 0) return;
+      out.push({ year: Number(m[1]), week: Number(m[2]), label: label, text: e.v, at: at, len: needle.length });
+    });
+    out.sort((x, y) => (y.year - x.year) || (y.week - x.week));
+    return out;
+  }
+  function renderSearch() {
+    const list = $('searchResults');
+    const q = $('searchInput').value;
+    list.textContent = '';
+    const found = searchEntries(q);
+    if (q.trim().length < 2) { list.appendChild(el('li', 'results-empty', 'Escribí al menos dos letras.')); return; }
+    if (!found.length) { list.appendChild(el('li', 'results-empty', 'No encontré nada con “' + q.trim() + '”.')); return; }
+    found.slice(0, 60).forEach(function (r) {
+      const li = el('li');
+      const b = el('button', 'result');
+      b.type = 'button';
+      b.appendChild(el('span', 'result-where', 'Semana ' + Math.max(1, r.week) + ' · ' + r.year + ' · ' + r.label));
+      const from = Math.max(0, r.at - 50), to = Math.min(r.text.length, r.at + r.len + 90);
+      const snip = el('span', 'result-text');
+      snip.appendChild(document.createTextNode((from > 0 ? '…' : '') + r.text.slice(from, r.at)));
+      snip.appendChild(el('mark', null, r.text.slice(r.at, r.at + r.len)));
+      snip.appendChild(document.createTextNode(r.text.slice(r.at + r.len, to) + (to < r.text.length ? '…' : '')));
+      b.appendChild(snip);
+      b.addEventListener('click', function () {
+        const yr = YEARS[yearIndex(r.year)];
+        closeSearch();
+        if (yr) goTo(yr, Math.max(1, r.week));
+      });
+      li.appendChild(b); list.appendChild(li);
+    });
+    if (found.length > 60) list.appendChild(el('li', 'results-empty', 'Hay ' + found.length + ' resultados; mostrando los 60 más recientes. Afiná la búsqueda.'));
+  }
+  function openSearch() {
+    $('search').hidden = false;
+    document.documentElement.classList.add('no-scroll');
+    $('searchInput').focus();
+    renderSearch();
+  }
+  function closeSearch() {
+    $('search').hidden = true;
+    document.documentElement.classList.remove('no-scroll');
+    $('searchBtn').focus({ preventScroll: true });
+  }
+  $('searchBtn').addEventListener('click', openSearch);
+  $('searchDone').addEventListener('click', closeSearch);
+  $('searchInput').addEventListener('input', debounce(renderSearch, 150));
+
   function goTo(year, week) {
     Y = year;
     viewing = Math.min(Y.weeks.length, Math.max(1, week));
@@ -1039,7 +1149,7 @@
     const head = ['Año', 'Semana', 'Fechas', 'Color'];
     WEEKDAYS.forEach((d) => head.push('Registro ' + d));
     for (let i = 1; i <= 3; i++) head.push('Palabra ' + i, 'Respuestas ' + i, '% ' + i, 'Comentario ' + i);
-    head.push('% semana', 'Cumplimiento (D L M X J V S)', 'Maestría del color', 'Qué funcionó / mejorar', 'Intención');
+    head.push('% semana', 'Cumplimiento (D L M X J V S)', 'Ánimo (D L M X J V S)', 'Gratitud', 'Maestría del color', 'Qué funcionó / mejorar', 'Intención');
     const rows = [head];
     YEARS.forEach(function (YY) {
       YY.weeks.forEach(function (wk) {
@@ -1050,7 +1160,7 @@
           row.push(a.word, getAnswers(YY, w, a.word).map((v) => v || '-').join(' '),
             Math.round(wordScore(YY, w, a.word) * 100), getV(k(YY, w, 'c/' + a.word), ''));
         });
-        row.push(Math.round(weekScore(YY, w) * 100), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'p' + d), null); return v == null ? '-' : v; }).join(' '), (function () { const cm = colorMastery(YY, YY.weeks[w - 1].col); return cm.complete ? cm.leader.word : ''; })(),
+        row.push(Math.round(weekScore(YY, w) * 100), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'p' + d), null); return v == null ? '-' : v; }).join(' '), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'm' + d), null); return v == null ? '-' : v; }).join(' '), [0, 1, 2, 3, 4, 5, 6].map((d) => getV(k(YY, w, 'g' + d), '')).filter(Boolean).join(' | '), (function () { const cm = colorMastery(YY, YY.weeks[w - 1].col); return cm.complete ? cm.leader.word : ''; })(),
           getV(k(YY, w, 'funciono'), ''), getV(k(YY, w, 'intencion'), ''));
         rows.push(row);
       });
@@ -1158,6 +1268,7 @@
     sync();
   });
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !$('search').hidden) { closeSearch(); return; }
     if (e.key === 'Escape' && editing) { closeEditor(); return; }
     if (e.key === 'Escape' && !$('wordModal').hidden) { closeWord(); return; }
     if (e.target.closest('input,textarea') || !$('welcome').hidden || editing) return;
