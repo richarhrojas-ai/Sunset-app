@@ -26,6 +26,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:8px}
 .wrap{max-width:860px;margin:0 auto;padding:0 16px 64px}
 .kicker{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ink3);font-weight:400}
+h2.sec .cuenta{float:right;font-size:10.5px;letter-spacing:.14em;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink3);font-variant-numeric:tabular-nums}
+h2.sec .cuenta.completo{background:var(--gold);border-color:var(--gold);color:#2a1a08}
 h2.sec{font-size:12px;letter-spacing:.34em;text-transform:uppercase;font-weight:500;color:var(--acc);margin:34px 0 12px}
 .card{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);padding:20px;
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
@@ -268,10 +270,10 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
       <details class="valor"><summary>Guía interna ▾</summary><dl id="f-guia"></dl></details></div>
   </div>
 
-  <h2 class="sec" id="s-subtemas">Tres subtemas</h2>
+  <h2 class="sec" id="s-subtemas">Tres subtemas <span class="cuenta" id="c-st"></span></h2>
   <div class="subtemas" id="subtemas"></div>
 
-  <h2 class="sec" id="s-dias">Versículos de la semana</h2>
+  <h2 class="sec" id="s-dias">Versículos de la semana <span class="cuenta" id="c-v"></span></h2>
   <p class="muted" style="font-size:14px;margin:-4px 0 14px">Un versículo por día, con su fecha, para el aire y para los flyers de redes.</p>
   <div class="dias-grid" id="dias"></div>
 
@@ -421,8 +423,8 @@ const notaBox = (w, k, ph) => { const v = get(key(w, k)) || '';
   return `<details class="mi-nota${v ? ' tiene' : ''}"${v ? ' open' : ''}><summary>${v ? 'Mi nota' : 'Agregar nota'}</summary>
     <textarea id="n-${w.n}-${k.replace('/', '-')}" data-n="${k}" placeholder="${ph}" aria-label="Nota">${esc(v)}</textarea></details>`; };
 const botonAire = (w, k) => { const e = entries[key(w, k)], on = !!e?.v;
-  return `<button class="chk aire-mini" data-k="${k}" aria-pressed="${on}">${on ? 'Al aire ✓ · ' + fcorta(new Date(Math.max(e.t, +dateOf(w.inicio)))).slice(0, -5) : 'Al aire'}</button>`; };
-const fcorta = d => `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+  return `<button class="chk aire-mini" data-k="${k}" aria-pressed="${on}">${on ? 'Al aire ✓' : 'Al aire'}</button>`; };
+const fcorta = d => d.toLocaleDateString('es-PY', {day: 'numeric', month: 'short'}).replace('.', '');
 
 /* ── Semana actual ── */
 const sem = DATA.semanas;
@@ -502,6 +504,7 @@ function render() {
     </article>`; }).join('');
 
   renderRegistro(ini.getMonth());
+  pintarCuentas();
 
   // marco
   const m = w.marco;
@@ -544,11 +547,17 @@ function renderRegistro(m) {
   $('tiles').innerHTML = `<div class="tile"><b>${v.length} <small>de ${total}</small></b><span>Versículos al aire</span></div>
     <div class="tile"><b>${st.length}</b><span>Subtemas al aire</span></div>
     <div class="tile"><b>${Math.round(v.length / total * 100)}%</b><span>Días con versículo</span></div>`;
-  const fila = x => `<li><time>${fcorta(x.f).slice(0, -5)}</time><button data-i="${x.w.n-1}">${esc(x.txt)} <span class="muted">· semana ${x.w.n}</span></button></li>`;
+  const fila = x => `<li><time>${fcorta(x.f)}</time><button data-i="${x.w.n-1}">${esc(x.txt)} <span class="muted">· semana ${x.w.n}</span></button></li>`;
   $('reg-v').innerHTML = v.map(fila).join('') || `<li class="muted" style="display:block">Ningún versículo marcado al aire en ${MESES[m]}.</li>`;
   $('reg-s').innerHTML = st.map(fila).join('') || `<li class="muted" style="display:block">Ningún subtema marcado al aire en ${MESES[m]}.</li>`;
   const n = (k, a, b) => `${k} ${k === 1 ? a : b}`;
   $('reg-anio').textContent = `En ${DATA.anio}: ${n(vs.length, 'versículo', 'versículos')} y ${n(ss.length, 'subtema', 'subtemas')} al aire · ${n(rev, 'versículo revisado', 'versículos revisados')}.`;
+}
+
+function pintarCuentas() {
+  const w = sem[cur], c = (el, n, de) => { el.textContent = `${n}/${de} al aire`; el.classList.toggle('completo', n === de); };
+  c($('c-st'), [0,1,2].filter(i => get(key(w, 'st'+i+'/aire'))).length, 3);
+  c($('c-v'), w.dias.filter((_, i) => get(key(w, 'aire'+i))).length, 7);
 }
 
 function pintarPrep() {
@@ -601,7 +610,7 @@ const marcarChk = e => { const b = e.target.closest('.chk'); if (!b) return;
   const w = sem[cur], k = b.dataset.k, v = !get(key(w, k)); set(key(w, k), v); b.setAttribute('aria-pressed', v);
   if (k.startsWith('st')) b.outerHTML = botonAire(w, k);
   else b.textContent = k.startsWith('vr') ? (v ? 'Revisado' : 'Revisar versículo') : (v ? 'Al aire ✓' : 'Al aire');
-  renderRegistro(+$('mes').value); };
+  renderRegistro(+$('mes').value); pintarCuentas(); };
 $('dias').onclick = marcarChk;
 $('subtemas').onclick = marcarChk;
 document.addEventListener('input', e => { const t = e.target.closest('textarea[data-n]'); if (!t) return;
