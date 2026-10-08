@@ -367,3 +367,11 @@ main>section,main>details,#days .card{scroll-margin-top:60px;}
 .result-text mark{background:rgba(255,215,0,.28);color:#fff;border-radius:3px;padding:0 2px;}
 .mood-end{font-size:11px;font-weight:300;letter-spacing:.08em;color:var(--txt2);}
 .mood{flex-wrap:wrap;row-gap:6px;}
+
+/* Botón del registro: lleno y con el color de su tarjeta, para que se vea como acción */
+.record-tab{--rc:var(--dc,var(--wk));gap:10px;padding:12px 14px;border:1px solid var(--rc);border-style:solid;background:linear-gradient(135deg,color-mix(in srgb,var(--rc) 55%,rgba(22,10,40,.9)),color-mix(in srgb,var(--rc) 30%,rgba(22,10,40,.9)));color:#fff;font-weight:500;letter-spacing:.05em;box-shadow:0 2px 14px color-mix(in srgb,var(--rc) 35%,transparent);transition:transform .15s,box-shadow .15s;}
+.record-tab:hover{border-color:var(--gold-hi);box-shadow:0 2px 18px rgba(255,215,0,.35);transform:translateY(-1px);color:#fff;}
+.record-tab>.ico:first-child{width:28px;height:28px;padding:6px;border-radius:50%;background:var(--rc);color:#12091c;filter:brightness(1.25);}
+.record-tab.has-text{background:linear-gradient(135deg,color-mix(in srgb,var(--rc) 40%,rgba(22,10,40,.9)),color-mix(in srgb,var(--rc) 20%,rgba(22,10,40,.9)));border-color:color-mix(in srgb,var(--rc) 70%,transparent);font-weight:400;}
+.record-tab .count{color:#fff;opacity:.85;}
+.expand-btn{border-color:var(--gold);color:var(--gold-hi);background:rgba(255,215,0,.08);}
