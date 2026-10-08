@@ -15,7 +15,7 @@ const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'public');
 const TMP = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'sunset-render-'));
 const COLORS = ['Lila', 'Verde', 'Amarillo', 'Blanco', 'Negro', 'Rojo', 'Azul'];
-const SIZES = { wide: [1040, 450], tall: [480, 430] };   // tamaño en píxeles CSS; se dibuja al doble
+const SIZES = { wide: [1180, 560], tall: [480, 640] };   // tamaño en píxeles CSS; se dibuja al doble
 const COL = { Negro: 0, Rojo: 1, Azul: 2, Lila: 3, Verde: 4, Amarillo: 5, Blanco: 6 };   // columna del tablero; define la variante de cada árbol
 
 (async () => {

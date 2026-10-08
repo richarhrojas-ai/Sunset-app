@@ -54,6 +54,19 @@ columna o si el color no avanza de a uno:
 palabra_k = tablero[(fila + k) % 7][columna]     // k = 0,1,2 activas; 3..6 "en juego"
 ```
 
+## Estilo visual
+
+Crepúsculo: violeta de medianoche (`#1C102B`) arriba, ámbar quemado (`#B84A15`) abajo; línea blanca mate, destellos
+dorados (`#F0A830` / `#FFD700`), tarjetas de vidrio oscuro, letra Jost fina con mucho espacio entre letras y firma en
+cursiva. Los colores de cada semana (`accent` / `mid`) están en `public/js/tree.js`.
+
+- **Las siete palabras** (cabecera): una por dimensión, con su ícono de línea. Las tres principales de la semana brillan y
+  llevan la marca "Principal". Tocar una principal abre la autoevaluación con esa palabra; tocar una de las otras abre una
+  ficha con sus preguntas y la semana en que se evalúa. El marco dorado se desliza hasta la palabra elegida.
+- **Frase de hoy** (vidrio, a la izquierda del árbol en pantallas anchas): el @ del día y el control deslizante de
+  cumplimiento (se guarda como `AAAA/wN/pD`, 0 a 100, y sale en la planilla CSV).
+- Los íconos se generan con `python3 tools/make_icons.py` (símbolos `d-0` a `d-6`).
+
 ## Imágenes de los árboles
 
 Cada color tiene dos imágenes fijas (ancha y para celular). Por defecto son ilustraciones generadas con

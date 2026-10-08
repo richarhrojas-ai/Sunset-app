@@ -35,14 +35,6 @@
     svg.appendChild(use);
     return svg;
   }
-  function hexToRgb(hex) {
-    const n = parseInt(hex.slice(1), 16);
-    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-  }
-  function luminance(hex) {
-    const [r, g, b] = hexToRgb(hex).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  }
   // Días enteros desde una fecha de referencia, sin que el horario de verano cambie el resultado.
   const utcDay = (d) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
   function fmtDate(d) { return d.getDate() + ' de ' + MONTHS[d.getMonth()]; }
@@ -53,17 +45,14 @@
 
   // ── Años ──
   // Cada año trae su planilla: semanas, tablero 7×7, preguntas y colores.
-  // Colores: el de la columna, con contraste suficiente sobre fondo claro.
-  // Negro usa negro real; Blanco usa su gris pizarra (el blanco no se lee sobre crema).
+  // Colores de la semana: el acento de su árbol (claro, para leerse sobre el fondo nocturno).
   function prepare(data) {
   YEARS = data.years;
   YEARS.forEach(function (Y) {
     Y.start = new Date(Y.firstSunday + 'T00:00:00');
     Y.themes = Y.colors.map(function (c) {
-      const [p0, p1, p2] = c.palette;
-      const strong = luminance(p0) > 0.6 ? p1 : p0;
-      const soft = luminance(p2) > 0.75 && c.name !== 'Negro' ? p2 : '#EFEDE8';
-      return { name: c.name, emoji: c.emoji, strong: strong, mid: p1, soft: soft };
+      const t = window.SunsetTree.TREES[c.name];
+      return { name: c.name, emoji: c.emoji, strong: t.accent, mid: t.mid };
     });
     // Semanas en que se evalúa cada palabra.
     Y.evalWeeks = {};
@@ -107,6 +96,7 @@
   //   AAAA/wN/a/Palabra   respuestas [5 valores de 1 a 5 o null]
   //   AAAA/wN/c/Palabra   comentario sobre la palabra
   //   AAAA/wN/d0..d6      registro del día (0 = domingo)
+  //   AAAA/wN/p0..p6      cumplimiento del día (0 a 100), del control deslizante
   //   AAAA/wN/maestria    palabra confirmada como maestría de la semana
   //   AAAA/wN/funciono    ¿qué funcionó? ¿qué mejorar?
   //   AAAA/wN/intencion   intención para la próxima semana
@@ -307,12 +297,11 @@
     const root = document.documentElement.style;
     root.setProperty('--wk', t.strong);
     root.setProperty('--wk-mid', t.mid);
-    root.setProperty('--wk-soft', t.soft);
     // Paisaje de la semana: una imagen fija por color (ancha para pantallas grandes, alta para celulares).
     if (shown !== t.name) {
       shown = t.name;
       const base = 'images/trees/' + t.name;
-      $('hero').style.backgroundColor = t.name === 'Negro' ? '#120a0e' : '#4a2238';
+      $('hero').style.backgroundColor = treeOf(t.name).top;
       $('heroWide').srcset = base + '-wide.webp';
       $('heroImg').src = base + '-tall.webp';
     }
@@ -321,8 +310,11 @@
 
   function renderHeader() {
     const h = $('headerDate');
-    h.textContent = WEEKDAYS[now.getDay()] + ' ' + fmtDate(now);
-    const sub = TODAY.inRange ? 'Sunset ' + TODAY.Y.year + ' · semana ' + TODAY.week + ' de ' + TODAY.Y.weeks.length
+    h.textContent = '';
+    const long = el('span', 'd-long', WEEKDAYS[now.getDay()] + ', ' + now.getDate() + ' de ' + MONTHS[now.getMonth()] + ', ' + now.getFullYear());
+    const short = el('span', 'd-short', WEEKDAYS[now.getDay()].slice(0, 3) + ' ' + now.getDate() + ' ' + MONTHS[now.getMonth()].slice(0, 3) + ' ' + now.getFullYear());
+    h.appendChild(long); h.appendChild(short);
+    const sub = TODAY.inRange ? 'Semana ' + TODAY.week + ' de ' + TODAY.Y.weeks.length
       : TODAY.before ? 'Sunset ' + TODAY.Y.year + ' empieza el ' + fmtDate(TODAY.Y.start)
         : 'Falta cargar la planilla del año siguiente';
     h.appendChild(el('small', null, sub));
@@ -602,9 +594,163 @@
     legend.appendChild(el('span', null, 'Centro dorado = fue maestría de la semana'));
   }
 
+  // ── Las siete palabras de la semana ──
+  // Toda la columna del tablero está "en juego"; la dimensión d tiene su día: lunes a sábado y el cierre semanal.
+  const DIM_DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Cierre semanal'];
+  let selDim = null;
+
+  function renderDims() {
+    const wk = Y.weeks[viewing - 1];
+    const nav = $('dims');
+    Array.from(nav.querySelectorAll('.dim')).forEach((n) => n.remove());
+    const today = todayIndex();                       // 0 = domingo
+    const todayDim = today >= 1 && today <= 6 ? today - 1 : -1;
+    if (selDim === null || !isCurrent()) selDim = todayDim >= 0 ? todayDim : null;
+    for (let d = 0; d < 7; d++) {
+      const word = Y.board[d][wk.col];
+      const evaluated = ((d - wk.phase + 7) % 7) < 3;
+      const b = el('button', 'dim' + (evaluated ? ' is-eval' : '') + (d === todayDim ? ' is-today' : '') + (d === selDim ? ' is-sel' : ''));
+      b.type = 'button';
+      b.dataset.d = d;
+      b.setAttribute('aria-label', 'Abrir ' + word + ' (' + Y.dimensions[d] + ', ' + DIM_DAYS[d] + ')' + (evaluated ? '. Palabra principal: se evalúa esta semana' : '. Está en juego pero se evalúa otra semana'));
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'dim-ico');
+      svg.setAttribute('viewBox', '0 0 48 48');
+      svg.setAttribute('aria-hidden', 'true');
+      const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+      use.setAttribute('href', '#d-' + d);
+      svg.appendChild(use);
+      b.appendChild(svg);
+      b.appendChild(el('span', 'dim-name', Y.dimensions[d]));
+      b.appendChild(el('span', 'dim-word', word));
+      b.appendChild(el('span', 'dim-day', DIM_DAYS[d]));
+      b.addEventListener('click', function () {
+        selDim = d;
+        markSelected();
+        accessWord(d, word, evaluated);
+      });
+      nav.appendChild(b);
+    }
+    requestAnimationFrame(function () { markSelected(true); });
+  }
+  // Cada ícono es la entrada a su palabra. Las tres principales llevan a la autoevaluación con la palabra
+  // abierta; las otras cuatro (en juego, pero no evaluadas esta semana) abren una ficha con sus preguntas.
+  function accessWord(d, word, evaluated) {
+    if (evaluated) {
+      openWord = word;
+      renderEvaluation();
+      $('evaluation').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    const next = nextEvalWeek(Y, word, viewing);
+    const nw = Y.weeks[next - 1];
+    $('wordEyebrow').textContent = Y.dimensions[d] + ' · ' + DIM_DAYS[d];
+    $('wordTitle').textContent = word;
+    $('wordWhen').textContent = 'Está en juego esta semana, pero se evalúa en la semana ' + next + ' (' + nw.dates + '). Estas son sus preguntas:';
+    const list = $('wordQs');
+    list.innerHTML = '';
+    (Y.questions[word] || []).forEach((q) => list.appendChild(el('li', null, q)));
+    const go = $('wordGo');
+    go.textContent = next === viewing ? 'Ver la autoevaluación' : 'Ir a la semana ' + next;
+    go.onclick = function () { closeWord(); goTo(Y, next); };
+    $('wordModal').hidden = false;
+    go.focus();
+  }
+  function closeWord() { $('wordModal').hidden = true; }
+  $('wordClose').addEventListener('click', closeWord);
+  $('wordModal').addEventListener('click', function (e) { if (e.target === this) closeWord(); });
+
+  // Mueve el marco dorado hasta la palabra elegida.
+  function markSelected(instant) {
+    const nav = $('dims'), glow = $('dimGlow');
+    nav.querySelectorAll('.dim').forEach((n) => n.classList.toggle('is-sel', Number(n.dataset.d) === selDim));
+    const item = selDim === null ? null : nav.querySelector('.dim[data-d="' + selDim + '"]');
+    if (!item) { glow.classList.remove('on'); return; }
+    if (instant) glow.style.transition = 'none';
+    glow.style.width = item.offsetWidth + 'px';
+    glow.style.transform = 'translateX(' + item.offsetLeft + 'px)';
+    glow.classList.add('on');
+    if (instant) { void glow.offsetWidth; glow.style.transition = ''; }
+    // En pantallas angostas la franja se desplaza: dejar la palabra elegida a la vista.
+    const want = item.offsetLeft - (nav.clientWidth - item.offsetWidth) / 2;
+    if (nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: Math.max(0, want), behavior: instant ? 'auto' : 'smooth' });
+  }
+  window.addEventListener('resize', debounce(function () { if (Y) markSelected(true); }, 200));
+
+  // ── Frase del día y cumplimiento (el control deslizante) ──
+  const pKey = (day) => k(Y, viewing, 'p' + day);
+  function weekFulfilment() {
+    const vals = [0, 1, 2, 3, 4, 5, 6].map((d) => getV(pKey(d), null)).filter((v) => v != null);
+    return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null;
+  }
+  function renderToday() {
+    const wk = Y.weeks[viewing - 1];
+    const day = todayIndex();
+    const label = $('todayLabel'), text = $('todayText'), more = $('todayMore'), meter = $('meter');
+    let full = '';
+    if (day >= 0) {
+      const c = day === 0 ? null : DAY_CARDS.find((x) => x.day === day);
+      label.textContent = (c ? c.label : 'La frase de la semana') + ' · ' + WEEKDAYS[day];
+      full = day === 0 ? wk.hook : c.key === 'sabado' ? wk.sabado.join('  ') : wk[c.key];
+    } else {
+      label.textContent = 'La frase de la semana';
+      full = wk.hook;
+    }
+    text.textContent = full;
+    more.hidden = day < 0 || full.length < 140;
+    // Tocar la frase lleva a la tarjeta completa de ese día.
+    const toCard = function () {
+      if (day < 0) return;
+      const target = day >= 1 ? document.querySelectorAll('#days .card')[day - 1] : $('sunday');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    more.onclick = toCard;
+    text.onclick = toCard;
+    text.style.cursor = day < 0 ? 'default' : 'pointer';
+    meter.innerHTML = '';
+    if (day >= 0) {
+      const v = getV(pKey(day), null);
+      const head = el('div', 'meter-head');
+      const lab = el('label', null, 'Cumplimiento de hoy');
+      lab.setAttribute('for', 'dayPct');
+      const out = el('output', null, v == null ? '—' : v + '%');
+      out.id = 'dayPctOut';
+      head.appendChild(lab); head.appendChild(out);
+      const input = el('input');
+      input.type = 'range'; input.id = 'dayPct'; input.min = 0; input.max = 100; input.step = 5;
+      input.value = v == null ? 0 : v;
+      input.classList.toggle('unset', v == null);
+      input.style.setProperty('--p', (v == null ? 0 : v) + '%');
+      input.setAttribute('aria-valuetext', v == null ? 'sin registrar' : v + ' por ciento');
+      const commit = debounce(function () { setV(pKey(day), Number(input.value)); }, 400);
+      input.addEventListener('input', function () {
+        input.classList.remove('unset');
+        input.style.setProperty('--p', input.value + '%');
+        out.textContent = input.value + '%';
+        input.setAttribute('aria-valuetext', input.value + ' por ciento');
+        commit();
+      });
+      input.addEventListener('change', function () { setV(pKey(day), Number(input.value)); });
+      meter.appendChild(head); meter.appendChild(input);
+    } else {
+      const avg = weekFulfilment();
+      const head = el('div', 'meter-head');
+      head.appendChild(el('span', null, 'Cumplimiento de la semana'));
+      head.appendChild(el('output', null, avg == null ? '—' : avg + '%'));
+      meter.appendChild(head);
+      const bar = el('div', 'meter-bar');
+      const fill = el('i'); fill.style.width = (avg || 0) + '%';
+      bar.appendChild(fill);
+      meter.appendChild(bar);
+      meter.appendChild(el('p', 'meter-note', avg == null ? 'Se registra día a día desde la tarjeta de hoy.' : 'Promedio de los días que registraste.'));
+    }
+  }
+
   function render() {
     applyTheme();
     renderWeekBar();
+    renderDims();
+    renderToday();
     renderSunday();
     renderDays();
     renderEvaluation();
@@ -861,7 +1007,7 @@
     const head = ['Año', 'Semana', 'Fechas', 'Color'];
     WEEKDAYS.forEach((d) => head.push('Registro ' + d));
     for (let i = 1; i <= 3; i++) head.push('Palabra ' + i, 'Respuestas ' + i, '% ' + i, 'Comentario ' + i);
-    head.push('% semana', 'Maestría', 'Qué funcionó / mejorar', 'Intención');
+    head.push('% semana', 'Cumplimiento (D L M X J V S)', 'Maestría', 'Qué funcionó / mejorar', 'Intención');
     const rows = [head];
     YEARS.forEach(function (YY) {
       YY.weeks.forEach(function (wk) {
@@ -872,7 +1018,7 @@
           row.push(a.word, getAnswers(YY, w, a.word).map((v) => v || '-').join(' '),
             Math.round(wordScore(YY, w, a.word) * 100), getV(k(YY, w, 'c/' + a.word), ''));
         });
-        row.push(Math.round(weekScore(YY, w) * 100), getV(k(YY, w, 'maestria'), ''),
+        row.push(Math.round(weekScore(YY, w) * 100), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'p' + d), null); return v == null ? '-' : v; }).join(' '), getV(k(YY, w, 'maestria'), ''),
           getV(k(YY, w, 'funciono'), ''), getV(k(YY, w, 'intencion'), ''));
         rows.push(row);
       });
@@ -981,6 +1127,7 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && editing) { closeEditor(); return; }
+    if (e.key === 'Escape' && !$('wordModal').hidden) { closeWord(); return; }
     if (e.target.closest('input,textarea') || !$('welcome').hidden || editing) return;
     if (e.key === 'ArrowLeft') step(-1);
     if (e.key === 'ArrowRight') step(1);

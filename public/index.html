@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>SUNSET — Richarh Rojas</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#2a1a08">
+<meta name="theme-color" content="#1c102b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SUNSET">
 <link rel="manifest" href="manifest.webmanifest">
@@ -13,15 +13,15 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Nunito:wght@800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 <div class="frame">
   <header class="hero" id="hero">
     <picture class="hero-pic">
-      <source id="heroWide" media="(min-width: 561px)">
-      <img id="heroImg" alt="" width="480" height="430" decoding="async">
+      <source id="heroWide" media="(min-width: 521px)">
+      <img id="heroImg" alt="" width="480" height="505" decoding="async">
     </picture>
     <div class="hero-top">
       <div class="logo">
@@ -33,7 +33,10 @@
       </div>
       <div class="header-date" id="headerDate"></div>
     </div>
-    <nav class="hero-bottom" aria-label="Semana">
+    <nav class="dims" id="dims" aria-label="Las siete palabras de la semana">
+      <span class="dim-glow" id="dimGlow" aria-hidden="true"></span>
+    </nav>
+    <div class="hero-bottom">
       <div class="week-info">
         <div class="week-eyebrow" id="weekSub"></div>
         <h2 class="week-num" id="weekNum"></h2>
@@ -44,8 +47,16 @@
         <button class="today-btn" id="todayBtn" hidden>Hoy</button>
         <button class="nav-btn" id="nextWeek" aria-label="Semana siguiente"><svg class="ico"><use href="#i-right"/></svg></button>
       </div>
-    </nav>
+    </div>
+    <div class="signature" aria-hidden="true">Richarh Rojas</div>
   </header>
+
+  <aside class="today" id="today" aria-label="Frase del día">
+    <div class="today-label" id="todayLabel"></div>
+    <p class="today-text" id="todayText"></p>
+    <button type="button" class="today-more" id="todayMore">Leer completo</button>
+    <div class="meter" id="meter"></div>
+  </aside>
 
   <nav class="jump" aria-label="Ir a una sección">
     <button type="button" data-go="today">Hoy</button>
@@ -133,7 +144,6 @@
     </details>
   </main>
 
-  <footer>Richarh Rojas</footer>
 </div>
 
 <div class="modal" id="welcome" hidden role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
@@ -141,6 +151,8 @@
     <h2 id="welcomeTitle">Bienvenido a Sunset</h2>
     <p>Cada semana tiene un color y 3 palabras activas.</p>
     <ul>
+      <li><b>Las siete palabras:</b> arriba, una por dimensión. Las tres principales de la semana brillan; tocá cualquiera para abrirla.</li>
+      <li><b>Frase de hoy:</b> la tarjeta de vidrio muestra el @ del día; debajo, el control de <i>cumplimiento</i> para registrar cuánto cumpliste hoy.</li>
       <li><b>Domingo:</b> el título y la frase de la semana.</li>
       <li><b>Lunes a sábado:</b> un @ por día. El registro de hoy se escribe en su tarjeta (con <i>Ampliar</i> para textos largos); el de los otros días se abre desde su pestaña y no se ve en la tarjeta.</li>
       <li><b>Autoevaluación:</b> tocá cada palabra, respondé sus 5 preguntas del 1 (nunca) al 5 (siempre) y dejá un comentario.</li>
@@ -183,6 +195,19 @@
   </form>
 </div>
 
+<div class="modal" id="wordModal" hidden role="dialog" aria-modal="true" aria-labelledby="wordTitle">
+  <div class="modal-box">
+    <div class="sheet-eyebrow" id="wordEyebrow"></div>
+    <h2 id="wordTitle"></h2>
+    <p id="wordWhen"></p>
+    <ol class="word-qs" id="wordQs"></ol>
+    <div class="ask-actions">
+      <button class="btn primary" id="wordGo" type="button"></button>
+      <button class="btn" id="wordClose" type="button">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="ask" hidden role="dialog" aria-modal="true" aria-labelledby="askTitle">
   <div class="modal-box">
     <h2 id="askTitle"></h2>
@@ -194,6 +219,15 @@
 <div class="toast" id="toast" hidden></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><radialGradient id="goldGlow"><stop offset="0" stop-color="#ffe9a0" stop-opacity=".95"/><stop offset=".45" stop-color="#ffd700" stop-opacity=".55"/><stop offset="1" stop-color="#f0a830" stop-opacity="0"/></radialGradient></defs>
+  <symbol id="d-0" viewBox="0 0 48 48"><circle class="glow" cx="24" cy="16" r="11"/><circle cx="24" cy="16" r="5"/><path d="M31.50 16.00 L34.50 16.00 M29.30 21.30 L31.42 23.42 M24.00 23.50 L24.00 26.50 M18.70 21.30 L16.58 23.42 M16.50 16.00 L13.50 16.00 M18.70 10.70 L16.58 8.58 M24.00 8.50 L24.00 5.50 M29.30 10.70 L31.42 8.58"/><path d="M5 28 C5 37 13 43 24 43 C35 43 43 37 43 28"/><path d="M5 28 C10 29 15 32 19 36 M43 28 C38 29 33 32 29 36"/><path d="M10 33.5 C13 36.5 17 38.5 21 39.5 M38 33.5 C35 36.5 31 38.5 27 39.5" opacity=".75"/></symbol>
+  <symbol id="d-1" viewBox="0 0 48 48"><circle class="glow" cx="24" cy="14" r="9"/><path d="M19 42 L21 19 H27 L29 42 Z"/><path d="M20.4 27 H27.6 M19.7 34.5 H28.3"/><path d="M20 19 V14 H28 V19"/><path d="M19 14 L24 9 L29 14"/><circle cx="24" cy="16.5" r="1.6"/><path d="M15 42 H33"/><path d="M31 15 L45 11.5 M31 17.5 L45 18 M17 15 L3 11.5 M17 17.5 L3 18" opacity=".7"/></symbol>
+  <symbol id="d-2" viewBox="0 0 48 48"><circle class="glow" cx="24" cy="18" r="10"/><path d="M24 41 C19 37.5 12 37 6 38.5 V25 C12 23.5 19 24 24 27.5 C29 24 36 23.5 42 25 V38.5 C36 37 29 37.5 24 41 Z"/><path d="M24 27.5 V41"/><path d="M24 26 V17"/><path d="M24 20 C24 15 19.5 13 15.5 14 C15.5 18.5 19 21 24 20 Z"/><path d="M24 17 C24 12 28.5 10 32.5 11 C32.5 15.5 29 18 24 17 Z"/></symbol>
+  <symbol id="d-3" viewBox="0 0 48 48"><circle class="glow" cx="35" cy="11" r="8"/><path d="M3 42 L20 13 L29 28 L33 22 L45 42 Z"/><path d="M16 42 L25 36.5 L15.5 31 L24 25.5 L17.5 21.5 L20 16.5" /><circle cx="35" cy="11" r="2.6"/><path d="M39.60 11.00 L41.60 11.00 M38.25 14.25 L39.67 15.67 M35.00 15.60 L35.00 17.60 M31.75 14.25 L30.33 15.67 M30.40 11.00 L28.40 11.00 M31.75 7.75 L30.33 6.33 M35.00 6.40 L35.00 4.40 M38.25 7.75 L39.67 6.33" opacity=".85"/></symbol>
+  <symbol id="d-4" viewBox="0 0 48 48"><circle class="glow" cx="24" cy="15" r="12"/><path d="M16 7 H32 L38 14 L24 29 L10 14 Z"/><path d="M10 14 H38 M16 7 L19.5 14 L24 7 L28.5 14 L32 7 M19.5 14 L24 29 L28.5 14"/><path d="M41 4 V9 M38.5 6.5 H43.5" opacity=".9"/><path d="M4 38 C9 35.5 14 36.5 18 38.5 H29.5 C32.2 38.5 32.2 42 29.5 42 H20 M18 38.5 L11 42.5 L4 41 M20 42 L33 42 L42 38.5"/></symbol>
+  <symbol id="d-5" viewBox="0 0 48 48"><circle class="glow" cx="24" cy="18" r="12"/><path d="M17 31 C17 26 19.5 24 21 21 C18 21.2 15.5 19.5 15.2 17 L20 10.5 L19.5 6.5 L23 8.2 C24 7.8 25 7.6 26 7.8 C32 9 34.5 15 33.8 21.5 C33.4 25 33.8 28 34.2 31 Z"/><path d="M14.5 31 H35.5"/><circle cx="23.3" cy="13.4" r=".9"/><path d="M28.5 10.5 C30.5 14 30.5 18 28.5 22"/><path d="M30.88 37.36 L33.05 37.84 L33.05 41.16 L30.88 41.64 L30.82 41.81 L32.29 43.48 L30.35 46.16 L28.30 45.27 L28.16 45.38 L28.37 47.60 L25.22 48.62 L24.09 46.70 L23.91 46.70 L22.78 48.62 L19.63 47.60 L19.84 45.38 L19.70 45.27 L17.65 46.16 L15.71 43.48 L17.18 41.81 L17.12 41.64 L14.95 41.16 L14.95 37.84 L17.12 37.36 L17.18 37.19 L15.71 35.52 L17.65 32.84 L19.70 33.73 L19.84 33.62 L19.63 31.40 L22.78 30.38 L23.91 32.30 L24.09 32.30 L25.22 30.38 L28.37 31.40 L28.16 33.62 L28.30 33.73 L30.35 32.84 L32.29 35.52 L30.82 37.19 Z M26.40 39.50 A2.40 2.40 0 1 0 21.60 39.50 A2.40 2.40 0 1 0 26.40 39.50 Z"/></symbol>
+  <symbol id="d-6" viewBox="0 0 48 48"><circle class="glow" cx="24" cy="24" r="10"/><path d="M23.24 26.80 L25.79 27.40 L25.79 31.60 L23.24 32.20 L23.17 32.41 L24.73 34.51 L22.03 37.72 L19.70 36.54 L19.50 36.66 L19.35 39.27 L15.22 40.00 L14.19 37.59 L13.96 37.55 L12.17 39.46 L8.54 37.36 L9.29 34.86 L9.15 34.68 L6.55 34.99 L5.11 31.05 L7.30 29.61 L7.30 29.39 L5.11 27.95 L6.55 24.01 L9.15 24.32 L9.29 24.14 L8.54 21.64 L12.17 19.54 L13.96 21.45 L14.19 21.41 L15.22 19.00 L19.35 19.73 L19.50 22.34 L19.70 22.46 L22.03 21.28 L24.73 24.49 L23.17 26.59 Z M18.70 29.50 A3.20 3.20 0 1 0 12.30 29.50 A3.20 3.20 0 1 0 18.70 29.50 Z"/><path d="M40.60 13.41 L42.50 14.29 L41.78 17.81 L39.70 17.88 L39.59 18.04 L40.30 20.01 L37.31 21.99 L35.78 20.57 L35.59 20.60 L34.71 22.50 L31.19 21.78 L31.12 19.70 L30.96 19.59 L28.99 20.30 L27.01 17.31 L28.43 15.78 L28.40 15.59 L26.50 14.71 L27.22 11.19 L29.30 11.12 L29.41 10.96 L28.70 8.99 L31.69 7.01 L33.22 8.43 L33.41 8.40 L34.29 6.50 L37.81 7.22 L37.88 9.30 L38.04 9.41 L40.01 8.70 L41.99 11.69 L40.57 13.22 Z M37.10 14.50 A2.60 2.60 0 1 0 31.90 14.50 A2.60 2.60 0 1 0 37.10 14.50 Z"/><path d="M40.90 36.12 L42.39 37.21 L41.17 40.10 L39.35 39.79 L39.23 39.91 L39.52 41.73 L36.61 42.91 L35.55 41.40 L35.38 41.40 L34.29 42.89 L31.40 41.67 L31.71 39.85 L31.59 39.73 L29.77 40.02 L28.59 37.11 L30.10 36.05 L30.10 35.88 L28.61 34.79 L29.83 31.90 L31.65 32.21 L31.77 32.09 L31.48 30.27 L34.39 29.09 L35.45 30.60 L35.62 30.60 L36.71 29.11 L39.60 30.33 L39.29 32.15 L39.41 32.27 L41.23 31.98 L42.41 34.89 L40.90 35.95 Z M37.70 36.00 A2.20 2.20 0 1 0 33.30 36.00 A2.20 2.20 0 1 0 37.70 36.00 Z"/><circle cx="24" cy="24" r="2.6"/><path d="M28.00 24.00 L30.00 24.00 M26.83 26.83 L28.24 28.24 M24.00 28.00 L24.00 30.00 M21.17 26.83 L19.76 28.24 M20.00 24.00 L18.00 24.00 M21.17 21.17 L19.76 19.76 M24.00 20.00 L24.00 18.00 M26.83 21.17 L28.24 19.76" opacity=".9"/></symbol>
+
   <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
   <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>

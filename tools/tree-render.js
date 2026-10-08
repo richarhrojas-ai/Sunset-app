@@ -21,6 +21,20 @@
       flowers: ['#0D0705', '#140B07', '#1C120C', '#24170F'], leaves: ['#060302', '#0A0504'] },
   };
 
+  // Cielo nocturno de cada color: tonos de arriba y del medio, luz detrás de la copa y calidez del horizonte.
+  const SKY = {
+    Lila:     { top: '#1c102b', mid: '#3a1d52', glow: '#a58cf0', warm: '#d96b27', bark: '#2d1f1b' },
+    Azul:     { top: '#190f2e', mid: '#2e1f63', glow: '#8497ff', warm: '#d46a2c', bark: '#2d1f1b' },
+    Rojo:     { top: '#1e0e24', mid: '#4a1a3a', glow: '#ff7656', warm: '#e0702a', bark: '#2d1f1b' },
+    Amarillo: { top: '#1c102b', mid: '#43224f', glow: '#f9cf62', warm: '#e07a2a', bark: '#2d1f1b' },
+    Blanco:   { top: '#1c102b', mid: '#3a2358', glow: '#e4dcf8', warm: '#d96b27', bark: '#2d1f1b' },
+    Verde:    { top: '#14122a', mid: '#2a2350', glow: '#74cf8a', warm: '#d27a2c', bark: '#2d1f1b' },
+    Negro:    { top: '#0f0916', mid: '#2a1626', glow: '#9a6a3c', warm: '#b84a15', bark: '#0a0608' },
+  };
+  const rgbOf = (hex) => { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+  const rgba = (hex, a) => 'rgba(' + rgbOf(hex).join(',') + ',' + a + ')';
+  const mixHex = (a, b, t) => { const A = rgbOf(a), B = rgbOf(b); return 'rgb(' + A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',') + ')'; };
+
   const FORMS = {
     // spread: apertura entre ramas · decay: acortamiento por nivel · depth: niveles
     // lift: cuánto tienden a subir · trunk: largo del tronco relativo · bloom: densidad de flores
@@ -40,43 +54,63 @@
     };
   }
 
-  function drawSky(ctx, w, h, horizon, dark) {
-    const sky = ctx.createLinearGradient(0, 0, 0, horizon);
-    if (dark) {
-      sky.addColorStop(0, '#120a0e'); sky.addColorStop(0.6, '#3a1614'); sky.addColorStop(1, '#8a3a1c');
-    } else {
-      sky.addColorStop(0, '#4a2238'); sky.addColorStop(0.55, '#b8502e'); sky.addColorStop(1, '#f2b45e');
-    }
-    ctx.fillStyle = sky;
-    ctx.fillRect(0, 0, w, horizon);
-  }
-
-  // Sol como el del logo: disco con franjas en la mitad de abajo.
-  function drawSun(ctx, cx, horizon, r, dark) {
-    const g = ctx.createLinearGradient(0, horizon - r, 0, horizon);
-    if (dark) { g.addColorStop(0, '#c9773a'); g.addColorStop(1, '#7a2a12'); }
-    else { g.addColorStop(0, '#ffd27a'); g.addColorStop(0.55, '#f7a646'); g.addColorStop(1, '#ec6a2c'); }
-    ctx.save();
-    ctx.beginPath(); ctx.rect(0, 0, ctx.canvas.width, horizon); ctx.clip();
-    ctx.beginPath(); ctx.arc(cx, horizon, r, 0, Math.PI * 2); ctx.clip();
+  // Cielo de noche con un halo de luz detrás de la copa y calidez al ras del horizonte.
+  function drawSky(ctx, w, h, horizon, sky, cx, cy, R) {
+    const g = ctx.createLinearGradient(0, 0, 0, horizon);
+    g.addColorStop(0, sky.top);
+    g.addColorStop(0.6, sky.mid);
+    g.addColorStop(1, mixHex(sky.mid, sky.warm, 0.78));
     ctx.fillStyle = g;
-    ctx.fillRect(cx - r, horizon - r, r * 2, r);
-    // Franjas: líneas del color del cielo, cada vez más gruesas hacia el horizonte.
-    ctx.fillStyle = dark ? '#5a2416' : '#e08a44';
-    for (let i = 0; i < 4; i++) {
-      const y = horizon - r * (0.42 - i * 0.1);
-      ctx.fillRect(cx - r, y, r * 2, r * (0.018 + i * 0.012));
-    }
+    ctx.fillRect(0, 0, w, horizon);
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 0, w, horizon); ctx.clip();
+    const halo = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    halo.addColorStop(0, rgba(sky.glow, 0.7));
+    halo.addColorStop(0.4, rgba(sky.glow, 0.3));
+    halo.addColorStop(1, rgba(sky.glow, 0));
+    ctx.fillStyle = halo;
+    ctx.fillRect(0, 0, w, horizon);
+    // Luz baja y ancha en el horizonte.
+    ctx.translate(cx, horizon);
+    ctx.scale(1, 0.26);
+    const low = ctx.createRadialGradient(0, 0, 0, 0, 0, w * 0.75);
+    low.addColorStop(0, rgba(sky.warm, 0.55));
+    low.addColorStop(0.5, rgba(sky.warm, 0.18));
+    low.addColorStop(1, rgba(sky.warm, 0));
+    ctx.fillStyle = low;
+    ctx.fillRect(-w, -h * 2, w * 2, h * 4);
     ctx.restore();
   }
 
-  function drawGround(ctx, w, h, horizon) {
+  // Suelo oscuro con un reflejo de luz y una alfombra de pétalos caídos.
+  function drawGround(ctx, rand, w, h, horizon, sky, flowers, cx, scale, dark) {
     const g = ctx.createLinearGradient(0, horizon, 0, h);
-    g.addColorStop(0, '#24110a'); g.addColorStop(1, '#0e0604');
+    g.addColorStop(0, mixHex(sky.warm, '#000000', 0.78));
+    g.addColorStop(1, mixHex(sky.top, '#000000', 0.45));
     ctx.fillStyle = g;
     ctx.fillRect(0, horizon, w, h - horizon);
-    ctx.fillStyle = 'rgba(255,190,120,0.18)';
-    ctx.fillRect(0, horizon, w, 1);
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, horizon, w, h - horizon); ctx.clip();
+    ctx.translate(cx, horizon);
+    ctx.scale(1, 0.22);
+    const lit = ctx.createRadialGradient(0, 0, 0, 0, 0, w * 0.55);
+    lit.addColorStop(0, rgba(sky.warm, dark ? 0.35 : 0.6));
+    lit.addColorStop(1, rgba(sky.warm, 0));
+    ctx.fillStyle = lit;
+    ctx.fillRect(-w, -h, w * 2, h * 4);
+    ctx.restore();
+    // Alfombra de pétalos: más densa y chica cerca del horizonte, más grande hacia adelante.
+    const n = Math.round(w * 0.55);
+    for (let i = 0; i < n; i++) {
+      const v = Math.pow(rand(), 1.5);                       // 0 = horizonte, 1 = abajo
+      const spread = scale * (4.2 + v * 4.5);
+      const x = cx + (rand() * 2 - 1) * spread;
+      const y = horizon + 3 + v * (h - horizon) * 0.62;
+      const edge = Math.abs(x - cx) / spread;
+      ctx.globalAlpha = Math.max(0.15, (dark ? 0.55 : 0.85) * (1 - edge * 0.8));
+      drawFlower(ctx, x, y, 1.1 + v * 2.2, flowers[Math.floor(rand() * flowers.length)], rand() * 3);
+    }
+    ctx.globalAlpha = 1;
   }
 
   function drawFlower(ctx, x, y, r, color, rot) {
@@ -189,16 +223,17 @@
     const ctx = layer.getContext('2d');
     ctx.scale(dpr, dpr);
     const w = cssW, h = cssH;
-    const horizon = h * 0.74;
-    const narrow = w < 640;
-    const treeX = narrow ? w * 0.5 : w * 0.66;
+    const wideFmt = w > h;
+    const horizon = h * (wideFmt ? 0.84 : 0.87);       // más abajo: arriba queda lugar para la franja de palabras
+    const treeX = w * 0.5;
     const dark = tree.form === 'silhouette';
-    drawSky(ctx, w, h, horizon, dark);
-    drawSun(ctx, narrow ? w * 0.5 : w * 0.66, horizon, Math.min(w, h) * (narrow ? 0.34 : 0.3), dark);
+    const sky = SKY[colorName] || SKY.Lila;
 
     const rand = rng(seed);
-    const scale = Math.min(h * (narrow ? 0.12 : 0.135), w * (narrow ? 0.15 : 0.11)) * (form.flat && narrow ? 0.85 : 1);
-    const bark = dark ? '#070403' : '#2a150a';
+    const scale = Math.min(h * (wideFmt ? 0.1 : 0.088), w * 0.115) * (form.flat && w < 640 ? 0.9 : 1);
+    const bark = sky.bark;
+    const glowY = horizon - scale * 3.2;                 // centro de la copa
+    drawSky(ctx, w, h, horizon, sky, treeX, glowY, scale * 7.5);
     const tips = growTree(ctx, rand, treeX, horizon + 2, scale, form, bark);
 
     // Flores (u hojas) en las puntas.
@@ -268,22 +303,18 @@
         }
       });
     }
-    ctx.globalAlpha = dark ? 0.9 : 0.92;
+    ctx.globalAlpha = dark ? 0.92 : 0.95;
     blossoms.forEach(function (b) {
-      if (form.leaf) drawLeaf(ctx, b[0], b[1], b[2] * 1.15, b[3], b[4]);
-      else drawFlower(ctx, b[0], b[1], b[2], b[3], b[4]);
+      let c = b[3];
+      if (!dark) {   // luz de atrás: las flores cercanas al halo se aclaran
+        const d = Math.hypot(b[0] - treeX, b[1] - glowY) / (scale * 3.8);
+        c = mixHex(c, '#ffd9a0', Math.max(0, 1 - d) * 0.36);
+      }
+      if (form.leaf) drawLeaf(ctx, b[0], b[1], b[2] * 1.15, c, b[4]);
+      else drawFlower(ctx, b[0], b[1], b[2], c, b[4]);
     });
     ctx.globalAlpha = 1;
-    drawGround(ctx, w, h, horizon);
-
-    // Pétalos caídos en el suelo.
-    for (let i = 0; i < 10; i++) {
-      const x = treeX + (rand() - 0.5) * scale * 2.6;
-      const y = horizon + 3 + rand() * (h - horizon) * 0.12;
-      ctx.globalAlpha = 0.45;
-      drawFlower(ctx, x, y, 1.6 + rand() * 1.2, tree.flowers[i % tree.flowers.length], rand() * 3);
-    }
-    ctx.globalAlpha = 1;
+    drawGround(ctx, rand, w, h, horizon, sky, tree.flowers, treeX, scale, dark);
 
     canvas.getContext('2d').drawImage(layer, 0, 0);
     return tree;

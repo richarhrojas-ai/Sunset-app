@@ -4,14 +4,16 @@
 (function () {
   'use strict';
 
+  // accent/mid: colores de la interfaz de esa semana · ink: tonos de la flor en el progreso y el tablero
+  // · top: color del cielo arriba (se ve mientras carga la imagen)
   const TREES = {
-    Lila: { ink: ['#B565C9', '#D58AD8'], name: 'Lapacho morado', sci: 'Handroanthus impetiginosus' },
-    Azul: { ink: ['#6A6CC9', '#9AA0EC'], name: 'Jacarandá', sci: 'Jacaranda mimosifolia' },
-    Rojo: { ink: ['#D42A18', '#EF5A44'], name: 'Flamboyán', sci: 'Delonix regia' },
-    Amarillo: { ink: ['#E8A90C', '#F5C518'], name: 'Lapacho amarillo', sci: 'Handroanthus albus' },
-    Blanco: { ink: ['#E9CFDB', '#FBF1F5'], name: 'Lapacho blanco', sci: 'Tabebuia roseoalba' },
-    Verde: { ink: ['#4E9A3B', '#86C25A'], name: 'Árbol en hoja nueva', sci: '' },
-    Negro: { ink: ['#2A2420', '#5A4C42'], name: 'Silueta al atardecer', sci: '' },
+    Lila:     { name: 'Lapacho morado',      sci: 'Handroanthus impetiginosus', accent: '#c9a0f0', mid: '#9b59b6', ink: ['#b565c9', '#d58ad8'], top: '#1c102b' },
+    Azul:     { name: 'Jacarandá',           sci: 'Jacaranda mimosifolia',      accent: '#a9b0fa', mid: '#6a6cc9', ink: ['#6a6cc9', '#9aa0ec'], top: '#190f2e' },
+    Rojo:     { name: 'Flamboyán',           sci: 'Delonix regia',              accent: '#ff8e7b', mid: '#d4392a', ink: ['#d42a18', '#ef5a44'], top: '#1e0e24' },
+    Amarillo: { name: 'Lapacho amarillo',    sci: 'Handroanthus albus',         accent: '#f7cf55', mid: '#c99a10', ink: ['#e8a90c', '#f5c518'], top: '#1c102b' },
+    Blanco:   { name: 'Lapacho blanco',      sci: 'Tabebuia roseoalba',         accent: '#f4ebf6', mid: '#b9a8c0', ink: ['#e9cfdb', '#fbf1f5'], top: '#1c102b' },
+    Verde:    { name: 'Árbol en hoja nueva', sci: '',                           accent: '#98d878', mid: '#4e9a3b', ink: ['#4e9a3b', '#86c25a'], top: '#14122a' },
+    Negro:    { name: 'Silueta al atardecer', sci: '',                          accent: '#e3cfa2', mid: '#8c7b5c', ink: ['#a8997f', '#e3cfa2'], top: '#0f0916' },
   };
 
   // Flor sola en SVG, para el progreso del año y el tablero.
