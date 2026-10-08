@@ -5,23 +5,39 @@ Dashboard semanal del Sistema Sunset (Richarh Rojas).
 ## Estructura
 
 ```
-index.html                    App completa (HTML + CSS + JS en un solo archivo)
-netlify/functions/notion.js   Proxy hacia la API de Notion
-netlify.toml                  Configuración de Netlify
+index.html                    App Sunset 2027
+css/app.css                   Estilos
+js/app.js                     Lógica (rotación, autoevaluación, tablero, respaldo)
+data/sunset-contenido-2027.xlsx   Planilla fuente (contenido de las 52 semanas)
+data/sunset-2027.js           Datos generados desde la planilla — no editar a mano
+tools/build_data.py           Generador de data/sunset-2027.js
+manifest.webmanifest, sw.js, icons/   Instalación como app (PWA) y uso sin conexión
+2026.html                     App anterior (2026), se mantiene hasta fin de año
+netlify/functions/notion.js   Proxy hacia la API de Notion (lo usa 2026.html)
 ```
 
-## Datos
+## Actualizar el contenido
 
-- El progreso se guarda en `localStorage` del navegador (clave `sunset_v10_2026`).
-- Los registros diarios, evaluaciones y @ semanales se envían a tres bases de Notion
-  a través de `/.netlify/functions/notion`.
+1. Reemplazar `data/sunset-contenido-2027.xlsx` por la versión nueva.
+2. Correr `python3 tools/build_data.py` (requiere `openpyxl`).
+3. Si cambió algún archivo de la app, subir la versión de caché en `sw.js` (`sunset-2027-vN`).
 
-## Configuración en Netlify
+El script valida que las 3 palabras principales de cada semana coincidan con la rotación:
 
-En **Site configuration → Environment variables**, crear:
+```
+phase     = floor((semana-1) / 7)
+col       = (3 + (semana-1) % 7) % 7
+palabra_k = tablero[(phase+k) % 7][col]     // k = 0,1,2 activas; 3..6 "en juego"
+```
 
-| Variable       | Valor                              |
-| -------------- | ---------------------------------- |
-| `NOTION_TOKEN` | Token de la integración de Notion  |
+La columna define el color: Negro, Rojo, Azul, Lila, Verde, Amarillo, Blanco.
 
-La función solo acepta el endpoint `pages` de Notion.
+## Datos del usuario
+
+El progreso se guarda en `localStorage` (clave `sunset_2027_v1`). No hay sincronización
+entre dispositivos: usar *Respaldo de datos → Exportar / Importar*.
+
+## Configuración en Netlify (solo para 2026.html)
+
+En **Site configuration → Environment variables**, crear `NOTION_TOKEN` con el token de la
+integración de Notion. La función solo acepta el endpoint `pages`.
