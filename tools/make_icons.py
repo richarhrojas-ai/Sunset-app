@@ -57,14 +57,14 @@ icons[4] = (G(24, 15, 12) +
   '<path d="M41 4 V9 M38.5 6.5 H43.5" opacity=".9"/>'
   '<path d="M4 38 C9 35.5 14 36.5 18 38.5 H29.5 C32.2 38.5 32.2 42 29.5 42 H20 M18 38.5 L11 42.5 L4 41 M20 42 L33 42 L42 38.5"/>')
 
-# 5 · Estrategia: caballo de ajedrez sobre un engranaje
-icons[5] = (G(24, 18, 12) +
+# 6 · Sistema: caballo de ajedrez sobre un engranaje (sus palabras son de ajedrez)
+icons[6] = (G(24, 18, 12) +
   '<path d="M17 31 C17 26 19.5 24 21 21 C18 21.2 15.5 19.5 15.2 17 L20 10.5 L19.5 6.5 L23 8.2 C24 7.8 25 7.6 26 7.8 C32 9 34.5 15 33.8 21.5 C33.4 25 33.8 28 34.2 31 Z"/>'
   '<path d="M14.5 31 H35.5"/><circle cx="23.3" cy="13.4" r=".9"/><path d="M28.5 10.5 C30.5 14 30.5 18 28.5 22"/>'
   f'<path d="{gear(24, 39.5, 9.2, 7.2, 10, hole=2.4)}"/>')
 
-# 6 · Sistema: tres engranajes conectados con un sol radiante al centro
-icons[6] = (G(24, 24, 10) +
+# 5 · Estrategia: tres engranajes conectados con un sol radiante al centro
+icons[5] = (G(24, 24, 10) +
   f'<path d="{gear(15.5, 29.5, 10.5, 8.2, 9, hole=3.2)}"/>'
   f'<path d="{gear(34.5, 14.5, 8, 6.2, 8, hole=2.6, rot=.2)}"/>'
   f'<path d="{gear(35.5, 36, 7, 5.4, 8, hole=2.2, rot=.4)}"/>'
