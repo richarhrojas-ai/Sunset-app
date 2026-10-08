@@ -744,19 +744,22 @@
   }
 
   // Lo que se anotó como intención la semana pasada, como recordatorio sutil al empezar esta.
+  // La semana 1 del primer año cargado no tiene semana anterior: ahí se escribe a mano (clave AAAA/w0/intencion).
+  // Si existe el año anterior, la semana 1 continúa la última semana de ese año.
   function renderIntent() {
     const p = $('intent');
+    const prev = viewing === 1 ? YEARS[yearIndex(Y.year) - 1] : null;
+    const starter = viewing === 1 && !prev;
     let text = '';
     if (viewing > 1) text = String(getV(k(Y, viewing - 1, 'intencion'), '')).trim();
-    else {
-      const prev = YEARS[yearIndex(Y.year) - 1];
-      if (prev) text = String(getV(k(prev, prev.weeks.length, 'intencion'), '')).trim();
-    }
+    else if (prev) text = String(getV(k(prev, prev.weeks.length, 'intencion'), '')).trim();
     p.textContent = '';
-    p.hidden = !text;
-    if (!text) return;
+    p.hidden = !text && !starter;
+    if (p.hidden) return;
+    p.classList.toggle('is-edit', starter);
     p.appendChild(el('span', 'intent-label', 'Esta semana quiero…'));
-    p.appendChild(document.createTextNode(' ' + text));
+    if (starter) p.appendChild(noteField(Y.year + '/w0/intencion', 'Para empezar, ¿qué quiero esta primera semana?', 1));
+    else p.appendChild(document.createTextNode(' ' + text));
   }
 
   function render() {

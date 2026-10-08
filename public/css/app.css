@@ -145,6 +145,9 @@ main{padding:18px;display:flex;flex-direction:column;gap:20px;flex:1;}
 /* ── DOMINGO ── */
 .intent{margin:-4px 4px 0;font-size:14px;font-weight:300;font-style:italic;line-height:1.6;color:var(--txt2);white-space:pre-line;}
 .intent[hidden]{display:none;}
+.intent.is-edit{font-style:normal;}
+.intent.is-edit .note{margin-top:6px;font-size:14px;font-style:italic;background:transparent;border-color:var(--line);}
+.intent.is-edit .note:focus{font-style:normal;}
 .intent-label{font-style:normal;font-size:11px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--wk);margin-right:4px;}
 .sunday{border-left:2px solid var(--wk);}
 .sunday-title{font-size:clamp(26px,4.2vw,38px);font-weight:200;letter-spacing:.05em;line-height:1.2;margin-bottom:10px;}
