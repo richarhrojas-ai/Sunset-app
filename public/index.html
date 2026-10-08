@@ -36,6 +36,13 @@
     <nav class="dims" id="dims" aria-label="Las siete palabras de la semana">
       <span class="dim-glow" id="dimGlow" aria-hidden="true"></span>
     </nav>
+    <div class="dim-cap" id="dimCap" hidden aria-live="polite">
+      <div>
+        <span class="dim-cap-dim" id="capDim"></span>
+        <span class="dim-cap-word"><strong id="capWord"></strong><span class="dim-cap-tag" id="capTag"></span></span>
+      </div>
+      <button type="button" class="btn primary" id="capGo"></button>
+    </div>
     <div class="hero-bottom">
       <div class="week-info">
         <div class="week-eyebrow" id="weekSub"></div>
@@ -99,7 +106,7 @@
     <details class="fold" id="yearFold">
       <summary><svg class="ico"><use href="#i-grid"/></svg><span id="yearTitle">Progreso del año</span><svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
-        <p class="fold-hint">Cada flor es una semana: se abre a medida que respondés la autoevaluación, y lleva centro dorado si confirmaste la maestría. Tocá una para ir a esa semana.</p>
+        <p class="fold-hint">Cada flor es una semana: se abre a medida que respondés la autoevaluación, y lleva centro dorado cuando es la maestría de su color. Tocá una para ir a esa semana.</p>
         <div class="branches" id="yearGrid"></div>
       </div>
     </details>
@@ -156,8 +163,8 @@
       <li><b>Domingo:</b> el título y la frase de la semana.</li>
       <li><b>Lunes a sábado:</b> un @ por día. El registro de hoy se escribe en su tarjeta (con <i>Ampliar</i> para textos largos); el de los otros días se abre desde su pestaña y no se ve en la tarjeta.</li>
       <li><b>Autoevaluación:</b> tocá cada palabra, respondé sus 5 preguntas del 1 (nunca) al 5 (siempre) y dejá un comentario.</li>
-      <li><b>Cierre de la semana:</b> confirmá tu maestría y anotá qué funcionó y qué te proponés.</li>
-      <li><b>Tablero de maestría:</b> muestra cómo vas con las 49 palabras a lo largo del año.</li>
+      <li><b>Cierre de la semana:</b> anotá qué funcionó y qué te proponés.</li>
+      <li><b>Tablero de maestría:</b> muestra cómo vas con las 49 palabras. Cuando las 7 de un color ya pasaron por evaluación, la de mejor calificación queda como su maestría, sola.</li>
     </ul>
     <button class="btn primary" id="welcomeOk">Empezar</button>
   </div>

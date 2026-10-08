@@ -22,6 +22,7 @@ const COL = { Negro: 0, Rojo: 1, Azul: 2, Lila: 3, Verde: 4, Amarillo: 5, Blanco
   const browser = await chromium.launch();
   const page = await browser.newPage();
   await page.setContent('<canvas id="c"></canvas>');
+  await page.addScriptTag({ content: fs.readFileSync(path.join(ROOT, 'public', 'js', 'tree.js'), 'utf8') });
   await page.addScriptTag({ content: fs.readFileSync(path.join(ROOT, 'tools', 'tree-render.js'), 'utf8') });
   const draw = (fn, args) => page.evaluate(fn, args);
 

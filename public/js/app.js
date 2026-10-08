@@ -97,7 +97,6 @@
   //   AAAA/wN/c/Palabra   comentario sobre la palabra
   //   AAAA/wN/d0..d6      registro del día (0 = domingo)
   //   AAAA/wN/p0..p6      cumplimiento del día (0 a 100), del control deslizante
-  //   AAAA/wN/maestria    palabra confirmada como maestría de la semana
   //   AAAA/wN/funciono    ¿qué funcionó? ¿qué mejorar?
   //   AAAA/wN/intencion   intención para la próxima semana
   // Al sincronizar, por cada clave gana la entrada más reciente.
@@ -159,20 +158,18 @@
     if (!scored.length) return 0;
     return scored.reduce((s, w) => s + wordScore(Y, w, word), 0) / scored.length;
   }
-  // Semanas en que la palabra fue confirmada como maestría de la semana.
-  function crowns(Y, word) {
-    return (Y.evalWeeks[word] || []).filter((w) => getV(k(Y, w, 'maestria'), '') === word).length;
-  }
-  // Sugerencia: la palabra activa con mayor puntaje esa semana, entre las que tienen al menos 3 respuestas
-  // (con una sola respuesta alta cualquier palabra ganaría).
-  function suggestedMastery(Y, week) {
-    let best = null;
-    activeWords(Y, week).forEach(function (a) {
-      const n = wordAnswered(Y, week, a.word), sc = wordScore(Y, week, a.word);
-      if (n >= 3 && (!best || sc > best.sc || (sc === best.sc && n > best.n))) best = { word: a.word, sc: sc, n: n };
+  // Maestría del color: se calcula sola. Cuando las 7 palabras de la columna ya pasaron por una evaluación,
+  // la de mejor puntaje acumulado es la maestría del color. Mientras tanto solo hay una líder provisoria.
+  function colorMastery(Y, col) {
+    const words = Y.board.map((row) => row[col]);
+    let leader = null, done = 0;
+    words.forEach(function (w) {
+      const m = mastery(Y, w);
+      if (m > 0) { done++; if (!leader || m > leader.m) leader = { word: w, m: m }; }
     });
-    return best && best.word;
+    return { done: done, complete: done === words.length, leader: leader };
   }
+  const isMastery = (Y, col, word) => { const cm = colorMastery(Y, col); return cm.complete && cm.leader.word === word; };
   function nextEvalWeek(Y, word, from) {
     const list = Y.evalWeeks[word] || [];
     return list.find((w) => w >= from) || list[0];
@@ -297,11 +294,18 @@
     const root = document.documentElement.style;
     root.setProperty('--wk', t.strong);
     root.setProperty('--wk-mid', t.mid);
+    const bg = treeOf(t.name).bg;
+    root.setProperty('--bg-top', bg.top);
+    root.setProperty('--bg-mid', bg.mid);
+    root.setProperty('--bg-low', bg.low);
+    root.setProperty('--bg-warm', bg.warm);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', bg.top);
     // Paisaje de la semana: una imagen fija por color (ancha para pantallas grandes, alta para celulares).
     if (shown !== t.name) {
       shown = t.name;
       const base = 'images/trees/' + t.name;
-      $('hero').style.backgroundColor = treeOf(t.name).top;
+      $('hero').style.backgroundColor = treeOf(t.name).bg.top;
       $('heroWide').srcset = base + '-wide.webp';
       $('heroImg').src = base + '-tall.webp';
     }
@@ -466,30 +470,14 @@
   function renderClosing() {
     const wrap = $('closing');
     wrap.innerHTML = '';
-    const confirmed = getV(k(Y, viewing, 'maestria'), '');
-    const suggested = suggestedMastery(Y, viewing);
-
-    wrap.appendChild(el('div', 'field-label', 'Maestría de la semana'));
-    wrap.appendChild(el('p', 'field-hint', confirmed ? 'Confirmada. Tocá otra palabra para cambiarla, o la misma para quitarla.'
-      : suggested ? 'Sugerida: ' + suggested + ' (la de mayor puntaje entre las que respondiste). Tocá una palabra para confirmarla.'
-        : 'Respondé al menos 3 preguntas de una palabra para ver la sugerencia, o elegí directamente.'));
-    const opts = el('div', 'mastery-opts');
-    activeWords(Y, viewing).forEach(function (a) {
-      const b = el('button', 'mastery-opt');
-      b.setAttribute('aria-pressed', String(confirmed === a.word));
-      if (!confirmed && suggested === a.word) b.classList.add('is-suggested');
-      if (confirmed === a.word) b.appendChild(icon('crown'));
-      b.appendChild(document.createTextNode(a.word));
-      b.appendChild(el('span', 'chip-pct', pctText(Y, viewing, a.word)));
-      b.addEventListener('click', function () {
-        setV(k(Y, viewing, 'maestria'), confirmed === a.word ? '' : a.word);
-        renderClosing();
-        renderYear();
-        renderBoard();
-      });
-      opts.appendChild(b);
-    });
-    wrap.appendChild(opts);
+    const col = Y.weeks[viewing - 1].col;
+    const cm = colorMastery(Y, col);
+    const cname = treeOf(Y.themes[col].name).name;
+    wrap.appendChild(el('div', 'field-label', 'Maestría de ' + Y.themes[col].name));
+    const lead = cm.leader ? ' Va primera: ' + cm.leader.word + ' (' + Math.round(cm.leader.m * 100) + '%).' : '';
+    wrap.appendChild(el('p', 'field-hint', cm.complete
+      ? 'Las 7 palabras ya pasaron por evaluación. La maestría de ' + Y.themes[col].name + ' es ' + cm.leader.word + ' (' + Math.round(cm.leader.m * 100) + '%), la de mejor calificación.'
+      : cm.done + ' de 7 palabras evaluadas. Cuando pasen las 7, la de mejor calificación queda como maestría (' + cname + ').' + lead));
 
     wrap.appendChild(el('div', 'field-label', '¿Qué funcionó? ¿Qué mejorar?'));
     wrap.appendChild(noteField(k(Y, viewing, 'funciono'), 'Mirando la semana completa…', 3));
@@ -518,11 +506,11 @@
       Y.weeks.slice(start, start + per).forEach(function (wk) {
         const t = Y.themes[wk.col];
         const done = weekCompletion(Y, wk.week);
-        const m = getV(k(Y, wk.week, 'maestria'), '');
+        const m = '';
         const b = el('button', 'yw');
-        b.setAttribute('aria-label', 'Semana ' + wk.week + ', ' + wk.dates + ', ' + Math.round(done * 100) + '% respondido' + (m ? ', maestría ' + m : ''));
-        b.title = 'Semana ' + wk.week + ' · ' + treeOf(t.name).name + ' · ' + Math.round(done * 100) + '%' + (m ? ' · Maestría: ' + m : '');
-        b.appendChild(window.SunsetTree.flowerSVG(treeOf(t.name).ink, done, !!m));
+        b.setAttribute('aria-label', 'Semana ' + wk.week + ', ' + wk.dates + ', ' + Math.round(done * 100) + '% respondido' + '');
+        b.title = 'Semana ' + wk.week + ' · ' + treeOf(t.name).name + ' · ' + Math.round(done * 100) + '%';
+        b.appendChild(window.SunsetTree.flowerSVG(treeOf(t.name).ink, done, false));
         b.appendChild(el('span', null, String(wk.week)));
         if (wk.week === viewing) b.classList.add('is-viewing');
         if (TODAY.inRange && Y === TODAY.Y && wk.week === TODAY.week) b.classList.add('is-current');
@@ -559,17 +547,17 @@
         if (r < 7 && c < 7) {
           const word = Y.board[r][c];
           const m = mastery(Y, word);
-          const n = crowns(Y, word);
+          const n = isMastery(Y, c, word) ? 1 : 0;
           const t = Y.themes[c];
           const sq = el('button', 'sq ' + ((r + c) % 2 ? 'dark' : 'light'));
           const bloom = el('span', 'bloom');
           bloom.appendChild(window.SunsetTree.flowerSVG(treeOf(t.name).ink, m, n > 0));
           sq.appendChild(bloom);
           const lbl = el('span', 'lbl', word);
-          if (m > 0) lbl.appendChild(el('small', null, (m > 0 ? Math.round(m * 100) + '%' : '') + (n > 1 ? ' ×' + n : '')));
+          if (m > 0) lbl.appendChild(el('small', null, (m > 0 ? Math.round(m * 100) + '%' : '')));
           sq.appendChild(lbl);
           const next = nextEvalWeek(Y, word, viewing);
-          sq.title = word + ' · ' + Y.dimensions[r] + ' · ' + t.name + (n ? ' · maestría ' + n + ' vez/veces' : '') + ' · próxima evaluación: semana ' + next;
+          sq.title = word + ' · ' + Y.dimensions[r] + ' · ' + t.name + (n ? ' · maestría del color' : '') + ' · próxima evaluación: semana ' + next;
           sq.addEventListener('click', function () { goTo(Y, next); });
           board.appendChild(sq);
         } else if (r < 7) {
@@ -591,7 +579,7 @@
       s.appendChild(document.createTextNode(t.name + ' · ' + treeOf(t.name).name));
       legend.appendChild(s);
     });
-    legend.appendChild(el('span', null, 'Centro dorado = fue maestría de la semana'));
+    legend.appendChild(el('span', null, 'Centro dorado = maestría del color (la mejor de sus 7 palabras)'));
   }
 
   // ── Las siete palabras de la semana ──
@@ -602,6 +590,7 @@
   function renderDims() {
     const wk = Y.weeks[viewing - 1];
     const nav = $('dims');
+    hideCap();
     Array.from(nav.querySelectorAll('.dim')).forEach((n) => n.remove());
     const today = todayIndex();                       // 0 = domingo
     const todayDim = today >= 1 && today <= 6 ? today - 1 : -1;
@@ -621,18 +610,29 @@
       use.setAttribute('href', '#d-' + d);
       svg.appendChild(use);
       b.appendChild(svg);
-      b.appendChild(el('span', 'dim-name', Y.dimensions[d]));
-      b.appendChild(el('span', 'dim-word', word));
-      b.appendChild(el('span', 'dim-day', DIM_DAYS[d]));
       b.addEventListener('click', function () {
+        if (selDim === d && !$('dimCap').hidden) { hideCap(); return; }
         selDim = d;
         markSelected();
-        accessWord(d, word, evaluated);
+        showCap(d, word, evaluated);
       });
       nav.appendChild(b);
     }
     requestAnimationFrame(function () { markSelected(true); });
   }
+  // Al tocar un ícono aparece su dimensión, la palabra y el acceso a sus preguntas.
+  function showCap(d, word, evaluated) {
+    $('capDim').textContent = Y.dimensions[d] + ' · ' + DIM_DAYS[d];
+    $('capWord').textContent = word;
+    $('capTag').textContent = evaluated ? 'Principal' : 'En juego';
+    $('capTag').classList.toggle('is-main', evaluated);
+    $('capGo').textContent = evaluated ? 'Autoevaluar' : 'Ver preguntas';
+    $('capGo').onclick = function () { accessWord(d, word, evaluated); };
+    const cap = $('dimCap');
+    cap.hidden = false;
+    cap.classList.remove('in'); void cap.offsetWidth; cap.classList.add('in');
+  }
+  function hideCap() { $('dimCap').hidden = true; }
   // Cada ícono es la entrada a su palabra. Las tres principales llevan a la autoevaluación con la palabra
   // abierta; las otras cuatro (en juego, pero no evaluadas esta semana) abren una ficha con sus preguntas.
   function accessWord(d, word, evaluated) {
@@ -1007,7 +1007,7 @@
     const head = ['Año', 'Semana', 'Fechas', 'Color'];
     WEEKDAYS.forEach((d) => head.push('Registro ' + d));
     for (let i = 1; i <= 3; i++) head.push('Palabra ' + i, 'Respuestas ' + i, '% ' + i, 'Comentario ' + i);
-    head.push('% semana', 'Cumplimiento (D L M X J V S)', 'Maestría', 'Qué funcionó / mejorar', 'Intención');
+    head.push('% semana', 'Cumplimiento (D L M X J V S)', 'Maestría del color', 'Qué funcionó / mejorar', 'Intención');
     const rows = [head];
     YEARS.forEach(function (YY) {
       YY.weeks.forEach(function (wk) {
@@ -1018,7 +1018,7 @@
           row.push(a.word, getAnswers(YY, w, a.word).map((v) => v || '-').join(' '),
             Math.round(wordScore(YY, w, a.word) * 100), getV(k(YY, w, 'c/' + a.word), ''));
         });
-        row.push(Math.round(weekScore(YY, w) * 100), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'p' + d), null); return v == null ? '-' : v; }).join(' '), getV(k(YY, w, 'maestria'), ''),
+        row.push(Math.round(weekScore(YY, w) * 100), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'p' + d), null); return v == null ? '-' : v; }).join(' '), (function () { const cm = colorMastery(YY, YY.weeks[w - 1].col); return cm.complete ? cm.leader.word : ''; })(),
           getV(k(YY, w, 'funciono'), ''), getV(k(YY, w, 'intencion'), ''));
         rows.push(row);
       });

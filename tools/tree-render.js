@@ -21,16 +21,9 @@
       flowers: ['#0D0705', '#140B07', '#1C120C', '#24170F'], leaves: ['#060302', '#0A0504'] },
   };
 
-  // Cielo nocturno de cada color: tonos de arriba y del medio, luz detrás de la copa y calidez del horizonte.
-  const SKY = {
-    Lila:     { top: '#1c102b', mid: '#3a1d52', glow: '#a58cf0', warm: '#d96b27', bark: '#2d1f1b' },
-    Azul:     { top: '#190f2e', mid: '#2e1f63', glow: '#8497ff', warm: '#d46a2c', bark: '#2d1f1b' },
-    Rojo:     { top: '#1e0e24', mid: '#4a1a3a', glow: '#ff7656', warm: '#e0702a', bark: '#2d1f1b' },
-    Amarillo: { top: '#1c102b', mid: '#43224f', glow: '#f9cf62', warm: '#e07a2a', bark: '#2d1f1b' },
-    Blanco:   { top: '#1c102b', mid: '#3a2358', glow: '#e4dcf8', warm: '#d96b27', bark: '#2d1f1b' },
-    Verde:    { top: '#14122a', mid: '#2a2350', glow: '#74cf8a', warm: '#d27a2c', bark: '#2d1f1b' },
-    Negro:    { top: '#0f0916', mid: '#2a1626', glow: '#9a6a3c', warm: '#b84a15', bark: '#0a0608' },
-  };
+  // Cielo de cada color: sale de los mismos datos que usa la app (public/js/tree.js), así no se desfasan.
+  const T = window.SunsetTree.TREES;
+  const skyOf = (name) => { const t = T[name] || T.Lila; return { top: t.bg.top, mid: t.bg.mid, glow: t.glow, warm: t.bg.warm, bark: t.bark }; };
   const rgbOf = (hex) => { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
   const rgba = (hex, a) => 'rgba(' + rgbOf(hex).join(',') + ',' + a + ')';
   const mixHex = (a, b, t) => { const A = rgbOf(a), B = rgbOf(b); return 'rgb(' + A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',') + ')'; };
@@ -224,13 +217,13 @@
     ctx.scale(dpr, dpr);
     const w = cssW, h = cssH;
     const wideFmt = w > h;
-    const horizon = h * (wideFmt ? 0.84 : 0.87);       // más abajo: arriba queda lugar para la franja de palabras
+    const horizon = h * (wideFmt ? 0.85 : 0.87);       // el árbol se apoya abajo: arriba queda lugar para la franja de íconos
     const treeX = w * 0.5;
     const dark = tree.form === 'silhouette';
-    const sky = SKY[colorName] || SKY.Lila;
+    const sky = skyOf(colorName);
 
     const rand = rng(seed);
-    const scale = Math.min(h * (wideFmt ? 0.1 : 0.088), w * 0.115) * (form.flat && w < 640 ? 0.9 : 1);
+    const scale = Math.min(h * (wideFmt ? 0.115 : 0.1), w * 0.125) * (form.flat && w < 640 ? 0.9 : 1);
     const bark = sky.bark;
     const glowY = horizon - scale * 3.2;                 // centro de la copa
     drawSky(ctx, w, h, horizon, sky, treeX, glowY, scale * 7.5);
