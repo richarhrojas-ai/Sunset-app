@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encargo técnico Mensajero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Documento técnico de una columna: encabezado con la marca, índice corto, secciones numeradas porque se leen en orden de trabajo */
+:root{
+  --bg:#f6f8f9; --paper:#ffffff; --ink:#14232a; --ink2:#46585f; --line:#d9e2e5;
+  --teal:#007f96; --teal-bg:#e3f3f6; --gold:#a87a00; --gold-bg:#fbf3dc; --code-bg:#eef3f4;
+  --display:'Jost',system-ui,sans-serif; --body:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d1518; --paper:#121d21; --ink:#e6eef0; --ink2:#9fb2b8; --line:#24353b;
+  --teal:#3cc3dc; --teal-bg:#0f2c33; --gold:#f0c24a; --gold-bg:#2c2512; --code-bg:#17252a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d1518; --paper:#121d21; --ink:#e6eef0; --ink2:#9fb2b8; --line:#24353b;
+  --teal:#3cc3dc; --teal-bg:#0f2c33; --gold:#f0c24a; --gold-bg:#2c2512; --code-bg:#17252a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+.page{max-width:820px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:grid;gap:28px}
+header.cab{display:grid;gap:10px;padding-bottom:22px;border-bottom:2px solid var(--teal)}
+.marca{font-family:var(--display);font-weight:600;letter-spacing:.28em;font-size:12px;text-transform:uppercase;color:var(--teal)}
+h1{font-family:var(--display);font-weight:300;font-size:clamp(30px,6vw,44px);line-height:1.1;margin:0;text-wrap:balance}
+.sub{color:var(--ink2);margin:0;max-width:62ch}
+.datos{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px;color:var(--ink2)}
+.datos b{color:var(--ink);font-weight:500}
+nav.indice{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+nav.indice ol{margin:0;padding-left:22px;columns:2;column-gap:28px;font-size:14px}
+@media(max-width:560px){nav.indice ol{columns:1}}
+nav.indice a{color:var(--ink);text-decoration:none}
+nav.indice a:hover{color:var(--teal);text-decoration:underline}
+section{display:grid;gap:12px;min-width:0}
+h2{font-family:var(--display);font-weight:500;font-size:24px;margin:0;padding-top:8px;display:flex;gap:12px;align-items:baseline;text-wrap:balance}
+h2 .n{font-family:var(--mono);font-size:13px;color:var(--teal);font-weight:500;flex:none}
+h3{font-family:var(--display);font-weight:500;font-size:17px;margin:6px 0 0;letter-spacing:.02em}
+p,li{max-width:68ch}
+p{margin:0}
+ul,ol{margin:0;padding-left:22px;display:grid;gap:4px}
+code{font-family:var(--mono);font-size:.88em;background:var(--code-bg);padding:1px 5px;border-radius:4px}
+pre{font-family:var(--mono);font-size:13px;line-height:1.55;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:0;overflow-x:auto}
+.tabla{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);background:var(--code-bg)}
+tr:last-child td{border-bottom:0}
+.aviso{border:1px solid var(--line);border-left:4px solid var(--gold);background:var(--gold-bg);border-radius:6px;padding:12px 16px;font-size:15px}
+.aviso b{color:var(--gold)}
+.nota{border-left:4px solid var(--teal);background:var(--teal-bg);border-radius:6px;padding:12px 16px;font-size:15px}
+.check{list-style:none;padding-left:0;gap:8px}
+.check li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px}
+.check li::before{content:"";width:14px;height:14px;border:1.5px solid var(--teal);border-radius:3px;margin-top:5px}
+.check .hecho::before{background:var(--teal)}
+.tag{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px;background:var(--teal-bg);color:var(--teal);margin-left:6px;white-space:nowrap}
+a{color:var(--teal)}
+a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+footer{font-size:13px;color:var(--ink2);border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+
+<div class="page">
+<header class="cab">
+  <div class="marca">Mensajero · Edificando una Cultura 2027</div>
+  <h1>Encargo técnico para la app semanal</h1>
+  <p class="sub">Qué hay que construir, de dónde sale el contenido, qué guarda cada usuario y qué falta para pasar del prototipo a producción.</p>
+  <div class="datos">
+    <span>Prototipo: <a href="https://claude.ai/artifact/QqQ5Epdkk8f2r4Y3TPn9ps" target="_blank" rel="noopener">abrir</a></span>
+    <span>Repo: <b>richarhrojas-ai/Sunset-app</b></span>
+    <span>Rama: <code>claude/mensajero-tema-macro</code></span>
+    <span>Carpeta: <code>mensajero/</code></span>
+  </div>
+</header>
+
+<nav class="indice" aria-label="Índice"><ol>
+  <li><a href="#que">Qué es</a></li>
+  <li><a href="#pantalla">Pantalla, de arriba abajo</a></li>
+  <li><a href="#contenido">Contenido y planilla</a></li>
+  <li><a href="#usuario">Datos del usuario</a></li>
+  <li><a href="#reglas">Reglas de negocio</a></li>
+  <li><a href="#arquitectura">Arquitectura</a></li>
+  <li><a href="#tareas">Tareas para producción</a></li>
+  <li><a href="#decidir">Decisiones pendientes</a></li>
+  <li><a href="#archivos">Archivos de la rama</a></li>
+</ol></nav>
+
+<section id="que">
+  <h2><span class="n">01</span>Qué es</h2>
+  <p>Una app web instalable (PWA), para móvil y computadora, que usa el equipo de Mensajero 100.9 FM para preparar y registrar la programación de <b>Edificando una Cultura</b> (antes «Temas Macro»). El año 2027 tiene 52 semanas. Cada semana tiene un color, un tema, un enfoque, tres subtemas, siete versículos (domingo a sábado), una historia ilustrativa, un valor de Mensajero y un programa al que apoyamos.</p>
+  <p>El prototipo ya funciona con el contenido real de 2027 y sirve de referencia visual y de comportamiento. Toma como molde la app Sunset del mismo repositorio: mismo esquema de datos, misma sincronización, mismo flujo de Excel a datos.</p>
+  <div class="nota">El prototipo es un solo <code>index.html</code> con el contenido incrustado y lo marcado guardado en <code>localStorage</code>. Para producción hay que separarlo en archivos, proteger el contenido con clave y sincronizar entre dispositivos (sección 07).</div>
+</section>
+
+<section id="pantalla">
+  <h2><span class="n">02</span>Pantalla, de arriba abajo</h2>
+  <ol>
+    <li><b>Portada.</b> Escena ilustrada del tema (SVG generado en código, pintado con la paleta del color de la semana). Arriba: logo circular, «MENSAJERO» en blanco y «Edificando una Cultura» en gris; a la derecha, fechas de la semana. Tarjeta de vidrio con tema, enfoque, color, número de semana y los tres subtemas. Flecha anterior, «Esta semana», flecha siguiente.</li>
+    <li><b>Íconos de los 7 temas</b> en el cielo de la portada. El de la semana lleva aro dorado. Al tocar uno se abre una hoja (<code>&lt;dialog&gt;</code>) con todas las semanas de ese tema: fechas, enfoque y subtemas; la semana activa resaltada, la próxima marcada, las pasadas atenuadas. Tocar una semana lleva a ella.</li>
+    <li><b>Barra de atajos</b> fija: Ficha, Subtemas, Versículos, Historia, Marco, Preparación, Registro, Año, Buscar. Subraya la sección visible.</li>
+    <li><b>Ficha de la semana:</b> «Apoyamos al programa» (programa y locutor) y «Valor de Mensajero» con su guía interna plegable.</li>
+    <li><b>Tres subtemas:</b> desarrollo, nota para el locutor, frase célebre. Abajo: «+ Agregar nota» a la izquierda y botón pequeño «Al aire» a la derecha (dorado al marcar). Contador <code>n/3 al aire</code> junto al título.</li>
+    <li><b>Versículos de la semana:</b> siete, domingo a sábado, con día y fecha completa, cita, texto y 3 puntos. Botones «Revisar versículo» y «Al aire», y nota plegable. Contador <code>n/7 al aire</code>. El del día de hoy lleva borde dorado.</li>
+    <li><b>Historia ilustrativa</b> de la semana.</li>
+    <li><b>Plegables:</b> Historia bíblica y marcos (teórico y bíblico) · Preparación de la semana (8 puntos + notas de producción, con porcentaje) · Registro al aire · Mapa del año (52 semanas por color con barra de preparación) · Buscar.</li>
+    <li><b>Pie:</b> logo con «MENSAJERO», «Suena bien, hace bien» y «Edificando una Cultura».</li>
+  </ol>
+  <h3>Diseño</h3>
+  <ul>
+    <li>Estilo crepúsculo de Sunset: cielo por color (variables <code>--top --mid --low --warm --h1 --h2 --h3 --acc</code>), tarjetas de vidrio, dorado <code>#FFD700</code> / ámbar <code>#F0A830</code>.</li>
+    <li>Tipografía Jost fina con espaciado amplio; Nunito para «MENSAJERO»; Dancing Script para el lema.</li>
+    <li>Paletas de los 7 colores (Lila, Verde, Amarillo, Blanco, Negro, Rojo, Azul) y las 7 escenas e íconos están en el objeto <code>PAL</code> y las funciones <code>escena()</code> e <code>ICONO</code> del prototipo: se pueden copiar tal cual.</li>
+    <li>Siempre oscuro. Probado a 390 px y 1200 px de ancho, sin desborde horizontal. Respeta «reducir movimiento».</li>
+  </ul>
+</section>
+
+<section id="contenido">
+  <h2><span class="n">03</span>Contenido y planilla</h2>
+  <p>La fuente de verdad es el Excel <code>content/planillas/Mensajero_TemasMacro_2027.xlsx</code>. El script <code>tools/build_data.py</code> lo convierte en JSON. Nadie edita los datos a mano: se corrige el Excel y se vuelve a generar.</p>
+  <div class="tabla"><table>
+    <thead><tr><th>Hoja</th><th>Qué aporta</th><th>Columnas que se usan</th></tr></thead>
+    <tbody>
+      <tr><td>Temas Macro 2027</td><td>Una fila por semana (52)</td><td>Semana, Fecha inicio (Dom) <code>dd/mm/aaaa</code>, Color, Tema, Ronda, Enfoque, Subtema 1–3, Desarrollo 1–3, Nota Locutor 1–3, Frase Celebre 1–3, Historia Ilustrativa, Valor (ADN), Programa, Locutor, Versiculo Domingo…Sabado, 3 Puntos Domingo…Sabado</td></tr>
+      <tr><td>Historia y Marcos</td><td>Historia bíblica y marcos, por tema y ronda</td><td>Tema, Ronda, Historia Biblica - Titulo / Texto, Marco Teorico - Afirmacion / Fuente, Marco Biblico - Versiculos clave (separados por <code>|</code>) / Contexto / Conexion</td></tr>
+      <tr><td>Guia de Valores ADN</td><td>Guía de los 5 valores</td><td>Valor, Definicion aplicada, Como se nota en el contenido, Pregunta guia, Ejemplo de aplicacion</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>Versículo: texto con formato <code>Cita — texto</code>; el script lo separa en <code>ref</code> y <code>texto</code>.</li>
+    <li>Frase célebre: <code>"frase" — Autor</code>; se separa en <code>texto</code> y <code>autor</code>.</li>
+    <li>3 puntos: una línea por punto, con viñeta <code>•</code> opcional.</li>
+    <li>La ronda se usa solo para unir con «Historia y Marcos»; no se muestra.</li>
+  </ul>
+  <h3>Forma del JSON</h3>
+<pre>{
+  "anio": 2027,
+  "valores": { "Orden": { "definicion", "contenido", "pregunta", "ejemplo" }, … },
+  "semanas": [{
+    "n": 1, "inicio": "2027-01-03", "color": "Lila",
+    "tema": "Crecimiento Personal", "ronda": 1, "enfoque": "Lo Fisico (cuidado integral)",
+    "subtemas": [{ "titulo", "desarrollo", "nota", "frase": { "texto", "autor" } } ×3],
+    "historia": "…", "valor": "Orden", "programa": "RM Deportes", "locutor": "…",
+    "dias": [{ "ref": "1 Corintios 6:19-20", "texto": "…", "puntos": ["…","…","…"] } ×7],
+    "marco": { "historiaTitulo", "historia", "teorico", "fuente", "claves": [], "contexto", "conexion" }
+  }]
+}</pre>
+  <p><code>dias[0]</code> es domingo y <code>dias[6]</code> sábado. Hoy el script escribe el JSON dentro de <code>index.html</code> (entre <code>/*DATA*/</code> y <code>/*/DATA*/</code>). En producción debe escribir <code>netlify/content/data.mjs</code>, como en Sunset.</p>
+</section>
+
+<section id="usuario">
+  <h2><span class="n">04</span>Datos del usuario</h2>
+  <p>Mismo esquema que Sunset: <code>entries[clave] = { v: valor, t: milisegundos }</code>. Al sincronizar gana la entrada más reciente por clave. Prefijo por semana <code>AAAA/wN/</code> (por ejemplo <code>2027/w1/aire3</code>).</p>
+  <div class="tabla"><table>
+    <thead><tr><th>Clave</th><th>Valor</th><th>Significado</th></tr></thead>
+    <tbody>
+      <tr><td><code>vr0</code> … <code>vr6</code></td><td>bool</td><td>Versículo del día revisado (corrección RVC)</td></tr>
+      <tr><td><code>aire0</code> … <code>aire6</code></td><td>bool</td><td>Versículo del día al aire / compartido</td></tr>
+      <tr><td><code>vn0</code> … <code>vn6</code></td><td>texto</td><td>Nota del versículo</td></tr>
+      <tr><td><code>st0/aire</code> … <code>st2/aire</code></td><td>bool</td><td>Subtema al aire</td></tr>
+      <tr><td><code>st0/nota</code> … <code>st2/nota</code></td><td>texto</td><td>Nota del subtema</td></tr>
+      <tr><td><code>prep/0</code> … <code>prep/7</code></td><td>bool</td><td>Puntos de la lista de preparación</td></tr>
+      <tr><td><code>notas</code></td><td>texto</td><td>Notas de producción de la semana</td></tr>
+    </tbody>
+  </table></div>
+  <p>El prototipo guarda todo en <code>localStorage["mensajero:entries"]</code>.</p>
+</section>
+
+<section id="reglas">
+  <h2><span class="n">05</span>Reglas de negocio</h2>
+  <ul>
+    <li><b>Semana:</b> empieza el domingo. La semana 1 de 2027 empieza el domingo 3 de enero. «Esta semana» es la que contiene la fecha de hoy; antes del inicio del año se abre la semana 1 con el aviso «El año arranca el 3 de enero de 2027 · faltan N días».</li>
+    <li><b>Color y tema</b> salen de la planilla, no se calculan en la app.</li>
+    <li><b>Portada:</b> se muestra solo «Semana N», sin «de 52» ni la ronda.</li>
+    <li><b>Subtemas sin día fijo:</b> cada locutor tiene su propio programa (lunes a viernes o un solo día; los domingos casi no hay programas en vivo).</li>
+    <li><b>Versículos con día y fecha:</b> domingo a sábado, porque se usan para flyers de redes y hay que saber cuándo se compartió cada uno.</li>
+    <li><b>Registro mensual:</b>
+      <ul>
+        <li>un versículo al aire cuenta en el mes de <i>su fecha</i> (ej.: el del 31 de enero cuenta en enero aunque se marque el 2 de febrero);</li>
+        <li>un subtema al aire cuenta en el día en que se marcó (<code>t</code>), y nunca antes del domingo de su semana;</li>
+        <li>muestra: versículos al aire «n de días del mes», subtemas al aire, % de días con versículo, listas con fecha (formato «3 ene») y totales del año.</li>
+      </ul></li>
+    <li><b>Preparación:</b> 8 puntos fijos (guion, versículos revisados, frases verificadas, historia bíblica, datos de Paraguay, meditaciones, documento enviado, audios). El porcentaje se ve también en el mapa del año.</li>
+    <li><b>Buscador:</b> sin distinguir tildes ni mayúsculas, sobre enfoque, tema, subtemas, frases, versículos, historia y programa; muestra hasta 30 resultados y lleva a la semana.</li>
+  </ul>
+</section>
+
+<section id="arquitectura">
+  <h2><span class="n">06</span>Arquitectura recomendada</h2>
+  <p>Copiar la de Sunset para no inventar nada nuevo:</p>
+<pre>mensajero/
+  public/index.html          estructura de pantalla
+  public/css/app.css         diseño (variables por color)
+  public/js/app.js           lógica: estado, vistas, registro, buscador
+  public/js/escenas.js       paletas, escenas SVG e íconos de temas
+  public/images/             logo, marca, íconos 192/512
+  public/manifest.webmanifest, public/sw.js   PWA (red primero, caché versionada)
+  netlify/functions/content.mjs   entrega el contenido con clave
+  netlify/functions/sync.mjs      guarda y fusiona entries {v,t} en Netlify Blobs
+  netlify/lib/auth.mjs            valida la clave (timingSafeEqual)
+  netlify/content/data.mjs        generado por tools/build_data.py
+  content/planillas/              Excel de cada año
+  tools/build_data.py             Excel → data.mjs
+  tests/                          sincronización (node --test) + Playwright</pre>
+  <ul>
+    <li>Sin base de datos ni servicios externos: Netlify Functions + Netlify Blobs.</li>
+    <li>Clave en variable de entorno (en Sunset: <code>SUNSET_KEY</code>, cabecera <code>x-sunset-key</code>). Para Mensajero usar nombres propios, por ejemplo <code>MENSAJERO_KEY</code> y <code>x-mensajero-key</code>.</li>
+    <li>El contenido no va en <code>public/</code>: solo por <code>/api/content</code> con clave. La app lo guarda en el dispositivo para abrir sin conexión.</li>
+    <li>Copias diarias, restaurar, exportar e importar JSON: reutilizar lo de Sunset.</li>
+  </ul>
+</section>
+
+<section id="tareas">
+  <h2><span class="n">07</span>Tareas para producción</h2>
+  <ul class="check">
+    <li class="hecho">Prototipo con contenido real 2027, escenas, íconos, registro y notas <span class="tag">hecho</span></li>
+    <li class="hecho">Script Excel → JSON <span class="tag">hecho</span></li>
+    <li class="hecho">Logo, marca e íconos 192/512 en <code>public/images/</code> <span class="tag">hecho</span></li>
+    <li>Separar <code>index.html</code> en HTML, CSS y JS (sección 06)</li>
+    <li>Cambiar la salida de <code>build_data.py</code> a <code>netlify/content/data.mjs</code></li>
+    <li>Funciones <code>content.mjs</code>, <code>sync.mjs</code>, <code>auth.mjs</code> adaptadas de Sunset</li>
+    <li>Reemplazar <code>localStorage</code> por sincronización (conservar caché local para usar sin conexión)</li>
+    <li>PWA: manifest (nombre «Edificando una Cultura», color de tema), service worker, íconos</li>
+    <li>Pruebas: fusión de <code>entries</code>, conteo del registro por mes (casos de fin de mes y de subtema marcado antes de su semana), flujo principal en Playwright a 390 px y 1200 px, axe sin violaciones</li>
+    <li>Configurar el sitio en Netlify y la variable de la clave</li>
+  </ul>
+  <div class="aviso"><b>Seguridad:</b> en la raíz del repositorio, <code>notion.js</code> tiene un token de Notion escrito en el código. Hay que revocarlo en Notion, crear uno nuevo y leerlo desde una variable de entorno de Netlify. No reutilizar ese archivo en Mensajero.</div>
+</section>
+
+<section id="decidir">
+  <h2><span class="n">08</span>Decisiones pendientes</h2>
+  <ul>
+    <li><b>Usuarios:</b> ¿una sola clave para todo el equipo o una por locutor? Si el registro debe decir quién compartió cada versículo, cada marca necesita guardar el autor y la clave tiene que identificar a la persona.</li>
+    <li><b>Versículos:</b> Richarh enviará la corrección (versión RVC). Se carga en el Excel y se regenera.</li>
+    <li><b>Tildes:</b> la planilla está sin tildes (Prevencion, Lider, Habitos…). Corregir en el Excel.</li>
+    <li><b>Columnas de versículos:</b> hoy se llaman «Versiculo Domingo» … «Versiculo Sabado»; se mantienen así porque el día sí importa.</li>
+    <li><b>Flyers de redes</b> (siguiente etapa): generar desde la app la imagen de cada versículo con el color, la escena y la fecha.</li>
+  </ul>
+</section>
+
+<section id="archivos">
+  <h2><span class="n">09</span>Archivos de la rama</h2>
+  <div class="tabla"><table>
+    <thead><tr><th>Archivo</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td><code>mensajero/public/index.html</code></td><td>Prototipo completo (contenido incrustado, logo en data URI)</td></tr>
+      <tr><td><code>mensajero/tools/build_data.py</code></td><td>Excel → JSON. Uso: <code>python3 tools/build_data.py [ruta.xlsx]</code></td></tr>
+      <tr><td><code>mensajero/content/planillas/Mensajero_TemasMacro_2027.xlsx</code></td><td>Planilla del año</td></tr>
+      <tr><td><code>mensajero/public/images/</code></td><td><code>marca.png</code>, <code>logo-mensajero.png</code>, <code>icono-192.png</code>, <code>icono-512.png</code></td></tr>
+      <tr><td><code>mensajero/IDEA.md</code></td><td>Resumen de cómo se pasó Sunset a Mensajero</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>Preparado para el equipo de Mensajero 100.9 FM · octubre de 2026. Dudas sobre el contenido: Richarh Rojas.</footer>
+</div>
+</body>
+</html>
