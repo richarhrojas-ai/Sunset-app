@@ -1,3 +1,7 @@
+// Proxy hacia la API de Notion. El token vive en la variable de entorno
+// NOTION_TOKEN (Netlify → Site configuration → Environment variables).
+const ALLOWED_ENDPOINTS = ['pages'];
+
 exports.handler = async function(event, context) {
   // CORS headers
   const headers = {
@@ -15,9 +19,17 @@ exports.handler = async function(event, context) {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
+  const NOTION_TOKEN = process.env.NOTION_TOKEN;
+  if (!NOTION_TOKEN) {
+    return { statusCode: 500, headers, body: JSON.stringify({ error: 'NOTION_TOKEN no está configurado' }) };
+  }
+
   try {
     const { endpoint, payload } = JSON.parse(event.body);
-    const NOTION_TOKEN = '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';
+
+    if (!ALLOWED_ENDPOINTS.includes(endpoint)) {
+      return { statusCode: 400, headers, body: JSON.stringify({ error: 'Endpoint no permitido' }) };
+    }
 
     const resp = await fetch('https://api.notion.com/v1/' + endpoint, {
       method: 'POST',
