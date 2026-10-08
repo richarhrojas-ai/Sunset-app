@@ -13,7 +13,6 @@ data/sunset-2027.js           Datos generados desde la planilla — no editar a 
 tools/build_data.py           Generador de data/sunset-2027.js
 manifest.webmanifest, sw.js, icons/   Instalación como app (PWA) y uso sin conexión
 2026.html                     App anterior (2026), se mantiene hasta fin de año
-netlify/functions/notion.js   Proxy hacia la API de Notion (lo usa 2026.html)
 ```
 
 ## Actualizar el contenido
@@ -36,8 +35,3 @@ La columna define el color: Negro, Rojo, Azul, Lila, Verde, Amarillo, Blanco.
 
 El progreso se guarda en `localStorage` (clave `sunset_2027_v1`). No hay sincronización
 entre dispositivos: usar *Respaldo de datos → Exportar / Importar*.
-
-## Configuración en Netlify (solo para 2026.html)
-
-En **Site configuration → Environment variables**, crear `NOTION_TOKEN` con el token de la
-integración de Notion. La función solo acepta el endpoint `pages`.
