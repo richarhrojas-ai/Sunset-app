@@ -76,7 +76,6 @@ button{font-family:inherit;color:inherit;}
 .dim.is-eval .dim-ico{filter:drop-shadow(0 0 7px rgba(255,215,0,.55));}
 .dim::after{content:'';width:20px;height:2px;border-radius:2px;background:transparent;}
 .dim.is-eval::after{background:var(--gold);box-shadow:0 0 8px rgba(255,215,0,.75);}
-.dim.is-today::before{content:'';position:absolute;top:8px;right:calc(50% - 30px);width:6px;height:6px;border-radius:50%;background:var(--gold-hi);box-shadow:0 0 8px var(--gold-hi);}
 .dim.is-sel .dim-ico{opacity:1;filter:drop-shadow(0 0 9px rgba(255,215,0,.7));}
 .dim:hover .dim-ico{opacity:1;}
 .dim:focus-visible{outline:2px solid var(--gold-hi);outline-offset:-2px;}

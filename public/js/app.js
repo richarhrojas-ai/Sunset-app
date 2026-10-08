@@ -583,8 +583,7 @@
   }
 
   // ── Las siete palabras de la semana ──
-  // Toda la columna del tablero está "en juego"; la dimensión d tiene su día: lunes a sábado y el cierre semanal.
-  const DIM_DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Cierre semanal'];
+  // Toda la columna del tablero está "en juego"; los iconos no se atan a ningún día de la semana.
   let selDim = null;
 
   function renderDims() {
@@ -592,16 +591,14 @@
     const nav = $('dims');
     hideCap();
     Array.from(nav.querySelectorAll('.dim')).forEach((n) => n.remove());
-    const today = todayIndex();                       // 0 = domingo
-    const todayDim = today >= 1 && today <= 6 ? today - 1 : -1;
-    if (selDim === null || !isCurrent()) selDim = todayDim >= 0 ? todayDim : null;
+    selDim = null;
     for (let d = 0; d < 7; d++) {
       const word = Y.board[d][wk.col];
       const evaluated = ((d - wk.phase + 7) % 7) < 3;
-      const b = el('button', 'dim' + (evaluated ? ' is-eval' : '') + (d === todayDim ? ' is-today' : '') + (d === selDim ? ' is-sel' : ''));
+      const b = el('button', 'dim' + (evaluated ? ' is-eval' : '') + (d === selDim ? ' is-sel' : ''));
       b.type = 'button';
       b.dataset.d = d;
-      b.setAttribute('aria-label', 'Abrir ' + word + ' (' + Y.dimensions[d] + ', ' + DIM_DAYS[d] + ')' + (evaluated ? '. Palabra principal: se evalúa esta semana' : '. Está en juego pero se evalúa otra semana'));
+      b.setAttribute('aria-label', 'Abrir ' + word + ' (' + Y.dimensions[d] + ')' + (evaluated ? '. Palabra principal: se evalúa esta semana' : '. Está en juego pero se evalúa otra semana'));
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('class', 'dim-ico');
       svg.setAttribute('viewBox', '0 0 48 48');
@@ -622,7 +619,7 @@
   }
   // Al tocar un ícono aparece su dimensión, la palabra y el acceso a sus preguntas.
   function showCap(d, word, evaluated) {
-    $('capDim').textContent = Y.dimensions[d] + ' · ' + DIM_DAYS[d];
+    $('capDim').textContent = Y.dimensions[d];
     $('capWord').textContent = word;
     $('capTag').textContent = evaluated ? 'Principal' : 'En juego';
     $('capTag').classList.toggle('is-main', evaluated);
@@ -644,7 +641,7 @@
     }
     const next = nextEvalWeek(Y, word, viewing);
     const nw = Y.weeks[next - 1];
-    $('wordEyebrow').textContent = Y.dimensions[d] + ' · ' + DIM_DAYS[d];
+    $('wordEyebrow').textContent = Y.dimensions[d];
     $('wordTitle').textContent = word;
     $('wordWhen').textContent = 'Está en juego esta semana, pero se evalúa en la semana ' + next + ' (' + nw.dates + '). Estas son sus preguntas:';
     const list = $('wordQs');
