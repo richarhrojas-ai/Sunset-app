@@ -241,6 +241,24 @@
         blossoms.push([x, y, (2.4 + rand() * 2.8) * form.petal * (w < 400 ? 0.85 : 1), pal[Math.floor(rand() * pal.length)], rand() * Math.PI]);
       }
     });
+    // Terminación de los costados: un contorno redondeado que cierra la copa por los lados y por
+    // abajo, para que no termine en un borde recto.
+    const sideTips = tips.filter(function (t) { return Math.abs((t[0] - domeCx) / domeRx) > 0.65; });
+    if (sideTips.length) {
+      const baseY = sideTips.reduce(function (a, t) { return a + t[1]; }, 0) / sideTips.length;
+      const shoulderCy = baseY - domeH * 0.3, shoulderRy = domeH * 0.55 + scale * 0.25;
+      const n = Math.round(tips.length * form.bloom * 0.3);
+      for (let i = 0; i < n; i++) {
+        const left = rand() < 0.5;
+        const th = (rand() - 0.5) * 2.2;                     // de arriba-costado a abajo-costado
+        const d = 0.78 + 0.22 * Math.sqrt(rand());           // pegado al borde, apenas hacia dentro
+        const x = domeCx + (left ? -1 : 1) * Math.cos(th) * domeRx * 1.02 * d;
+        const y = shoulderCy + Math.sin(th) * shoulderRy * d;
+        const useDeep = tree.leaves && rand() < 0.25;
+        const pal = useDeep ? tree.leaves : tree.flowers;
+        blossoms.push([x, y, (2.4 + rand() * 2.8) * form.petal * (w < 400 ? 0.85 : 1), pal[Math.floor(rand() * pal.length)], rand() * Math.PI]);
+      }
+    }
     // Las flores oscuras van primero (al fondo) para dar volumen.
     if (tree.leaves) {
       const deep = new Set(tree.leaves);
