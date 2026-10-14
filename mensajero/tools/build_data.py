@@ -2,7 +2,7 @@
 """Planilla de Temas Macro (Excel) -> datos JSON inyectados en public/index.html.
 
 Uso: python3 tools/build_data.py [ruta.xlsx]
-Lee las hojas «Temas Macro AAAA», «Historia y Marcos» y «Guia de Valores ADN».
+Lee las hojas «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN» y, si existe, «Guiones AAAA».
 El bloque entre /*DATA*/ y /*/DATA*/ de index.html se reemplaza; no editar a mano.
 """
 import json, re, sys
@@ -70,6 +70,25 @@ def main(path):
             'ejemplo': txt(r['Ejemplo de aplicacion']),
         }
 
+    # guiones para el aire (opcional): una fila por día, lunes a sábado
+    guiones = {}
+    hg = f'Guiones {anio}'
+    if hg in wb.sheetnames:
+        for r in rows(wb[hg]):
+            guiones.setdefault(int(r['Semana']), []).append({
+                'dia': txt(r['Dia']),
+                'subtema': int(r['Subtema']),
+                'titulo': txt(r['Titulo']),
+                'dato': {'texto': txt(r['Dato curioso']), 'fuente': txt(r['Fuente dato'])},
+                'puntos': [{
+                    'titulo': txt(r[f'Punto {i}']),
+                    'desarrollo': txt(r[f'Desarrollo {i}']),
+                    'problema': txt(r[f'Problematica {i}']),
+                    'solucion': txt(r[f'Solucion {i}']),
+                } for i in (1, 2, 3)],
+                'cierre': {'ref': txt(r['Cierre cita (NTV)']), 'texto': txt(r['Cierre texto'])},
+            })
+
     semanas = []
     for r in rows(wb[hoja]):
         d, m, a = txt(r['Fecha inicio (Dom)']).split('/')
@@ -93,6 +112,7 @@ def main(path):
             'locutor': txt(r['Locutor']),
             'dias': [{**versiculo(r[f'Versiculo {d}']), 'puntos': puntos(r[f'3 Puntos {d}'])} for d in DIAS],
             'marco': marcos.get((tema, ronda)),
+            'guion': guiones.get(int(r['Semana']), []),
         })
 
     data = {'anio': anio, 'semanas': semanas, 'valores': valores}
@@ -104,7 +124,7 @@ def main(path):
         sys.exit('No se encontró el marcador /*DATA*/ en index.html')
     html.write_text(out, encoding='utf-8')
     sin_marco = [s['n'] for s in semanas if not s['marco']]
-    print(f'{anio}: {len(semanas)} semanas · {len(marcos)} marcos · {len(valores)} valores'
+    print(f'{anio}: {len(semanas)} semanas · {len(marcos)} marcos · {len(valores)} valores · {len(guiones)} con guion'
           + (f' · sin marco: {sin_marco}' if sin_marco else ''))
 
 

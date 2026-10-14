@@ -17,7 +17,8 @@ vocabulario de la radio.
 | Lunes–sábado: @ del día | **7 versículos, domingo a sábado, con fecha** (para el aire y para ubicar los flyers de redes) |
 | Autoevaluación de 3 palabras | **3 subtemas**: desarrollo, nota para el locutor, frase célebre |
 | Ficha / maestría | **Apoyamos al programa** (programa + locutor) y **Valor de Mensajero** con su guía interna |
-| Cierre / progreso | **Preparación de la semana** (lista + notas de producción) y avance en el mapa del año |
+| — | **Guion para el aire** (5 a 7 min), lunes a sábado: dato para abrir, 3 puntos con problemática y solución práctica, cierre con versículo NTV. Botón para copiar el prompt de la semana |
+| Cierre / progreso | **Preparación de la semana**: biblioteca de 30 tareas, cada locutor elige hasta 10 según su programa (diario o semanal, 1/2/3 h, con o sin entrevistas) |
 | — | **Registro al aire** por mes: versículos y subtemas al aire, con lista y totales del año |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
 
@@ -30,7 +31,7 @@ así que los subtemas sirven para cualquier día. Los versículos sí llevan dí
 datos dentro de `public/index.html` (prototipo). En la versión final pasa a
 `netlify/content/data.mjs` y se entrega por `/api/content` con clave, igual que Sunset.
 
-Hojas que se leen: «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN».
+Hojas que se leen: «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN» y «Guiones AAAA» (una fila por día: título, dato curioso y fuente, 3 puntos con desarrollo, problemática y solución, cierre NTV).
 Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden corregir aparte.
 
 ## Claves del usuario (`AAAA/wN/...`, valor `{v,t}`)
@@ -40,7 +41,8 @@ Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden cor
 - `vn0..vn6` nota de cada versículo
 - `st0..st2/aire` subtema al aire (cuenta en el día en que se marcó, nunca antes del inicio de su semana)
 - `st0..st2/nota` nota de cada subtema
-- `prep/0..7` lista de preparación
+- `prep/<id>` tarea de preparación hecha (id de la biblioteca)
+- `cfg/programa` mi programa {nombre, frec, horas, entrevistas} · `cfg/prep` mis tareas elegidas · `cfg/prepManual` si las eligió a mano
 - `notas` notas de producción
 
 Hoy se guardan en el dispositivo; con `sync.mjs` de Sunset quedan compartidas.
