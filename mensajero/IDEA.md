@@ -13,7 +13,7 @@ vocabulario de la radio.
 | Semana con color + título + hook | Semana con **color + Tema + Enfoque** y su número de semana |
 | Árbol fijo por color | **Escena por tema** (paisaje SVG, sin íconos), pintada con la gama del color de la semana |
 | Franja de 7 íconos / dimensiones | **7 íconos de temas** en el cielo de la portada; al tocar uno se abren todas sus semanas del año, con la activa resaltada y la próxima marcada |
-| Domingo + lunes–sábado | **Día a día** (Dom–Sáb, con fecha): domingo abre la semana con su versículo y la historia ilustrativa; de lunes a sábado, el **versículo del día es la base del guion** de 5 a 7 min: sus 3 puntos son los 3 puntos del guion, cada uno con problemática y solución práctica, más un dato para abrir |
+| Domingo + lunes–sábado | **Día a día** (Dom–Sáb, con fecha): domingo abre la semana con su versículo y la historia ilustrativa; de lunes a sábado, el **versículo del día es la base del guion** de hasta 5 minutos: sus 3 puntos son los 3 puntos del guion, cada uno con problemática y solución práctica, más un dato para abrir |
 | Autoevaluación de 3 palabras | **3 subtemas**: desarrollo, nota para el locutor, frase célebre |
 | Ficha / maestría | **Apoyamos al programa** (programa + locutor) y **Valor de Mensajero** con su guía interna |
 | Cierre / progreso | **Preparación de la semana**: biblioteca de 30 tareas, cada locutor elige hasta 10 según su programa (diario o semanal, 1/2/3 h, con o sin entrevistas) |

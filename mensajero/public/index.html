@@ -341,7 +341,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   <div class="subtemas" id="subtemas"></div>
 
   <h2 class="sec" id="s-dias">Día a día <span class="cuenta" id="c-v"></span></h2>
-  <p class="muted" style="font-size:14px;margin:-4px 0 14px">Cada día tiene su versículo y, de lunes a sábado, un guion de 5 a 7 minutos que se apoya en él.</p>
+  <p class="muted" style="font-size:14px;margin:-4px 0 14px">Cada día tiene su versículo y, de lunes a sábado, un guion de hasta 5 minutos que se apoya en él.</p>
   <div class="card guion-wrap" id="dias"></div>
 
   <details class="fold" id="s-marco"><summary>Historia bíblica y marcos</summary><div class="fold-body" id="marco"></div></details>
@@ -404,7 +404,7 @@ const BIBLIO = [
   {g:'Contenido', items:[
     ['guion','Guion o escaleta del programa listo'],
     ['tema','Leer el tema y los tres subtemas de la semana'],
-    ['reflexion','Reflexión del subtema preparada (5 a 7 min)'],
+    ['reflexion','Reflexión del día preparada (hasta 5 min)'],
     ['versiculo','Versículo del día revisado','diario'],
     ['versSem','Versículo de la semana elegido','semanal'],
     ['devocional','Devocional diario preparado','diario'],
@@ -669,8 +669,9 @@ const fechaDia = (w, i) => { const f = dateOf(w.inicio); f.setDate(f.getDate()+i
 function promptSemana(w) {
   const t = TEMA_TXT[w.tema] || w.tema, st = w.subtemas.map(x => x.titulo);
   const base = w.dias.slice(1).map((d, j) => `${DIAS[j+1]} — ${d.ref}\n${d.puntos.map((p, k) => `   ${k+1}. ${tituloPunto(p)[0]}`).join('\n')}`).join('\n');
-  return `Hola!!! Necesito que me estructures temáticas para hablar en la radio en 5 a 7 min. La radio tiene temas definidos para todo el año, que te iré pasando cada semana, y para la semana quiero que me des los puntos a tratar para mejorar en forma práctica esas áreas.
+  return `Hola!!! Necesito que me estructures temáticas para hablar en la radio en no más de 5 minutos. La radio tiene temas definidos para todo el año, que te iré pasando cada semana, y para la semana quiero que me des los puntos a tratar para mejorar en forma práctica esas áreas.
 
+- Cada reflexión no debe superar los 5 minutos al aire (unas 650 palabras como máximo).
 - Usá como base el versículo de cada día que te paso abajo: sus 3 puntos son los 3 puntos a recordar o aprender de ese día.
 - Debajo de cada punto, una problemática social y cómo se soluciona en forma práctica.
 - Cerrá cada reflexión volviendo al versículo del día.
