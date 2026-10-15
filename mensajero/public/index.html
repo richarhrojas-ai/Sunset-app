@@ -759,6 +759,11 @@ function textoDia(w, i, semanal) {
   if (g) out.push(`PARA CERRAR: ${d.ref}`);
   return out.join('\n');
 }
+// notas que acompañan al guion copiado: la del día y las de producción de la semana
+function misNotas(w, i) {
+  const dia = (get(key(w, 'vn'+i)) || '').trim(), sem = (get(key(w, 'notas')) || '').trim();
+  return (dia ? `\n\nMIS NOTAS DEL ${DIAS[i].toUpperCase()}:\n${dia}` : '') + (sem ? `\n\nNOTAS DE PRODUCCIÓN DE LA SEMANA:\n${sem}` : '');
+}
 function bloqueVersiculo(w, i, conPuntos) {
   const d = w.dias[i];
   return `<div class="vers-base"><span class="ref">${esc(d.ref)}</span><p class="vtxt">${esc(d.texto)}</p>
@@ -928,7 +933,7 @@ $('dias').onclick = e => {
   const t = e.target.closest('[data-d]');
   if (t) { diaSel = +t.dataset.d; renderDias(w, hoyDe(w)); $('dias').querySelector(`[data-d="${diaSel}"]`).focus(); return; }
   const c = e.target.closest('[data-copiar]');
-  if (c) return copiar(c.dataset.copiar === 'prompt' ? promptSemana(w) : textoDia(w, diaSel, cfgPrograma().dias.length === 1 && !verTodo));
+  if (c) return copiar(c.dataset.copiar === 'prompt' ? promptSemana(w) : textoDia(w, diaSel, cfgPrograma().dias.length === 1 && !verTodo) + misNotas(w, diaSel));
   if (e.target.closest('.chk')) marcarChk(e);
 };
 $('h-subs').onclick = e => { const b = e.target.closest('[data-ir]'); if (!b) return;
