@@ -157,6 +157,9 @@ details.valor dd{color:var(--ink2)}
 .chk{flex:1;min-height:40px;border-radius:999px;border:1px solid var(--line);font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:0 10px;color:var(--ink2);background:rgba(0,0,0,.15)}
 .chk[aria-pressed="true"]{background:var(--gold);color:#2a1a08;border-color:var(--gold);font-weight:500}
 .chk.rev[aria-pressed="false"]{border-style:dashed;color:var(--amber)}
+.barra-dia{display:grid;gap:4px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.18)}
+.barra-dia .acc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.barra-dia details.mi-nota{margin-top:4px}
 .chk.ent[aria-pressed="true"]{background:#9fd0ff;border-color:#9fd0ff;color:#0b1f33}
 
 /* ── PLEGABLES ── */
@@ -753,12 +756,17 @@ function textoDia(w, i, semanal) {
   return out.join('\n');
 }
 function bloqueVersiculo(w, i, conPuntos) {
-  const d = w.dias[i], aire = !!get(key(w, 'aire'+i)), ent = !!get(key(w, 'ent'+i));
+  const d = w.dias[i];
   return `<div class="vers-base"><span class="ref">${esc(d.ref)}</span><p class="vtxt">${esc(d.texto)}</p>
       ${conPuntos ? `<ul>${d.puntos.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
-      <div class="acc"><button class="chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Marcar al aire'}</button>
-        <button class="chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Entrevista ✓' : 'Hoy tuve entrevista'}</button></div>
-      ${notaBox(w, 'vn'+i, 'Programa, invitado, flyer, comentarios de la audiencia…')}</div>`;
+</div>`;
+}
+// registro del día, siempre arriba de la tarjeta: al aire, entrevista y nota
+function barraDia(w, i) {
+  const aire = !!get(key(w, 'aire'+i)), ent = !!get(key(w, 'ent'+i));
+  return `<div class="barra-dia"><div class="acc"><button class="chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Marcar al aire'}</button>
+      <button class="chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Entrevista ✓' : 'Hoy tuve entrevista'}</button></div>
+    ${notaBox(w, 'vn'+i, 'Invitado, programa, flyer, comentarios de la audiencia…')}</div>`;
 }
 const introSemana = w => `<div><div class="kick">Esta semana</div><h3>${esc(w.enfoque)}</h3></div>
   <ul class="intro-subs">${w.subtemas.map((x, k) => `<li><small>${DIAS_BLOQUE[k]}</small>${esc(x.titulo)}</li>`).join('')}</ul>`;
@@ -784,7 +792,7 @@ function renderDias(w, hoyIdx) {
   $('dias-ayuda').textContent = semanal ? `Programa de un día (${DIAS[mis[0]].toLowerCase()}): la introducción y el resumen de la semana en un solo guion de hasta 5 minutos.`
     : verTodo ? 'Toda la semana: domingo introducción, lunes a viernes los subtemas, sábado el resumen.'
     : `Tus días al aire: ${mis.map(k => DIAS[k].toLowerCase()).join(', ')}. Cada uno con su versículo y un guion de hasta 5 minutos.`;
-  const cab = `<div class="dia-cab"><b>${DIAS[i]}${i === hoyIdx ? ' · hoy' : ''}</b><span>${f.toLocaleDateString('es-PY', {day: 'numeric', month: 'long', year: 'numeric'})}</span></div>`;
+  const cab = `<div class="dia-cab"><b>${DIAS[i]}${i === hoyIdx ? ' · hoy' : ''}</b><span>${f.toLocaleDateString('es-PY', {day: 'numeric', month: 'long', year: 'numeric'})}</span></div>${barraDia(w, i)}`;
   const tabs = semanal ? '' : `<div class="tabs" role="tablist" aria-label="Día" style="grid-template-columns:repeat(${visibles.length},minmax(0,1fr))">${visibles.map(k => { const fk = fechaDia(w, k);
     return `<button role="tab" data-d="${k}" aria-selected="${k === i}" class="${k === hoyIdx ? 'hoy' : ''}"><b>${DIAS[k].slice(0, 3)}</b><small>${fk.getDate()}/${fk.getMonth()+1}${get(key(w, 'aire'+k)) ? ' ✓' : ''}</small></button>`; }).join('')}</div>`;
   const pie = (txt) => `<div class="acciones"><button class="btn prim" data-copiar="dia">${txt}</button><button class="btn" data-copiar="prompt">Copiar prompt de la semana</button></div>`;
