@@ -11,6 +11,7 @@ import openpyxl
 
 ROOT = Path(__file__).resolve().parent.parent
 DIAS = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+DIAS_TXT = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
 
 
 def txt(v):
@@ -48,6 +49,34 @@ def rows(ws):
     it = ws.iter_rows(values_only=True)
     head = [txt(h) for h in next(it)]
     return [dict(zip(head, r)) for r in it if any(r)]
+
+
+def revisar(anio, semanas):
+    """Revisión de la planilla: avisa lo que conviene corregir antes de publicar.
+    Escribe content/revision_planilla.txt; no detiene la generación."""
+    avisos, usos = [], {}
+    clave = lambda ref: re.sub(r'\s+', ' ', quitar_tildes(ref).lower().replace('—', '-')).strip()
+    for w in semanas:
+        for campo in ('enfoque', 'programa', 'locutor', 'historia', 'valor'):
+            if not w[campo]:
+                avisos.append(f'Semana {w["n"]}: falta «{campo}».')
+        for i, st in enumerate(w['subtemas'], 1):
+            if not st['titulo']:
+                avisos.append(f'Semana {w["n"]}: falta el subtema {i}.')
+        for i, d in enumerate(w['dias']):
+            dia = f'Semana {w["n"]} · {DIAS_TXT[i]}'
+            if not d['ref']:
+                avisos.append(f'{dia}: el versículo no tiene el formato «Cita — texto».')
+            else:
+                usos.setdefault(clave(d['ref']), []).append(dia)
+            if len(d['puntos']) != 3:
+                avisos.append(f'{dia}: tiene {len(d["puntos"])} puntos (se esperan 3).')
+    repetidos = [(ref, l) for ref, l in usos.items() if len(l) > 1]
+    lineas = [f'Revisión de la planilla {anio}', '']
+    lineas += ['VERSÍCULOS REPETIDOS'] + [f'- {ref}: ' + '; '.join(l) for ref, l in sorted(repetidos)] + ['']
+    lineas += ['OTROS AVISOS'] + [f'- {a}' for a in avisos]
+    (ROOT / 'content' / 'revision_planilla.txt').write_text('\n'.join(lineas) + '\n', encoding='utf-8')
+    print(f'Revisión: {len(repetidos)} versículos repetidos · {len(avisos)} avisos → content/revision_planilla.txt')
 
 
 def main(path):
@@ -129,6 +158,7 @@ def main(path):
                               'aire': txt(r.get('Para el aire')).lower().startswith('s')})
 
     data = {'anio': anio, 'semanas': semanas, 'valores': valores, 'mensajero': mensajero}
+    revisar(anio, semanas)
     html = ROOT / 'public' / 'index.html'
     src = html.read_text(encoding='utf-8')
     blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
