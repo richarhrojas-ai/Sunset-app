@@ -161,6 +161,7 @@ details.valor dd{color:var(--ink2)}
 .barra-dia .acc{display:flex;gap:6px}
 .barra-dia details.mi-nota{margin-top:0}
 .barra-dia details.mi-nota[open]{flex-basis:100%}
+.barra-dia details.mi-nota textarea{min-height:min(45vh,340px);font-size:15.5px;line-height:1.55;padding:14px 16px;resize:vertical}
 .chk.mini-chk{flex:none;min-height:30px;padding:0 12px;font-size:9.5px;letter-spacing:.14em;background:transparent;color:var(--ink3);border-color:rgba(255,255,255,.18)}
 .chk.mini-chk:hover{color:var(--ink);border-color:rgba(255,255,255,.35)}
 .chk.ent[aria-pressed="true"]{background:#9fd0ff;border-color:#9fd0ff;color:#0b1f33}
@@ -769,7 +770,7 @@ function barraDia(w, i) {
   const aire = !!get(key(w, 'aire'+i)), ent = !!get(key(w, 'ent'+i));
   return `<div class="barra-dia"><div class="acc"><button class="chk mini-chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button>
       <button class="chk mini-chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Con entrevista ✓' : 'Con entrevista'}</button></div>
-    ${notaBox(w, 'vn'+i, 'Invitado, programa, flyer, comentarios de la audiencia…')}</div>`;
+    ${notaBox(w, 'vn'+i, 'Lo que quieras anotar para este día: noticias, clima, avisos, invitados, pedidos de oración, ideas que surgen al aire…')}</div>`;
 }
 const introSemana = w => `<div><div class="kick">Esta semana</div><h3>${esc(w.enfoque)}</h3></div>
   <ul class="intro-subs">${w.subtemas.map((x, k) => `<li><small>${DIAS_BLOQUE[k]}</small>${esc(x.titulo)}</li>`).join('')}</ul>`;
@@ -934,7 +935,9 @@ $('h-subs').onclick = e => { const b = e.target.closest('[data-ir]'); if (!b) re
   if (!cfgPrograma().listo) return $('s-prog').scrollIntoView({behavior: 'smooth'});
   const i = +b.dataset.ir; if (!cfgPrograma().dias.includes(i)) verTodo = true;
   diaSel = i; renderDias(sem[cur], hoyDe(sem[cur])); $('s-dias').scrollIntoView({behavior: 'smooth'}); };
-document.addEventListener('input', e => { const t = e.target.closest('textarea[data-n]'); if (!t) return;
+const crecer = t => { t.style.height = 'auto'; t.style.height = Math.max(t.scrollHeight + 2, t.offsetHeight) + 'px'; };
+document.addEventListener('toggle', e => { const t = e.target.querySelector?.('textarea[data-n]'); if (t && e.target.open) { crecer(t); t.focus(); } }, true);
+document.addEventListener('input', e => { const t = e.target.closest('textarea[data-n]'); if (!t) return; crecer(t);
   set(key(sem[cur], t.dataset.n), t.value); const d = t.closest('details'); d.classList.toggle('tiene', !!t.value); d.querySelector('summary').textContent = t.value ? 'Mi nota' : 'Agregar nota'; });
 $('mes').onchange = e => renderRegistro(+e.target.value);
 document.querySelectorAll('.reg-list').forEach(l => l.onclick = e => { const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } });
