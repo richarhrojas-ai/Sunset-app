@@ -642,7 +642,7 @@ function render() {
   $('h-tema').textContent = TEMA_TXT[w.tema] || w.tema;
   $('h-enfoque').textContent = w.enfoque;
   $('h-meta').innerHTML = `<span><span class="dot"></span><b>${esc(w.color)}</b></span><span>Semana <b>${w.n}</b></span>`;
-  $('h-subs').innerHTML = w.subtemas.map((s, i) => `<li><span>${i+1}</span><button data-ir="${[1,3,5][i]}">${esc(s.titulo)}<small>${DIAS_BLOQUE[i]}</small></button></li>`).join('');
+  $('h-subs').innerHTML = w.subtemas.map((s, i) => `<li><span>${i+1}</span><button data-ir="${[1,3,5][i]}">${esc(s.titulo)}</button></li>`).join('');
   const antes = hoyD < dateOf(sem[0].inicio);
   $('h-aviso').hidden = !(antes && cur === 0);
   if (antes) $('h-aviso').textContent = `El año arranca el ${fmt(dateOf(sem[0].inicio))} de ${DATA.anio} · faltan ${Math.ceil((dateOf(sem[0].inicio)-hoyD)/864e5)} días`;
