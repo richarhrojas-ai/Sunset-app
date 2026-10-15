@@ -18,7 +18,8 @@ def txt(v):
 
 
 def puntos(v):
-    return [re.sub(r'^[•\-\s]+', '', l).strip() for l in txt(v).splitlines() if l.strip()]
+    # admite «• texto», «- texto» y «1. Título: explicación»
+    return [re.sub(r'^(?:[•\-\s]+|\d+[.)]\s*)', '', l).strip() for l in txt(v).splitlines() if l.strip()]
 
 
 def versiculo(v):
@@ -36,6 +37,11 @@ def frase(v):
         f, autor = s.rsplit('—', 1)
         return {'texto': f.strip().strip('"“”'), 'autor': autor.strip()}
     return {'texto': s.strip('"“”'), 'autor': ''}
+
+
+def quitar_tildes(s):
+    import unicodedata
+    return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')
 
 
 def rows(ws):
@@ -70,24 +76,19 @@ def main(path):
             'ejemplo': txt(r['Ejemplo de aplicacion']),
         }
 
-    # guiones para el aire (opcional): una fila por día, lunes a sábado
+    # guiones para el aire (opcional): una fila por día, lunes a sábado.
+    # Se apoyan en el versículo del día: sus 3 puntos son los 3 puntos del guion.
     guiones = {}
     hg = f'Guiones {anio}'
     if hg in wb.sheetnames:
         for r in rows(wb[hg]):
-            guiones.setdefault(int(r['Semana']), []).append({
-                'dia': txt(r['Dia']),
-                'subtema': int(r['Subtema']),
+            dia = next(i for i, d in enumerate(DIAS) if d.lower() == quitar_tildes(txt(r['Dia'])).lower())
+            guiones[(int(r['Semana']), dia)] = {
                 'titulo': txt(r['Titulo']),
                 'dato': {'texto': txt(r['Dato curioso']), 'fuente': txt(r['Fuente dato'])},
-                'puntos': [{
-                    'titulo': txt(r[f'Punto {i}']),
-                    'desarrollo': txt(r[f'Desarrollo {i}']),
-                    'problema': txt(r[f'Problematica {i}']),
-                    'solucion': txt(r[f'Solucion {i}']),
-                } for i in (1, 2, 3)],
-                'cierre': {'ref': txt(r['Cierre cita (NTV)']), 'texto': txt(r['Cierre texto'])},
-            })
+                'puntos': [{'desarrollo': txt(r[f'Desarrollo {i}']), 'problema': txt(r[f'Problematica {i}']),
+                            'solucion': txt(r[f'Solucion {i}'])} for i in (1, 2, 3)],
+            }
 
     semanas = []
     for r in rows(wb[hoja]):
@@ -110,9 +111,9 @@ def main(path):
             'valor': txt(r['Valor (ADN)']),
             'programa': txt(r['Programa']),
             'locutor': txt(r['Locutor']),
-            'dias': [{**versiculo(r[f'Versiculo {d}']), 'puntos': puntos(r[f'3 Puntos {d}'])} for d in DIAS],
+            'dias': [{**versiculo(r[f'Versiculo {d}']), 'puntos': puntos(r[f'3 Puntos {d}']),
+                      'guion': guiones.get((int(r['Semana']), i))} for i, d in enumerate(DIAS)],
             'marco': marcos.get((tema, ronda)),
-            'guion': guiones.get(int(r['Semana']), []),
         })
 
     data = {'anio': anio, 'semanas': semanas, 'valores': valores}
@@ -124,7 +125,7 @@ def main(path):
         sys.exit('No se encontró el marcador /*DATA*/ en index.html')
     html.write_text(out, encoding='utf-8')
     sin_marco = [s['n'] for s in semanas if not s['marco']]
-    print(f'{anio}: {len(semanas)} semanas · {len(marcos)} marcos · {len(valores)} valores · {len(guiones)} con guion'
+    print(f'{anio}: {len(semanas)} semanas · {len(marcos)} marcos · {len(valores)} valores · {len(guiones)} días con guion'
           + (f' · sin marco: {sin_marco}' if sin_marco else ''))
 
 

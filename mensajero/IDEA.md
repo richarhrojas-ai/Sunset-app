@@ -13,11 +13,9 @@ vocabulario de la radio.
 | Semana con color + título + hook | Semana con **color + Tema + Enfoque** y su número de semana |
 | Árbol fijo por color | **Escena por tema** (paisaje SVG, sin íconos), pintada con la gama del color de la semana |
 | Franja de 7 íconos / dimensiones | **7 íconos de temas** en el cielo de la portada; al tocar uno se abren todas sus semanas del año, con la activa resaltada y la próxima marcada |
-| Domingo: título, frase, historia | **Historia ilustrativa** de la semana |
-| Lunes–sábado: @ del día | **7 versículos, domingo a sábado, con fecha** (para el aire y para ubicar los flyers de redes) |
+| Domingo + lunes–sábado | **Día a día** (Dom–Sáb, con fecha): domingo abre la semana con su versículo y la historia ilustrativa; de lunes a sábado, el **versículo del día es la base del guion** de 5 a 7 min: sus 3 puntos son los 3 puntos del guion, cada uno con problemática y solución práctica, más un dato para abrir |
 | Autoevaluación de 3 palabras | **3 subtemas**: desarrollo, nota para el locutor, frase célebre |
 | Ficha / maestría | **Apoyamos al programa** (programa + locutor) y **Valor de Mensajero** con su guía interna |
-| — | **Guion para el aire** (5 a 7 min), lunes a sábado: dato para abrir, 3 puntos con problemática y solución práctica, cierre con versículo NTV. Botón para copiar el prompt de la semana |
 | Cierre / progreso | **Preparación de la semana**: biblioteca de 30 tareas, cada locutor elige hasta 10 según su programa (diario o semanal, 1/2/3 h, con o sin entrevistas) |
 | — | **Registro al aire** por mes: versículos y subtemas al aire, con lista y totales del año |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
@@ -31,7 +29,7 @@ así que los subtemas sirven para cualquier día. Los versículos sí llevan dí
 datos dentro de `public/index.html` (prototipo). En la versión final pasa a
 `netlify/content/data.mjs` y se entrega por `/api/content` con clave, igual que Sunset.
 
-Hojas que se leen: «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN» y «Guiones AAAA» (una fila por día: título, dato curioso y fuente, 3 puntos con desarrollo, problemática y solución, cierre NTV).
+Hojas que se leen: «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN» y «Guiones AAAA» (una fila por día, lunes a sábado: título, dato curioso y fuente, y para cada uno de los 3 puntos del versículo: desarrollo, problemática y solución).
 Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden corregir aparte.
 
 ## Claves del usuario (`AAAA/wN/...`, valor `{v,t}`)
