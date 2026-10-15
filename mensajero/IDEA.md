@@ -20,6 +20,7 @@ vocabulario de la radio.
 | Cierre / progreso | **Preparación de la semana**: biblioteca de 30 tareas, cada locutor elige hasta 10 según su programa (diario o semanal, 1/2/3 h, con o sin entrevistas) |
 | — | **Registro al aire**: días al aire y entrevistas por semana, mes y año, más la lista del mes |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
+| — | **Sobre Mensajero** (al final): identidad, historia, misión, visión, valores, contacto para la audiencia y por áreas, organigrama, programas y locutores, y frases para el aire con botón «Copiar». Sale de la hoja «Mensajero» de la planilla |
 
 Un «Al aire», un «Con entrevista» y una nota por día. El registro cuenta días al aire (cada uno es un versículo compartido y su reflexión).
 
@@ -29,7 +30,7 @@ Un «Al aire», un «Con entrevista» y una nota por día. El registro cuenta d�
 datos dentro de `public/index.html` (prototipo). En la versión final pasa a
 `netlify/content/data.mjs` y se entrega por `/api/content` con clave, igual que Sunset.
 
-Hojas que se leen: «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN» y «Guiones AAAA» (una fila por día. Lunes a viernes: título, dato y fuente, y para cada uno de los 3 puntos del versículo: desarrollo, problemática y solución. Sábado = resumen: título, dato, Desarrollo 1-3 = idea clave de cada subtema, Solucion 1 = acción para la semana).
+Hojas que se leen: «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN», «Mensajero» (Seccion, Titulo, Texto, Para el aire) y «Guiones AAAA» (una fila por día. Lunes a viernes: título, dato y fuente, y para cada uno de los 3 puntos del versículo: desarrollo, problemática y solución. Sábado = resumen: título, dato, Desarrollo 1-3 = idea clave de cada subtema, Solucion 1 = acción para la semana).
 Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden corregir aparte.
 
 ## Claves del usuario (`AAAA/wN/...`, valor `{v,t}`)

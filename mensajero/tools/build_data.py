@@ -119,7 +119,16 @@ def main(path):
             'marco': marcos.get((tema, ronda)),
         })
 
-    data = {'anio': anio, 'semanas': semanas, 'valores': valores}
+    # información institucional (opcional): hoja «Mensajero» con Seccion, Titulo, Texto, Para el aire
+    mensajero = []
+    if 'Mensajero' in wb.sheetnames:
+        for r in rows(wb['Mensajero']):
+            texto = txt(r['Texto'])
+            mensajero.append({'seccion': txt(r['Seccion']), 'titulo': txt(r['Titulo']),
+                              'texto': '' if texto.startswith('(por completar') else texto,
+                              'aire': txt(r.get('Para el aire')).lower().startswith('s')})
+
+    data = {'anio': anio, 'semanas': semanas, 'valores': valores, 'mensajero': mensajero}
     html = ROOT / 'public' / 'index.html'
     src = html.read_text(encoding='utf-8')
     blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
