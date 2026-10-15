@@ -106,7 +106,7 @@ dialog.hoja::backdrop{background:rgba(5,3,10,.6);backdrop-filter:blur(4px)}
 .hoja li.pasada button{opacity:.5}
 
 /* ── FICHA ── */
-.ficha{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ficha{display:grid;grid-template-columns:1fr;gap:12px}
 @media(max-width:560px){.ficha{grid-template-columns:1fr}}
 .ficha .card h3{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:6px}
 .ficha .big{font-size:22px;font-weight:300;letter-spacing:.03em}
@@ -198,6 +198,17 @@ details.fold[open]>summary::after{content:"–"}
 .btn:hover{color:var(--ink);border-color:rgba(255,255,255,.35)}
 .btn.prim{background:var(--gold);border-color:var(--gold);color:#2a1a08;font-weight:500}
 .vacio{display:grid;gap:12px;justify-items:start}
+.apoyo{margin-top:14px;padding:10px 14px;border-radius:14px;border:1px solid rgba(255,215,0,.35);background:rgba(255,215,0,.07);display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.apoyo span{flex-basis:100%;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+.apoyo b{font-size:17px;font-weight:500}
+.apoyo small{font-size:13px;color:var(--ink2)}
+.mi-prog{margin-top:18px}
+.mi-prog .resumen{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:var(--glass)}
+.mi-prog .resumen span{font-size:14px;color:var(--ink2)}
+.mi-prog .resumen b{color:var(--ink);font-weight:500}
+.mi-prog .form{display:grid;gap:12px;padding:18px;border-radius:18px;border:1px solid rgba(255,215,0,.4);background:var(--glass)}
+.mi-prog .form h2{font-size:20px;font-weight:400}
+.mi-prog .form p{font-size:14px;color:var(--ink2)}
 .dias-chips{display:flex;gap:4px;flex-wrap:wrap}
 .dias-chips button{min-width:44px;min-height:40px;border-radius:999px;border:1px solid var(--line);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);background:rgba(0,0,0,.2)}
 .dias-chips button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#2a1a08;font-weight:500}
@@ -329,6 +340,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
       <div class="tema" id="h-tema"></div>
       <h1 class="enfoque" id="h-enfoque"></h1>
       <div class="meta" id="h-meta"></div>
+      <div class="apoyo" id="h-apoyo"></div>
       <ol class="subs" id="h-subs"></ol>
       <div class="aviso" id="h-aviso" hidden></div>
     </div>
@@ -351,18 +363,19 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   <textarea id="copia-txt" readonly aria-label="Texto para copiar"></textarea><button class="btn" id="copia-x">Cerrar</button></dialog>
 
 <main class="wrap">
+  <section class="mi-prog" id="s-prog" aria-label="Mi programa"></section>
+
 
   <h2 class="sec" id="s-dias">Mi semana <span class="cuenta" id="c-v"></span></h2>
   <p class="muted" style="font-size:14px;margin:-4px 0 14px" id="dias-ayuda"></p>
   <div class="card guion-wrap" id="dias"></div>
 
-  <details class="fold" id="s-prep" open><summary>Mi preparación <span id="prep-pct" class="muted" style="letter-spacing:.1em"></span></summary>
+  <details class="fold" id="s-prep"><summary>Mi preparación <span id="prep-pct" class="muted" style="letter-spacing:.1em"></span></summary>
     <div class="fold-body">
-      <div><h4>Mi programa</h4><div class="programa" id="programa"></div></div>
       <div class="barra"><i id="prep-bar"></i></div><div class="prep" id="prep"></div>
       <div class="acciones"><button class="btn" id="abrir-biblio">Elegir de la biblioteca (30)</button></div>
       <div><h4>Notas de producción</h4><textarea id="notas" placeholder="Ideas, invitados, cambios para esta semana…"></textarea></div></div></details>
-  <details class="fold" id="s-reg" open><summary>Registro al aire</summary><div class="fold-body">
+  <details class="fold" id="s-reg"><summary>Registro al aire</summary><div class="fold-body">
     <div class="reg-top"><label for="mes" class="kicker">Mes</label><select id="mes"></select></div>
     <div class="tiles" id="tiles"></div>
     <div><h4>Días al aire</h4><ul class="reg-list" id="reg-v"></ul></div>
@@ -370,7 +383,6 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   <details class="fold" id="s-marco"><summary>Historia bíblica y marcos</summary><div class="fold-body" id="marco"></div></details>
   <h2 class="sec" id="s-ficha" style="margin-top:28px">Ficha de la semana</h2>
   <div class="ficha">
-    <div class="card"><h3>Apoyamos al programa</h3><div class="big" id="f-prog"></div><div class="muted" id="f-loc"></div></div>
     <div class="card"><h3>Valor de Mensajero</h3><div class="big" id="f-valor"></div>
       <details class="valor"><summary>Guía interna ▾</summary><dl id="f-guia"></dl></details></div>
   </div>
@@ -462,9 +474,10 @@ const PRIORIDAD = ['guion','tema','reflexion','versiculo','versSem','devocional'
 const TAG_TXT = {diario: 'solo diarios', semanal: 'solo semanales', entrevista: 'con entrevistas', '2h': 'de 2 h o más', '3h': 'de 3 h'};
 const cfgPrograma = () => {
   const c = {nombre: '', horas: 1, entrevistas: false, ...(get('cfg/programa') || {})};
-  if (!Array.isArray(c.dias)) c.dias = c.frec === 'semanal' ? [6] : [1, 2, 3, 4, 5];
+  if (!Array.isArray(c.dias)) c.dias = c.frec === 'semanal' ? [6] : c.frec === 'diario' ? [1, 2, 3, 4, 5] : [];   // [] = todavía no eligió
   c.dias = [...new Set(c.dias)].sort();
   c.frec = c.dias.length === 1 ? 'semanal' : 'diario';   // un solo día al aire = programa semanal
+  c.listo = c.dias.length > 0;
   return c;
 };
 const BLOQUE = [null, 0, 0, 1, 1, 2, null];        // subtema de cada día: lun-mar 1, mié-jue 2, vie 3
@@ -609,7 +622,7 @@ function render() {
     <span class="ic">${icono(t)}</span><small>${esc(TEMA_CORTO[t] || t)}</small></button>`).join('');
 
   // ficha
-  $('f-prog').textContent = w.programa; $('f-loc').textContent = w.locutor;
+  $('h-apoyo').innerHTML = `<span>Apoyamos al programa</span><b>${esc(w.programa)}</b><small>${esc(w.locutor)}</small>`;
   $('f-valor').textContent = w.valor;
   const g = DATA.valores[w.valor] || {};
   $('f-guia').innerHTML = [['Definición', g.definicion], ['En el contenido', g.contenido], ['Pregunta guía', g.pregunta], ['Ejemplo', g.ejemplo]]
@@ -668,6 +681,7 @@ function renderRegistro(m) {
 }
 
 function pintarCuentas() {
+  $('c-v').hidden = !cfgPrograma().listo;
   const w = sem[cur], mis = cfgPrograma().dias, n = mis.filter(i => get(key(w, 'aire'+i))).length, el = $('c-v');
   el.textContent = `${n}/${mis.length} al aire`; el.classList.toggle('completo', n === mis.length);
 }
@@ -746,6 +760,12 @@ function paraLocutor(w, b) {
 }
 function renderDias(w, hoyIdx) {
   const c = cfgPrograma(), mis = c.dias, semanal = mis.length === 1 && !verTodo;
+  if (!c.listo && !verTodo) {
+    $('dias-ayuda').textContent = '';
+    $('dias').innerHTML = `<div class="vacio"><p class="muted">Elegí arriba tus días al aire y acá vas a ver solo lo de tu programa.</p>
+      <button class="ver-todo" data-vertodo>Ver toda la semana</button></div>`;
+    return;
+  }
   const visibles = verTodo ? [0,1,2,3,4,5,6] : mis;
   if (diaSel === null || !visibles.includes(diaSel)) diaSel = visibles.includes(hoyIdx) ? hoyIdx : visibles[0];
   const i = diaSel, f = fechaDia(w, i), d = w.dias[i];
@@ -789,18 +809,30 @@ function avisar(msg) {
 
 /* mi programa: define qué tareas se sugieren */
 const PROGRAMAS = [...new Set(DATA.semanas.map(w => w.programa))];
+let editandoPrograma = false;
+const resumenDias = d => { const k = d.join(','); return k === '1,2,3,4,5' ? 'lunes a viernes' : k === '1,2,3,4,5,6' ? 'lunes a sábado'
+  : d.map(i => DIAS[i].toLowerCase()).join(', '); };
 function pintarPrograma() {
   const c = cfgPrograma();
-  $('programa').innerHTML = `<select id="pg-nombre" aria-label="Programa"><option value="">Elegí tu programa</option>${PROGRAMAS.map(p => `<option${p === c.nombre ? ' selected' : ''}>${esc(p)}</option>`).join('')}</select>
-    <select id="pg-horas" aria-label="Duración">${[1,2,3].map(h => `<option value="${h}"${c.horas === h ? ' selected' : ''}>${h} hora${h > 1 ? 's' : ''}</option>`).join('')}</select>
-    <label class="tog"><input type="checkbox" id="pg-ent"${c.entrevistas ? ' checked' : ''}> Con entrevistas</label>
-    <div style="flex-basis:100%;display:grid;gap:6px"><span class="kicker" style="letter-spacing:.2em">Días al aire</span>
-      <div class="dias-chips" role="group" aria-label="Días al aire">${DIAS.map((d, i) => `<button type="button" data-dia="${i}" aria-pressed="${c.dias.includes(i)}">${d.slice(0, 3)}</button>`).join('')}
-        <button type="button" class="btn mini" data-preset="1,2,3,4,5">Lun a vie</button><button type="button" class="btn mini" data-preset="1,2,3,4,5,6">Lun a sáb</button></div></div>`;
+  if (c.listo && !editandoPrograma) {
+    $('s-prog').innerHTML = `<div class="resumen"><span>${c.nombre ? `<b>${esc(c.nombre)}</b> · ` : ''}Al aire: <b>${resumenDias(c.dias)}</b> · ${c.horas} h${c.entrevistas ? ' · con entrevistas' : ''}</span>
+      <button class="btn mini" id="pg-editar">Cambiar</button></div>`;
+    return;
+  }
+  $('s-prog').innerHTML = `<div class="form">
+    <div><h2>${c.listo ? 'Mi programa' : 'Para empezar, contanos tu programa'}</h2><p>Marcá los días que salís al aire. La app te muestra solo lo que necesitás para esos días.</p></div>
+    <div class="programa" id="programa">
+      <div style="flex-basis:100%;display:grid;gap:6px"><span class="kicker" style="letter-spacing:.2em">Días al aire</span>
+        <div class="dias-chips" role="group" aria-label="Días al aire">${DIAS.map((d, i) => `<button type="button" data-dia="${i}" aria-pressed="${c.dias.includes(i)}">${d.slice(0, 3)}</button>`).join('')}</div>
+        <div class="dias-chips"><button type="button" class="btn mini" data-preset="1,2,3,4,5">Lunes a viernes</button><button type="button" class="btn mini" data-preset="1,2,3,4,5,6">Lunes a sábado</button></div></div>
+      <select id="pg-nombre" aria-label="Programa"><option value="">Elegí tu programa</option>${PROGRAMAS.map(p => `<option${p === c.nombre ? ' selected' : ''}>${esc(p)}</option>`).join('')}</select>
+      <select id="pg-horas" aria-label="Duración">${[1,2,3].map(h => `<option value="${h}"${c.horas === h ? ' selected' : ''}>${h} hora${h > 1 ? 's' : ''}</option>`).join('')}</select>
+      <label class="tog"><input type="checkbox" id="pg-ent"${c.entrevistas ? ' checked' : ''}> Con entrevistas</label>
+    </div>
+    <div class="acciones"><button class="btn prim" id="pg-listo"${c.listo ? '' : ' disabled'}>Listo</button></div></div>`;
 }
 function guardarPrograma(dias) {
   const c = {nombre: $('pg-nombre').value, horas: +$('pg-horas').value, entrevistas: $('pg-ent').checked, dias: dias || cfgPrograma().dias};
-  if (!c.dias.length) c.dias = [1];
   set('cfg/programa', c);
   if (!get('cfg/prepManual')) set('cfg/prep', sugerir(cfgPrograma()));   // mientras no elija a mano, la lista sigue al programa
   diaSel = null; render();
@@ -893,13 +925,15 @@ document.addEventListener('input', e => { const t = e.target.closest('textarea[d
 $('mes').onchange = e => renderRegistro(+e.target.value);
 document.querySelectorAll('.reg-list').forEach(l => l.onclick = e => { const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } });
 $('copia-x').onclick = () => $('copia').close();
-$('programa').onchange = () => guardarPrograma();
-$('programa').onclick = e => {
+$('s-prog').onchange = () => { const c = cfgPrograma(); if (c.listo) guardarPrograma(); };
+$('s-prog').onclick = e => {
+  if (e.target.closest('#pg-editar')) { editandoPrograma = true; return pintarPrograma(); }
+  if (e.target.closest('#pg-listo')) { editandoPrograma = false; return guardarPrograma(); }
   const d = e.target.closest('[data-dia]'), p = e.target.closest('[data-preset]'); if (!d && !p) return;
   let dias = cfgPrograma().dias;
   if (p) dias = p.dataset.preset.split(',').map(Number);
   else { const i = +d.dataset.dia; dias = dias.includes(i) ? dias.filter(x => x !== i) : [...dias, i]; }
-  guardarPrograma(dias);
+  editandoPrograma = true; guardarPrograma(dias);
 };
 $('abrir-biblio').onclick = abrirBiblio;
 $('prep').onclick = e => { const b = e.target.closest('button'); if (!b) return;
