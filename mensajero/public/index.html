@@ -164,6 +164,11 @@ details.valor dd{color:var(--ink2)}
 .barra-dia details.mi-nota textarea{min-height:min(45vh,340px);font-size:15.5px;line-height:1.55;padding:14px 16px;resize:vertical}
 .chk.mini-chk{flex:none;min-height:30px;padding:0 12px;font-size:9.5px;letter-spacing:.14em;background:transparent;color:var(--ink3);border-color:rgba(255,255,255,.18)}
 .chk.mini-chk:hover{color:var(--ink);border-color:rgba(255,255,255,.35)}
+.chk.mini-chk[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#2a1a08;font-weight:500}
+.chk.mini-chk.ent[aria-pressed="true"]{background:#9fd0ff;border-color:#9fd0ff;color:#0b1f33}
+.acciones.copiar{justify-content:flex-end;gap:6px}
+.acciones.copiar .btn{color:var(--ink3);background:transparent;border-color:rgba(255,255,255,.18)}
+.acciones.copiar .btn:hover{color:var(--ink)}
 .chk.ent[aria-pressed="true"]{background:#9fd0ff;border-color:#9fd0ff;color:#0b1f33}
 
 /* ── PLEGABLES ── */
@@ -829,13 +834,13 @@ function renderDias(w, hoyIdx) {
   const cab = `<div class="dia-cab"><b>${DIAS[i]}${i === hoyIdx ? ' · hoy' : ''}</b><span>${f.toLocaleDateString('es-PY', {day: 'numeric', month: 'long', year: 'numeric'})}</span></div>${barraDia(w, i)}`;
   const tabs = semanal ? '' : `<div class="tabs" role="tablist" aria-label="Día" style="grid-template-columns:repeat(${visibles.length},minmax(0,1fr))">${visibles.map(k => { const fk = fechaDia(w, k);
     return `<button role="tab" data-d="${k}" aria-selected="${k === i}" class="${k === hoyIdx ? 'hoy' : ''}"><b>${DIAS[k].slice(0, 3)}</b><small>${fk.getDate()}/${fk.getMonth()+1}${get(key(w, 'aire'+k)) ? ' ✓' : ''}</small></button>`; }).join('')}</div>`;
-  const pie = (txt) => `<div class="acciones"><button class="btn prim" data-copiar="dia">${txt}</button><button class="btn" data-copiar="prompt">Copiar prompt de la semana</button></div>`;
+  const pie = (txt) => `<div class="acciones copiar"><button class="btn mini" data-copiar="dia">${txt}</button><button class="btn mini" data-copiar="prompt">Copiar prompt</button></div>`;
   let cuerpo;
   if (semanal) cuerpo = `${cab}<div class="kick">Tu programa de la semana</div>${introSemana(w)}${bloqueResumen(w)}${bloqueVersiculo(w, i, true)}
-      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${esc(w.historia)}</p></div></details>${pie('Copiar guion de la semana')}`;
+      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${esc(w.historia)}</p></div></details>${pie('Copiar guion')}`;
   else if (i === 0) cuerpo = `${cab}<div class="kick">Introducción de la semana</div>${introSemana(w)}${bloqueVersiculo(w, 0, true)}
-      <div class="hist"><b>Historia ilustrativa</b><p>${esc(w.historia)}</p></div>${pie('Copiar introducción')}`;
-  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${pie('Copiar resumen')}`;
+      <div class="hist"><b>Historia ilustrativa</b><p>${esc(w.historia)}</p></div>${pie('Copiar guion')}`;
+  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${pie('Copiar guion')}`;
   else { const b = BLOQUE[i], g = d.guion, primero = [1,3,5].includes(i) || !visibles.includes(i-1);
     cuerpo = `${cab}<div class="kick">Subtema ${b+1} · ${esc(w.subtemas[b].titulo)}</div>${primero ? paraLocutor(w, b) : ''}
       ${g ? `<h3>${esc(g.titulo)}</h3>${g.dato.texto ? `<div class="dato"><b>Dato para abrir</b><p>${esc(g.dato.texto)}</p><cite>${esc(g.dato.fuente)}</cite></div>` : ''}
@@ -843,9 +848,9 @@ function renderDias(w, hoyIdx) {
         ${d.puntos.map((p, k) => { const [tt, ex] = tituloPunto(p), q = g.puntos[k] || {};
           return `<div class="punto"><span>${k+1}</span><h4>${esc(tt)}${ex ? `<small>${esc(ex)}</small>` : ''}</h4><p>${esc(q.desarrollo)}</p>
           <dl><div><dt class="pr">Problemática</dt><dd>${esc(q.problema)}</dd></div><div><dt class="so">En la práctica</dt><dd>${esc(q.solucion)}</dd></div></dl></div>`; }).join('')}
-        ${pie(`Copiar guion del ${DIAS[i].toLowerCase()}`)}`
+        ${pie('Copiar guion')}`
       : `${bloqueVersiculo(w, i, true)}<div class="vacio"><p class="muted">Este día todavía no tiene guion. Copiá el prompt de la semana: ya trae el tema, los subtemas, el valor y los versículos de cada día.</p>
-        <div class="acciones"><button class="btn prim" data-copiar="prompt">Copiar prompt de la semana</button></div></div>`}`; }
+        <div class="acciones copiar"><button class="btn mini" data-copiar="prompt">Copiar prompt</button></div></div>`}`; }
   $('dias').innerHTML = `${tabs}<article class="guion" role="tabpanel">${cuerpo}</article>
     <div style="margin-top:14px;text-align:center"><button class="ver-todo" data-vertodo>${verTodo ? 'Ver solo mis días' : 'Ver toda la semana'}</button></div>`;
 }
