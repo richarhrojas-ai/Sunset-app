@@ -13,15 +13,14 @@ vocabulario de la radio.
 | Semana con color + título + hook | Semana con **color + Tema + Enfoque** y su número de semana |
 | Árbol fijo por color | **Escena por tema** (paisaje SVG, sin íconos), pintada con la gama del color de la semana |
 | Franja de 7 íconos / dimensiones | **7 íconos de temas** en el cielo de la portada; al tocar uno se abren todas sus semanas del año, con la activa resaltada y la próxima marcada |
-| Domingo + lunes–sábado | **Día a día** (Dom–Sáb, con fecha): domingo abre la semana con su versículo y la historia ilustrativa; de lunes a sábado, el **versículo del día es la base del guion** de hasta 5 minutos: sus 3 puntos son los 3 puntos del guion, cada uno con problemática y solución práctica, más un dato para abrir |
-| Autoevaluación de 3 palabras | **3 subtemas**: desarrollo, nota para el locutor, frase célebre |
+| Domingo + lunes–sábado | **Mi semana**: domingo introducción · lun–mar subtema 1 · mié–jue subtema 2 · viernes subtema 3 completo (cierra) · sábado **resumen**. De lunes a viernes, el versículo del día es la base del guion (sus 3 puntos, con problemática y solución). Cada día dice a qué subtema pertenece; el primer día del subtema trae «Para el locutor» (desarrollo, nota, frase) |
+| — | **Según los días al aire** de cada programa: lunes a viernes ve sus 5 días (los 3 subtemas completos); lunes a sábado suma el resumen; un programa de un solo día ve la introducción y el resumen juntos en un guion de 5 minutos |
 | Ficha / maestría | **Apoyamos al programa** (programa + locutor) y **Valor de Mensajero** con su guía interna |
 | Cierre / progreso | **Preparación de la semana**: biblioteca de 30 tareas, cada locutor elige hasta 10 según su programa (diario o semanal, 1/2/3 h, con o sin entrevistas) |
 | — | **Registro al aire** por mes: versículos y subtemas al aire, con lista y totales del año |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
 
-Sin días fijos: cada locutor tiene su programa (de lunes a viernes o un solo día; los domingos casi no hay programas en vivo),
-así que los subtemas sirven para cualquier día. Los versículos sí llevan día y fecha: así se sabe cuándo se compartió cada uno.
+Un «Al aire» y una nota por día. El registro cuenta días al aire (cada uno es un versículo compartido y su reflexión).
 
 ## Flujo de contenido
 
@@ -29,25 +28,22 @@ así que los subtemas sirven para cualquier día. Los versículos sí llevan dí
 datos dentro de `public/index.html` (prototipo). En la versión final pasa a
 `netlify/content/data.mjs` y se entrega por `/api/content` con clave, igual que Sunset.
 
-Hojas que se leen: «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN» y «Guiones AAAA» (una fila por día, lunes a sábado: título, dato curioso y fuente, y para cada uno de los 3 puntos del versículo: desarrollo, problemática y solución).
+Hojas que se leen: «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN» y «Guiones AAAA» (una fila por día. Lunes a viernes: título, dato y fuente, y para cada uno de los 3 puntos del versículo: desarrollo, problemática y solución. Sábado = resumen: título, dato, Desarrollo 1-3 = idea clave de cada subtema, Solucion 1 = acción para la semana).
 Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden corregir aparte.
 
 ## Claves del usuario (`AAAA/wN/...`, valor `{v,t}`)
 
-- `vr0..vr6` versículo revisado
-- `aire0..aire6` versículo al aire (cuenta en el mes de su fecha)
-- `vn0..vn6` nota de cada versículo
-- `st0..st2/aire` subtema al aire (cuenta en el día en que se marcó, nunca antes del inicio de su semana)
-- `st0..st2/nota` nota de cada subtema
+- `aire0..aire6` día al aire (cuenta en el mes de su fecha)
+- `vn0..vn6` nota de cada día
 - `prep/<id>` tarea de preparación hecha (id de la biblioteca)
-- `cfg/programa` mi programa {nombre, frec, horas, entrevistas} · `cfg/prep` mis tareas elegidas · `cfg/prepManual` si las eligió a mano
+- `cfg/programa` mi programa {nombre, dias (0=dom…6=sáb), horas, entrevistas} · `cfg/prep` mis tareas elegidas · `cfg/prepManual` si las eligió a mano
 - `notas` notas de producción
 
 Hoy se guardan en el dispositivo; con `sync.mjs` de Sunset quedan compartidas.
 
 ## Pendiente
 
-- Corrección de versículos (RVC): el botón «Revisar versículo» de cada día marca cuáles ya se revisaron.
+- Corrección de versículos: se marca en el Excel (no es tarea del locutor en la app).
 - La planilla está sin tildes (Prevencion, Lider, Habitos…); conviene corregirla en el Excel, que es la fuente.
 - PWA (manifest + sw), clave, sincronización y pruebas: copiar de Sunset.
 - Definir si la app es para Richarh solo o para cada locutor (filtro «mis semanas»).

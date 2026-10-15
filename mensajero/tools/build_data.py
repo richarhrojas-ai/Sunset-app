@@ -77,18 +77,21 @@ def main(path):
         }
 
     # guiones para el aire (opcional): una fila por día, lunes a sábado.
-    # Se apoyan en el versículo del día: sus 3 puntos son los 3 puntos del guion.
+    # Lunes a viernes se apoyan en el versículo del día (sus 3 puntos son los del guion);
+    # el sábado es el resumen de la semana.
     guiones = {}
     hg = f'Guiones {anio}'
     if hg in wb.sheetnames:
         for r in rows(wb[hg]):
             dia = next(i for i, d in enumerate(DIAS) if d.lower() == quitar_tildes(txt(r['Dia'])).lower())
-            guiones[(int(r['Semana']), dia)] = {
-                'titulo': txt(r['Titulo']),
-                'dato': {'texto': txt(r['Dato curioso']), 'fuente': txt(r['Fuente dato'])},
-                'puntos': [{'desarrollo': txt(r[f'Desarrollo {i}']), 'problema': txt(r[f'Problematica {i}']),
-                            'solucion': txt(r[f'Solucion {i}'])} for i in (1, 2, 3)],
-            }
+            g = {'titulo': txt(r['Titulo']),
+                 'dato': {'texto': txt(r['Dato curioso']), 'fuente': txt(r['Fuente dato'])}}
+            if dia == 6:  # sábado = resumen: Desarrollo 1-3 son las ideas clave de cada subtema, Solucion 1 la acción
+                g |= {'tipo': 'resumen', 'ideas': [txt(r[f'Desarrollo {i}']) for i in (1, 2, 3)], 'accion': txt(r['Solucion 1'])}
+            else:
+                g['puntos'] = [{'desarrollo': txt(r[f'Desarrollo {i}']), 'problema': txt(r[f'Problematica {i}']),
+                                'solucion': txt(r[f'Solucion {i}'])} for i in (1, 2, 3)]
+            guiones[(int(r['Semana']), dia)] = g
 
     semanas = []
     for r in rows(wb[hoja]):
