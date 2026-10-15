@@ -157,9 +157,12 @@ details.valor dd{color:var(--ink2)}
 .chk{flex:1;min-height:40px;border-radius:999px;border:1px solid var(--line);font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:0 10px;color:var(--ink2);background:rgba(0,0,0,.15)}
 .chk[aria-pressed="true"]{background:var(--gold);color:#2a1a08;border-color:var(--gold);font-weight:500}
 .chk.rev[aria-pressed="false"]{border-style:dashed;color:var(--amber)}
-.barra-dia{display:grid;gap:4px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(0,0,0,.18)}
-.barra-dia .acc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.barra-dia details.mi-nota{margin-top:4px}
+.barra-dia{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;margin-top:-4px}
+.barra-dia .acc{display:flex;gap:6px}
+.barra-dia details.mi-nota{margin-top:0}
+.barra-dia details.mi-nota[open]{flex-basis:100%}
+.chk.mini-chk{flex:none;min-height:30px;padding:0 12px;font-size:9.5px;letter-spacing:.14em;background:transparent;color:var(--ink3);border-color:rgba(255,255,255,.18)}
+.chk.mini-chk:hover{color:var(--ink);border-color:rgba(255,255,255,.35)}
 .chk.ent[aria-pressed="true"]{background:#9fd0ff;border-color:#9fd0ff;color:#0b1f33}
 
 /* ── PLEGABLES ── */
@@ -764,8 +767,8 @@ function bloqueVersiculo(w, i, conPuntos) {
 // registro del día, siempre arriba de la tarjeta: al aire, entrevista y nota
 function barraDia(w, i) {
   const aire = !!get(key(w, 'aire'+i)), ent = !!get(key(w, 'ent'+i));
-  return `<div class="barra-dia"><div class="acc"><button class="chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Marcar al aire'}</button>
-      <button class="chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Entrevista ✓' : 'Hoy tuve entrevista'}</button></div>
+  return `<div class="barra-dia"><div class="acc"><button class="chk mini-chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button>
+      <button class="chk mini-chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Con entrevista ✓' : 'Con entrevista'}</button></div>
     ${notaBox(w, 'vn'+i, 'Invitado, programa, flyer, comentarios de la audiencia…')}</div>`;
 }
 const introSemana = w => `<div><div class="kick">Esta semana</div><h3>${esc(w.enfoque)}</h3></div>

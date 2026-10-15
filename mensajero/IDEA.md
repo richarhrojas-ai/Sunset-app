@@ -21,7 +21,7 @@ vocabulario de la radio.
 | — | **Registro al aire**: días al aire y entrevistas por semana, mes y año, más la lista del mes |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
 
-Un «Al aire», un «Hoy tuve entrevista» y una nota por día. El registro cuenta días al aire (cada uno es un versículo compartido y su reflexión).
+Un «Al aire», un «Con entrevista» y una nota por día. El registro cuenta días al aire (cada uno es un versículo compartido y su reflexión).
 
 ## Flujo de contenido
 
