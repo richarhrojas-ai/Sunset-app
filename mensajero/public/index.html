@@ -325,6 +325,25 @@ details.mi-nota textarea{min-height:72px;margin-top:6px;font-size:14px}
 .tile b small{font-size:14px;color:var(--ink3);font-weight:300}
 .tile span{font-size:10px;letter-spacing:.14em;line-height:1.3;display:block;text-transform:uppercase;color:var(--ink3)}
 .reg-list{list-style:none;display:grid;gap:4px;font-size:14px}
+.inf-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media(min-width:560px){.inf-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.nivel{display:inline-block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink2)}
+.nivel.n4{border-color:var(--gold);color:var(--gold)}.nivel.n1{border-color:rgba(255,120,120,.6);color:#ffb3b3}
+.inf-sem{list-style:none;display:grid;gap:2px}
+.inf-sem li button{width:100%;display:grid;grid-template-columns:52px minmax(0,1fr) 44px;gap:10px;align-items:center;text-align:left;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);color:var(--ink2);font-size:13.5px}
+.inf-sem li button:hover{color:var(--ink)}
+.inf-sem .sn{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.inf-sem .pc{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.inf-sem .tx{min-width:0}.inf-sem .tx .barra{display:block;margin-top:6px}.inf-sem .tx small{display:block;color:var(--ink3);font-size:12px;margin-top:2px}
+.inf-tareas{list-style:none;display:grid;gap:6px;font-size:13.5px}
+.inf-tareas li{display:grid;grid-template-columns:minmax(0,1fr) 56px;gap:4px 10px;align-items:center;color:var(--ink2)}
+.inf-tareas li b{font-weight:400;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.inf-tareas li .barra{grid-column:1/-1;margin-top:0}
+.inf-anio{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;align-items:end;height:84px}
+.inf-anio button{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;font-size:9.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em}
+.inf-anio button i{display:block;width:100%;max-width:22px;border-radius:4px 4px 0 0;background:linear-gradient(0deg,var(--amber),var(--gold));min-height:2px}
+.inf-anio button[aria-current="true"]{color:var(--gold)}
+.inf-anio button.vacio i{background:rgba(255,255,255,.1)}
 .reg-list li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)}
 .reg-list li time{color:var(--ink3);font-variant-numeric:tabular-nums;font-size:13px}
 .reg-list button{text-align:left;color:var(--ink2)}
@@ -425,6 +444,10 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
     <div><h4>Días al aire</h4><ul class="reg-list" id="reg-v"></ul></div>
     <p class="muted" style="font-size:13px" id="reg-anio"></p>
     <div class="acciones copiar"><button class="btn mini" id="copiar-informe">Copiar informe del mes</button></div></div></details>
+  <details class="fold" id="s-inf"><summary>Informe de preparación <span id="inf-pct" class="muted" style="letter-spacing:.1em"></span></summary><div class="fold-body">
+    <div class="reg-top"><label for="mes-p" class="kicker">Mes</label><select id="mes-p"></select></div>
+    <div id="inf"></div>
+    <div class="acciones copiar"><button class="btn mini" id="copiar-prep">Copiar informe de preparación</button></div></div></details>
   <details class="fold" id="s-marco"><summary>Historia bíblica y marcos</summary><div class="fold-body" id="marco"></div></details>
 
   <details class="fold" id="s-anio"><summary>Edificando una Cultura · 2027</summary><div class="fold-body"><p class="muted" style="font-size:13px">La barra de cada semana muestra tus días al aire.</p><div class="anio" id="anio"></div><div class="leyenda" id="leyenda"></div></div></details>
@@ -636,9 +659,12 @@ function aplicarPaleta(p) {
   document.querySelector('meta[name=theme-color]').content = p.top;
 }
 
+// cada semana guarda la lista de tareas que regía al marcarla (prepLista); así cambiar la lista no altera semanas pasadas
+const listaDe = w => (get(key(w, 'prepLista')) || misItems().map(it => it.id)).map(id => ITEMS.find(i => i.id === id)).filter(Boolean);
+const prepHechas = w => listaDe(w).filter(it => get(key(w, 'prep/'+it.id)));
 function prepPct(w) {
-  const mis = misItems(), n = mis.filter(it => get(key(w, 'prep/'+it.id))).length;
-  return mis.length ? Math.round(n / mis.length * 100) : 0;
+  const mis = listaDe(w);
+  return mis.length ? Math.round(prepHechas(w).length / mis.length * 100) : 0;
 }
 
 function render() {
@@ -674,7 +700,7 @@ function render() {
   const hoyIdx = (hoyD >= ini && hoyD <= fin) ? hoyD.getDay() : -1;
   renderDias(w, hoyIdx);
 
-  renderRegistro(ini.getMonth());
+  renderRegistro(ini.getMonth()); renderInforme(mesDe(w));
   pintarCuentas();
 
   // marco
@@ -717,7 +743,7 @@ $('mensajero').onclick = e => { const b = e.target.closest('[data-txt]'); if (b)
 
 /* registro: versículos por su fecha, subtemas por el día en que se marcaron */
 const MESES = Array.from({length: 12}, (_, m) => new Date(DATA.anio, m, 1).toLocaleDateString('es-PY', {month: 'long'}));
-$('mes').innerHTML = MESES.map((m, i) => `<option value="${i}">${m} ${DATA.anio}</option>`).join('');
+$('mes').innerHTML = $('mes-p').innerHTML = MESES.map((m, i) => `<option value="${i}">${m} ${DATA.anio}</option>`).join('');
 function registro() {
   const vs = [];
   for (const w of sem) w.dias.forEach((d, i) => { if (get(key(w, 'aire'+i))) vs.push({f: fechaDia(w, i), w, txt: `${DIAS[i]} · ${d.ref}`}); });
@@ -758,8 +784,64 @@ function informeMes(m) {
   const total = diasDelMes(m), mes = MESES[m][0].toUpperCase() + MESES[m].slice(1);
   return [`INFORME ${mes.toUpperCase()} ${DATA.anio} · Edificando una Cultura`, c.nombre ? `Programa: ${c.nombre}` : '', '',
     `Días al aire: ${dias.length} de ${total} (${total ? Math.round(dias.length / total * 100) : 0}%)`,
-    `Entrevistas: ${ent.length}${ent.length ? ' (' + ent.join(', ') + ')' : ''}`, `Días con notas: ${notas}`, '',
+    `Entrevistas: ${ent.length}${ent.length ? ' (' + ent.join(', ') + ')' : ''}`, `Días con notas: ${notas}`,
+    (d => d.ws.length ? `Preparación promedio: ${d.prom} % · semanas al 100 %: ${d.completas} de ${d.ws.length}` : '')(datosPrep(m)), '',
     'VERSÍCULOS Y TEMAS COMPARTIDOS', ...(dias.length ? dias : ['- Ninguno marcado.'])].filter((x, k) => x !== '' || k > 1).join('\n');
+}
+
+/* informe de preparación: semanas del mes (cada semana cuenta en el mes de su miércoles) */
+const mesDe = w => fechaDia(w, 3).getMonth();
+const hayDatos = w => listaDe(w).some(it => get(key(w, 'prep/'+it.id))) || [0,1,2,3,4,5,6].some(i => get(key(w, 'aire'+i)));
+const semanasDelMes = m => sem.filter((w, j) => mesDe(w) === m && (j <= semanaHoy() || hayDatos(w)));
+const NIVEL = p => p >= 90 ? ['Excelente', 4] : p >= 70 ? ['Buena', 3] : p >= 40 ? ['Regular', 2] : ['Baja', 1];
+const prom = a => a.length ? Math.round(a.reduce((x, y) => x + y, 0) / a.length) : 0;
+function datosPrep(m) {
+  const ws = semanasDelMes(m), pcts = ws.map(prepPct), mis = cfgPrograma().dias;
+  const tareas = {};
+  for (const w of ws) for (const it of listaDe(w)) { const t = tareas[it.id] ||= {it, n: 0, de: 0}; t.de++; if (get(key(w, 'prep/'+it.id))) t.n++; }
+  const filas = ws.map((w, k) => { const aire = mis.filter(i => get(key(w, 'aire'+i))).length;
+    return {w, pct: pcts[k], aire, de: mis.length, falta: listaDe(w).filter(it => !get(key(w, 'prep/'+it.id))).map(it => it.t)}; });
+  let racha = 0, mejor = 0;   // semanas seguidas con 80 % o más, en todo el año hasta hoy
+  const hasta = Math.max(semanaHoy(), ...sem.map((w, j) => hayDatos(w) ? j : 0));
+  for (const w of sem.slice(0, hasta + 1)) { racha = prepPct(w) >= 80 ? racha + 1 : 0; mejor = Math.max(mejor, racha); }
+  const conAire = filas.filter(f => f.aire), prepAire = prom(conAire.map(f => f.pct));
+  return {ws, filas, prom: prom(pcts), completas: pcts.filter(p => p === 100).length, sin: pcts.filter(p => p === 0).length,
+    racha, mejor, prepAire, tareas: Object.values(tareas).sort((a, b) => a.n / a.de - b.n / b.de || b.de - a.de)};
+}
+function renderInforme(m) {
+  $('mes-p').value = m;
+  const d = datosPrep(m), mes = MESES[m], [nv, ni] = NIVEL(d.prom);
+  const tile = (n, t) => `<div class="tile"><b>${n}</b><span>${t}</span></div>`;
+  const anual = MESES.map((x, k) => { const ws = semanasDelMes(k), p = prom(ws.map(prepPct));
+    return `<button data-mes="${k}" class="${ws.length ? '' : 'vacio'}" aria-current="${k === m}" title="${x}: ${ws.length ? p + ' %' : 'sin semanas'}"><i style="height:${ws.length ? Math.max(3, p) : 3}%"></i>${x.slice(0, 3)}</button>`; }).join('');
+  $('inf').innerHTML = !d.ws.length ? `<p class="muted">Todavía no hay semanas de ${mes} para medir.</p>` : `
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="nivel n${ni}">Preparación ${nv}</span>
+      <span class="muted" style="font-size:13px">${d.ws.length} semana${d.ws.length > 1 ? 's' : ''} de ${mes}</span></div>
+    <div class="inf-tiles">${tile(d.prom + '<small> %</small>', 'Promedio del mes')}${tile(d.completas + '<small>/' + d.ws.length + '</small>', 'Semanas al 100 %')}
+      ${tile(d.racha, 'Racha actual (80 %+)')}${tile(d.sin, 'Semanas sin preparar')}</div>
+    <div><h4>Semana a semana</h4><ul class="inf-sem">${d.filas.map(f => `<li><button data-i="${f.w.n-1}"><span class="sn">Sem ${f.w.n}</span>
+      <span class="tx">${esc(TEMA_TXT[f.w.tema] || f.w.tema)}<small>${f.de ? `Al aire ${f.aire}/${f.de}` : ''}${f.falta.length && f.pct ? ` · faltó: ${esc(f.falta.slice(0, 2).join(', '))}${f.falta.length > 2 ? '…' : ''}` : ''}</small>
+      <span class="barra"><i style="width:${f.pct}%"></i></span></span><span class="pc">${f.pct}%</span></button></li>`).join('')}</ul></div>
+    <div><h4>Cumplimiento por tarea</h4><ul class="inf-tareas">${d.tareas.map(t => { const p = Math.round(t.n / t.de * 100);
+      return `<li>${esc(t.it.t)}<b>${t.n}/${t.de}</b><span class="barra"><i style="width:${p}%"></i></span></li>`; }).join('')}</ul>
+      <p class="muted" style="font-size:13px;margin-top:8px">Arriba, las que más se dejan sin hacer.</p></div>
+    <div><h4>Promedio por mes · ${DATA.anio}</h4><div class="inf-anio" id="inf-anio">${anual}</div>
+      <p class="muted" style="font-size:13px;margin-top:8px">Mejor racha del año: ${d.mejor === 1 ? '1 semana' : d.mejor + ' semanas seguidas'} con 80 % o más.</p></div>`;
+  $('inf-pct').textContent = d.ws.length ? d.prom + '%' : '';
+}
+function informePrep(m) {
+  const d = datosPrep(m), c = cfgPrograma(), mes = MESES[m][0].toUpperCase() + MESES[m].slice(1);
+  if (!d.ws.length) return `INFORME DE PREPARACIÓN · ${mes} ${DATA.anio}\nTodavía no hay semanas para medir.`;
+  const pend = d.tareas.filter(t => t.n < t.de).slice(0, 5);
+  return [`INFORME DE PREPARACIÓN · ${mes.toUpperCase()} ${DATA.anio} · Edificando una Cultura`,
+    c.nombre ? `Programa: ${c.nombre}` : '', `Días al aire: ${c.dias.map(i => DIAS[i]).join(', ') || 'sin elegir'} · ${c.horas} h`, '',
+    `Preparación promedio: ${d.prom} % (${NIVEL(d.prom)[0].toLowerCase()})`,
+    `Semanas al 100 %: ${d.completas} de ${d.ws.length} · sin preparar: ${d.sin}`,
+    `Racha actual (80 % o más): ${d.racha} semana${d.racha === 1 ? '' : 's'} · mejor del año: ${d.mejor}`, '',
+    'SEMANA A SEMANA',
+    ...d.filas.map(f => `- Semana ${f.w.n} · ${TEMA_TXT[f.w.tema] || f.w.tema}: ${f.pct} %${f.de ? ` · al aire ${f.aire}/${f.de}` : ''}${f.falta.length && f.falta.length < listaDe(f.w).length ? ` · faltó: ${f.falta.join(', ')}` : ''}`), '',
+    'TAREAS QUE MÁS SE DEJAN SIN HACER',
+    ...(pend.length ? pend.map(t => `- ${t.it.t}: ${t.n} de ${t.de} semanas`) : ['- Ninguna: todas cumplidas.'])].filter((x, k) => x !== '' || k > 2).join('\n');
 }
 
 function pintarCuentas() {
@@ -1001,6 +1083,7 @@ function airePct(w) { const mis = cfgPrograma().dias; return mis.length ? Math.r
 function pintarPrep() {
   const pct = prepPct(sem[cur]);
   $('prep-bar').style.width = pct + '%'; $('prep-pct').textContent = pct + '%';
+  renderInforme(+$('mes-p').value);
 }
 
 /* ── Eventos ── */
@@ -1069,6 +1152,10 @@ document.addEventListener('input', e => { const t = e.target.closest('textarea[d
   set(key(sem[cur], t.dataset.n), t.value); const d = t.closest('details'); d.classList.toggle('tiene', !!t.value); d.querySelector('summary').textContent = t.value ? 'Mi nota' : 'Agregar nota'; });
 $('mes').onchange = e => renderRegistro(+e.target.value);
 $('copiar-informe').onclick = () => copiar(informeMes(+$('mes').value));
+$('mes-p').onchange = e => renderInforme(+e.target.value);
+$('copiar-prep').onclick = () => copiar(informePrep(+$('mes-p').value));
+$('inf').onclick = e => { const m = e.target.closest('[data-mes]'); if (m) return renderInforme(+m.dataset.mes);
+  const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } };
 document.querySelectorAll('.reg-list').forEach(l => l.onclick = e => { const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } });
 $('copia-x').onclick = () => $('copia').close();
 $('programa').onchange = () => guardarPrograma();
@@ -1082,7 +1169,7 @@ $('s-prog').onclick = e => {
 };
 $('abrir-biblio').onclick = abrirBiblio;
 $('prep').onclick = e => { const b = e.target.closest('button'); if (!b) return;
-  const k = key(sem[cur], 'prep/'+b.dataset.p), v = !get(k); set(k, v); b.setAttribute('aria-pressed', v); pintarPrep();
+  const k = key(sem[cur], 'prep/'+b.dataset.p), v = !get(k); set(k, v); set(key(sem[cur], 'prepLista'), misItems().map(it => it.id)); b.setAttribute('aria-pressed', v); pintarPrep();
 };
 $('notas').oninput = e => set(key(sem[cur], 'notas'), e.target.value);
 $('anio').onclick = e => { const b = e.target.closest('button'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } };

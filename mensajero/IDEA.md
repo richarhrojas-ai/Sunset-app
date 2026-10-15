@@ -18,7 +18,8 @@ vocabulario de la radio.
 | Ficha / maestría | **Ficha de la semana** justo después de la portada: Apoyamos al programa y Valor de Mensajero |
 | — | **Mis días al aire** a la vista (Dom..Sáb, atajos lun-vie y lun-sáb). «Mi semana» queda oculta hasta marcar días y aparece según lo marcado. Programa y duración se eligen en «Mi preparación» |
 | Cierre / progreso | **Preparación de la semana**: biblioteca de 30 tareas, cada locutor elige hasta 10 según su programa (diario o semanal, 1/2/3 h, con o sin entrevistas) |
-| — | **Registro al aire**: días al aire y entrevistas por semana, mes y año, más la lista del mes |
+| — | **Registro al aire**: días al aire y entrevistas por semana, mes y año, más la lista del mes e informe copiable |
+| — | **Informe de preparación**: promedio del mes con nivel (excelente ≥90 %, buena ≥70, regular ≥40, baja), semanas al 100 %, racha de semanas con 80 %+, semana a semana con lo que faltó, cumplimiento por tarea (las más omitidas arriba) y barras por mes del año. Se copia para enviarlo a coordinación |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
 | — | **Sobre Mensajero** (al final): identidad, historia, misión, visión, valores, contacto para la audiencia y por áreas, organigrama, programas y locutores, y frases para el aire con botón «Copiar». Sale de la hoja «Mensajero» de la planilla |
 
@@ -39,6 +40,7 @@ Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden cor
 - `ent0..ent6` hubo entrevista ese día
 - `vn0..vn6` nota de cada día
 - `prep/<id>` tarea de preparación hecha (id de la biblioteca)
+- `prepLista` lista de tareas que regía esa semana (así cambiar la lista no altera el % de semanas pasadas)
 - `cfg/programa` mi programa {nombre, dias (0=dom…6=sáb), horas} · `cfg/prep` mis tareas elegidas · `cfg/prepManual` si las eligió a mano
 - `notas` notas de producción
 
@@ -48,5 +50,5 @@ Hoy se guardan en el dispositivo; con `sync.mjs` de Sunset quedan compartidas.
 
 - Corrección de versículos: se marca en el Excel (no es tarea del locutor en la app).
 - La planilla está sin tildes (Prevencion, Lider, Habitos…); conviene corregirla en el Excel, que es la fuente.
-- PWA (manifest + sw), clave, sincronización y pruebas: copiar de Sunset.
+- Clave, sincronización y pruebas: copiar de Sunset. Con sincronización, el informe de preparación de cada locutor alimenta un panel de coordinación (todos los locutores, mes a mes).
 - Definir si la app es para Richarh solo o para cada locutor (filtro «mis semanas»).
