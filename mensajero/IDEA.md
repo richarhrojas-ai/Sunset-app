@@ -15,8 +15,8 @@ vocabulario de la radio.
 | Franja de 7 íconos / dimensiones | **7 íconos de temas** en el cielo de la portada; al tocar uno se abren todas sus semanas del año, con la activa resaltada y la próxima marcada |
 | Domingo + lunes–sábado | **Mi semana**: domingo introducción · lun–mar subtema 1 · mié–jue subtema 2 · viernes subtema 3 completo (cierra) · sábado **resumen**. De lunes a viernes, el versículo del día es la base del guion (sus 3 puntos, con problemática y solución). Cada día dice a qué subtema pertenece; el primer día del subtema trae «Para el locutor» (desarrollo, nota, frase) |
 | — | **Según los días al aire** de cada programa: lunes a viernes ve sus 5 días (los 3 subtemas completos); lunes a sábado suma el resumen; un programa de un solo día ve la introducción y el resumen juntos en un guion de 5 minutos |
-| Ficha / maestría | **Apoyamos al programa** en la portada; **Valor de Mensajero** con su guía interna en la ficha |
-| — | **Mi programa** justo después del menú: la primera vez pide los días al aire (y programa, duración, entrevistas) antes de mostrar la semana; después queda en una línea con «Cambiar» |
+| Ficha / maestría | **Ficha de la semana** justo después de la portada: Apoyamos al programa y Valor de Mensajero |
+| — | **Mis días al aire** a la vista (Dom..Sáb, atajos lun-vie y lun-sáb). «Mi semana» queda oculta hasta marcar días y aparece según lo marcado. Programa, duración y entrevistas se eligen en «Mi preparación» |
 | Cierre / progreso | **Preparación de la semana**: biblioteca de 30 tareas, cada locutor elige hasta 10 según su programa (diario o semanal, 1/2/3 h, con o sin entrevistas) |
 | — | **Registro al aire** por mes: versículos y subtemas al aire, con lista y totales del año |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
