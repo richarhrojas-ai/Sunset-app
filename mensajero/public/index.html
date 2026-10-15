@@ -927,6 +927,15 @@ async function abrirFlyer(w, i) {
   const share = $('flyer-compartir'); share.hidden = !(navigator.canShare);
   share.onclick = async () => { try { const b = await (await fetch(url)).blob(); const file = new File([b], nombre, {type: 'image/png'});
     if (navigator.canShare({files: [file]})) await navigator.share({files: [file], text: `${w.dias[i].ref} · Mensajero 100.9 FM`}); } catch {} };
+  $('flyer-bajar').onclick = async (e) => {
+    // dentro del visor de claude.ai la descarga pasa por su capacidad «downloads»
+    if (!window.claude?.use) return;
+    e.preventDefault();
+    const dl = await window.claude.use('downloads').catch(() => null);
+    if (!dl) return avisar('Mantené presionada la imagen para guardarla');
+    try { await dl.save({filename: nombre, data: await (await fetch(url)).blob()}); }
+    catch (err) { if (err?.code !== 'declined') avisar('No se pudo descargar: mantené presionada la imagen'); }
+  };
   $('flyer').showModal();
 }
 $('flyer-x').onclick = () => $('flyer').close();
