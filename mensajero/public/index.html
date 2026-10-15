@@ -157,6 +157,7 @@ details.valor dd{color:var(--ink2)}
 .chk{flex:1;min-height:40px;border-radius:999px;border:1px solid var(--line);font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:0 10px;color:var(--ink2);background:rgba(0,0,0,.15)}
 .chk[aria-pressed="true"]{background:var(--gold);color:#2a1a08;border-color:var(--gold);font-weight:500}
 .chk.rev[aria-pressed="false"]{border-style:dashed;color:var(--amber)}
+.chk.ent[aria-pressed="true"]{background:#9fd0ff;border-color:#9fd0ff;color:#0b1f33}
 
 /* ── PLEGABLES ── */
 details.fold{margin-top:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--glass)}
@@ -291,7 +292,12 @@ details.mi-nota textarea{min-height:72px;margin-top:6px;font-size:14px}
 .chk.aire-mini[aria-pressed="true"]{background:var(--gold);color:#2a1a08;border-color:var(--gold);font-weight:500}
 .reg-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .reg-top select{min-height:42px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--ink);font:inherit;font-size:14px;padding:0 16px;text-transform:capitalize}
-.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tiles{display:block}
+.tabla-reg{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.tabla-reg th,.tabla-reg td{padding:10px 8px;text-align:center;border-bottom:1px solid var(--line)}
+.tabla-reg thead th{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);font-weight:400}
+.tabla-reg tbody th{text-align:left;font-size:13px;letter-spacing:.06em;color:var(--ink2);font-weight:400}
+.tabla-reg td{font-size:24px;font-weight:200;color:var(--ink)}
 .tile{border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0;background:rgba(0,0,0,.15)}
 .tile b{display:block;font-size:clamp(24px,7vw,34px);font-weight:200;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums}
 .tile b small{font-size:14px;color:var(--ink3);font-weight:300}
@@ -477,9 +483,9 @@ const MAX_PREP = 10;
 const PRIORIDAD = ['guion','tema','reflexion','versiculo','versSem','devocional','invitado','preguntasInv','noticias','musica',
   'audios','dato','secciones','tandas','equipo','oracion','preguntas','registro','redes','podcast','frase','historia',
   'paraguay','agenda','cortinas','clima','llamada','respaldo','promo','grabacion'];
-const TAG_TXT = {diario: 'solo diarios', semanal: 'solo semanales', entrevista: 'con entrevistas', '2h': 'de 2 h o más', '3h': 'de 3 h'};
+const TAG_TXT = {diario: 'solo diarios', semanal: 'solo semanales', entrevista: 'con entrevistas (sumalas si las usás)', '2h': 'de 2 h o más', '3h': 'de 3 h'};
 const cfgPrograma = () => {
-  const c = {nombre: '', horas: 1, entrevistas: false, ...(get('cfg/programa') || {})};
+  const c = {nombre: '', horas: 1, ...(get('cfg/programa') || {})};
   if (!Array.isArray(c.dias)) c.dias = c.frec === 'semanal' ? [6] : c.frec === 'diario' ? [1, 2, 3, 4, 5] : [];   // [] = todavía no eligió
   c.dias = [...new Set(c.dias)].sort();
   c.frec = c.dias.length === 1 ? 'semanal' : 'diario';   // un solo día al aire = programa semanal
@@ -489,8 +495,9 @@ const cfgPrograma = () => {
 const BLOQUE = [null, 0, 0, 1, 1, 2, null];        // subtema de cada día: lun-mar 1, mié-jue 2, vie 3
 const DIAS_BLOQUE = ['Lun y mar', 'Mié y jue', 'Viernes'];
 const aplica = (it, c) => !it.tag || (it.tag === 'diario' ? c.frec === 'diario' : it.tag === 'semanal' ? c.frec === 'semanal'
-  : it.tag === 'entrevista' ? c.entrevistas : it.tag === '2h' ? c.horas >= 2 : c.horas >= 3);
-const sugerir = c => PRIORIDAD.filter(id => aplica(ITEMS.find(i => i.id === id), c)).slice(0, MAX_PREP);
+  : it.tag === 'entrevista' ? true : it.tag === '2h' ? c.horas >= 2 : c.horas >= 3);
+// las tareas de entrevista no se sugieren solas: cada locutor las suma desde la biblioteca si las necesita
+const sugerir = c => PRIORIDAD.filter(id => { const it = ITEMS.find(i => i.id === id); return it.tag !== 'entrevista' && aplica(it, c); }).slice(0, MAX_PREP);
 const misItems = () => (get('cfg/prep') || sugerir(cfgPrograma())).map(id => ITEMS.find(i => i.id === id)).filter(Boolean);
 
 /* ── Escenas por tema (paisaje, sin íconos) ── */
@@ -677,10 +684,13 @@ function diasDelMes(m) {   // cuántos de mis días al aire caen en el mes
 function renderRegistro(m) {
   $('mes').value = m;
   const vs = registro(), v = vs.filter(x => x.f.getMonth() === m && x.f.getFullYear() === DATA.anio).sort((a, b) => a.f - b.f);
-  const total = diasDelMes(m);
-  $('tiles').innerHTML = `<div class="tile"><b>${v.length} <small>de ${total}</small></b><span>Días al aire</span></div>
-    <div class="tile"><b>${total ? Math.min(100, Math.round(v.length / total * 100)) : 0}%</b><span>De mis días del mes</span></div>
-    <div class="tile"><b>${vs.length}</b><span>En todo ${DATA.anio}</span></div>`;
+  const total = diasDelMes(m), w = sem[cur], mis = cfgPrograma().dias;
+  const cuenta = (k, filtro) => { let n = 0; for (const s of sem) for (let i = 0; i < 7; i++) if (get(key(s, k+i)) && filtro(s, fechaDia(s, i))) n++; return n; };
+  const enSem = s => s === w, enMes = (s, f) => f.getMonth() === m && f.getFullYear() === DATA.anio, todo = () => true;
+  const fila = (t, k) => `<tr><th scope="row">${t}</th><td>${cuenta(k, enSem)}</td><td>${cuenta(k, enMes)}</td><td>${cuenta(k, todo)}</td></tr>`;
+  $('tiles').innerHTML = `<table class="tabla-reg"><thead><tr><th></th><th>Semana ${w.n}</th><th>${MESES[m]}</th><th>${DATA.anio}</th></tr></thead>
+    <tbody>${fila('Días al aire', 'aire')}${fila('Entrevistas', 'ent')}</tbody></table>
+    <p class="muted" style="font-size:13px;margin-top:8px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)}: ${v.length} de ${total} días de tu programa al aire (${total ? Math.min(100, Math.round(v.length / total * 100)) : 0}%).</p>`;
   $('reg-v').innerHTML = v.map(x => `<li><time>${fcorta(x.f)}</time><button data-i="${x.w.n-1}">${esc(x.txt)} <span class="muted">· semana ${x.w.n}</span></button></li>`).join('')
     || `<li class="muted" style="display:block">Ningún día marcado al aire en ${MESES[m]}.</li>`;
   $('reg-anio').textContent = 'Cada día al aire es un versículo compartido y su reflexión.';
@@ -743,10 +753,11 @@ function textoDia(w, i, semanal) {
   return out.join('\n');
 }
 function bloqueVersiculo(w, i, conPuntos) {
-  const d = w.dias[i], aire = !!get(key(w, 'aire'+i));
+  const d = w.dias[i], aire = !!get(key(w, 'aire'+i)), ent = !!get(key(w, 'ent'+i));
   return `<div class="vers-base"><span class="ref">${esc(d.ref)}</span><p class="vtxt">${esc(d.texto)}</p>
       ${conPuntos ? `<ul>${d.puntos.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
-      <div class="acc"><button class="chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Marcar al aire'}</button></div>
+      <div class="acc"><button class="chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Marcar al aire'}</button>
+        <button class="chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Entrevista ✓' : 'Hoy tuve entrevista'}</button></div>
       ${notaBox(w, 'vn'+i, 'Programa, invitado, flyer, comentarios de la audiencia…')}</div>`;
 }
 const introSemana = w => `<div><div class="kick">Esta semana</div><h3>${esc(w.enfoque)}</h3></div>
@@ -819,12 +830,11 @@ function pintarPrograma() {
     <div class="dias-chips" role="group" aria-label="Días al aire">${DIAS.map((d, i) => `<button type="button" data-dia="${i}" aria-pressed="${c.dias.includes(i)}">${d.slice(0, 3)}</button>`).join('')}</div>
     <div class="dias-chips"><button type="button" class="btn mini" data-preset="1,2,3,4,5">Lunes a viernes</button><button type="button" class="btn mini" data-preset="1,2,3,4,5,6">Lunes a sábado</button></div></div>`;
   $('programa').innerHTML = `<select id="pg-nombre" aria-label="Programa"><option value="">Elegí tu programa</option>${PROGRAMAS.map(p => `<option${p === c.nombre ? ' selected' : ''}>${esc(p)}</option>`).join('')}</select>
-    <select id="pg-horas" aria-label="Duración">${[1,2,3].map(h => `<option value="${h}"${c.horas === h ? ' selected' : ''}>${h} hora${h > 1 ? 's' : ''}</option>`).join('')}</select>
-    <label class="tog"><input type="checkbox" id="pg-ent"${c.entrevistas ? ' checked' : ''}> Con entrevistas</label>`;
+    <select id="pg-horas" aria-label="Duración">${[1,2,3].map(h => `<option value="${h}"${c.horas === h ? ' selected' : ''}>${h} hora${h > 1 ? 's' : ''}</option>`).join('')}</select>`;
   $('semana').hidden = !c.listo;
 }
 function guardarPrograma(dias) {
-  const c = {nombre: $('pg-nombre').value, horas: +$('pg-horas').value, entrevistas: $('pg-ent').checked, dias: dias || cfgPrograma().dias};
+  const c = {nombre: $('pg-nombre').value, horas: +$('pg-horas').value, dias: dias || cfgPrograma().dias};
   set('cfg/programa', c);
   if (!get('cfg/prepManual')) set('cfg/prep', sugerir(cfgPrograma()));   // mientras no elija a mano, la lista sigue al programa
   diaSel = null; render();

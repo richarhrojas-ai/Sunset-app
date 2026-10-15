@@ -16,12 +16,12 @@ vocabulario de la radio.
 | Domingo + lunes–sábado | **Mi semana**: domingo introducción · lun–mar subtema 1 · mié–jue subtema 2 · viernes subtema 3 completo (cierra) · sábado **resumen**. De lunes a viernes, el versículo del día es la base del guion (sus 3 puntos, con problemática y solución). Cada día dice a qué subtema pertenece; el primer día del subtema trae «Para el locutor» (desarrollo, nota, frase) |
 | — | **Según los días al aire** de cada programa: lunes a viernes ve sus 5 días (los 3 subtemas completos); lunes a sábado suma el resumen; un programa de un solo día ve la introducción y el resumen juntos en un guion de 5 minutos |
 | Ficha / maestría | **Ficha de la semana** justo después de la portada: Apoyamos al programa y Valor de Mensajero |
-| — | **Mis días al aire** a la vista (Dom..Sáb, atajos lun-vie y lun-sáb). «Mi semana» queda oculta hasta marcar días y aparece según lo marcado. Programa, duración y entrevistas se eligen en «Mi preparación» |
+| — | **Mis días al aire** a la vista (Dom..Sáb, atajos lun-vie y lun-sáb). «Mi semana» queda oculta hasta marcar días y aparece según lo marcado. Programa y duración se eligen en «Mi preparación» |
 | Cierre / progreso | **Preparación de la semana**: biblioteca de 30 tareas, cada locutor elige hasta 10 según su programa (diario o semanal, 1/2/3 h, con o sin entrevistas) |
-| — | **Registro al aire** por mes: versículos y subtemas al aire, con lista y totales del año |
+| — | **Registro al aire**: días al aire y entrevistas por semana, mes y año, más la lista del mes |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
 
-Un «Al aire» y una nota por día. El registro cuenta días al aire (cada uno es un versículo compartido y su reflexión).
+Un «Al aire», un «Hoy tuve entrevista» y una nota por día. El registro cuenta días al aire (cada uno es un versículo compartido y su reflexión).
 
 ## Flujo de contenido
 
@@ -35,9 +35,10 @@ Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden cor
 ## Claves del usuario (`AAAA/wN/...`, valor `{v,t}`)
 
 - `aire0..aire6` día al aire (cuenta en el mes de su fecha)
+- `ent0..ent6` hubo entrevista ese día
 - `vn0..vn6` nota de cada día
 - `prep/<id>` tarea de preparación hecha (id de la biblioteca)
-- `cfg/programa` mi programa {nombre, dias (0=dom…6=sáb), horas, entrevistas} · `cfg/prep` mis tareas elegidas · `cfg/prepManual` si las eligió a mano
+- `cfg/programa` mi programa {nombre, dias (0=dom…6=sáb), horas} · `cfg/prep` mis tareas elegidas · `cfg/prepManual` si las eligió a mano
 - `notas` notas de producción
 
 Hoy se guardan en el dispositivo; con `sync.mjs` de Sunset quedan compartidas.
