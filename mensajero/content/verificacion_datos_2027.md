@@ -399,3 +399,45 @@ Script: `tools/verificacion_datos_jul_2027.py`. Se verificaron los 24 datos con 
 - Semana 30 · Lunes: «En Paraguay, el Instituto Nacional de Tecnología, Normalización y Metrología (INTN) verifica balanzas y surtidores de combustible para que el cliente reciba lo que paga.» (INTN, Metrología Legal)
 - Semana 30 · Martes: «En excavaciones de Judá se encontraron pesas de piedra de los siglos VIII y VII antes de Cristo, marcadas con su valor en siclos.» (Raz Kletter, Economic Keystones: The Weight System of the Kingdom of Judah, 1998)
 - Semana 30 · Viernes: «WhatsApp lanzó su aplicación para pequeñas empresas, WhatsApp Business, en enero de 2018.» (WhatsApp, anuncio oficial, 18 de enero de 2018)
+
+## Agosto 2027 (semanas 31 a 34)
+
+Script: `tools/verificacion_datos_ago_2027.py`. Se verificaron los 24 datos con búsqueda web: 20 confirmados y 4 ajustados. También se confirmó el texto RVC de Mateo 6:6, Jeremías 29:11, 1 Pedro 3:7, Marcos 11:22 y Marcos 2:27. En Hechos 20:28 (16 de agosto) el texto cargado decía «y que cuiden el rebaño»; la RVC dice «y que velen por el rebaño», y se corrigió. No se pudo confirmar el texto RVC de Colosenses 4:6; el dato de ese día cita el griego y la Reina-Valera 1960.
+
+### Ajustados
+
+- **Semana 32 · Martes** — Jesús probablemente hablaba en arameo; la palabra griega es la del evangelista.
+  - antes: «La palabra griega que Jesús usa para «habitación» designaba el cuarto interior o la despensa de la casa, a veces el único lugar con puerta.» (Mateo 6:6; léxico griego de Strong (G5009, tameíon))
+  - ahora: «La palabra griega que Mateo usa para «habitación» designaba el cuarto interior o la despensa de la casa, a veces el único lugar con puerta.» (Mateo 6:6; léxico griego de Strong (G5009, tameíon))
+- **Semana 32 · Viernes** — Fue en el camino desde Betania, antes de volver a Jerusalén (11:27).
+  - antes: «Jesús dijo estas palabras en Jerusalén, en su última semana; pocos días después, en Getsemaní, pidió que se hiciera la voluntad del Padre y no la suya.» (Marcos 11:11-24; 14:36)
+  - ahora: «Jesús dijo estas palabras camino a Jerusalén, en su última semana; pocos días después, en Getsemaní, pidió que se hiciera la voluntad del Padre y no la suya.» (Marcos 11:20-24; 14:36)
+- **Semana 32 · Sábado** — El texto dice «sus escogidos» (18:7).
+  - antes: «Después de este versículo, Jesús cuenta la parábola de una viuda que insistió ante un juez injusto; si ese juez le hizo justicia, cuánto más Dios a sus hijos.» (Lucas 18:2-8)
+  - ahora: «Después de este versículo, Jesús cuenta la parábola de una viuda que insistió ante un juez injusto; si ese juez le hizo justicia, cuánto más Dios a sus escogidos que claman a él día y noche.» (Lucas 18:1-8)
+- **Semana 34 · Viernes** — «¿Qué hace que el amor perdure?» es otro libro; se deja el título original.
+  - antes: «El investigador de parejas John Gottman señaló el desprecio como uno de los signos que más anticipan una ruptura.» (John Gottman, ¿Qué hace que el amor perdure? / Why Marriages Succeed or Fail, 1994)
+  - ahora: «El investigador de parejas John Gottman señaló el desprecio como uno de los signos que más anticipan una ruptura.» (John Gottman, Why Marriages Succeed or Fail, 1994)
+
+### Confirmados
+
+- Semana 31 · Lunes: «Los especialistas en sueño recomiendan que los adultos duerman 7 horas o más por noche de forma regular.» (Watson y otros, consenso de la American Academy of Sleep Medicine y la Sleep Research Society, 2015)
+- Semana 31 · Martes: «Durante el sueño, el cerebro elimina con más eficacia sustancias de desecho; así lo mostró un estudio en ratones publicado en 2013.» (Xie y otros, Science, 2013)
+- Semana 31 · Miércoles: «Según los Centros para el Control y la Prevención de Enfermedades de Estados Unidos, cerca de uno de cada tres adultos no duerme lo suficiente de forma habitual.» (Centros para el Control y la Prevención de Enfermedades (CDC), 2016)
+- Semana 31 · Jueves: «El Salmo 127 se atribuye a Salomón, el rey que construyó el templo de Jerusalén.» (Salmo 127 (título); 1 Reyes 6)
+- Semana 31 · Viernes: «Entre los hábitos que recomiendan los especialistas están acostarse y levantarse a la misma hora, y tener el dormitorio oscuro, silencioso y fresco.» (American Academy of Sleep Medicine, recomendaciones para dormir mejor)
+- Semana 31 · Sábado: «En Génesis, Dios descansa el séptimo día de la creación, mucho antes de que existiera el mandamiento del día de reposo.» (Génesis 2:2-3; Éxodo 20:11)
+- Semana 32 · Lunes: «Jeremías recibió esta palabra estando preso en el patio de la guardia, mientras Jerusalén estaba sitiada.» (Jeremías 32:1-2; 33:1)
+- Semana 32 · Miércoles: «Pablo pidió tres veces que Dios le quitara un sufrimiento, y Dios le respondió que su gracia le bastaba.» (2 Corintios 12:7-9)
+- Semana 32 · Jueves: «Cerca de un tercio de los salmos son lamentos: oraciones de queja, de dolor o de pregunta a Dios.» (Clasificación de los Salmos por géneros (Hermann Gunkel y estudios posteriores))
+- Semana 33 · Lunes: «Hoy, 16 de agosto, Paraguay celebra el Día del Niño, en memoria de los niños que combatieron en la batalla de Acosta Ñu, en 1869.» (Batalla de Acosta Ñu, 16 de agosto de 1869; Día del Niño en Paraguay)
+- Semana 33 · Martes: «Jeremías anunció que el exilio en Babilonia duraría setenta años; la promesa de Jeremías 29:11 viene justo después de ese anuncio.» (Jeremías 29:10-11)
+- Semana 33 · Miércoles: «La palabra griega que Pablo usa para «meta» (skopós) designaba la marca que el corredor miraba al final de la pista.» (Filipenses 3:14; léxico griego de Strong (G4649, skopós))
+- Semana 33 · Jueves: «La segunda carta a Timoteo es considerada la última carta de Pablo, escrita desde la prisión poco antes de su muerte.» (2 Timoteo 1:8; 4:6-8)
+- Semana 33 · Viernes: «Este versículo cierra una oración de Pablo para que los creyentes conozcan el amor de Cristo, que sobrepasa todo conocimiento.» (Efesios 3:14-21)
+- Semana 33 · Sábado: «El 15 de agosto se recuerda la fundación de Asunción, en 1537.» (Fundación de Nuestra Señora Santa María de la Asunción, 15 de agosto de 1537)
+- Semana 34 · Lunes: «Santiago da una regla sencilla para comunicarse: ser rápidos para escuchar, lentos para hablar y lentos para enojarse.» (Santiago 1:19)
+- Semana 34 · Martes: «Pedro escribe a creyentes dispersos por varias provincias de Asia Menor, en la actual Turquía.» (1 Pedro 1:1)
+- Semana 34 · Miércoles: «En el griego, Pablo pide que la conversación sea «con gracia, sazonada con sal»: la sal daba sabor y conservaba los alimentos.» (Colosenses 4:6 (texto griego; Reina-Valera 1960))
+- Semana 34 · Jueves: «Proverbios 25 abre una colección de dichos de Salomón que copiaron los hombres de Ezequías, rey de Judá.» (Proverbios 25:1)
+- Semana 34 · Sábado: «Jesús enseñó que de lo que abunda en el corazón habla la boca.» (Mateo 12:34; Lucas 6:45)
