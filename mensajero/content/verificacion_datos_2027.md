@@ -353,3 +353,49 @@ Cada dato se contrastó con su fuente original o con una fuente de autoridad (or
 - Semana 26 · Miércoles: «La confianza se pierde rápido y se recupera lento: un hecho negativo suele pesar más que varios positivos a la hora de confiar.» (Paul Slovic, «Perceived risk, trust, and democracy», Risk Analysis, 1993)
 - Semana 26 · Jueves: «En este capítulo Pablo usa dos palabras griegas distintas: una para la carga pesada que agobia (6:2) y otra para la carga propia de cada día (6:5).» (Gálatas 6:2-5; léxico griego de Strong (G922 y G5413))
 - Semana 26 · Sábado: «Inmediatamente después, Pablo pone como ejemplo a Jesús, que se humilló hasta la muerte en la cruz.» (Filipenses 2:5-8)
+
+## Julio 2027 (semanas 27 a 30)
+
+Script: `tools/verificacion_datos_jul_2027.py`. Se verificaron los 24 datos con búsqueda web: 18 confirmados y 6 ajustados. También se confirmó la línea 137 (Ministerio de la Mujer), el programa de educación financiera del Banco Central del Paraguay y el texto RVC de Romanos 13:1 y Jeremías 29:7. En Efesios 4:25 (29 de julio) el texto cargado decía «despreciar la mentira»; la RVC dice «desechar la mentira», y se corrigió.
+
+### Ajustados
+
+- **Semana 28 · Jueves** — Las vendió con una pequeña ganancia, no a precio de costo; título en español completo.
+  - antes: «Warren Buffett compró sus primeras acciones a los 11 años; cuando bajaron, las vendió apenas recuperó lo invertido, y después subieron mucho. Dijo que aprendió a tener paciencia.» (Alice Schroeder, La bola de nieve (biografía de Warren Buffett), 2008)
+  - ahora: «Warren Buffett compró sus primeras acciones a los 11 años. Cuando bajaron, se asustó y las vendió con una ganancia mínima, y después subieron muchísimo. Aprendió a no apurarse por una ganancia chica.» (Alice Schroeder, La bola de nieve: Warren Buffett y el negocio de la vida, 2008)
+- **Semana 29 · Lunes** — Se suma a la fuente el pasaje de la meta.
+  - antes: «Pablo escribió la carta a los Filipenses estando preso, y aun así habla de seguir avanzando hacia la meta.» (Filipenses 1:13)
+  - ahora: «Pablo escribió la carta a los Filipenses estando preso, y aun así habla de seguir avanzando hacia la meta.» (Filipenses 1:13; 3:13-14)
+- **Semana 29 · Miércoles** — Son 94 pruebas tomadas de 63 informes; efecto medio a grande.
+  - antes: «Una revisión de 94 estudios encontró que decidir de antemano cuándo, dónde y cómo se va a dar un paso aumenta mucho la probabilidad de cumplir una meta.» (Gollwitzer y Sheeran, Advances in Experimental Social Psychology, 2006)
+  - ahora: «Una revisión de 94 pruebas, con más de 8.000 participantes, encontró que decidir de antemano cuándo, dónde y cómo se va a dar un paso aumenta bastante la probabilidad de cumplir una meta.» (Gollwitzer y Sheeran, Advances in Experimental Social Psychology, 2006)
+- **Semana 30 · Miércoles** — Se agrega la cifra oficial.
+  - antes: «Según el Ministerio de Industria y Comercio, las micro, pequeñas y medianas empresas son la gran mayoría de las empresas del Paraguay.» (Ministerio de Industria y Comercio, Viceministerio de MIPYMES)
+  - ahora: «Según el Ministerio de Industria y Comercio, cerca del 97 % de las empresas del Paraguay son micro, pequeñas o medianas, y la gran mayoría son microempresas.» (Ministerio de Industria y Comercio, Viceministerio de MIPYMES (datos del DIRGE 2019))
+- **Semana 30 · Jueves** — El impacto se midió en la economía de Chicago, no solo del barrio.
+  - antes: «Un estudio en un barrio de Chicago encontró que, de cada 100 dólares gastados en comercios locales, unos 68 seguían circulando en la economía de la zona, frente a 43 en las cadenas.» (Civic Economics, Andersonville Study of Retail Economics, 2004)
+  - ahora: «Un estudio en un barrio de Chicago encontró que, de cada 100 dólares gastados en comercios locales, unos 68 seguían circulando en la economía de la ciudad, frente a 43 en las cadenas.» (Civic Economics, Andersonville Study of Retail Economics, 2004)
+- **Semana 30 · Sábado** — Se llama Festival Nacional; las ediciones recientes cambiaron de fecha.
+  - antes: «Itauguá es conocida como la «ciudad del ñandutí» y cada año celebra el Festival Internacional del Ñandutí, por lo general en julio.» (Secretaría Nacional de Turismo (SENATUR))
+  - ahora: «Itauguá es conocida como la «ciudad del ñandutí», y allí se realiza desde 1970 el Festival Nacional del Ñandutí; la primera edición fue en julio.» (Agencia de Información Paraguaya (IP), Festival Nacional del Ñandutí)
+
+### Confirmados
+
+- Semana 27 · Lunes: «Jeremías envió esta carta a los judíos deportados a Babilonia; antes de pedirles que oraran por la ciudad, les dijo que construyeran casas, plantaran huertos y formaran familias allí.» (Jeremías 29:1-7)
+- Semana 27 · Martes: «Pablo escribió la carta a los Romanos hacia el año 57, cuando gobernaba el emperador Nerón.» (Introducciones bíblicas a Romanos; Hechos 20:2-3)
+- Semana 27 · Miércoles: «Miqueas profetizó en el siglo VIII antes de Cristo, en tiempos de los reyes Jotam, Acaz y Ezequías, igual que Isaías.» (Miqueas 1:1; Isaías 1:1)
+- Semana 27 · Jueves: «La Asamblea General de las Naciones Unidas proclamó en 1993 el 15 de mayo como Día Internacional de las Familias.» (Naciones Unidas, resolución 47/237 de la Asamblea General, 1993)
+- Semana 27 · Viernes: «En guaraní, «jopói» nombra la reciprocidad: dar y recibir con las manos abiertas, una práctica central de la vida comunitaria.» (Bartomeu Melià y Dominique Temple, El don, la venganza y otras formas de economía guaraní, 2004)
+- Semana 27 · Sábado: «Pablo pidió orar por los reyes y las autoridades cuando los cristianos eran una minoría sin poder en el Imperio romano.» (1 Timoteo 2:1-2)
+- Semana 28 · Lunes: «En el griego original dice «cinco talentos». Un talento equivalía a unos 6.000 denarios, y un denario era el pago de un día de trabajo de un jornalero.» (Mateo 25:15 y 20:2; diccionarios bíblicos)
+- Semana 28 · Martes: «Según la «regla del 72», si dividís 72 por la tasa de interés anual, sabés en cuántos años se duplica un ahorro: al 6 % anual, en unos 12 años.» (Regla del 72, aproximación del interés compuesto)
+- Semana 28 · Miércoles: «Según una encuesta mundial de S&P, solo uno de cada tres adultos entiende conceptos financieros básicos como el interés compuesto, la inflación y la diversificación del riesgo.» (Klapper, Lusardi y van Oudheusden, Encuesta Global de Educación Financiera de S&P, 2015)
+- Semana 28 · Viernes: «En tiempos bíblicos, la ropa fina era una forma de riqueza que se guardaba, y por eso la polilla era una amenaza real.» (Josué 7:21; Hechos 20:33; Santiago 5:2)
+- Semana 28 · Sábado: «Benjamin Franklin dejó en su testamento 1.000 libras a Boston y 1.000 a Filadelfia para que crecieran durante 200 años prestándoselas a jóvenes artesanos.» (Testamento de Benjamin Franklin, 1789)
+- Semana 29 · Martes: «En un estudio de la psicóloga Gail Matthews, quienes escribieron sus metas y enviaron informes de avance a un amigo lograron más que quienes solo las pensaron. Fue un estudio pequeño.» (Gail Matthews, Universidad Dominicana de California, 2015)
+- Semana 29 · Jueves: «Un análisis de 138 estudios encontró que registrar el propio avance ayuda a alcanzar las metas, sobre todo cuando se anota o se cuenta a otros.» (Harkin y otros, Psychological Bulletin, 2016)
+- Semana 29 · Viernes: «Job 22:28 lo dice Elifaz, uno de los amigos de Job. Al final del libro, Dios les dice a esos amigos que no hablaron de él lo recto (Job 42:7).» (Job 22:1; 42:7)
+- Semana 29 · Sábado: «La palabra «ojalá» viene del árabe hispánico y significa «si Dios quiere».» (Real Academia Española, Diccionario de la lengua española, «ojalá»)
+- Semana 30 · Lunes: «En Paraguay, el Instituto Nacional de Tecnología, Normalización y Metrología (INTN) verifica balanzas y surtidores de combustible para que el cliente reciba lo que paga.» (INTN, Metrología Legal)
+- Semana 30 · Martes: «En excavaciones de Judá se encontraron pesas de piedra de los siglos VIII y VII antes de Cristo, marcadas con su valor en siclos.» (Raz Kletter, Economic Keystones: The Weight System of the Kingdom of Judah, 1998)
+- Semana 30 · Viernes: «WhatsApp lanzó su aplicación para pequeñas empresas, WhatsApp Business, en enero de 2018.» (WhatsApp, anuncio oficial, 18 de enero de 2018)
