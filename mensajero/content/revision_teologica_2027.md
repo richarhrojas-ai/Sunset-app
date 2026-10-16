@@ -367,3 +367,35 @@ Ajuste pedido por Richarh (semana 28): se suavizaron las advertencias sobre «ga
 Con el mismo criterio se suavizaron después dos días ya aprobados (`tools/ajuste_temas_sensibles_2027.py`):
 - **Semana 2 · lunes 11 de enero** (Gálatas 6:7): se quitó la mención de «préstamos rápidos, cadenas, esquemas de inversión». Ahora la problemática es «Querer resultados sin esfuerzo y decidir sobre la plata sin pensar en el mañana» y la acción pide consultar a un profesional de confianza.
 - **Semana 7 · miércoles 17 de febrero** (Proverbios 13:11): se quitaron las «promesas de ganancia rápida» y las «cadenas y esquemas». Ahora el punto habla de lo que se construye con trabajo y paciencia y recomienda conversar con un profesional, como un contador.
+
+# Agosto 2027 (semanas 31 a 34)
+
+Script del borrador: `tools/guiones_agosto_2027.py`. Revisión: `tools/revision_teologica_ago_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- **Éxodo 20:8-10** (2 de agosto): el día de reposo se guarda de formas distintas según la iglesia, así que no se toma posición sobre el día. Se toma el principio de detenerse (Marcos 2:27).
+- **Salmo 4:8 y el insomnio:** dormir mal no es falta de fe. Si el problema dura semanas, se recomienda consultar a un médico.
+- **Jeremías 33:3:** la promesa fue para Jeremías y su pueblo (la restauración de Jerusalén). Se aplica lo que enseña sobre Dios, no como garantía de «cosas grandes» para cada oyente.
+- **Semana de la oración, subtema «Cuando sentís que Dios no responde»:** no se promete respuesta inmediata ni se culpa a nadie de «no creer lo suficiente». A veces la respuesta es «no» o «todavía no» (2 Corintios 12:7-9).
+- **Marcos 11:24** (13 de agosto): no es una fórmula. La fe es en Dios (11:22), y se lee con 1 Juan 5:14 y con Getsemaní (14:36).
+- **Jeremías 29:11** (17 de agosto): fue escrito a un pueblo en el exilio, que iba a esperar setenta años (29:10). No es una promesa de éxito rápido.
+- **Efesios 3:20:** el contexto es la oración por conocer el amor de Cristo. No se usa para prometer proyectos más grandes.
+- **1 Pedro 3:7:** la mujer era más vulnerable en esa sociedad; Pedro pide honrarla y la llama coheredera: igual ante Dios.
+- **Perdón (Efesios 4:32):** perdonar no es tolerar el maltrato. Si hay violencia, hace falta buscar ayuda y protección.
+- **Colosenses 4:6:** Pablo habla del trato con los de afuera (4:5); el puente a la familia se dice en voz alta.
+
+En la lectura posterior no se encontraron frases de guion para corregir.
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 31 · Lunes: «El día de reposo es mandato, no sugerencia» → «Dios estableció un ritmo de trabajo y descanso». No entrar en la discusión entre iglesias sobre el día.
+- Semana 31 · Martes: «El sueño tranquilo refleja fe, no solo cansancio» → «Dios nos cuida también en las noches difíciles». Insinuaba que dormir mal es falta de fe.
+- Semana 32 · Viernes: «Creer antes de ver la respuesta» → «Confiar en que Dios responde según su voluntad», y «La fe activa la oración» → «La fe está puesta en Dios (11:22)». Marcos 11:24 no es una fórmula.
+- Semana 34 · Martes: **error de copia.** Los puntos («Habrá un día de juicio…») eran de otro versículo. Ahora salen de 1 Pedro 3:7: comprensión, honra (coherederos) y relación que afecta la oración.
+- Semana 34 · Jueves: se quitó el texto pegado de una búsqueda («…a través de Bible Gateway»).
+- Copia y tildes: semana 33 domingo (punto incompleto), semana 33 sábado (viñetas dobles), semana 31 miércoles y viernes, semana 34 viernes («perdonó»).
+- Semana 33 · Lunes: Hechos 20:28 tenía el número de versículo pegado al final («sangre.28»).
+
+Cambio de versículo sugerido (opcional): Nehemías 2:18 para el 18 de agosto, porque Filipenses 3:14 repite el pasaje del 19 de julio (`content/versiculos_sugeridos.md`, n.º 14).
+
+La alarma automática no marca frases de agosto.
