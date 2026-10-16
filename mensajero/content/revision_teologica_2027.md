@@ -1,4 +1,6 @@
-# Revisión teológica · enero y febrero 2027
+# Revisión teológica 2027
+
+# Enero y febrero 2027
 
 Criterios: `content/criterios_teologicos.md`. Script que aplica los cambios: `tools/revision_teologica_ene_feb_2027.py`.
 
@@ -199,3 +201,42 @@ Criterios: `content/criterios_teologicos.md`. Script que aplica los cambios: `to
 ## Alarma automática después de la revisión
 
 Quedan marcadas dos frases con «prosperar» (semana 4, martes y jueves). Se revisaron: ya explican su sentido bíblico (cumplir la misión de Dios, dar fruto a su tiempo).
+
+# Marzo 2027 (semanas 9 a 13)
+
+Script del borrador: `tools/guiones_marzo_2027.py`. Revisión: `tools/revision_teologica_mar_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- Marcos 2:17: se dice primero que Jesús vino por los pecadores, y después se lo aplica a la salud.
+- Proverbios 29:18: «visión» como revelación de Dios.
+- Génesis 30: es una narración, no una fórmula.
+- Juan 10:11: la entrega de Cristo es única.
+- Isaías 38:21: oración y tratamiento van juntos.
+- Semana 13 (matrimonio): sin tomar posición entre iglesias, con Efesios 5:21 y una advertencia clara contra el maltrato.
+
+En la lectura posterior se corrigió esto:
+
+- **Semana 9 · Viernes** (Desarrollo 3). La entrega de Cristo es única (redención); el paso a la cadena de trabajo se dice como inspiración, no como imitación.
+  - antes: «Detrás de cada comida hay una cadena de personas que se dedican: el que cría, el que transporta, el que vende. Cada eslabón, hecho con dedicación, es una forma de servir.»
+  - ahora: «La entrega de Jesús también inspira el trabajo de cada día. Detrás de cada comida hay una cadena de personas que se dedican: el que cría, el que transporta, el que vende. Cada eslabón, hecho con dedicación, es una forma de servir.»
+- **Semana 10 · Viernes** (Desarrollo 2). No llamar «necio» a quien duda o tiene miedo: se describe la conducta sin culpar a la persona.
+  - antes: «Escuchar el consejo de quien sabe, como un profesional de la salud, es una forma concreta de sabiduría. Rechazarlo sin razón suele salir caro.»
+  - ahora: «Escuchar el consejo de quien sabe, como un profesional de la salud, es una forma concreta de sabiduría. Postergarlo por miedo o por orgullo suele salir caro.»
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 9 · Jueves: «La diligencia trae prosperidad visible» → «La bendición de Dios acompañó el trabajo fiel». Génesis 30 es una narración: el texto atribuye la bendición al Señor (30:30), no promete prosperidad a la diligencia.
+- Semana 9 · Martes: «El modelo de Dios enseña como cuidar» → «El modelo de Dios enseña cómo cuidar». Tilde.
+- Semana 10 · Jueves: «El uso de remedios naturales aparece en la Escritura» → «Dios usó un remedio de su tiempo». Evitar que se lea como aval de remedios caseros en lugar del tratamiento médico.
+- Semana 10 · Viernes: «Rechazar el consejo médico es necedad» → «Rechazar un buen consejo sale caro». No etiquetar de «necio» a quien duda o tiene miedo; mismo sentido, sin culpa.
+- Semana 12 · Viernes: «La visión da orden y propósito» → «La Palabra de Dios da orden y propósito». En Proverbios 29:18 «visión» es la revelación de Dios, no la visión de una organización.
+- Semana 13 · Martes: «El respeto es el lenguaje de la esposa» → «La esposa honra a su esposo». El texto dice «honren»; «el lenguaje de la esposa» es una generalización de autoayuda.
+- Semana 13 · Martes: «No hay jerarquía de valor, si de función» → «Igual valor y respeto mutuo». Las iglesias explican los roles de distintas maneras; se queda en lo que todas comparten (Efesios 5:21; 1 Pedro 3:7).
+
+Tildes en el texto de dos versículos: Salmo 23:1-2 («Señor») y Proverbios 12:10 («impíos», «corazón»).
+
+Datos para confirmar antes de salir al aire, por ser cifras o recursos locales:
+- semana 9: ganado y población, y las horas de descanso de las vacas;
+- semana 13: la línea 137 «SOS Mujer», el estudio sobre orar por la pareja y el de la Universidad de Virginia.
+
+Cambios de versículo sugeridos: en `content/versiculos_sugeridos.md`. El más urgente es el texto de Proverbios 12:15 (12 de marzo).

@@ -39,7 +39,7 @@ Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden cor
 
 ## Revisión teológica (paso fijo de cada mes)
 
-Antes de cargar guiones nuevos: versículos firmes → borrador → **revisión teológica con `content/criterios_teologicos.md`**, cada corrección con su motivo en `tools/revision_teologica_<mes>_<año>.py` → alarma automática en `content/revision_planilla.txt` (sección «PARA LA REVISIÓN TEOLÓGICA») → datos verificados → aprobación de Richarh. El «Copiar prompt» de la app incluye los mismos criterios.
+Antes de cargar guiones nuevos: versículos firmes → borrador → **revisión teológica con `content/criterios_teologicos.md`**, cada corrección con su motivo en `tools/revision_teologica_<mes>_<año>.py` → alarma automática en `content/revision_planilla.txt` (sección «PARA LA REVISIÓN TEOLÓGICA») → datos verificados → aprobación de Richarh. Los cambios de versículo que se recomiendan se juntan en `content/versiculos_sugeridos.md` y se aplican todos juntos cuando Richarh los aprueba. El «Copiar prompt» de la app incluye los mismos criterios.
 
 ## Claves del usuario (`AAAA/wN/...`, valor `{v,t}`)
 

@@ -55,7 +55,7 @@ def rows(ws):
 # Es una alarma para leer con atención, no un juicio: cada caso lo decide la revisión humana.
 RIESGOS = [
     (r'\bprosper', 'prosperidad: ¿se presenta como promesa de riqueza o salud? (3 Juan 1:2, Josué 1:8)'),
-    (r'\bgarantiz|\bseguro que\b|\bsiempre (te|vas|va a)\b|\bnunca (te|vas|va a)\b|\bjamás\b', 'promesa absoluta: ¿el texto lo promete o es un principio general (proverbio)?'),
+    (r'\bgarantiz|\bseguro que\b|\bsiempre (te|vas|va a)\b|\bnunca (te|vas|va a)\b|\bjamás\b(?! (se )?justific)','promesa absoluta: ¿el texto lo promete o es un principio general (proverbio)?'),
     (r'\bcastig[oa] de Dios\b|\bDios (te|los|nos) castiga|\bpor (su|tu) pecado\b|\bmaldici', 'retribución: ¿se insinúa que la enfermedad o la desgracia es castigo? (Juan 9:3)'),
     (r'(ansiedad|depresi|tristeza|enferm|miedo)[^.]{0,60}(?<!no es )(falta de fe|poca fe)|(?<!no es )(falta de fe|poca fe)[^.]{0,60}(ansiedad|depresi|tristeza|enferm|miedo)', 'salud mental o enfermedad atribuidas a la falta de fe'),
     (r'\bDios bendice (el|la|a los|al)\b|\bsi (obedecés|das|sembrás|diezmás)\b[^.]*\b(Dios|bendic)', 'gracia condicionada: ¿la bendición se presenta como pago por una conducta?'),

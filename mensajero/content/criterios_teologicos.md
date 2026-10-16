@@ -8,8 +8,9 @@ Todo guion pasa por esta revisión **antes** de cargarse en la app. Vale igual p
 2. **Borrador.** Se escriben los guiones del mes en la hoja «Guiones AAAA».
 3. **Revisión teológica.** Se lee cada día con su versículo al lado, usando la lista de abajo. Cada corrección queda anotada con su motivo en un script `tools/revision_teologica_<mes>_<año>.py` (texto nuevo y por qué).
 4. **Alarma automática.** `python3 tools/build_data.py` escribe en `content/revision_planilla.txt` la sección «PARA LA REVISIÓN TEOLÓGICA», con frases de riesgo (prosperidad, promesas absolutas, retribución, fe y salud mental, gracia condicionada, falsos dilemas). La alarma no reemplaza la lectura: los errores de contexto solo se ven leyendo.
-5. **Datos verificados.** Cada dato curioso se confirma en su fuente antes de salir al aire.
-6. **Aprobación.** Richarh revisa el informe del mes y, recién después, se publica.
+5. **Versículos que no encajan.** Si un versículo no corresponde al subtema o tiene un error de copia, no se cambia en el momento: se anota en `content/versiculos_sugeridos.md`, con el motivo, y se aplican todos juntos cuando Richarh los aprueba.
+6. **Datos verificados.** Cada dato curioso se confirma en su fuente antes de salir al aire.
+7. **Aprobación.** Richarh revisa el informe del mes y, recién después, se publica.
 
 ## 1. Leer el versículo en su contexto
 
