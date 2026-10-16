@@ -54,7 +54,7 @@ Hoy se guardan en el dispositivo; con `sync.mjs` de Sunset quedan compartidas.
 
 ## Pendiente
 
-- Corrección de versículos: se marca en el Excel (no es tarea del locutor en la app).
+- Versículos: corregidos por Richarh (oct. 2026), sin repetidos; los números de versículo se quitan del texto para el aire y el flyer.
 - La planilla está sin tildes (Prevencion, Lider, Habitos…); conviene corregirla en el Excel, que es la fuente.
 - Clave, sincronización y pruebas: copiar de Sunset. Con sincronización, el informe de preparación de cada locutor alimenta un panel de coordinación (todos los locutores, mes a mes).
 - Definir si la app es para Richarh solo o para cada locutor (filtro «mis semanas»).
