@@ -310,3 +310,28 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 - Semana 21 · Sábado: «El alma generosa prospera» → «La generosidad enriquece la vida». Evitar la lectura de «dar para recibir más plata».
 
 Cambios de versículo sugeridos (opcionales): Mateo 6:3-4 para el 6 de mayo y Hageo 1:6 para el 28 de mayo, en `content/versiculos_sugeridos.md`.
+
+# Junio 2027 (semanas 22 a 26)
+
+Script del borrador: `tools/guiones_junio_2027.py`. Revisión: `tools/revision_teologica_jun_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- **Job 8:7** (8 de junio) lo dice Bildad, amigo de Job, y Dios corrige a esos amigos al final (42:7). El guion lo explica y no lo presenta como promesa de riqueza. Se recomienda cambiarlo por Zacarías 4:10 (`content/versiculos_sugeridos.md`).
+- **Daniel 1:** el motivo fue la fidelidad, no una dieta; el texto atribuye el resultado a Dios.
+- **Nutrición:** sin cifras de peso y sin culpa.
+- **Juan 8:31-32:** se cita con su condición («si permanecen en mi palabra»).
+- **Mateo 25:** la recompensa es el gozo del Señor, no ganancias.
+- **Liderazgo:** motivar sin manipular ni usar la culpa ni lo espiritual.
+- **Corrección:** siempre en privado.
+
+En la lectura posterior no se encontraron frases de guion para corregir.
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 23 · Martes: «Dios puede restaurar: Lo poco puede convertirse en mucho.» → «Quien habla es Bildad: Un amigo de Job cuya idea de Dios fue corregida (42:7).». Job 8:7 no es una promesa de Dios: lo dice Bildad.
+- Semana 23 · Martes: «Esperar en Dios: El proceso no define el resultado.» → «Los comienzos pequeños: No definen el final ni son una vergüenza.». Mismo motivo: el punto sale de lo que sí enseña el pasaje leído en su contexto.
+- Semana 23 · Martes: «Un futuro mejor: Dios puede traer mayor bendición después.» → «Dios no abandona: Restauró a Job por gracia, no como pago.». Evitar la promesa de prosperidad; lo que el libro de Job muestra es la fidelidad de Dios.
+- Semana 24 · Sábado: «La dieta sencilla mostró mejores resultados» → «Dios honró la fidelidad de Daniel». Daniel 1 atribuye el resultado a Dios (1:9, 17); no es una «dieta bíblica».
+- Semana 22 · Sábado: «1 Tesalonisenses» → «1 Tesalonicenses» (errata en la cita).
+
+La alarma automática marca dos frases de la semana 23, martes («prometer prosperidad segura», «pensar que Dios nos castiga»). Se revisaron: son la problemática que el guion denuncia, no una enseñanza.
