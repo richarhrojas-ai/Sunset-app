@@ -181,3 +181,59 @@ Cada dato se contrastó con su fuente original o con una fuente de autoridad (or
 - **Proverbios 12:15 (RVC):** «El necio piensa que va por buen camino, pero el sabio presta atención al consejo.» Va en `content/versiculos_sugeridos.md`.
 - **Génesis 1:26 (RVC):** texto completo confirmado. Va en `content/versiculos_sugeridos.md`.
 - **Efesios 5:21 (RVC):** «Cultiven entre ustedes la mutua sumisión, en el temor de Dios». El guion de la semana 13, martes, ahora usa esta redacción.
+
+## Abril (semanas 14 a 17)
+
+**14 confirmados sin cambios. 10 ajustados.** Script: `tools/verificacion_datos_abr_2027.py`.
+
+### Ajustados
+
+- **Semana 14 · Martes** — Se encuestó a adultos, no a hogares; la pregunta era sobre un presupuesto mensual.
+  - antes: «En una encuesta de Gallup en Estados Unidos, solo uno de cada tres hogares (32 %) dijo llevar un presupuesto detallado de sus ingresos y gastos.» (Gallup, 2013)
+  - ahora: «En una encuesta de Gallup en Estados Unidos, solo uno de cada tres adultos (32 %) dijo preparar cada mes un presupuesto detallado de sus ingresos y gastos.» (Gallup, abril de 2013)
+- **Semana 15 · Miércoles** — Fuente concreta.
+  - antes: «Las águilas aprovechan las corrientes de aire caliente para subir y planear durante largos tramos casi sin aletear, ahorrando energía.» (Estudios sobre el vuelo de aves planeadoras)
+  - ahora: «Las águilas aprovechan las corrientes de aire caliente para subir en espiral y luego planear largos tramos casi sin aletear, ahorrando energía.» (Duerr y otros, PLoS ONE, 2012 (águilas reales seguidas con GPS))
+- **Semana 16 · Martes** — Compara los equipos más y menos comprometidos; es una asociación.
+  - antes: «Los equipos de trabajo más comprometidos logran resultados mejores: en los análisis de Gallup, alrededor de un 23 % más de rentabilidad.» (Gallup, State of the Global Workplace, 2023)
+  - ahora: «Según los análisis de Gallup, los equipos de trabajo más comprometidos son alrededor de un 23 % más rentables que los menos comprometidos.» (Gallup, State of the Global Workplace, 2023)
+- **Semana 16 · Miércoles** — La muestra era solo de varones; estudio observacional.
+  - antes: «En un estudio con miles de empleados públicos británicos, quienes sentían que su jefe los trataba con justicia tuvieron menos enfermedades del corazón en los años siguientes.» (Kivimäki y otros, estudio Whitehall II, Archives of Internal Medicine, 2005)
+  - ahora: «En un estudio con más de 6.000 funcionarios públicos británicos varones, quienes sentían que en su trabajo los trataban con justicia tuvieron menos riesgo de enfermedades del corazón en los años siguientes.» (Kivimäki y otros, estudio Whitehall II, Archives of Internal Medicine, 2005)
+- **Semana 16 · Jueves** — La RVC dice «retama», no «zarza».
+  - antes: «Jeremías 17 compara dos plantas: el que confía en el ser humano es como una zarza en el desierto; el que confía en el Señor, como un árbol junto al agua.» (Jeremías 17:5-8)
+  - ahora: «Jeremías 17 compara dos plantas: el que confía en el ser humano es como una retama en el desierto; el que confía en el Señor, como un árbol junto al agua.» (Jeremías 17:5-8 (RVC))
+- **Semana 16 · Viernes** — Cifra actualizada: «más de seis de cada diez» exageraba.
+  - antes: «En Paraguay, más de seis de cada diez personas ocupadas trabajan en la informalidad.» (Instituto Nacional de Estadística (INE), Encuesta Permanente de Hogares Continua)
+  - ahora: «En Paraguay, seis de cada diez personas ocupadas trabajan en la informalidad: el 60,1 % en 2025.» (Instituto Nacional de Estadística (INE), Ocupación Informal 2025, Encuesta Permanente de Hogares Continua)
+- **Semana 17 · Lunes** — La recomendación es un rango.
+  - antes: «La Organización Mundial de la Salud recomienda a los adultos al menos 150 minutos por semana de actividad física moderada.» (Organización Mundial de la Salud, Directrices sobre actividad física, 2020)
+  - ahora: «La Organización Mundial de la Salud recomienda a los adultos entre 150 y 300 minutos por semana de actividad física moderada, o entre 75 y 150 de actividad intensa.» (Organización Mundial de la Salud, Directrices sobre actividad física y hábitos sedentarios, 2020)
+- **Semana 17 · Miércoles** — Precisión del tipo de estudio y de lo que midió.
+  - antes: «Reemplazar tiempo sentado por 15 minutos de correr o una hora de caminata por día se asoció con un 26 % menos de riesgo de depresión.» (Choi y otros, JAMA Psychiatry, 2019)
+  - ahora: «Un estudio genético estimó que sumar actividad equivalente a 15 minutos de correr o una hora de caminata rápida por día, en lugar de estar sentado, se asocia con un 26 % menos de probabilidad de depresión.» (Choi y otros, JAMA Psychiatry, 2019)
+- **Semana 17 · Jueves** — El 65 % se refiere a la somnolencia diurna, no a «dormir mucho mejor».
+  - antes: «Adultos que hacían al menos 150 minutos semanales de actividad física moderada o intensa contaron que dormían mucho mejor que los que se movían menos.» (Loprinzi y Cardinal, Mental Health and Physical Activity, 2011)
+  - ahora: «Adultos que, medidos con un sensor de movimiento, sumaban al menos 150 minutos semanales de actividad física tuvieron un 65 % menos de probabilidad de sentirse muy somnolientos durante el día.» (Loprinzi y Cardinal, Mental Health and Physical Activity, 2011)
+- **Semana 17 · Sábado** — Se agregan la edad y la intensidad.
+  - antes: «Para niños y adolescentes, la recomendación es de al menos 60 minutos de actividad física por día, en promedio.» (Organización Mundial de la Salud, Directrices sobre actividad física, 2020)
+  - ahora: «Para niños y adolescentes de 5 a 17 años, la recomendación es de al menos 60 minutos por día, en promedio, de actividad física moderada a intensa.» (Organización Mundial de la Salud, Directrices sobre actividad física, 2020)
+
+### Confirmados
+
+- Semana 14 · Lunes: «Solo un tercio de los adultos del mundo entiende conceptos financieros básicos como el interés, la inflación o repartir el riesgo.» (Klapper, Lusardi y van Oudheusden, Encuesta Global de Educación Financiera de S&P, 2015)
+- Semana 14 · Miércoles: «Un método conocido propone repartir el ingreso en 50 % para necesidades, 30 % para gustos y 20 % para ahorro o deudas; es una guía para empezar, no una ley.» (Elizabeth Warren y Amelia Warren Tyagi, All Your Worth, 2005)
+- Semana 14 · Jueves: «En un experimento, las personas que pagaban con tarjeta ofrecieron pagar hasta el doble por las mismas entradas que las que pagaban en efectivo.» (Prelec y Simester, MIT, Marketing Letters, 2001)
+- Semana 14 · Viernes: «La ofrenda que Pablo organizaba en Corinto era para los cristianos pobres de Jerusalén.» (1 Corintios 16:1-3; Romanos 15:26)
+- Semana 14 · Sábado: «La palabra que Pablo usa para «administrador» designaba al encargado de manejar los bienes de una casa que no era suya.» (Diccionarios del griego del Nuevo Testamento (oikonómos))
+- Semana 15 · Lunes: «En griego, Pablo dice «el fruto» en singular: no son nueve frutos separados, sino un solo fruto con nueve rasgos.» (Texto griego de Gálatas 5:22)
+- Semana 15 · Martes: «El Salmo 63 lleva como título: «Salmo de David, cuando estaba en el desierto de Judá».» (Salmo 63, título)
+- Semana 15 · Jueves: «Repasar en sesiones cortas y repartidas en el tiempo se recuerda mejor que estudiar todo de una vez.» (Cepeda y otros, Psychological Bulletin, 2006)
+- Semana 15 · Viernes: «El Salmo 42 se atribuye a los hijos de Coré, una familia de levitas cantores del templo.» (Salmo 42, título)
+- Semana 15 · Sábado: «En este versículo Pablo combina dos imágenes: la de una planta que echa raíces y la de un edificio que se levanta sobre cimientos.» (Colosenses 2:7)
+- Semana 16 · Lunes: «Las micro, pequeñas y medianas empresas son más del 90 % de las empresas de Paraguay.» (Ministerio de Industria y Comercio (MIC) del Paraguay)
+- Semana 16 · Sábado: «El Salmo 90 se atribuye a Moisés: es el único salmo que lleva su nombre en el título.» (Salmo 90, título)
+- Semana 17 · Martes: «Cortar los ratos largos sentado con pausas cortas de movimiento ayudó a controlar el azúcar en sangre después de comer.» (Dunstan y otros, Diabetes Care, 2012)
+- Semana 17 · Viernes: «Las tareas de la casa y del jardín también cuentan como actividad física, si se hacen con ritmo.» (Organización Mundial de la Salud, Directrices sobre actividad física, 2020)
+
+- **Proverbios 21:5 (RVC):** «Si piensas lo que haces, tendrás abundancia; si te apresuras, acabarás en la pobreza.» Va en `content/versiculos_sugeridos.md`.
