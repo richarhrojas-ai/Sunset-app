@@ -335,3 +335,29 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 - Semana 22 · Sábado: «1 Tesalonisenses» → «1 Tesalonicenses» (errata en la cita).
 
 La alarma automática marca dos frases de la semana 23, martes («prometer prosperidad segura», «pensar que Dios nos castiga»). Se revisaron: son la problemática que el guion denuncia, no una enseñanza.
+
+# Julio 2027 (semanas 27 a 30)
+
+Script del borrador: `tools/guiones_julio_2027.py`. Revisión: `tools/revision_teologica_jul_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- **Romanos 13:1** (6 de julio): respetar a las autoridades, pero ninguna autoridad humana es absoluta (Hechos 5:29). Respetar no es aprobar todo ni callar ante una injusticia.
+- **Proverbios 14:34 y 24:16:** se presentan como principios, no como garantías. «El justo» es el que confía en Dios, no el que nunca se equivoca.
+- **Mateo 25:20-21** (12 de julio): la recompensa es más responsabilidad y el gozo del Señor, no ganancias. El que ganó dos mil recibe el mismo elogio (25:23).
+- **Inversión** (semana 28): enfoque educativo, sin recomendar productos. Advertencia contra las promesas de ganancia rápida y los esquemas piramidales. No arriesgar lo que la familia necesita. Mateo 6:19-21 no condena ahorrar, sino poner ahí el corazón.
+- **Habacuc 2:2:** era una revelación de Dios y no una meta personal; se toma solo el principio de escribir con claridad.
+- **Mateo 7:7:** no es una fórmula para conseguir cualquier cosa (7:11). No se culpa a nadie de «no haber orado lo suficiente».
+- **Job 22:28** (23 de julio): lo dice Elifaz, y Dios corrige a esos amigos (42:7). El guion lo explica y usa Proverbios 16:9. Se recomienda cambiarlo por Proverbios 16:9 (`content/versiculos_sugeridos.md`, n.º 13).
+- **Proverbios 20:14:** es una descripción del mercado, no un mandato.
+- **Violencia en el hogar** (9 de julio): se nombra la línea 137 para pedir ayuda.
+
+En la lectura posterior no se encontraron frases de guion para corregir.
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 28 · Lunes: «El buen manejo trae recompensa» → «La recompensa: más responsabilidad y el gozo del Señor». Es lo que dice la parábola; se evita la lectura de prosperidad.
+- Semana 29 · Viernes: «Confía en Dios: Pon tus planes en sus manos.» → «Quien habla es Elifaz: Un amigo de Job cuya idea de Dios fue corregida (42:7).». Job 22:28 no es una promesa de Dios.
+- Semana 29 · Viernes: «Persevera: Dios puede ayudarte a llevarlos a buen término.» → «Confía en Dios: Pon tus planes en sus manos.». No presentar el versículo como garantía de éxito.
+- Copia y tildes: semana 28 viernes («lo 2. material»), semana 28 sábado y semana 29 viernes (números sueltos), semana 29 sábado («está»), semana 30 martes («Él») y semana 30 sábado («La prAI31:AK31oduccion» → «La producción»).
+
+La alarma automática ya no marca frases de julio. Se ajustó para no marcar «no está garantizado», que es justamente la idea correcta.
