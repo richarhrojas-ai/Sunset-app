@@ -363,3 +363,7 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 La alarma automática ya no marca frases de julio. Se ajustó para no marcar «no está garantizado», que es justamente la idea correcta.
 
 Ajuste pedido por Richarh (semana 28): se suavizaron las advertencias sobre «ganancias rápidas» y esquemas piramidales de martes a sábado. Es un tema sensible que puede asustar a la audiencia y generar preguntas que el locutor no puede responder: hay propuestas que parecen confiables y no lo son, y otras al revés. En su lugar, el guion anima a pedir consejo a un profesional (contador o asesor financiero). La nota del locutor del subtema 2 sugiere no opinar sobre empresas o productos concretos e invitar a un profesional si se quiere profundizar. El criterio quedó en `content/criterios_teologicos.md` para los meses siguientes.
+
+Con el mismo criterio se suavizaron después dos días ya aprobados (`tools/ajuste_temas_sensibles_2027.py`):
+- **Semana 2 · lunes 11 de enero** (Gálatas 6:7): se quitó la mención de «préstamos rápidos, cadenas, esquemas de inversión». Ahora la problemática es «Querer resultados sin esfuerzo y decidir sobre la plata sin pensar en el mañana» y la acción pide consultar a un profesional de confianza.
+- **Semana 7 · miércoles 17 de febrero** (Proverbios 13:11): se quitaron las «promesas de ganancia rápida» y las «cadenas y esquemas». Ahora el punto habla de lo que se construye con trabajo y paciencia y recomienda conversar con un profesional, como un contador.
