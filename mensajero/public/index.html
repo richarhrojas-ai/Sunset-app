@@ -234,6 +234,17 @@ details.fold[open]>summary::after{content:"–"}
 .mi-prog .dias-chips[role=group]{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
 .mi-prog .dias-chips[role=group] button{min-width:0;padding:0}
 .mi-prog .form p{font-size:14px;color:var(--ink2)}
+:root[data-prog="p2"]{--prog:#5fd3c6}
+:root[data-prog="p3"]{--prog:#f29ac0}
+:root[data-prog] body{background-image:linear-gradient(180deg,color-mix(in srgb,var(--prog) 26%,var(--top)) 0%,color-mix(in srgb,var(--prog) 8%,var(--h3)) 55%,#050308 100%)}
+:root[data-prog] #dias.card,:root[data-prog] #s-prog .form{border-color:color-mix(in srgb,var(--prog) 60%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--prog) 13%,transparent),transparent 50%),var(--glass)}
+:root[data-prog] #sem-prog,:root[data-prog] #prep-prog{color:var(--prog)}
+:root[data-prog] .progs button[aria-selected="true"]{border-color:var(--prog);color:var(--prog);background:color-mix(in srgb,var(--prog) 12%,transparent)}
+.progs button[data-prog="p2"]::before,.progs button[data-prog="p3"]::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px;background:#5fd3c6}
+.progs button[data-prog="p3"]::before{background:#f29ac0}
+.ya-aviso{border-left:3px solid var(--prog,var(--gold));padding:8px 12px;border-radius:0 10px 10px 0;background:rgba(0,0,0,.18);font-size:13.5px;color:var(--ink2)}
+.ya-aviso b{color:var(--prog,var(--gold));font-weight:500}
+details.loc.ya summary{color:var(--ink3)}
 .progs{display:flex;gap:6px;flex-wrap:wrap}
 .progs button{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--ink2);background:rgba(0,0,0,.2);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .progs button[aria-selected="true"]{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.08)}
@@ -733,7 +744,11 @@ function render() {
 
   // preparación
   pintarPrograma();
-  $('prep').innerHTML = misItems().map(it => `<button data-p="${it.id}" aria-pressed="${!!get(kPrep(w, it))}"><i></i>${esc(it.t)}</button>`).join('');
+  const btnPrep = it => `<button data-p="${it.id}" aria-pressed="${!!get(kPrep(w, it))}"><i></i>${esc(it.t)}</button>`;
+  if (prog !== progs()[0]) { const cont = misItems().filter(it => it.g === 'Contenido'), resto = misItems().filter(it => it.g !== 'Contenido');
+    $('prep').innerHTML = (cont.length ? `<details class="loc ya"><summary>Contenido · compartido con «${esc(nombreProg(progs()[0]))}» (${cont.filter(it => get(kPrep(w, it))).length}/${cont.length})</summary><div class="in prep">${cont.map(btnPrep).join('')}</div></details>` : '')
+      + resto.map(btnPrep).join(''); }
+  else $('prep').innerHTML = misItems().map(btnPrep).join('');
   pintarPrep();
   $('notas').value = get(key(w, 'notas')) || '';
 
@@ -1033,8 +1048,31 @@ function renderDias(w, hoyIdx) {
         ${pie('Copiar guion')}`
       : `${bloqueVersiculo(w, i, true)}<div class="vacio"><p class="muted">Este día todavía no tiene guion. Copiá el prompt de la semana: ya trae el tema, los subtemas, el valor y los versículos de cada día.</p>
         <div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="prompt">Copiar prompt</button></div></div>`}`; }
+  const previos = progs().slice(0, progs().indexOf(prog)).filter(id => conProg(id, () => cfgPrograma().dias.includes(i)));
+  if (previos.length) cuerpo = cab + versionEnfocada(w, i, semanal, previos) + `<details class="loc ya"><summary>Guion completo · ya usado en ${previos.map(id => '«' + esc(nombreProg(id)) + '»').join(' y ')}</summary><div class="in">${cuerpo.slice(cab.length)}</div></details>`;
   $('dias').innerHTML = `${tabs}<article class="guion" role="tabpanel">${cuerpo}</article>
     <div style="margin-top:14px;text-align:center"><button class="ver-todo" data-vertodo>${verTodo ? 'Ver solo mis días' : 'Ver toda la semana'}</button></div>`;
+}
+/* segundo o tercer programa del mismo día: no repetir; cada programa toma otro punto del versículo como eje */
+const puntoDe = () => progs().indexOf(prog) % 3;
+function versionEnfocada(w, i, semanal, previos) {
+  const ya = previos.map(id => '«' + esc(nombreProg(id)) + '»').join(' y '), yo = esc(nombreProg(prog)), d = w.dias[i];
+  const corto = `<div class="acciones copiar"><button class="btn mini" data-copiar="corto">Copiar versión de este programa</button></div>`;
+  if (semanal || i === 0 || i === 6) return `<p class="ya-aviso">El versículo de hoy ya salió en ${ya}. Para <b>${yo}</b> quedó a la vista lo propio del día; el resto está plegado abajo.</p>
+    ${i === 0 && !semanal ? introSemana(w) : bloqueResumen(w)}${corto}`;
+  const k = puntoDe(), [tt, ex] = tituloPunto(d.puntos[k] || ''), q = d.guion?.puntos[k] || {};
+  return `<p class="ya-aviso">Este guion ya salió hoy en ${ya}. Para no repetir, <b>${yo}</b> toma el <b>punto ${k+1}</b> del versículo como eje. El guion completo queda plegado abajo.</p>
+    <div class="kick">Subtema ${BLOQUE[i]+1} · ${esc(w.subtemas[BLOQUE[i]].titulo)}</div>
+    <div class="vers-base"><span class="ref">${esc(d.ref)}</span><p class="vtxt">${esc(d.texto)}</p></div>
+    <div class="punto"><span>${k+1}</span><h4>${esc(tt)}${ex ? `<small>${esc(ex)}</small>` : ''}</h4>${q.desarrollo ? `<p>${esc(q.desarrollo)}</p>
+      <dl><div><dt class="pr">Problemática</dt><dd>${esc(q.problema)}</dd></div><div><dt class="so">En la práctica</dt><dd>${esc(q.solucion)}</dd></div></dl>` : ''}</div>${corto}`;
+}
+function textoCorto(w, i, semanal) {
+  if (semanal || i === 0 || i === 6) return textoDia(w, i, semanal);
+  const d = w.dias[i], k = puntoDe(), [tt, ex] = tituloPunto(d.puntos[k] || ''), q = d.guion?.puntos[k], f = fechaDia(w, i).toLocaleDateString('es-PY', {day: 'numeric', month: 'long'});
+  return [`${DIAS[i].toUpperCase()} ${f} · ${nombreProg(prog)} · ${TEMA_TXT[w.tema] || w.tema}`, '', `SUBTEMA ${BLOQUE[i]+1}: ${w.subtemas[BLOQUE[i]].titulo}`, '',
+    `VERSÍCULO: ${d.ref} — ${d.texto}`, '', `EJE DE HOY (punto ${k+1}): ${tt}${ex ? ' — ' + ex : ''}`,
+    ...(q ? [q.desarrollo, `Problemática: ${q.problema}`, `En la práctica: ${q.solucion}`] : []), '', `PARA CERRAR: ${d.ref}`].join('\n');
 }
 /* flyer del versículo para redes: 1080×1350 con la escena y el color de la semana */
 function cargarImg(src) { return new Promise((ok, mal) => { const im = new Image(); im.onload = () => ok(im); im.onerror = mal; im.src = src; }); }
@@ -1120,6 +1158,7 @@ function pintarPrograma() {
     <div class="dias-chips" role="group" aria-label="Días al aire">${DIAS.map((d, i) => `<button type="button" data-dia="${i}" aria-pressed="${c.dias.includes(i)}">${d.slice(0, 3)}</button>`).join('')}</div>
     <div class="dias-chips"><button type="button" class="btn mini" data-preset="1,2,3,4,5">Lunes a viernes</button><button type="button" class="btn mini" data-preset="1,2,3,4,5,6">Lunes a sábado</button></div>${pie}</div>`;
   $('sem-prog').textContent = $('prep-prog').textContent = varios ? '· ' + nom : '';
+  if (varios && prog !== 'p1') document.documentElement.dataset.prog = prog; else delete document.documentElement.dataset.prog;
   $('programa').innerHTML = `<select id="pg-nombre" aria-label="Programa"><option value="">Elegí tu programa</option>${PROGRAMAS.map(p => `<option${p === c.nombre ? ' selected' : ''}>${esc(p)}</option>`).join('')}</select>
     <select id="pg-horas" aria-label="Duración">${[1,2,3].map(h => `<option value="${h}"${c.horas === h ? ' selected' : ''}>${h} hora${h > 1 ? 's' : ''}</option>`).join('')}</select>`;
   $('semana').hidden = !c.listo;
@@ -1229,7 +1268,7 @@ $('dias').onclick = e => {
   if (t) { diaSel = +t.dataset.d; renderDias(w, hoyDe(w)); $('dias').querySelector(`[data-d="${diaSel}"]`).focus(); return; }
   if (e.target.closest('[data-flyer]')) return abrirFlyer(w, diaSel);
   const c = e.target.closest('[data-copiar]');
-  if (c) return copiar(c.dataset.copiar === 'prompt' ? promptSemana(w) : textoDia(w, diaSel, cfgPrograma().dias.length === 1 && !verTodo) + misNotas(w, diaSel));
+  if (c) return copiar(c.dataset.copiar === 'prompt' ? promptSemana(w) : c.dataset.copiar === 'corto' ? textoCorto(w, diaSel, cfgPrograma().dias.length === 1 && !verTodo) + misNotas(w, diaSel) : textoDia(w, diaSel, cfgPrograma().dias.length === 1 && !verTodo) + misNotas(w, diaSel));
   if (e.target.closest('.chk')) marcarChk(e);
 };
 $('h-subs').onclick = e => { const b = e.target.closest('[data-ir]'); if (!b) return;
@@ -1252,7 +1291,7 @@ $('programa').onchange = () => guardarPrograma();
 $('dias').onchange = e => { const s = e.target.closest('[data-reem-sel]'); if (!s) return;
   set(keyBase(sem[cur], 'reem'+s.dataset.reemSel), s.value); renderRegistro(+$('mes').value); };
 $('s-prog').onclick = e => {
-  const g = e.target.closest('[data-prog]'); if (g) return g.dataset.prog !== prog && cambiarProg(g.dataset.prog);
+  const g = e.target.closest('button[data-prog]'); if (g) return g.dataset.prog !== prog && cambiarProg(g.dataset.prog);
   if (e.target.closest('[data-prog-nuevo]')) return nuevoProg();
   if (e.target.closest('[data-prog-quitar]')) return quitarProg();
   if (e.target.closest('[data-ir-prep]')) { $('s-prep').open = true; return $('s-prep').scrollIntoView({behavior: 'smooth'}); }
