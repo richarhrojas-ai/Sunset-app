@@ -237,3 +237,57 @@ Cada dato se contrastó con su fuente original o con una fuente de autoridad (or
 - Semana 17 · Viernes: «Las tareas de la casa y del jardín también cuentan como actividad física, si se hacen con ritmo.» (Organización Mundial de la Salud, Directrices sobre actividad física, 2020)
 
 - **Proverbios 21:5 (RVC):** «Si piensas lo que haces, tendrás abundancia; si te apresuras, acabarás en la pobreza.» Va en `content/versiculos_sugeridos.md`.
+
+## Mayo (semanas 18 a 21)
+
+**14 confirmados sin cambios. 10 ajustados.** Script: `tools/verificacion_datos_may_2027.py`. La cifra de pobreza conviene confirmarla en ine.gov.py antes de salir al aire.
+
+### Ajustados
+
+- **Semana 18 · Miércoles** — Las fuentes no coinciden en si lo hacía siempre un sirviente.
+  - antes: «En tiempos de Jesús, lavar los pies de los invitados era una tarea que normalmente hacía un sirviente.» (Juan 13:4-5; comentarios bíblicos sobre las costumbres del siglo I)
+  - ahora: «En tiempos de Jesús, lavar los pies de otra persona se consideraba una tarea de sirvientes: lo normal era que el anfitrión ofreciera agua o que lo hiciera un siervo de la casa.» (Juan 13:4-5; Lucas 7:44; 1 Samuel 25:41)
+- **Semana 18 · Jueves** — «De 15 años o más», como dice el informe.
+  - antes: «Se estima que unos 862 millones de personas mayores de 15 años hacen algún tipo de voluntariado cada mes en el mundo.» (Voluntarios de las Naciones Unidas, Informe sobre el estado del voluntariado en el mundo, 2022)
+  - ahora: «Se estima que unos 862 millones de personas de 15 años o más hacen algún tipo de voluntariado cada mes en el mundo.» (Voluntarios de las Naciones Unidas (VNU), Informe sobre el estado del voluntariado en el mundo, 2022)
+- **Semana 18 · Viernes** — Año del libro original y de la edición en español.
+  - antes: «El psicólogo Mihaly Csikszentmihalyi llamó «flujo» al estado en que estamos tan metidos en una tarea que el tiempo se pasa volando.» (Mihaly Csikszentmihalyi, «Fluir», 1990)
+  - ahora: «El psicólogo Mihaly Csikszentmihalyi llamó «flujo» al estado en que estamos tan metidos en una tarea que el tiempo se pasa volando.» (Mihaly Csikszentmihalyi, «Flow», 1990 (en español, «Fluir», 1997))
+- **Semana 19 · Lunes** — La revisión no da una proporción de elogios por crítica.
+  - antes: «Las experiencias negativas nos impactan más que las positivas: una crítica suele pesar más que varios elogios.» (Baumeister y otros, «Bad is stronger than good», Review of General Psychology, 2001)
+  - ahora: «Las experiencias negativas suelen impactarnos más que las positivas: por ejemplo, una crítica suele pesar más que un elogio.» (Baumeister, Bratslavsky, Finkenauer y Vohs, «Bad is stronger than good», Review of General Psychology, 2001)
+- **Semana 19 · Martes** — Fuente concreta y condiciones.
+  - antes: «El rugido de un león puede oírse a varios kilómetros de distancia.» (Estudios sobre comportamiento de leones)
+  - ahora: «En la sabana abierta, el rugido de un león puede oírse hasta a unos 8 kilómetros de distancia.» (IFAW (Fondo Internacional para el Bienestar Animal))
+- **Semana 19 · Miércoles** — La explicación es la interpretación de la autora.
+  - antes: «En un estudio en hospitales, los equipos con mejores líderes reportaban más errores: no porque se equivocaran más, sino porque se animaban a decirlos.» (Amy Edmondson, Universidad de Harvard, Journal of Applied Behavioral Science, 1996)
+  - ahora: «En un estudio en un hospital, los equipos de enfermería con mejor liderazgo registraban más errores de medicación; según la autora, no se equivocaban más, sino que se animaban a reportarlos.» (Amy Edmondson, Journal of Applied Behavioral Science, 1996)
+- **Semana 19 · Viernes** — Con seis horas, el efecto equivale a una noche sin dormir, no a dos.
+  - antes: «Dormir unas seis horas por noche durante dos semanas afectó el rendimiento casi tanto como pasar dos noches sin dormir, y los participantes no se daban cuenta.» (Van Dongen y otros, revista Sleep, 2003)
+  - ahora: «Dormir seis horas por noche durante dos semanas afectó la atención casi tanto como pasar una noche entera sin dormir, y los participantes apenas se sentían más somnolientos.» (Van Dongen y otros, revista Sleep, 2003)
+- **Semana 21 · Martes** — Cifra actualizada: 16 % en 2025 (20,1 % era de 2024).
+  - antes: «En Paraguay, alrededor de dos de cada diez personas viven en situación de pobreza.» (Instituto Nacional de Estadística (INE), Encuesta Permanente de Hogares Continua)
+  - ahora: «En Paraguay, alrededor de 16 de cada 100 personas viven en situación de pobreza.» (Instituto Nacional de Estadística (INE), Encuesta Permanente de Hogares Continua 2025)
+- **Semana 21 · Miércoles** — El estudio no se limita a deudas.
+  - antes: «Muchas personas subestiman cuánto crece una deuda con intereses compuestos; los economistas lo llaman «sesgo del crecimiento exponencial».» (Stango y Zinman, Journal of Finance, 2009)
+  - ahora: «Muchas personas subestiman cuánto crece el dinero con intereses compuestos, tanto una deuda como un ahorro; los economistas lo llaman «sesgo del crecimiento exponencial».» (Stango y Zinman, Journal of Finance, 2009)
+- **Semana 21 · Jueves** — Se precisan las palabras y las referencias.
+  - antes: «Jesús dice estas palabras justo después de la parábola del administrador infiel.» (Lucas 16:1-13)
+  - ahora: «Las palabras de Jesús sobre ser fiel en lo poco vienen justo después de la parábola del administrador infiel.» (Lucas 16:1-9 y 16:10-13)
+
+### Confirmados
+
+- Semana 18 · Lunes: «Hacer voluntariado se asoció con menos síntomas de depresión y más satisfacción con la vida; son estudios que muestran una relación, no una causa.» (Jenkinson y otros, BMC Public Health, 2013)
+- Semana 18 · Martes: «La palabra griega que Pedro usa para «don», járisma, viene de járis, que significa gracia.» (Léxico griego de Strong (G5486))
+- Semana 18 · Sábado: «La frase de Jesús «Hay más bendición en dar que en recibir» no aparece en los evangelios: la conocemos porque Pablo la recordó en Hechos.» (Hechos 20:35)
+- Semana 19 · Jueves: «Pablo escribió la carta a los Filipenses mientras estaba preso.» (Filipenses 1:13)
+- Semana 19 · Sábado: «Romanos 8:28 continúa en el versículo 29: el propósito de Dios es que seamos como Jesús.» (Romanos 8:28-29)
+- Semana 20 · Lunes: «En un gran estudio sobre jóvenes y religión en Estados Unidos, los padres resultaron la influencia más importante en la vida de fe de sus hijos adolescentes.» (Christian Smith, Estudio Nacional sobre Juventud y Religión («Soul Searching», 2005))
+- Semana 20 · Martes: «Los hijos de padres cálidos y con límites claros suelen tener mejores resultados que los de padres muy autoritarios o muy permisivos.» (Diana Baumrind, estudios sobre estilos de crianza, 1966 y 1991)
+- Semana 20 · Miércoles: «La palabra hebrea que en Proverbios se traduce como «corregir» significa sobre todo instruir y disciplinar, no solo castigar.» (Léxico hebreo de Strong (H3256, yasar))
+- Semana 20 · Jueves: «Deuteronomio 6:4-9, el «Shemá», es la oración que el pueblo judío repite cada mañana y cada noche desde hace siglos.» (Deuteronomio 6:4-9; tradición judía)
+- Semana 20 · Viernes: «Juan llama «hijos» a los creyentes que él había guiado en la fe.» (3 Juan 1:4; 1 Juan 2:1)
+- Semana 20 · Sábado: «En un estudio en Inglaterra y Gales, los adolescentes con abuelos más presentes en su vida tuvieron menos problemas emocionales y de conducta.» (Universidad de Oxford, Buchanan y otros, 2008)
+- Semana 21 · Lunes: «El apóstol Pablo trabajaba fabricando carpas para sostenerse mientras anunciaba el evangelio.» (Hechos 18:3)
+- Semana 21 · Viernes: «En varios estudios, las personas subestimaron sus gastos «excepcionales», esos que parecen únicos pero en realidad se repiten a lo largo del año.» (Sussman y Alter, Journal of Consumer Research, 2012)
+- Semana 21 · Sábado: «Personas que recibieron dinero para gastar en otros se sintieron más felices al final del día que las que lo gastaron en sí mismas, incluso con montos pequeños.» (Dunn, Aknin y Norton, revista Science, 2008)
