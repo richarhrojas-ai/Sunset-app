@@ -291,3 +291,65 @@ Cada dato se contrastó con su fuente original o con una fuente de autoridad (or
 - Semana 21 · Lunes: «El apóstol Pablo trabajaba fabricando carpas para sostenerse mientras anunciaba el evangelio.» (Hechos 18:3)
 - Semana 21 · Viernes: «En varios estudios, las personas subestimaron sus gastos «excepcionales», esos que parecen únicos pero en realidad se repiten a lo largo del año.» (Sussman y Alter, Journal of Consumer Research, 2012)
 - Semana 21 · Sábado: «Personas que recibieron dinero para gastar en otros se sintieron más felices al final del día que las que lo gastaron en sí mismas, incluso con montos pequeños.» (Dunn, Aknin y Norton, revista Science, 2008)
+
+## Junio (semanas 22 a 26)
+
+**19 confirmados sin cambios. 11 ajustados.** Script: `tools/verificacion_datos_jun_2027.py`.
+
+### Ajustados
+
+- **Semana 22 · Sábado** — Cifras exactas; es una asociación.
+  - antes: «En una empresa tecnológica de Estados Unidos, los empleados que recibieron mentoría fueron ascendidos con mucha más frecuencia que los que no la tuvieron.» (Gartner, estudio para Sun Microsystems, 2006)
+  - ahora: «En un estudio de Sun Microsystems, los empleados que recibieron mentoría fueron ascendidos cinco veces más que los que no la tuvieron, y los mentores, seis veces más.» (Gartner, análisis del programa de mentoría de Sun Microsystems, 2006)
+- **Semana 23 · Lunes** — Cifra y año exactos.
+  - antes: «En muchos países, cerca de la mitad de los adultos que ven una buena oportunidad para emprender dice que el miedo a fracasar lo frenaría.» (Global Entrepreneurship Monitor (GEM), informe mundial)
+  - ahora: «En 2024, casi la mitad (47 %) de los adultos que veían buenas oportunidades para emprender dijo que el miedo a fracasar le impediría hacerlo.» (Global Entrepreneurship Monitor (GEM), Informe mundial 2024/2025)
+- **Semana 23 · Martes** — Redacción de la RVC («con rectitud»).
+  - antes: «Al final del libro de Job, Dios dice a los amigos de Job que no hablaron de Él con verdad.» (Job 42:7)
+  - ahora: «Al final del libro de Job, Dios les dice a los amigos de Job que no hablaron de Él con rectitud, como sí lo hizo su siervo Job.» (Job 42:7 (RVC))
+- **Semana 23 · Sábado** — El texto cuenta «hombres».
+  - antes: «Jesús dijo estas palabras al día siguiente de multiplicar los panes para unas cinco mil personas.» (Juan 6:10-27)
+  - ahora: «Jesús dijo estas palabras al día siguiente de multiplicar los panes para unos cinco mil hombres, sin contar a las mujeres y a los niños.» (Juan 6:10, 22-27; Mateo 14:21)
+- **Semana 24 · Jueves** — Es una revisión de distracciones en general.
+  - antes: «Comer frente a una pantalla, distraídos, se asoció con comer más en esa comida y también en la siguiente.» (Robinson y otros, American Journal of Clinical Nutrition, 2013)
+  - ahora: «Una revisión de 24 estudios encontró que comer distraídos, por ejemplo frente a una pantalla, se asoció con comer más en esa comida y aún más en la siguiente.» (Robinson y otros, American Journal of Clinical Nutrition, 2013)
+- **Semana 24 · Viernes** — Dato concreto de la FAO.
+  - antes: «La mandioca, tan presente en la mesa paraguaya, es una de las principales fuentes de energía de los alimentos en las regiones tropicales del mundo.» (Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO))
+  - ahora: «La mandioca, tan presente en la mesa paraguaya, es la tercera fuente más importante de calorías en las regiones tropicales del mundo, después del arroz y el maíz.» (Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO))
+- **Semana 25 · Martes** — Fuente concreta.
+  - antes: «Antes de los espejos de vidrio, la gente se miraba en el agua quieta o en láminas de metal pulido.» (Historia del espejo)
+  - ahora: «Antes de los espejos de vidrio, la gente se miraba en el agua quieta, en piedra volcánica pulida o en láminas de metal pulido, como cobre o bronce.» (Encyclopaedia Britannica, «Mirror»)
+- **Semana 25 · Miércoles** — No aparece en las cartas: «solo», no «casi siempre».
+  - antes: «En el Nuevo Testamento, la palabra «discípulo» aparece más de 250 veces, casi siempre en los evangelios y en Hechos.» (Concordancias del Nuevo Testamento)
+  - ahora: «En el Nuevo Testamento, la palabra «discípulo» aparece más de 250 veces, y solo en los evangelios y en Hechos.» (Mounce, Greek Dictionary (Strong G3101, mathetés))
+- **Semana 25 · Jueves** — Lo que falta es el versículo 31, no parte del 32.
+  - antes: «La frase «la verdad los hará libres» está grabada en el vestíbulo de la sede de la CIA, en Estados Unidos, sin la primera parte del versículo.» (Agencia Central de Inteligencia (CIA), historia del edificio)
+  - ahora: «En el vestíbulo de la sede de la CIA, en Estados Unidos, está grabado «conocerán la verdad, y la verdad los hará libres», pero sin la condición del versículo anterior: «si permanecen en mi palabra».» (Agencia Central de Inteligencia (CIA), «Bible Quote Carving»)
+- **Semana 25 · Viernes** — Precisión de la cita.
+  - antes: «Filipos fue la primera ciudad de Europa donde Pablo fundó una iglesia, en la casa de una mujer llamada Lidia.» (Hechos 16:11-15)
+  - ahora: «Filipos es considerada la primera ciudad de Europa donde Pablo fundó una iglesia: allí creyó Lidia, y los creyentes se reunían en su casa.» (Hechos 16:11-15, 40)
+- **Semana 26 · Viernes** — Lo medido fue cuántos corrigieron su trabajo.
+  - antes: «En un experimento, los comentarios críticos acompañados de la frase «te digo esto porque tengo altas expectativas y sé que podés alcanzarlas» fueron mucho mejor recibidos.» (Yeager y otros, Journal of Experimental Psychology: General, 2014)
+  - ahora: «En un experimento con estudiantes, cuando las correcciones venían con la nota «te hago estos comentarios porque tengo altas expectativas y sé que podés alcanzarlas», muchos más decidieron corregir y mejorar su trabajo.» (Yeager y otros, Journal of Experimental Psychology: General, 2014)
+
+### Confirmados
+
+- Semana 22 · Lunes: «Según el Foro Económico Mundial, cerca del 39 % de las habilidades clave de los trabajadores cambiarán hacia 2030.» (Foro Económico Mundial, Informe sobre el futuro del empleo, 2025)
+- Semana 22 · Martes: «El Servicio Nacional de Promoción Profesional (SNPP) ofrece cursos gratuitos de formación en oficios en todo el país.» (Servicio Nacional de Promoción Profesional, Ministerio de Trabajo, Empleo y Seguridad Social)
+- Semana 22 · Miércoles: «Practicar con un objetivo concreto y con la devolución de alguien que sabe mejora mucho más que solo repetir; los investigadores lo llamaron «práctica deliberada».» (Ericsson, Krampe y Tesch-Römer, Psychological Review, 1993)
+- Semana 22 · Jueves: «La palabra griega que Pablo usa aquí significa literalmente «servicio para el ojo»: trabajar solo cuando nos ven.» (Léxico griego de Strong (G3787, ofthalmodoulía))
+- Semana 22 · Viernes: «Daniel sirvió en la corte de Babilonia y después en la de Persia durante más de sesenta años, bajo varios reyes.» (Daniel 1:21; 6:28)
+- Semana 23 · Miércoles: «En Estados Unidos, alrededor de uno de cada cinco negocios nuevos cierra durante su primer año.» (Oficina de Estadísticas Laborales de EE. UU. (BLS))
+- Semana 23 · Jueves: «En Estados Unidos, las estafas de inversión fueron en 2024 la categoría con más pérdidas reportadas: unos 5.700 millones de dólares.» (Comisión Federal de Comercio de EE. UU. (FTC), 2025)
+- Semana 23 · Viernes: «Un talento, en tiempos de Jesús, equivalía a unos 6.000 denarios, el salario de muchos años de trabajo de un jornalero.» (Mateo 20:2; diccionarios bíblicos)
+- Semana 24 · Lunes: «La Organización Mundial de la Salud recomienda comer al menos 400 gramos de frutas y verduras por día, unas cinco porciones.» (Organización Mundial de la Salud, nota descriptiva sobre alimentación sana)
+- Semana 24 · Martes: «La Organización Mundial de la Salud recomienda que los azúcares libres sean menos del 10 % de la energía diaria, e idealmente menos del 5 %.» (Organización Mundial de la Salud, Directriz sobre la ingesta de azúcares, 2015)
+- Semana 24 · Miércoles: «En un estudio con más de 9.000 adultos de Estados Unidos, quienes cocinaban en casa con más frecuencia comían de forma más sana.» (Wolfson y Bleich, Public Health Nutrition, 2015)
+- Semana 24 · Sábado: «Según el relato, Dios dio a Daniel y a sus amigos conocimiento y sabiduría: el texto atribuye el resultado a Dios, no solo a lo que comían.» (Daniel 1:9, 17)
+- Semana 25 · Lunes: «En 2 Timoteo 2:2 aparecen cuatro generaciones de creyentes: Pablo, Timoteo, las personas fieles y los otros a quienes ellas van a enseñar.» (2 Timoteo 2:2)
+- Semana 25 · Sábado: «Daniel 12 es uno de los pasajes del Antiguo Testamento que hablan claramente de la resurrección.» (Daniel 12:2)
+- Semana 26 · Lunes: «Un análisis de 128 experimentos encontró que los premios materiales, usados para controlar, pueden bajar el interés propio por una tarea.» (Deci, Koestner y Ryan, Psychological Bulletin, 1999)
+- Semana 26 · Martes: «Cuando Google estudió sus mejores equipos, encontró que lo que más los distinguía era la «seguridad psicológica»: poder opinar sin miedo.» (Google, Proyecto Aristóteles, 2015)
+- Semana 26 · Miércoles: «La confianza se pierde rápido y se recupera lento: un hecho negativo suele pesar más que varios positivos a la hora de confiar.» (Paul Slovic, «Perceived risk, trust, and democracy», Risk Analysis, 1993)
+- Semana 26 · Jueves: «En este capítulo Pablo usa dos palabras griegas distintas: una para la carga pesada que agobia (6:2) y otra para la carga propia de cada día (6:5).» (Gálatas 6:2-5; léxico griego de Strong (G922 y G5413))
+- Semana 26 · Sábado: «Inmediatamente después, Pablo pone como ejemplo a Jesús, que se humilló hasta la muerte en la cruz.» (Filipenses 2:5-8)
