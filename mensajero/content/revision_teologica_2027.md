@@ -272,3 +272,41 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 - Semana 17 · Jueves: «Dios cine de fuerza al que confía en El» → «Dios ciñe de fuerza al que confía en Él». Error de tipeo.
 
 Cambio de versículo urgente: el texto de Proverbios 21:5 (6 de abril) es en realidad 21:15. Está en `content/versiculos_sugeridos.md`.
+
+# Mayo 2027 (semanas 18 a 21)
+
+Script del borrador: `tools/guiones_mayo_2027.py`. Revisión: `tools/revision_teologica_may_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- Marcos 10:45: el rescate es obra única de Jesús; nuestro servicio responde, no salva.
+- 1 Pedro 5:8: quien critica no es el enemigo.
+- Filipenses 4:13: se lee en su contexto (contentamiento, escrito desde la cárcel).
+- Romanos 8:28-29: Dios obra en todo para formarnos como Jesús; no dice que todo sea bueno.
+- Proverbios 22:6: principio, no garantía; consuelo para padres de hijos alejados.
+- Proverbios 29:17: nunca castigo físico ni humillación.
+- 2 Tesalonicenses 3:10 y Proverbios 10:4: no se culpa al que no puede trabajar ni a todos los pobres.
+- Proverbios 11:24-25: la generosidad no es un negocio.
+
+En la lectura posterior se corrigió esto:
+
+- **Semana 20 · Miércoles** (Desarrollo 3). El desarrollo se había apartado del punto del versículo (la alegría de corregir con amor).
+  - antes: «Los hijos también tienen su parte: honrar y aportar según su edad. Darles responsabilidades los hace parte activa de la familia.»
+  - ahora: «Corregir con amor trae alegría a la casa. Y los hijos también tienen su parte: honrar y aportar según su edad; darles responsabilidades los hace parte activa de la familia.»
+- **Semana 20 · Viernes** (Desarrollo 2). El desarrollo se había apartado del punto del versículo (la alegría por el testimonio de los hijos).
+  - antes: «La disciplina tiene una meta: formar el carácter, no castigar. Disciplinar es corregir con propósito.»
+  - ahora: «La alegría de ver a los hijos firmes en la fe también pasa por la disciplina: formar el carácter, no castigar. Disciplinar es corregir con propósito.»
+- **Semana 21 · Jueves** (Desarrollo 3). Se une el punto del versículo (fidelidad en la base) con la aplicación.
+  - antes: «Lo primario va primero: las necesidades, las deudas y lo que vamos a dar. Lo secundario, después.»
+  - ahora: «Ser fiel en la base es poner primero lo primario: las necesidades, las deudas y lo que vamos a dar. Lo secundario, después.»
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 19 · Jueves: «Todo es posible con ese respaldo» → «Contento en la abundancia y en la escasez». Filipenses 4:13 habla de la fuerza de Cristo para vivir contento en toda situación (4:11-12), no de lograr cualquier meta.
+- Semana 19 · Jueves: «No hay desafío que anule esa fuerza» → «Su fuerza sostiene también en la derrota». Mismo motivo: no presentar el versículo como garantía de éxito.
+- Semana 19 · Sábado: «Todo ayuda a bien para quien ama a Dios» → «Dios obra en todo para el bien de los que lo aman». Romanos 8:28 no dice que todo sea bueno; se acerca a la redacción del texto.
+- Semana 20 · Lunes: «No se aparta cuando envejece» → «La formación deja huella para toda la vida». Proverbios 22:6 es un principio, no una garantía; no culpar a los padres cuyos hijos se alejaron.
+- Semana 21 · Lunes: «El trabajo es condición para el sustento» → «Quien puede trabajar, que trabaje». 2 Tesalonicenses 3:10 es para el que no quiere trabajar, no para el que no puede.
+- Semana 21 · Martes: «La diligencia enriquece» → «La diligencia abre caminos». Proverbios 10:4 es un principio; no toda pobreza es pereza.
+- Semana 21 · Sábado: «El alma generosa prospera» → «La generosidad enriquece la vida». Evitar la lectura de «dar para recibir más plata».
+
+Cambios de versículo sugeridos (opcionales): Mateo 6:3-4 para el 6 de mayo y Hageo 1:6 para el 28 de mayo, en `content/versiculos_sugeridos.md`.
