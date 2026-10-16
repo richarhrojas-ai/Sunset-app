@@ -234,6 +234,15 @@ details.fold[open]>summary::after{content:"–"}
 .mi-prog .dias-chips[role=group]{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
 .mi-prog .dias-chips[role=group] button{min-width:0;padding:0}
 .mi-prog .form p{font-size:14px;color:var(--ink2)}
+.progs{display:flex;gap:6px;flex-wrap:wrap}
+.progs button{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--ink2);background:rgba(0,0,0,.2);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.progs button[aria-selected="true"]{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.08)}
+.progs button.mas{border-style:dashed;color:var(--ink3)}
+.prog-pie{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink3)}
+.prog-pie button.link{color:var(--gold);text-decoration:underline;text-underline-offset:3px;font-size:13px}
+.chk.mini-chk.reem[aria-pressed="true"]{background:#e0b3ff;border-color:#e0b3ff;color:#2a0f3a}
+.reem-sel{min-height:36px;border-radius:999px;border:1px solid #e0b3ff;background:rgba(0,0,0,.25);color:var(--ink);font:inherit;font-size:13px;padding:0 12px;max-width:100%}
+.tambien{flex-basis:100%;font-size:12.5px;color:var(--ink3)}
 .dias-chips{display:flex;gap:4px;flex-wrap:wrap}
 .dias-chips button{min-width:44px;min-height:40px;border-radius:999px;border:1px solid var(--line);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);background:rgba(0,0,0,.2)}
 .dias-chips button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#2a1a08;font-weight:500}
@@ -427,12 +436,12 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 
 
   <div id="semana" hidden>
-  <h2 class="sec" id="s-dias">Mi semana <span class="cuenta" id="c-v"></span></h2>
+  <h2 class="sec" id="s-dias">Mi semana <span class="muted" id="sem-prog" style="font-size:.7em"></span> <span class="cuenta" id="c-v"></span></h2>
   <p class="muted" style="font-size:14px;margin:-4px 0 14px" id="dias-ayuda"></p>
   <div class="card guion-wrap" id="dias"></div>
   </div>
 
-  <details class="fold" id="s-prep"><summary>Mi preparación <span id="prep-pct" class="muted" style="letter-spacing:.1em"></span></summary>
+  <details class="fold" id="s-prep"><summary>Mi preparación <span class="muted" id="prep-prog" style="font-size:.85em"></span> <span id="prep-pct" class="muted" style="letter-spacing:.1em"></span></summary>
     <div class="fold-body">
       <div><h4>Mi programa</h4><div class="programa" id="programa"></div></div>
       <div class="barra"><i id="prep-bar"></i></div><div class="prep" id="prep"></div>
@@ -537,7 +546,7 @@ const PRIORIDAD = ['guion','tema','reflexion','versiculo','versSem','devocional'
   'paraguay','agenda','cortinas','clima','llamada','respaldo','promo','grabacion'];
 const TAG_TXT = {diario: 'solo diarios', semanal: 'solo semanales', entrevista: 'con entrevistas (sumalas si las usás)', '2h': 'de 2 h o más', '3h': 'de 3 h'};
 const cfgPrograma = () => {
-  const c = {nombre: '', horas: 1, ...(get('cfg/programa') || {})};
+  const c = {nombre: '', horas: 1, ...(get(ck('programa')) || {})};
   if (!Array.isArray(c.dias)) c.dias = c.frec === 'semanal' ? [6] : c.frec === 'diario' ? [1, 2, 3, 4, 5] : [];   // [] = todavía no eligió
   c.dias = [...new Set(c.dias)].sort();
   c.frec = c.dias.length === 1 ? 'semanal' : 'diario';   // un solo día al aire = programa semanal
@@ -550,7 +559,7 @@ const aplica = (it, c) => !it.tag || (it.tag === 'diario' ? c.frec === 'diario' 
   : it.tag === 'entrevista' ? true : it.tag === '2h' ? c.horas >= 2 : c.horas >= 3);
 // las tareas de entrevista no se sugieren solas: cada locutor las suma desde la biblioteca si las necesita
 const sugerir = c => PRIORIDAD.filter(id => { const it = ITEMS.find(i => i.id === id); return it.tag !== 'entrevista' && aplica(it, c); }).slice(0, MAX_PREP);
-const misItems = () => (get('cfg/prep') || sugerir(cfgPrograma())).map(id => ITEMS.find(i => i.id === id)).filter(Boolean);
+const misItems = () => (get(ck('prep')) || sugerir(cfgPrograma())).map(id => ITEMS.find(i => i.id === id)).filter(Boolean);
 
 /* ── Escenas por tema (paisaje, sin íconos) ── */
 function escena(tema, p) {
@@ -635,7 +644,18 @@ let entries = {};
 try { entries = JSON.parse(localStorage.getItem(LS)) || {}; } catch {}
 const get = k => entries[k]?.v;
 const set = (k, v) => { entries[k] = {v, t: Date.now()}; try { localStorage.setItem(LS, JSON.stringify(entries)); } catch {} };
-const key = (w, k) => `${DATA.anio}/w${w.n}/${k}`;
+/* hasta 3 programas por locutor: p1 usa las claves de siempre; p2 y p3 llevan su prefijo.
+   Las tareas de «Contenido» y los reemplazos son del locutor, no de un programa: se guardan sin prefijo. */
+const MAX_PROG = 3;
+const progs = () => get('cfg/programas') || ['p1'];
+let prog = progs().includes(get('cfg/activo')) ? get('cfg/activo') : 'p1';
+const pref = id => id === 'p1' ? '' : id + '/';
+const ck = k => 'cfg/' + pref(prog) + k;
+const keyBase = (w, k) => `${DATA.anio}/w${w.n}/${k}`;
+const key = (w, k) => keyBase(w, pref(prog) + k);
+const kPrep = (w, it) => it.g === 'Contenido' ? keyBase(w, 'prep/' + it.id) : key(w, 'prep/' + it.id);
+const conProg = (id, fn) => { const antes = prog; prog = id; try { return fn(); } finally { prog = antes; } };
+const nombreProg = id => conProg(id, () => cfgPrograma().nombre) || `Programa ${progs().indexOf(id) + 1}`;
 
 const notaBox = (w, k, ph) => { const v = get(key(w, k)) || '';
   return `<details class="mi-nota${v ? ' tiene' : ''}"${v ? ' open' : ''}><summary>${v ? 'Mi nota' : 'Agregar nota'}</summary>
@@ -661,7 +681,7 @@ function aplicarPaleta(p) {
 
 // cada semana guarda la lista de tareas que regía al marcarla (prepLista); así cambiar la lista no altera semanas pasadas
 const listaDe = w => (get(key(w, 'prepLista')) || misItems().map(it => it.id)).map(id => ITEMS.find(i => i.id === id)).filter(Boolean);
-const prepHechas = w => listaDe(w).filter(it => get(key(w, 'prep/'+it.id)));
+const prepHechas = w => listaDe(w).filter(it => get(kPrep(w, it)));
 function prepPct(w) {
   const mis = listaDe(w);
   return mis.length ? Math.round(prepHechas(w).length / mis.length * 100) : 0;
@@ -713,7 +733,7 @@ function render() {
 
   // preparación
   pintarPrograma();
-  $('prep').innerHTML = misItems().map(it => `<button data-p="${it.id}" aria-pressed="${!!get(key(w, 'prep/'+it.id))}"><i></i>${esc(it.t)}</button>`).join('');
+  $('prep').innerHTML = misItems().map(it => `<button data-p="${it.id}" aria-pressed="${!!get(kPrep(w, it))}"><i></i>${esc(it.t)}</button>`).join('');
   pintarPrep();
   $('notas').value = get(key(w, 'notas')) || '';
 
@@ -751,13 +771,37 @@ function registro() {
 }
 // días al aire vigentes en una fecha: cada cambio queda en cfg/historial {desde, dias}
 function diasEn(f) {
-  const h = (get('cfg/historial') || []).filter(x => x.desde <= +f).sort((a, b) => b.desde - a.desde);
+  const h = (get(ck('historial')) || []).filter(x => x.desde <= +f).sort((a, b) => b.desde - a.desde);
   return h.length ? h[0].dias : cfgPrograma().dias;
 }
 function diasDelMes(m) {   // cuántos días de mi programa caen en el mes, con los días que regían cada fecha
   const fin = new Date(DATA.anio, m+1, 0).getDate(); let n = 0;
   for (let d = 1; d <= fin; d++) { const f = new Date(DATA.anio, m, d); if (diasEn(f).includes(f.getDay())) n++; }
   return n;
+}
+// reemplazos: del locutor, no de un programa (clave sin prefijo, valor = programa reemplazado)
+const reemplazos = filtro => { const r = []; for (const s of sem) for (let i = 0; i < 7; i++) { const v = get(keyBase(s, 'reem'+i)), f = fechaDia(s, i);
+  if (typeof v === 'string' && filtro(s, f)) r.push({f, w: s, i, prog: v}); } return r; };
+const enMesDe = m => (s, f) => f.getMonth() === m && f.getFullYear() === DATA.anio;
+function filaReem(w, m) {
+  const n = [reemplazos(s => s === w).length, reemplazos(enMesDe(m)).length, reemplazos(() => true).length];
+  return n[2] ? `<tr><th scope="row">Reemplazos</th><td>${n[0]}</td><td>${n[1]}</td><td>${n[2]}</td></tr>` : '';
+}
+// resumen del mes de cada programa (para varios programas)
+function cuentasMes(m) {
+  const enMes = enMesDe(m);
+  return progs().map(id => conProg(id, () => { let aire = 0, ent = 0;
+    for (const s of sem) for (let i = 0; i < 7; i++) { const f = fechaDia(s, i); if (!enMes(s, f)) continue;
+      if (get(key(s, 'aire'+i))) aire++; if (get(key(s, 'ent'+i))) ent++; }
+    const c = cfgPrograma(), total = diasDelMes(m);
+    return {id, nombre: nombreProg(id), dias: c.dias, aire, ent, total, pct: total ? Math.min(100, Math.round(aire / total * 100)) : 0}; }));
+}
+function todosProgs(m) {
+  if (progs().length < 2) return '';
+  const cs = cuentasMes(m), t = cs.reduce((a, c) => ({aire: a.aire + c.aire, ent: a.ent + c.ent, total: a.total + c.total}), {aire: 0, ent: 0, total: 0});
+  return `<div style="margin-top:14px"><h4>Todos tus programas · ${MESES[m]}</h4><ul class="inf-tareas" style="margin-top:8px">${cs.map(c =>
+    `<li><span>${esc(c.nombre)} <span class="muted">· ${c.ent} entrevista${c.ent === 1 ? '' : 's'}</span></span><b>${c.aire}/${c.total}</b><span class="barra"><i style="width:${c.pct}%"></i></span></li>`).join('')}
+    <li><b style="text-align:left">Total del mes</b><b>${t.aire}/${t.total}</b></li></ul></div>`;
 }
 function renderRegistro(m) {
   $('mes').value = m;
@@ -767,40 +811,50 @@ function renderRegistro(m) {
   const enSem = s => s === w, enMes = (s, f) => f.getMonth() === m && f.getFullYear() === DATA.anio, todo = () => true;
   const fila = (t, k) => `<tr><th scope="row">${t}</th><td>${cuenta(k, enSem)}</td><td>${cuenta(k, enMes)}</td><td>${cuenta(k, todo)}</td></tr>`;
   $('tiles').innerHTML = `<table class="tabla-reg"><thead><tr><th></th><th>Semana ${w.n}</th><th>${MESES[m]}</th><th>${DATA.anio}</th></tr></thead>
-    <tbody>${fila('Días al aire', 'aire')}${fila('Entrevistas', 'ent')}</tbody></table>
-    <p class="muted" style="font-size:13px;margin-top:8px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)}: ${v.length} de ${total} días de tu programa al aire (${total ? Math.min(100, Math.round(v.length / total * 100)) : 0}%).</p>`;
+    <tbody>${fila('Días al aire', 'aire')}${fila('Entrevistas', 'ent')}${filaReem(w, m)}</tbody></table>${todosProgs(m)}
+    <p class="muted" style="font-size:13px;margin-top:8px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)}: ${v.length} de ${total} días ${progs().length > 1 ? 'de «' + esc(nombreProg(prog)) + '»' : 'de tu programa'} al aire (${total ? Math.min(100, Math.round(v.length / total * 100)) : 0}%).</p>`;
   $('reg-v').innerHTML = v.map(x => `<li><time>${fcorta(x.f)}</time><button data-i="${x.w.n-1}">${esc(x.txt)} <span class="muted">· semana ${x.w.n}</span></button></li>`).join('')
     || `<li class="muted" style="display:block">Ningún día marcado al aire en ${MESES[m]}.</li>`;
+  const rs = reemplazos(enMesDe(m)).sort((a, b) => a.f - b.f);
+  if (rs.length) $('reg-v').innerHTML += rs.map(x => `<li><time>${fcorta(x.f)}</time><button data-i="${x.w.n-1}">Reemplazo${x.prog ? ': ' + esc(x.prog) : ''} <span class="muted">· ${DIAS[x.i].toLowerCase()}</span></button></li>`).join('');
   $('reg-anio').textContent = 'Cada día al aire es un versículo compartido y su reflexión.';
 }
 
 function informeMes(m) {
-  const c = cfgPrograma(), enMes = f => f.getMonth() === m && f.getFullYear() === DATA.anio;
-  const dias = [], ent = []; let notas = 0;
-  for (const w of sem) for (let i = 0; i < 7; i++) { const f = fechaDia(w, i); if (!enMes(f)) continue;
-    if (get(key(w, 'aire'+i))) dias.push(`- ${fcorta(f)} · ${DIAS[i]} · ${w.dias[i].ref} · ${TEMA_TXT[w.tema] || w.tema}: ${w.enfoque}`);
-    if (get(key(w, 'ent'+i))) ent.push(fcorta(f));
-    if ((get(key(w, 'vn'+i)) || '').trim()) notas++; }
-  const total = diasDelMes(m), mes = MESES[m][0].toUpperCase() + MESES[m].slice(1);
-  return [`INFORME ${mes.toUpperCase()} ${DATA.anio} · Edificando una Cultura`, c.nombre ? `Programa: ${c.nombre}` : '', '',
-    `Días al aire: ${dias.length} de ${total} (${total ? Math.round(dias.length / total * 100) : 0}%)`,
-    `Entrevistas: ${ent.length}${ent.length ? ' (' + ent.join(', ') + ')' : ''}`, `Días con notas: ${notas}`,
-    (d => d.ws.length ? `Preparación promedio: ${d.prom} % · semanas al 100 %: ${d.completas} de ${d.ws.length}` : '')(datosPrep(m)), '',
+  const enMes = f => f.getMonth() === m && f.getFullYear() === DATA.anio, varios = progs().length > 1;
+  const porFecha = new Map(); let notas = 0;
+  const cs = cuentasMes(m);
+  for (const id of progs()) conProg(id, () => { for (const w of sem) for (let i = 0; i < 7; i++) { const f = fechaDia(w, i); if (!enMes(f)) continue;
+    if (get(key(w, 'aire'+i))) { const k = +f; if (!porFecha.has(k)) porFecha.set(k, {f, w, i, progs: []}); porFecha.get(k).progs.push(nombreProg(id)); }
+    if ((get(key(w, 'vn'+i)) || '').trim()) notas++; } });
+  const dias = [...porFecha.values()].sort((a, b) => a.f - b.f).map(x => `- ${fcorta(x.f)} · ${DIAS[x.i]} · ${x.w.dias[x.i].ref} · ${TEMA_TXT[x.w.tema] || x.w.tema}: ${x.w.enfoque}${varios ? ` (${x.progs.join(', ')})` : ''}`);
+  const ents = []; for (const id of progs()) conProg(id, () => { for (const w of sem) for (let i = 0; i < 7; i++) { const f = fechaDia(w, i); if (enMes(f) && get(key(w, 'ent'+i))) ents.push(fcorta(f) + (varios ? ' · ' + nombreProg(id) : '')); } });
+  const rs = reemplazos(enMesDe(m)).sort((a, b) => a.f - b.f).map(x => fcorta(x.f) + (x.prog ? ' · ' + x.prog : ''));
+  const prepTxt = cs.map(c => conProg(c.id, () => { const d = datosPrep(m); return d.ws.length ? `${varios ? c.nombre + ': ' : ''}${d.prom} % (al 100 %: ${d.completas} de ${d.ws.length})` : ''; })).filter(Boolean);
+  const mes = MESES[m][0].toUpperCase() + MESES[m].slice(1), c1 = cs[0];
+  return [`INFORME ${mes.toUpperCase()} ${DATA.anio} · Edificando una Cultura`,
+    varios ? `Programas: ${cs.map(c => `${c.nombre} (${resumenDias(c.dias)})`).join(' · ')}` : (c1.nombre && cfgPrograma().nombre ? `Programa: ${c1.nombre}` : ''), '',
+    ...(varios ? [...cs.map(c => `${c.nombre}: ${c.aire} de ${c.total} días al aire (${c.pct}%) · ${c.ent} entrevista${c.ent === 1 ? '' : 's'}`),
+        `Total: ${cs.reduce((a, c) => a + c.aire, 0)} programas al aire · ${ents.length} entrevista${ents.length === 1 ? '' : 's'}`]
+      : [`Días al aire: ${c1.aire} de ${c1.total} (${c1.pct}%)`, `Entrevistas: ${ents.length}${ents.length ? ' (' + ents.join(', ') + ')' : ''}`]),
+    rs.length ? `Reemplazos: ${rs.length} (${rs.join('; ')})` : '',
+    `Días con notas: ${notas}`,
+    prepTxt.length ? `Preparación promedio: ${prepTxt.join(' · ')}` : '', '',
     'VERSÍCULOS Y TEMAS COMPARTIDOS', ...(dias.length ? dias : ['- Ninguno marcado.'])].filter((x, k) => x !== '' || k > 1).join('\n');
 }
 
 /* informe de preparación: semanas del mes (cada semana cuenta en el mes de su miércoles) */
 const mesDe = w => fechaDia(w, 3).getMonth();
-const hayDatos = w => listaDe(w).some(it => get(key(w, 'prep/'+it.id))) || [0,1,2,3,4,5,6].some(i => get(key(w, 'aire'+i)));
+const hayDatos = w => listaDe(w).some(it => get(kPrep(w, it))) || [0,1,2,3,4,5,6].some(i => get(key(w, 'aire'+i)));
 const semanasDelMes = m => sem.filter((w, j) => mesDe(w) === m && (j <= semanaHoy() || hayDatos(w)));
 const NIVEL = p => p >= 90 ? ['Excelente', 4] : p >= 70 ? ['Buena', 3] : p >= 40 ? ['Regular', 2] : ['Baja', 1];
 const prom = a => a.length ? Math.round(a.reduce((x, y) => x + y, 0) / a.length) : 0;
 function datosPrep(m) {
   const ws = semanasDelMes(m), pcts = ws.map(prepPct), mis = cfgPrograma().dias;
   const tareas = {};
-  for (const w of ws) for (const it of listaDe(w)) { const t = tareas[it.id] ||= {it, n: 0, de: 0}; t.de++; if (get(key(w, 'prep/'+it.id))) t.n++; }
+  for (const w of ws) for (const it of listaDe(w)) { const t = tareas[it.id] ||= {it, n: 0, de: 0}; t.de++; if (get(kPrep(w, it))) t.n++; }
   const filas = ws.map((w, k) => { const aire = mis.filter(i => get(key(w, 'aire'+i))).length;
-    return {w, pct: pcts[k], aire, de: mis.length, falta: listaDe(w).filter(it => !get(key(w, 'prep/'+it.id))).map(it => it.t)}; });
+    return {w, pct: pcts[k], aire, de: mis.length, falta: listaDe(w).filter(it => !get(kPrep(w, it))).map(it => it.t)}; });
   let racha = 0, mejor = 0;   // semanas seguidas con 80 % o más, en todo el año hasta hoy
   const hasta = Math.max(semanaHoy(), ...sem.map((w, j) => hayDatos(w) ? j : 0));
   for (const w of sem.slice(0, hasta + 1)) { racha = prepPct(w) >= 80 ? racha + 1 : 0; mejor = Math.max(mejor, racha); }
@@ -827,21 +881,34 @@ function renderInforme(m) {
       <p class="muted" style="font-size:13px;margin-top:8px">Arriba, las que más se dejan sin hacer.</p></div>
     <div><h4>Promedio por mes · ${DATA.anio}</h4><div class="inf-anio" id="inf-anio">${anual}</div>
       <p class="muted" style="font-size:13px;margin-top:8px">Mejor racha del año: ${d.mejor === 1 ? '1 semana' : d.mejor + ' semanas seguidas'} con 80 % o más.</p></div>`;
+  if (progs().length > 1) { const ps = progs().map(id => conProg(id, () => ({id, d: datosPrep(m)})));
+    $('inf').insertAdjacentHTML('afterbegin', `<div><h4>Tus programas · ${mes}</h4><ul class="inf-tareas" style="margin-top:8px">${ps.map(x =>
+      `<li><span>${esc(nombreProg(x.id))}${x.id === prog ? ' <span class="muted">· abajo el detalle</span>' : ''}</span><b>${x.d.ws.length ? x.d.prom + '%' : '—'}</b><span class="barra"><i style="width:${x.d.prom}%"></i></span></li>`).join('')}</ul>
+      <p class="muted" style="font-size:13px;margin-top:8px">Las tareas de contenido se marcan una vez y valen para todos tus programas.</p></div>`); }
   $('inf-pct').textContent = d.ws.length ? d.prom + '%' : '';
 }
 function informePrep(m) {
+  if (progs().length < 2) return informePrep1(m);
+  const mes = MESES[m][0].toUpperCase() + MESES[m].slice(1);
+  const ps = progs().map(id => conProg(id, () => ({id, d: datosPrep(m)}))), con = ps.filter(x => x.d.ws.length);
+  const gen = prom(con.map(x => x.d.prom));
+  return [`INFORME DE PREPARACIÓN · ${mes.toUpperCase()} ${DATA.anio} · Edificando una Cultura`,
+    con.length ? `Promedio general: ${gen} % (${NIVEL(gen)[0].toLowerCase()}) · ${ps.length} programas` : '',
+    ...ps.map(x => '\n' + '— '.repeat(12).trim() + '\n' + conProg(x.id, () => informePrep1(m).split('\n').slice(1).join('\n')))].join('\n');
+}
+function informePrep1(m) {
   const d = datosPrep(m), c = cfgPrograma(), mes = MESES[m][0].toUpperCase() + MESES[m].slice(1);
   if (!d.ws.length) return `INFORME DE PREPARACIÓN · ${mes} ${DATA.anio}\nTodavía no hay semanas para medir.`;
   const pend = d.tareas.filter(t => t.n < t.de).slice(0, 5);
   return [`INFORME DE PREPARACIÓN · ${mes.toUpperCase()} ${DATA.anio} · Edificando una Cultura`,
-    c.nombre ? `Programa: ${c.nombre}` : '', `Días al aire: ${c.dias.map(i => DIAS[i]).join(', ') || 'sin elegir'} · ${c.horas} h`, '',
+    c.nombre || progs().length > 1 ? `Programa: ${nombreProg(prog)}` : '', `Días al aire: ${c.dias.map(i => DIAS[i]).join(', ') || 'sin elegir'} · ${c.horas} h`, '',
     `Preparación promedio: ${d.prom} % (${NIVEL(d.prom)[0].toLowerCase()})`,
     `Semanas al 100 %: ${d.completas} de ${d.ws.length} · sin preparar: ${d.sin}`,
     `Racha actual (80 % o más): ${d.racha} semana${d.racha === 1 ? '' : 's'} · mejor del año: ${d.mejor}`, '',
     'SEMANA A SEMANA',
     ...d.filas.map(f => `- Semana ${f.w.n} · ${TEMA_TXT[f.w.tema] || f.w.tema}: ${f.pct} %${f.de ? ` · al aire ${f.aire}/${f.de}` : ''}${f.falta.length && f.falta.length < listaDe(f.w).length ? ` · faltó: ${f.falta.join(', ')}` : ''}`), '',
     'TAREAS QUE MÁS SE DEJAN SIN HACER',
-    ...(pend.length ? pend.map(t => `- ${t.it.t}: ${t.n} de ${t.de} semanas`) : ['- Ninguna: todas cumplidas.'])].filter((x, k) => x !== '' || k > 2).join('\n');
+    ...(pend.length ? pend.map(t => `- ${t.it.t}: ${t.n} de ${t.de} semana${t.de === 1 ? '' : 's'}`) : ['- Ninguna: todas cumplidas.'])].filter((x, k) => x !== '' || k > 2).join('\n');
 }
 
 function pintarCuentas() {
@@ -913,9 +980,13 @@ function bloqueVersiculo(w, i, conPuntos) {
 }
 // registro del día, siempre arriba de la tarjeta: al aire, entrevista y nota
 function barraDia(w, i) {
-  const aire = !!get(key(w, 'aire'+i)), ent = !!get(key(w, 'ent'+i));
+  const aire = !!get(key(w, 'aire'+i)), ent = !!get(key(w, 'ent'+i)), r = get(keyBase(w, 'reem'+i)), reem = typeof r === 'string';
+  const otros = progs().filter(id => id !== prog && conProg(id, () => cfgPrograma().dias.includes(i))).map(nombreProg);
   return `<div class="barra-dia"><div class="acc"><button class="chk mini-chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button>
-      <button class="chk mini-chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Con entrevista ✓' : 'Con entrevista'}</button></div>
+      <button class="chk mini-chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Con entrevista ✓' : 'Con entrevista'}</button>
+      <button class="chk mini-chk reem" data-reem="${i}" aria-pressed="${reem}">${reem ? 'Reemplazo ✓' : 'Reemplazo'}</button></div>
+    ${reem ? `<select class="reem-sel" data-reem-sel="${i}" aria-label="Programa que reemplazaste"><option value="">¿Qué programa reemplazaste?</option>${[...new Set([...PROGRAMAS, r].filter(Boolean))].map(x => `<option${x === r ? ' selected' : ''}>${esc(x)}</option>`).join('')}</select>` : ''}
+    ${otros.length ? `<span class="tambien">Este día también: ${otros.map(esc).join(', ')}. Marcá cada programa en su pestaña.</span>` : ''}
     ${notaBox(w, 'vn'+i, 'Lo que quieras anotar para este día: noticias, clima, avisos, invitados, pedidos de oración, ideas que surgen al aire…')}</div>`;
 }
 const introSemana = w => `<div><div class="kick">Esta semana</div><h3>${esc(w.enfoque)}</h3></div>
@@ -1040,21 +1111,38 @@ const resumenDias = d => { const k = d.join(','); return k === '1,2,3,4,5' ? 'lu
   : d.map(i => DIAS[i].toLowerCase()).join(', '); };
 function pintarPrograma() {
   const c = cfgPrograma();
-  $('s-prog').innerHTML = `<div class="form">
-    <div><h2>Mis días al aire</h2><p>${c.listo ? `Tu semana muestra: <b>${resumenDias(c.dias)}</b>.` : 'Marcá los días que salís al aire y abajo aparece tu semana.'}</p></div>
+  const ps = progs(), varios = ps.length > 1, nom = nombreProg(prog);
+  const selector = varios ? `<div class="progs" role="tablist" aria-label="Mis programas">${ps.map(id => `<button type="button" role="tab" data-prog="${id}" aria-selected="${id === prog}">${esc(nombreProg(id))}</button>`).join('')}${ps.length < MAX_PROG ? '<button type="button" class="mas" data-prog-nuevo>+ Programa</button>' : ''}</div>` : '';
+  const pie = varios ? `<div class="prog-pie"><button type="button" class="link" data-ir-prep>Nombre y duración de «${esc(nom)}»</button>${prog !== 'p1' ? '<button type="button" class="btn mini" data-prog-quitar>Quitar este programa</button>' : ''}</div>`
+    : c.listo ? `<div class="prog-pie"><span>¿Hacés más de un programa?</span><button type="button" class="btn mini" data-prog-nuevo>+ Agregar programa</button></div>` : '';
+  $('s-prog').innerHTML = `<div class="form">${selector}
+    <div><h2>${varios ? 'Días al aire · ' + esc(nom) : 'Mis días al aire'}</h2><p>${c.listo ? `Tu semana muestra: <b>${resumenDias(c.dias)}</b>.` : 'Marcá los días que salís al aire y abajo aparece tu semana.'}</p></div>
     <div class="dias-chips" role="group" aria-label="Días al aire">${DIAS.map((d, i) => `<button type="button" data-dia="${i}" aria-pressed="${c.dias.includes(i)}">${d.slice(0, 3)}</button>`).join('')}</div>
-    <div class="dias-chips"><button type="button" class="btn mini" data-preset="1,2,3,4,5">Lunes a viernes</button><button type="button" class="btn mini" data-preset="1,2,3,4,5,6">Lunes a sábado</button></div></div>`;
+    <div class="dias-chips"><button type="button" class="btn mini" data-preset="1,2,3,4,5">Lunes a viernes</button><button type="button" class="btn mini" data-preset="1,2,3,4,5,6">Lunes a sábado</button></div>${pie}</div>`;
+  $('sem-prog').textContent = $('prep-prog').textContent = varios ? '· ' + nom : '';
   $('programa').innerHTML = `<select id="pg-nombre" aria-label="Programa"><option value="">Elegí tu programa</option>${PROGRAMAS.map(p => `<option${p === c.nombre ? ' selected' : ''}>${esc(p)}</option>`).join('')}</select>
     <select id="pg-horas" aria-label="Duración">${[1,2,3].map(h => `<option value="${h}"${c.horas === h ? ' selected' : ''}>${h} hora${h > 1 ? 's' : ''}</option>`).join('')}</select>`;
   $('semana').hidden = !c.listo;
 }
+function cambiarProg(id) { prog = id; set('cfg/activo', id); diaSel = null; verTodo = false; render(); }
+function nuevoProg() {
+  const ps = progs(); if (ps.length >= MAX_PROG) return;
+  const id = ['p2', 'p3'].find(x => !ps.includes(x)); set('cfg/programas', [...ps, id]); cambiarProg(id);
+  $('s-prog').scrollIntoView({behavior: 'smooth'}); avisar('Marcá los días de tu nuevo programa');
+}
+function quitarProg() {
+  if (prog === 'p1' || !confirm(`¿Quitar «${nombreProg(prog)}» y todo lo marcado en él?`)) return;
+  const id = prog, marca = new RegExp(`^(cfg/${id}/|\\d+/w\\d+/${id}/)`);
+  for (const k of Object.keys(entries)) if (marca.test(k)) delete entries[k];
+  set('cfg/programas', progs().filter(x => x !== id)); cambiarProg('p1');
+}
 function guardarPrograma(dias) {
   const c = {nombre: $('pg-nombre').value, horas: +$('pg-horas').value, dias: dias || cfgPrograma().dias};
-  if (dias) { const hoy = new Date(); hoy.setHours(0,0,0,0); const h = (get('cfg/historial') || []).filter(x => x.desde < +hoy);
+  if (dias) { const hoy = new Date(); hoy.setHours(0,0,0,0); const h = (get(ck('historial')) || []).filter(x => x.desde < +hoy);
     if (!h.length) h.push({desde: 0, dias: [...dias].sort()}); else h.push({desde: +hoy, dias: [...dias].sort()});
-    set('cfg/historial', h); }
-  set('cfg/programa', c);
-  if (!get('cfg/prepManual')) set('cfg/prep', sugerir(cfgPrograma()));   // mientras no elija a mano, la lista sigue al programa
+    set(ck('historial'), h); }
+  set(ck('programa'), c);
+  if (!get(ck('prepManual'))) set(ck('prep'), sugerir(cfgPrograma()));   // mientras no elija a mano, la lista sigue al programa
   diaSel = null; render();
 }
 function abrirBiblio() {
@@ -1073,7 +1161,7 @@ function abrirBiblio() {
   $('biblio').onclick = e => {
     if (e.target === $('biblio') || e.target.closest('#bib-x')) return $('biblio').close();
     if (e.target.closest('#bib-sug')) { sel.clear(); sugerir(c).forEach(id => sel.add(id)); pintar(); }
-    if (e.target.closest('#bib-ok')) { set('cfg/prep', PRIORIDAD.filter(id => sel.has(id))); set('cfg/prepManual', true); $('biblio').close(); render(); }
+    if (e.target.closest('#bib-ok')) { set(ck('prep'), PRIORIDAD.filter(id => sel.has(id))); set(ck('prepManual'), true); $('biblio').close(); render(); }
   };
   $('biblio').showModal();
 }
@@ -1129,7 +1217,9 @@ addEventListener('scroll', () => { cancelAnimationFrame(espia); espia = requestA
 
 const hoyDe = w => { const ini = dateOf(w.inicio), f = fechaDia(w, 6); return hoyD >= ini && hoyD <= f ? hoyD.getDay() : -1; };
 const marcarChk = e => { const b = e.target.closest('.chk'); if (!b) return;
-  const w = sem[cur], k = b.dataset.k; set(key(w, k), !get(key(w, k)));
+  const w = sem[cur], k = b.dataset.k;
+  if (b.dataset.reem) { const kr = keyBase(w, 'reem'+b.dataset.reem); set(kr, typeof get(kr) === 'string' ? null : ''); }
+  else set(key(w, k), !get(key(w, k)));
   renderRegistro(+$('mes').value); pintarCuentas(); renderDias(w, hoyDe(w));
   const cel = $('anio').children[cur]?.querySelector('.p i'); if (cel) cel.style.width = airePct(w) + '%'; };
 $('dias').onclick = e => {
@@ -1159,7 +1249,13 @@ $('inf').onclick = e => { const m = e.target.closest('[data-mes]'); if (m) retur
 document.querySelectorAll('.reg-list').forEach(l => l.onclick = e => { const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } });
 $('copia-x').onclick = () => $('copia').close();
 $('programa').onchange = () => guardarPrograma();
+$('dias').onchange = e => { const s = e.target.closest('[data-reem-sel]'); if (!s) return;
+  set(keyBase(sem[cur], 'reem'+s.dataset.reemSel), s.value); renderRegistro(+$('mes').value); };
 $('s-prog').onclick = e => {
+  const g = e.target.closest('[data-prog]'); if (g) return g.dataset.prog !== prog && cambiarProg(g.dataset.prog);
+  if (e.target.closest('[data-prog-nuevo]')) return nuevoProg();
+  if (e.target.closest('[data-prog-quitar]')) return quitarProg();
+  if (e.target.closest('[data-ir-prep]')) { $('s-prep').open = true; return $('s-prep').scrollIntoView({behavior: 'smooth'}); }
   const d = e.target.closest('[data-dia]'), p = e.target.closest('[data-preset]'); if (!d && !p) return;
   let dias = cfgPrograma().dias;
   if (p) dias = p.dataset.preset.split(',').map(Number);
@@ -1169,7 +1265,7 @@ $('s-prog').onclick = e => {
 };
 $('abrir-biblio').onclick = abrirBiblio;
 $('prep').onclick = e => { const b = e.target.closest('button'); if (!b) return;
-  const k = key(sem[cur], 'prep/'+b.dataset.p), v = !get(k); set(k, v); set(key(sem[cur], 'prepLista'), misItems().map(it => it.id)); b.setAttribute('aria-pressed', v); pintarPrep();
+  const k = kPrep(sem[cur], ITEMS.find(i => i.id === b.dataset.p)), v = !get(k); set(k, v); set(key(sem[cur], 'prepLista'), misItems().map(it => it.id)); b.setAttribute('aria-pressed', v); pintarPrep();
 };
 $('notas').oninput = e => set(key(sem[cur], 'notas'), e.target.value);
 $('anio').onclick = e => { const b = e.target.closest('button'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } };

@@ -18,6 +18,8 @@ vocabulario de la radio.
 | Ficha / maestría | **Ficha de la semana** justo después de la portada: Apoyamos al programa y Valor de Mensajero |
 | — | **Mis días al aire** a la vista (Dom..Sáb, atajos lun-vie y lun-sáb). «Mi semana» queda oculta hasta marcar días y aparece según lo marcado. Programa y duración se eligen en «Mi preparación» |
 | Cierre / progreso | **Preparación de la semana**: biblioteca de 30 tareas, cada locutor elige hasta 10 según su programa (diario o semanal, 1/2/3 h, con o sin entrevistas) |
+| — | **Varios programas** (hasta 3 por locutor): pestañas con el nombre de cada programa en «Mis días al aire»; cada uno tiene sus días, duración, al aire, entrevistas, notas, lista de preparación y registro. Las tareas de **Contenido** se marcan una vez y valen para todos; las de producción, técnica y después del aire van por programa. Si otro programa sale el mismo día, la tarjeta lo avisa |
+| — | **Reemplazo**: botón por día (lila) con el programa que se cubrió; cuenta aparte en el registro y en los informes |
 | — | **Registro al aire**: días al aire y entrevistas por semana, mes y año, más la lista del mes e informe copiable |
 | — | **Informe de preparación**: promedio del mes con nivel (excelente ≥90 %, buena ≥70, regular ≥40, baja), semanas al 100 %, racha de semanas con 80 %+, semana a semana con lo que faltó, cumplimiento por tarea (las más omitidas arriba) y barras por mes del año. Se copia para enviarlo a coordinación |
 | Progreso del año (flores) | **Mapa de 52 semanas** por color, con barra de preparación |
@@ -43,6 +45,9 @@ Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden cor
 - `prepLista` lista de tareas que regía esa semana (así cambiar la lista no altera el % de semanas pasadas)
 - `cfg/programa` mi programa {nombre, dias (0=dom…6=sáb), horas} · `cfg/prep` mis tareas elegidas · `cfg/prepManual` si las eligió a mano
 - `notas` notas de producción
+- `reemN` reemplazo de ese día (valor = programa reemplazado; sin prefijo de programa)
+- Programas 2 y 3: las mismas claves con prefijo `p2/` o `p3/` (`AAAA/wN/p2/aire1`, `cfg/p2/programa`). Las tareas de Contenido (`prep/<id>`) quedan sin prefijo: son compartidas
+- `cfg/programas` lista de programas (`['p1','p2']`) · `cfg/activo` el que se está viendo
 
 Hoy se guardan en el dispositivo; con `sync.mjs` de Sunset quedan compartidas.
 
