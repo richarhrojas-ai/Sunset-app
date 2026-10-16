@@ -19,8 +19,8 @@ def txt(v):
 
 
 def puntos(v):
-    # admite «• texto», «- texto» y «1. Título: explicación»
-    return [re.sub(r'^(?:[•\-\s]+|\d+[.)]\s*)', '', l).strip() for l in txt(v).splitlines() if l.strip()]
+    # admite «• texto», «- texto», «* texto», «1. Título: explicación» y «1, texto»
+    return [re.sub(r'^\s*(?:[•*\-]+|\d+[.),])\s*', '', l).strip() for l in txt(v).splitlines() if l.strip()]
 
 
 def versiculo(v):
@@ -51,6 +51,33 @@ def rows(ws):
     return [dict(zip(head, r)) for r in it if any(r)]
 
 
+# Frases que suelen esconder un error teológico o una falacia (ver content/criterios_teologicos.md).
+# Es una alarma para leer con atención, no un juicio: cada caso lo decide la revisión humana.
+RIESGOS = [
+    (r'\bprosper', 'prosperidad: ¿se presenta como promesa de riqueza o salud? (3 Juan 1:2, Josué 1:8)'),
+    (r'\bgarantiz|\bseguro que\b|\bsiempre (te|vas|va a)\b|\bnunca (te|vas|va a)\b|\bjamás\b', 'promesa absoluta: ¿el texto lo promete o es un principio general (proverbio)?'),
+    (r'\bcastig[oa] de Dios\b|\bDios (te|los|nos) castiga|\bpor (su|tu) pecado\b|\bmaldici', 'retribución: ¿se insinúa que la enfermedad o la desgracia es castigo? (Juan 9:3)'),
+    (r'(ansiedad|depresi|tristeza|enferm|miedo)[^.]{0,60}(?<!no es )(falta de fe|poca fe)|(?<!no es )(falta de fe|poca fe)[^.]{0,60}(ansiedad|depresi|tristeza|enferm|miedo)', 'salud mental o enfermedad atribuidas a la falta de fe'),
+    (r'\bDios bendice (el|la|a los|al)\b|\bsi (obedecés|das|sembrás|diezmás)\b[^.]*\b(Dios|bendic)', 'gracia condicionada: ¿la bendición se presenta como pago por una conducta?'),
+    (r'\bsiempre\b[^.]{0,30}\bnunca\b|\bo\b[^.]{0,40}\bo\b[^.]{0,20}\bno hay (otra|término medio)', 'falso dilema o absoluto'),
+]
+
+
+def revisar_teologia(semanas):
+    out = []
+    for w in semanas:
+        for i, d in enumerate(w['dias']):
+            g = d.get('guion') or {}
+            textos = list(d.get('puntos', [])) + [g.get('titulo', ''), g.get('accion', '')] + list(g.get('ideas', []))
+            for q in g.get('puntos', []):
+                textos += [q.get('desarrollo', ''), q.get('problema', ''), q.get('solucion', '')]
+            for t in filter(None, textos):
+                for pat, motivo in RIESGOS:
+                    if re.search(pat, t, re.I):
+                        out.append(f'Semana {w["n"]} · {DIAS_TXT[i]}: {motivo} → «{t[:90]}{"…" if len(t) > 90 else ""}»')
+    return out
+
+
 def revisar(anio, semanas):
     """Revisión de la planilla: avisa lo que conviene corregir antes de publicar.
     Escribe content/revision_planilla.txt; no detiene la generación."""
@@ -72,11 +99,14 @@ def revisar(anio, semanas):
             if len(d['puntos']) != 3:
                 avisos.append(f'{dia}: tiene {len(d["puntos"])} puntos (se esperan 3).')
     repetidos = [(ref, l) for ref, l in usos.items() if len(l) > 1]
+    teologia = revisar_teologia(semanas)
     lineas = [f'Revisión de la planilla {anio}', '']
     lineas += ['VERSÍCULOS REPETIDOS'] + [f'- {ref}: ' + '; '.join(l) for ref, l in sorted(repetidos)] + ['']
-    lineas += ['OTROS AVISOS'] + [f'- {a}' for a in avisos]
+    lineas += ['OTROS AVISOS'] + [f'- {a}' for a in avisos] + ['']
+    lineas += ['PARA LA REVISIÓN TEOLÓGICA (frases que hay que mirar con content/criterios_teologicos.md; no siempre son error)']
+    lineas += [f'- {a}' for a in teologia]
     (ROOT / 'content' / 'revision_planilla.txt').write_text('\n'.join(lineas) + '\n', encoding='utf-8')
-    print(f'Revisión: {len(repetidos)} versículos repetidos · {len(avisos)} avisos → content/revision_planilla.txt')
+    print(f'Revisión: {len(repetidos)} versículos repetidos · {len(avisos)} avisos · {len(teologia)} frases para revisión teológica → content/revision_planilla.txt')
 
 
 def main(path):

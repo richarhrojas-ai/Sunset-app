@@ -37,6 +37,10 @@ datos dentro de `public/index.html` (prototipo). En la versión final pasa a
 Hojas que se leen: «Temas Macro AAAA», «Historia y Marcos», «Guia de Valores ADN», «Mensajero» (Seccion, Titulo, Texto, Para el aire) y «Guiones AAAA» (una fila por día. Lunes a viernes: título, dato y fuente, y para cada uno de los 3 puntos del versículo: desarrollo, problemática y solución. Sábado = resumen: título, dato, Desarrollo 1-3 = idea clave de cada subtema, Solucion 1 = acción para la semana).
 Cada versículo se separa en cita y texto (`Cita — texto`), así se pueden corregir aparte.
 
+## Revisión teológica (paso fijo de cada mes)
+
+Antes de cargar guiones nuevos: versículos firmes → borrador → **revisión teológica con `content/criterios_teologicos.md`**, cada corrección con su motivo en `tools/revision_teologica_<mes>_<año>.py` → alarma automática en `content/revision_planilla.txt` (sección «PARA LA REVISIÓN TEOLÓGICA») → datos verificados → aprobación de Richarh. El «Copiar prompt» de la app incluye los mismos criterios.
+
 ## Claves del usuario (`AAAA/wN/...`, valor `{v,t}`)
 
 - `aire0..aire6` día al aire (cuenta en el mes de su fecha)

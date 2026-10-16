@@ -1,0 +1,201 @@
+# Revisión teológica · enero y febrero 2027
+
+Criterios: `content/criterios_teologicos.md`. Script que aplica los cambios: `tools/revision_teologica_ene_feb_2027.py`.
+
+**39 campos de guion y 4 puntos de versículo corregidos** en las semanas 1 a 8. En el sábado, «Desarrollo 1-3» son las ideas del repaso y «En la práctica 1» es la acción.
+
+
+## Semana 1 · Lunes · Romanos 12:1
+
+**Motivo:** Romanos 12:1: «cuerpo» es todo el ser y la ofrenda responde a la misericordia de Dios (gracia, no mérito)
+- *Desarrollo 1* — antes: «Presentar el cuerpo es ponerlo al servicio de algo más grande que la imagen o el rendimiento: cuidarlo para amar, trabajar y servir mejor.»
+  - ahora: «Pablo pide presentar todo nuestro ser, cuerpo incluido, como respuesta a la misericordia de Dios: no para ganar su amor, sino porque ya lo recibimos. Cuidar el cuerpo es parte de esa ofrenda, para amar, trabajar y servir mejor.»
+
+## Semana 1 · Martes · 3 Juan 1:2
+
+**Motivo:** 3 Juan 1:2 es el saludo de Juan a Gayo, no una promesa de prosperidad
+- *Desarrollo 1* — antes: «A Dios no le es indiferente tu salud. Desear el bien de alguien incluye desear que su cuerpo esté bien.»
+  - ahora: «Juan le escribe a su amigo Gayo y le desea salud y que todo le vaya bien. Es un saludo de cariño, no una promesa de que al creyente nunca le faltarán salud ni dinero. Nos enseña que desear el bien del otro incluye su cuerpo.»
+
+## Semana 1 · Viernes · Genesis 2:2-3
+
+**Motivo:** Génesis 2:2: Dios no reposa por cansancio (Isaías 40:28); evitar el antropomorfismo
+- *Desarrollo 1* — antes: «Si Dios mismo descansó, descansar no es pereza. Es parte de una vida bien ordenada.»
+  - ahora: «Dios no se cansa (Isaías 40:28): su reposo fue terminar la obra y bendecirla, y nos dejó ese ritmo como regalo (Éxodo 20:11). Descansar no es pereza: es parte de una vida bien ordenada.»
+
+## Semana 2 · Lunes · Galatas 6:7
+
+**Motivo:** Gálatas 6:7 en su contexto: sembrar para la carne o para el Espíritu (6:8)
+- *Desarrollo 1* — antes: «Nadie espera cosechar maíz si sembró poroto. Lo que hacemos hoy con el tiempo, las palabras y el dinero es la semilla de mañana.»
+  - ahora: «Pablo habla de sembrar para la carne o para el Espíritu (Gálatas 6:8): nuestras decisiones tienen consecuencias. Lo que hacemos hoy con el tiempo, las palabras y el dinero es la semilla de mañana.»
+
+**Motivo:** Evitar la retribución automática: no toda dificultad es castigo (Juan 9:3)
+- *Desarrollo 2* — antes: «La ley de la siembra vale en el campo, en la familia, en la salud y en la fe. Los valores son la mejor semilla.»
+  - ahora: «La siembra y la cosecha valen en la familia, en la salud y en la fe. Pero no es una cuenta automática: no toda dificultad es castigo por algo que hicimos (Juan 9:3). Los valores son la mejor semilla.»
+
+**Motivo:** El punto se apoya en el texto («Dios no puede ser burlado»), no en técnicas agrícolas
+- *Desarrollo 3* — antes: «En el campo los atajos se pagan caro: lo que se hace mal para ganar tiempo vuelve como pérdida.»
+  - ahora: ««Dios no puede ser burlado»: podemos engañar a otros por un tiempo, pero no a Dios. Lo que se hace mal para ganar tiempo, sobre todo si daña al prójimo, vuelve como pérdida.»
+
+## Semana 2 · Martes · Marcos 4:26-27
+
+**Motivo:** Marcos 4:26-27 habla del reino de Dios, que crece por el poder de Dios
+- *Desarrollo 1* — antes: «La semilla crece aunque no la veamos. Hay procesos que no se pueden apurar: la confianza, el carácter, un emprendimiento.»
+  - ahora: «Jesús habla del reino de Dios: crece por el poder de Dios, aunque no lo veamos. De esa paciencia aprendemos también en otros procesos que no se pueden apurar: la confianza, el carácter, un proyecto.»
+
+**Motivo:** En la parábola el crecimiento lo da Dios; evitar el activismo que el texto no dice
+- *Desarrollo 3* — antes: «Confiar no es quedarse quieto: el agricultor confía y mientras tanto prepara, limpia y repara.»
+  - ahora: «En la parábola el sembrador duerme y la semilla igual crece: el crecimiento lo da Dios. Eso no nos vuelve pasivos (él siembra y cosecha), pero nos libra de la ansiedad de controlarlo todo.»
+
+## Semana 2 · Miércoles · Salmo 65:9-10
+
+**Motivo:** «Dios bendice el trabajo, no la improvisación» condicionaba la gracia; se corrige
+- *Desarrollo 3* — antes: «Dios bendice el trabajo, no la improvisación. El esfuerzo ordenado rinde más.»
+  - ahora: «Dios da el crecimiento y nos llama a trabajar con orden y responsabilidad. El esfuerzo ordenado es buena mayordomía de lo que Él provee.»
+
+## Semana 2 · Jueves · Santiago 5:7
+
+**Motivo:** Santiago 5:7: la paciencia es hasta la venida del Señor, en medio de injusticias (5:1-6)
+- *Desarrollo 1* — antes: «Esperar con paciencia no es resignarse: es prepararse para lo que no se controla.»
+  - ahora: «Santiago anima a esperar con paciencia la venida del Señor, en medio de injusticias (5:1-6), y pone como ejemplo al labrador. Esperar con paciencia no es resignarse: es seguir firmes y prepararse para lo que no controlamos.»
+
+## Semana 2 · Viernes · 2 Corintios 9:6
+
+**Motivo:** El dato se alinea con la generosidad del texto
+- *Dato* — antes: «Un tercio de los suelos del planeta están moderada o altamente degradados.»
+  - ahora: «Unos 3.100 millones de personas en el mundo no pueden pagar una alimentación saludable.»
+- *Fuente* — antes: «FAO, Estado de los recursos de suelos del mundo, 2015»
+  - ahora: «FAO, El estado de la seguridad alimentaria y la nutrición en el mundo, 2023»
+
+**Motivo:** 2 Corintios 9:6 en su contexto: la ofrenda para hermanos necesitados; la cosecha no es ganancia asegurada (9:10-11)
+- *Desarrollo 1* — antes: «Quien siembra con generosidad cosecha con abundancia. Eso vale también para cómo tratamos la tierra que nos alimenta.»
+  - ahora: «Pablo habla de la ofrenda para hermanos necesitados: dar con generosidad es sembrar. La cosecha no es una ganancia asegurada, sino frutos de justicia y gratitud a Dios (2 Corintios 9:10-11).»
+- *Problemática 1* — antes: «La quema de campos y la deforestación, que empobrecen la tierra y afectan la salud de todos.»
+  - ahora: «La idea de «dar para recibir más plata», que convierte la generosidad en un negocio.»
+- *En la práctica 1* — antes: «Nunca quemes basura ni pastizales. Si ves una quema peligrosa, avisá a los bomberos o a la municipalidad.»
+  - ahora: «Esta semana ayudá a alguien que lo necesita, sin esperar nada a cambio.»
+- *Desarrollo 2* — antes: «Si no invertimos en cuidar el suelo y el agua, mañana cosechamos poco.»
+  - ahora: «El que guarda todo por miedo se pierde la alegría de compartir y de ver a Dios obrar a través de lo que da. Sembrar también es pensar en los que vienen detrás.»
+- *Problemática 2* — antes: «Arroyos contaminados con basura y agroquímicos cerca de las comunidades.»
+  - ahora: «Vecinos y productores que no se ayudan en los tiempos difíciles, cuando una mano a tiempo cambia todo.»
+- *En la práctica 2* — antes: «Organizá con tus vecinos una limpieza del arroyo o la plaza del barrio. Una mañana de trabajo cambia el paisaje.»
+  - ahora: «Si tu cosecha o tu trabajo rindió, compartí una parte con una familia que pasa necesidad.»
+- *Desarrollo 3* — antes: «La actitud al sembrar importa: trabajar de buena gana cambia el resultado y el ánimo.»
+  - ahora: «Pablo agrega que cada uno dé lo que decidió en su corazón, no con tristeza ni por obligación, porque Dios ama al que da con alegría (9:7).»
+- *Problemática 3* — antes: «El desgaste de quienes sienten que su trabajo no vale nada.»
+  - ahora: «Dar por presión, por quedar bien o por culpa.»
+- *En la práctica 3* — antes: «Hoy agradecé a alguien por su trabajo: al que te vende verduras, al que maneja el colectivo, al que limpia tu calle.»
+  - ahora: «Antes de dar, orá y decidí en tu corazón cuánto y a quién. Después, dalo con alegría.»
+
+## Semana 3 · Lunes · Exodo 15:26
+
+**Motivo:** Éxodo 15:26 es una promesa del pacto con Israel; la enfermedad no es señal de pecado (Juan 9:3)
+- *Desarrollo 2* — antes: «Escuchar y seguir buenas instrucciones protege: higiene, vacunas, cuidados básicos.»
+  - ahora: «Esta promesa fue parte del pacto de Dios con Israel en el desierto, y muchas de sus leyes cuidaban la salud del pueblo. No significa que quien se enferma está en pecado: Jesús lo aclaró (Juan 9:3). Sí nos enseña que escuchar instrucciones sabias protege.»
+
+## Semana 3 · Martes · Proverbios 14:26
+
+**Motivo:** «Temor del Señor» es reverencia y confianza, no miedo
+- *Desarrollo 1* — antes: «La confianza saca el miedo: prevenir no es vivir con paranoia, es cuidarse con tranquilidad.»
+  - ahora: «El temor del Señor no es miedo: es reverencia y confianza. Y esa confianza saca el miedo: prevenir no es vivir con paranoia, es cuidarse con tranquilidad.»
+
+## Semana 3 · Miércoles · Proverbios 4:20-22
+
+**Motivo:** Proverbios 4:20-22 habla de las palabras de sabiduría, no de las señales del cuerpo; se hace explícito el puente
+- *Desarrollo 1* — antes: «Prestar atención a las señales a tiempo da vida. Muchas enfermedades no duelen al principio.»
+  - ahora: «El padre de Proverbios pide atención a sus palabras de sabiduría: son vida y salud. Esa sabiduría también nos hace atentos con el cuerpo, como escuchar sus señales a tiempo: muchas enfermedades no duelen al principio.»
+
+**Motivo:** No equiparar la Palabra con el consejo médico
+- *Desarrollo 2* — antes: «Escuchar a quien sabe cuida el cuerpo. Los profesionales de salud están para orientarnos.»
+  - ahora: «La sabiduría se recibe escuchando. Dios nos habla en su Palabra y además pone a nuestro lado personas que saben, como los profesionales de salud, para orientarnos.»
+
+## Semana 4 · Martes · Josue 1:8
+
+**Motivo:** Josué 1:8: prosperar es cumplir la misión de Dios, no una promesa de riqueza
+- *Desarrollo 3* — antes: «El éxito verdadero no es solo plata: es integridad, paz y relaciones sanas. Y se construye con constancia diaria.»
+  - ahora: «En Josué, prosperar es cumplir con éxito la misión que Dios le dio, guiado por su Palabra. No es una promesa de riqueza: es la bendición de andar en su camino, que se ve en integridad, paz y fruto, y se construye con constancia diaria.»
+
+## Semana 5 · Sábado · 1 Timoteo 3:2
+
+**Motivo:** Evitar el moralismo: el carácter es obra de Dios en nosotros (Filipenses 2:13)
+- *Desarrollo 3* — antes: «Quién sos cuando nadie mira es quien realmente sos. Ahí se forma el líder.»
+  - ahora: «Quién sos cuando nadie mira es quien realmente sos. Dios forma ese carácter en nosotros cuando le abrimos el corazón (Filipenses 2:13).»
+
+## Semana 6 · Martes · 1 Corintios 14:40
+
+**Motivo:** Generalización apresurada que podía culpar a quien vive con pobreza, enfermedad o depresión
+- *Desarrollo 2* — antes: «Cómo está la casa dice algo de cómo estamos por dentro. No hace falta lujo: hace falta cuidado.»
+  - ahora: «A veces el desorden de afuera refleja cansancio o cargas de adentro. No hace falta lujo ni perfección: hace falta cuidado, de a poco.»
+
+## Semana 6 · Viernes · Mateo 7:24-25
+
+**Motivo:** Mateo 7:24: la roca es oír y hacer las palabras de Jesús; la familia no se pone al lado de Dios como fundamento
+- *Desarrollo 3* — antes: «Lo que va primero sostiene todo lo demás. Si Dios y la familia van primero, el trabajo y las cosas encuentran su lugar.»
+  - ahora: «Lo que va primero sostiene todo lo demás. Si Dios va primero, la familia, el trabajo y las cosas encuentran su lugar.»
+
+## Semana 7 · Lunes · Proverbios 6:6-8
+
+**Motivo:** Equilibrio con Mateo 6 y Lucas 12: prepararse no es acumular por miedo o avaricia
+- *Desarrollo 3* — antes: «Ahorrar no es desconfiar de Dios: es usar la sabiduría que Él mismo puso en la creación. Confiar y prepararse van juntos.»
+  - ahora: «Ahorrar no es desconfiar de Dios: es usar la sabiduría que Él puso en la creación. La diferencia está en el corazón: prepararse con confianza no es lo mismo que acumular por miedo o avaricia (Lucas 12:15-21).»
+
+## Semana 7 · Martes · Genesis 41:35
+
+**Motivo:** La seguridad de fondo está en Dios, no en el ahorro
+- *Desarrollo 2* — antes: «El ahorro es el puente entre los años buenos y los malos. Lo que guardás hoy es la tranquilidad de mañana.»
+  - ahora: «El ahorro es el puente entre los años buenos y los malos. Lo que guardás hoy puede aliviar el mañana, aunque nuestra seguridad de fondo está en Dios, no en la cuenta.»
+
+## Semana 7 · Jueves · Eclesiastes 11:2
+
+**Motivo:** Eclesiastés 11:1-2 tiene dos lecturas (generosidad o reparto); no presentar una sola como segura
+- *Desarrollo 1* — antes: «Salomón aconseja dividir: no poner todo en una sola cosa, porque no sabemos qué puede pasar.»
+  - ahora: «Este consejo se lee de dos maneras: muchos lo entienden como un llamado a compartir con varios, y otros como repartir lo que uno tiene. Las dos coinciden en algo: no aferrarse a una sola seguridad, porque no sabemos qué puede pasar.»
+
+## Semana 7 · Sábado · Lucas 14:28
+
+**Motivo:** Lucas 14:28 habla del costo de seguir a Jesús; se menciona su contexto
+- *En la práctica 1* — antes: «Abrí esta semana un sobre o una cuenta de ahorro y poné ahí tu primer aporte, aunque sea pequeño.»
+  - ahora: «Jesús usó esta imagen para hablar del costo de seguirlo, y la plata también es parte de ese camino. Esta semana abrí un sobre o una cuenta de ahorro y poné tu primer aporte, aunque sea pequeño.»
+
+## Semana 8 · Lunes · Mateo 5:37
+
+**Motivo:** Mateo 5:37 habla de los juramentos y la palabra verdadera; se hace explícito el puente a las emociones
+- *Desarrollo 1* — antes: «Jesús pide un «sí» que sea sí y un «no» que sea no. Esa honestidad empieza por dentro: reconocer lo que de verdad sentimos.»
+  - ahora: «Jesús habla de los juramentos: no hace falta jurar si nuestra palabra es verdadera. Un «sí» que es sí y un «no» que es no. Esa honestidad incluye no fingir lo que sentimos.»
+
+## Semana 8 · Martes · Romanos 12:2
+
+**Motivo:** Romanos 12:2: «transfórmense» es obra de Dios, no solo técnica mental
+- *Desarrollo 1* — antes: «Pablo dice que el cambio viene por la renovación de la mente. Lo que pensamos una y otra vez va formando lo que sentimos.»
+  - ahora: «Pablo dice «transfórmense»: es Dios quien transforma, mientras nosotros renovamos la mente con su Palabra. Lo que pensamos una y otra vez va formando lo que sentimos.»
+
+## Semana 8 · Miércoles · Juan 3:16
+
+**Motivo:** Amor de Dios completo: acepta y transforma
+- *Desarrollo 1* — antes: «Entre tantas voces que escuchamos cada día, hay una verdad que debería sonar más fuerte: Dios te ama, así como sos.»
+  - ahora: «Entre tantas voces que escuchamos cada día, hay una verdad que debería sonar más fuerte: Dios te ama tal como sos, y por amor no te deja como estás.»
+
+**Motivo:** El punto central de Juan 3:16 (vida eterna por creer en Jesús) no puede quedar desplazado
+- *Desarrollo 3* — antes: «La fe nace de lo que escuchamos. Si lo que más escuchamos es miedo y queja, la fe se achica.»
+  - ahora: «El regalo es vida eterna para todo el que cree en Jesús. Esa fe se alimenta de lo que escuchamos: si lo que más oímos es miedo y queja, nos olvidamos de la esperanza que tenemos.»
+
+## Semana 8 · Jueves · 2 Timoteo 1:7
+
+**Motivo:** 2 Timoteo 1:7 en su contexto: no avergonzarse del testimonio (1:8)
+- *Desarrollo 1* — antes: «Pablo le recuerda a Timoteo que el miedo que paraliza no es lo que Dios nos dio. Mucho de ese miedo entra por lo que consumimos.»
+  - ahora: «Pablo anima a Timoteo a no avergonzarse de dar testimonio: Dios no nos dio un espíritu de cobardía. Mucho del miedo que nos paraliza entra por lo que consumimos.»
+
+**Motivo:** La ansiedad no es falta de fe: se suma la invitación a pedir ayuda
+- *En la práctica 3* — antes: «Cuando aparezca el miedo, ponele nombre, respirá hondo tres veces y decí: «Dios no me dio un espíritu de cobardía».»
+  - ahora: «Cuando aparezca el miedo, ponele nombre, respirá hondo tres veces y decí: «Dios no me dio un espíritu de cobardía». Si la ansiedad no se va, pedí ayuda: no es falta de fe.»
+
+## Puntos de versículo (hoja «Temas Macro 2027»)
+
+- Semana 1 · Martes: «Dios desea prosperidad y salud» → «Juan desea a su hermano bienestar y salud». 3 Juan 1:2 es un saludo, no una promesa de prosperidad.
+- Semana 2 · Lunes: «No hay atajos en el trabajo de la tierra» → «Dios no puede ser burlado». El punto sale del texto de Gálatas 6:7.
+- Semana 4 · Martes: «Trae éxito verdadero y prosperidad» → «El verdadero éxito es andar en el camino de Dios». Josué 1:8 no promete riqueza.
+- Semana 8 · Jueves: «El temor no viene de Dios» → «La cobardía no viene de Dios». El texto dice «cobardía»; el «temor del Señor» es bueno (semana 3).
+
+## Alarma automática después de la revisión
+
+Quedan marcadas dos frases con «prosperar» (semana 4, martes y jueves). Se revisaron: ya explican su sentido bíblico (cumplir la misión de Dios, dar fruto a su tiempo).
