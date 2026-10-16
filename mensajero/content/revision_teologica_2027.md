@@ -240,3 +240,35 @@ Datos para confirmar antes de salir al aire, por ser cifras o recursos locales:
 - semana 13: la línea 137 «SOS Mujer», el estudio sobre orar por la pareja y el de la Universidad de Virginia.
 
 Cambios de versículo sugeridos: en `content/versiculos_sugeridos.md`. El más urgente es el texto de Proverbios 12:15 (12 de marzo).
+
+# Abril 2027 (semanas 14 a 17)
+
+Script del borrador: `tools/guiones_abril_2027.py`. Revisión: `tools/revision_teologica_abr_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- Deuteronomio 8:18: advierte contra el orgullo; no promete riqueza.
+- Proverbios 22:29: principio general, no promesa.
+- 1 Corintios 16:2: la ofrenda para los pobres de Jerusalén; se da según lo ganado, sin tomar posición sobre el diezmo.
+- Gálatas 5:22: el fruto lo produce el Espíritu, no la fuerza de voluntad.
+- La sequía espiritual no es falta de fe.
+- Colosenses 3:23: se dice que fue escrito a esclavos.
+- 1 Corintios 9:27: «golpear el cuerpo» es una imagen de dominio propio, no una invitación a lastimarse.
+
+En la lectura posterior se corrigió esto:
+
+- **Semana 14 · Sábado** (Solucion 1). 1 Corintios 4:2 habla de los que administran los misterios de Dios; se dice el contexto antes de aplicarlo al dinero.
+  - antes: «Todo lo que tenemos es de Dios y nosotros lo administramos. Esta semana, sentate con tu familia y armen o ajusten su presupuesto del mes.»
+  - ahora: «Pablo habla de los que sirven administrando lo que Dios les confió: lo primero que se espera es que sean confiables. Lo mismo vale para lo que tenemos, que también es de Dios. Esta semana, sentate con tu familia y armen o ajusten su presupuesto del mes.»
+- **Semana 17 · Miércoles** (Desarrollo 2). El paralelo entre el pecado y la falta de ejercicio podía leerse como si no moverse fuera pecado.
+  - antes: «Para correr hay que soltar lo que pesa. En la vida, el pecado y las cargas innecesarias nos frenan; en el cuerpo, la falta de movimiento.»
+  - ahora: «Para correr hay que soltar lo que pesa. En la fe, lo que nos frena es el pecado y las cargas innecesarias. En el cuidado del cuerpo, salvando las distancias, lo que más frena es la falta de movimiento.»
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 15 · Miércoles: «Correr sin fatigarse es promesa para quien espera» → «Dios da fuerzas nuevas para seguir». Isaías 40:31 es poesía: no promete que nunca nos cansemos.
+- Semana 15 · Viernes: «Sin ese anhelo, la vida espiritual se estanca» → «Aun en la sequía, el anhelo nos lleva a buscarlo». El subtema es la sequía espiritual: no generar culpa en quien no siente anhelo.
+- Semana 17 · Domingo: «Dios bendice la perseverancia: La constancia y la responsabilidad abren camino al progreso.» → «La constancia abre camino: La responsabilidad y la perseverancia suelen dar fruto.». Proverbios 13:4 es un principio general; la bendición no se presenta como pago.
+- Semana 17 · Martes: «El ejercicio también forma el carácter» → «El dominio propio también se entrena». 1 Corintios 9:27 habla de dominio propio en el ministerio, no de ejercicio físico.
+- Semana 17 · Jueves: «Dios cine de fuerza al que confía en El» → «Dios ciñe de fuerza al que confía en Él». Error de tipeo.
+
+Cambio de versículo urgente: el texto de Proverbios 21:5 (6 de abril) es en realidad 21:15. Está en `content/versiculos_sugeridos.md`.

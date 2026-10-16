@@ -40,6 +40,7 @@ for s, d, campo, motivo, nuevo in G:
 t = wb['Temas Macro 2027']; ht = [c.value for c in t[1]]
 for s, d, viejo, nuevo, motivo in P:
     c = t.cell(s + 1, ht.index('3 Puntos ' + d.replace('é', 'e').replace('á', 'a')) + 1)
+    if nuevo in c.value: continue   # ya aplicado
     assert viejo in c.value, (s, d, c.value)
     c.value = c.value.replace(viejo, nuevo)
 for s, d, viejo, nuevo in V:

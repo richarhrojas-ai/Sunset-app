@@ -1,0 +1,183 @@
+# Verificación de datos curiosos 2027
+
+Cada dato se contrastó con su fuente original o con una fuente de autoridad (organismo, artículo científico, texto bíblico). Script de cambios: `tools/verificacion_datos_ene_mar_2027.py`.
+
+**Límites de esta verificación:**
+- Algunas páginas (OMS, Nature, PMC, SENACSA, Banco Central) no se pudieron abrir directamente.
+- En esos casos se confirmaron con resultados de búsqueda que citan el texto original, o con prensa que cita al organismo.
+- Las cifras que más cambian con los años (depresión, hambre, enfermedades) conviene volver a mirarlas antes de salir al aire.
+
+## Enero a marzo (semanas 1 a 13)
+
+**40 confirmados sin cambios. 38 ajustados** (cifra actualizada, redacción fiel a lo que midió el estudio o fuente más precisa). El estudio de tomar notas a mano (semana 4, miércoles) se reemplazó porque no se confirmó en réplicas posteriores.
+
+### Ajustados
+
+- **Semana 1 · Miércoles** — 66 es la mediana, no el promedio.
+  - antes: «Un hábito nuevo tarda en promedio 66 días en volverse automático; en el estudio el rango fue de 18 a 254 días.» (Lally y otros, University College London, European Journal of Social Psychology, 2010)
+  - ahora: «Un hábito nuevo tarda una media de 66 días en volverse automático; según la persona, el rango fue de 18 a 254 días.» (Lally y otros, University College London, European Journal of Social Psychology, 2010)
+- **Semana 1 · Jueves** — La AHA da el ritmo por minuto; los 100.000 diarios son un cálculo.
+  - antes: «El corazón late alrededor de 100.000 veces por día, sin que tengamos que pensar en ello.» (American Heart Association)
+  - ahora: «Con un ritmo normal de unos 70 latidos por minuto, el corazón late alrededor de 100.000 veces por día, sin que tengamos que pensar en ello.» (Cálculo a partir del ritmo normal en reposo (60 a 100 latidos por minuto), American Heart Association)
+- **Semana 1 · Viernes** — El dato es de Estados Unidos.
+  - antes: «Uno de cada tres adultos no duerme las horas que necesita.» (Centros para el Control y la Prevención de Enfermedades (CDC) de EE. UU., 2016)
+  - ahora: «En Estados Unidos, uno de cada tres adultos no duerme las horas que necesita.» (Centros para el Control y la Prevención de Enfermedades (CDC) de EE. UU., 2016)
+- **Semana 1 · Sábado** — El estudio comparó tableta con libro impreso; no probó «cualquier pantalla».
+  - antes: «Leer en una pantalla antes de dormir retrasa la melatonina, cuesta más dormirse y se amanece menos alerta.» (Chang y otros, Harvard Medical School, revista PNAS, 2015)
+  - ahora: «Leer antes de dormir en una tableta con pantalla iluminada, en vez de un libro impreso, retrasó la melatonina, hizo más difícil dormirse y al otro día se amaneció menos alerta.» (Chang y otros, Brigham and Women's Hospital y Harvard Medical School, revista PNAS, 2015)
+- **Semana 2 · Viernes** — Cifra actualizada (3.100 millones era de 2021).
+  - antes: «Unos 3.100 millones de personas en el mundo no pueden pagar una alimentación saludable.» (FAO, El estado de la seguridad alimentaria y la nutrición en el mundo, 2023)
+  - ahora: «Unos 2.700 millones de personas en el mundo no pueden pagar una alimentación saludable.» (FAO y otros, El estado de la seguridad alimentaria y la nutrición en el mundo (SOFI), 2026)
+- **Semana 3 · Lunes** — Cifra actualizada por la OMS (43 millones de muertes en 2021).
+  - antes: «Las enfermedades no transmisibles (corazón, cáncer, diabetes, pulmones) causan el 74 % de las muertes en el mundo.» (Organización Mundial de la Salud, 2023)
+  - ahora: «Las enfermedades no transmisibles (corazón, cáncer, diabetes, pulmones) causan unas tres de cada cuatro muertes en el mundo, sin contar las de la pandemia.» (Organización Mundial de la Salud, nota descriptiva sobre enfermedades no transmisibles (datos de 2021))
+- **Semana 3 · Viernes** — La OMS actualizó la cifra (280 millones era de 2019).
+  - antes: «Unos 280 millones de personas en el mundo viven con depresión.» (Organización Mundial de la Salud, 2023)
+  - ahora: «Más de 300 millones de personas en el mundo viven con depresión.» (Organización Mundial de la Salud, nota descriptiva sobre la depresión)
+- **Semana 4 · Lunes** — Es una encuesta: muestra una relación, no que la lectura cause el cambio.
+  - antes: «Quienes leen la Biblia cuatro o más veces por semana muestran cambios mucho mayores en su conducta diaria que quienes la leen con menos frecuencia.» (Center for Bible Engagement, Cole y Ovwigho, 2009)
+  - ahora: «En una encuesta del ministerio Back to the Bible, quienes leían la Biblia cuatro o más días por semana contaron hábitos de vida muy distintos de los que la leían menos.» (Center for Bible Engagement (Back to the Bible), Cole y Ovwigho, 2009)
+- **Semana 4 · Martes** — Precisión de la cifra y de lo que midió.
+  - antes: «Si no repasamos lo aprendido, olvidamos más de la mitad en apenas un día.» (Hermann Ebbinghaus, estudios sobre la memoria, 1885)
+  - ahora: «En sus experimentos de memoria, Hermann Ebbinghaus comprobó que, sin repasar, al día siguiente ya había olvidado cerca de dos tercios de lo aprendido.» (Hermann Ebbinghaus, «Sobre la memoria», 1885; replicado por Murre y Dros, PLOS ONE, 2015)
+- **Semana 4 · Miércoles** — Reemplazo: el estudio sobre tomar notas a mano (2014) no se confirmó en réplicas posteriores.
+  - antes: «Quienes toman notas a mano comprenden mejor los conceptos que quienes escriben en una computadora.» (Mueller y Oppenheimer, revista Psychological Science, 2014)
+  - ahora: «Estudiantes que, en vez de releer, trataron de recordar lo leído retuvieron una semana después el 61 % del texto; los que solo releyeron, el 40 %.» (Roediger y Karpicke, Washington University in St. Louis, Psychological Science, 2006)
+- **Semana 5 · Martes** — Los niños no estaban solos durante la prueba.
+  - antes: «En un experimento clásico, niños que vieron a un adulto golpear a un muñeco repitieron casi los mismos golpes al quedarse solos con él.» (Bandura, Ross y Ross, Universidad de Stanford, 1961)
+  - ahora: «En un experimento clásico, niños que vieron a un adulto golpear a un muñeco inflable lo imitaron después casi con los mismos golpes y gritos cuando les tocó jugar con él.» (Bandura, Ross y Ross, Universidad de Stanford, Journal of Abnormal and Social Psychology, 1961)
+- **Semana 5 · Miércoles** — Se aclara lo que midió la encuesta.
+  - antes: «Los jóvenes en situación de riesgo que tuvieron un mentor tuvieron 55 % más probabilidades de inscribirse en estudios superiores.» (MENTOR, The Mentoring Effect, 2014)
+  - ahora: «Los jóvenes en situación de riesgo que tuvieron un mentor estaban cursando estudios superiores con más frecuencia que los que no lo tuvieron: 45 % frente a 29 %.» (MENTOR y Civic Enterprises, The Mentoring Effect, 2014)
+- **Semana 5 · Jueves** — No hay un texto de Buffett que la contenga: es una atribución.
+  - antes: ««Se necesitan 20 años para construir una reputación y cinco minutos para arruinarla.»» (Warren Buffett, inversor estadounidense)
+  - ahora: ««Se necesitan 20 años para construir una reputación y cinco minutos para arruinarla»: la frase se le atribuye a Warren Buffett.» (Atribuida a Warren Buffett (Quote Investigator))
+- **Semana 5 · Viernes** — Redacción fiel a Gallup.
+  - antes: «Al menos el 70 % de la diferencia en el compromiso de un equipo de trabajo depende de quien lo dirige.» (Gallup, State of the American Manager, 2015)
+  - ahora: «Al menos el 70 % de la variación en el compromiso de los equipos de trabajo se explica por el jefe que los dirige.» (Gallup, State of the American Manager, 2015)
+- **Semana 5 · Sábado** — Fuente verificada.
+  - antes: «La palabra «carácter» viene del griego y significaba la marca grabada en una moneda o en un sello.» (Diccionario etimológico de la lengua castellana (Corominas))
+  - ahora: «La palabra «carácter» viene del griego, a través del latín, y significaba la marca grabada en una moneda o en un sello.» (Diccionario de la lengua española (RAE), entrada «carácter»)
+- **Semana 6 · Miércoles** — Lo que midieron fue la educación en lavado de manos.
+  - antes: «Lavarse las manos con agua y jabón puede reducir entre un 23 y un 40 % las enfermedades diarreicas.» (Centros para el Control y la Prevención de Enfermedades (CDC) de EE. UU.)
+  - ahora: «Enseñar en la comunidad a lavarse las manos con agua y jabón puede reducir entre un 23 y un 40 % los casos de diarrea.» (Centros para el Control y la Prevención de Enfermedades (CDC) de EE. UU.)
+- **Semana 6 · Jueves** — Se agrega la muestra y se corrige la autoría.
+  - antes: «En esponjas de cocina usadas se encontraron 362 tipos distintos de bacterias.» (Cardinale y otros, Universidad de Furtwangen, Scientific Reports, 2017)
+  - ahora: «En 14 esponjas de cocina usadas se encontraron 362 tipos distintos de bacterias.» (Cardinale, Egert y otros, Universidad de Furtwangen y Universidad de Giessen, Scientific Reports, 2017)
+- **Semana 6 · Sábado** — La revisión no estudió la alimentación; se ajusta a lo que midió.
+  - antes: «Comer en familia con frecuencia se asocia con una mejor alimentación y menos síntomas de depresión en niños y adolescentes.» (Harrison y otros, Canadian Family Physician, 2015)
+  - ahora: «Comer en familia con frecuencia se asocia con menos síntomas de depresión, menos conductas de riesgo y más autoestima en niños y adolescentes.» (Harrison y otros, Canadian Family Physician, 2015)
+- **Semana 7 · Viernes** — Lo que midieron fueron inversores.
+  - antes: «Muchas personas revisan menos sus cuentas justo cuando las cosas van mal; los investigadores lo llamaron «efecto avestruz».» (Karlsson, Loewenstein y Seppi, Journal of Risk and Uncertainty, 2009)
+  - ahora: «Muchos inversores revisan sus cuentas con menos frecuencia cuando la bolsa baja que cuando sube; los investigadores lo llamaron «efecto avestruz».» (Karlsson, Loewenstein y Seppi, Journal of Risk and Uncertainty, 2009)
+- **Semana 7 · Sábado** — Lo documentado es un cimiento poco profundo sobre suelo débil.
+  - antes: «La Torre de Pisa empezó a inclinarse en 1178, cuando iban por el segundo piso, por un suelo blando que no se había estudiado bien. Terminarla llevó casi 200 años.» (Opera della Primaziale Pisana, Italia)
+  - ahora: «La Torre de Pisa empezó a inclinarse hacia 1178, cuando la obra iba por el segundo piso: tenía un cimiento de apenas 3 metros sobre un suelo blando. Terminarla llevó casi 200 años, de 1173 a 1372.» (Opera della Primaziale Pisana, historia de la Torre)
+- **Semana 8 · Miércoles** — Precisión del límite usado.
+  - antes: «Estudiantes que limitaron las redes sociales a 30 minutos por día durante tres semanas se sintieron menos solos y menos deprimidos.» (Hunt y otros, Universidad de Pensilvania, Journal of Social and Clinical Psychology, 2018)
+  - ahora: «Estudiantes que limitaron Facebook, Instagram y Snapchat a 10 minutos por día cada una, durante tres semanas, se sintieron menos solos y menos deprimidos que quienes siguieron igual.» (Hunt, Marx, Lipson y Young, Universidad de Pensilvania, Journal of Social and Clinical Psychology, 2018)
+- **Semana 8 · Viernes** — Cifra actualizada.
+  - antes: «Se estima que unos 280 millones de personas en el mundo viven con depresión.» (Organización Mundial de la Salud)
+  - ahora: «Más de 300 millones de personas en el mundo viven con depresión.» (Organización Mundial de la Salud, nota descriptiva sobre la depresión)
+- **Semana 8 · Sábado** — Precisión del tiempo y de lo que midió.
+  - antes: «Escribir sobre lo que nos preocupa o nos dolió, entre 15 y 20 minutos durante unos pocos días seguidos, se asoció con mejor salud en los meses siguientes.» (Pennebaker y Beall, Journal of Abnormal Psychology, 1986)
+  - ahora: «Escribir sobre algo que nos dolió, 15 minutos por día durante cuatro días seguidos, se asoció con menos visitas al médico en los meses siguientes.» (Pennebaker y Beall, Journal of Abnormal Psychology, 1986)
+- **Semana 9 · Miércoles** — Precisión del efecto.
+  - antes: «El estrés del ganado antes de la faena oscurece la carne y la vuelve más dura: el buen trato también se nota en el plato.» (Temple Grandin, Universidad Estatal de Colorado)
+  - ahora: «El estrés del ganado antes de la faena puede oscurecer la carne, hacerla menos tierna y que dure menos: el buen trato también se nota en el plato.» (Temple Grandin, Universidad Estatal de Colorado)
+- **Semana 9 · Jueves** — El segundo período es solo para terneros y animales jóvenes.
+  - antes: «Paraguay vacuna a todo su ganado bovino contra la fiebre aftosa en campañas que se repiten dos veces por año.» (Servicio Nacional de Calidad y Salud Animal (SENACSA))
+  - ahora: «Paraguay vacuna contra la fiebre aftosa en dos períodos por año: en uno a todo el ganado bovino y en el otro a los animales jóvenes. La cobertura ronda el 99,7 %.» (Servicio Nacional de Calidad y Salud Animal (SENACSA))
+- **Semana 9 · Sábado** — Lo de las caras humanas no está en este estudio.
+  - antes: «Las ovejas pueden reconocer y recordar las caras de al menos 50 ovejas, y también de personas, durante más de dos años.» (Kendrick y otros, revista Nature, 2001)
+  - ahora: «Las ovejas pueden reconocer y recordar las caras de al menos 50 ovejas distintas durante más de dos años.» (Kendrick y otros, Instituto Babraham, revista Nature, 2001)
+- **Semana 10 · Lunes** — Cifra válida en las dos ediciones.
+  - antes: «Casi la mitad de los adultos con diabetes en el mundo (44 %) no sabe que la tiene.» (Federación Internacional de Diabetes, Atlas de la Diabetes, 2021)
+  - ahora: «Casi la mitad de los adultos con diabetes en el mundo (más del 40 %) no sabe que la tiene.» (Federación Internacional de Diabetes, Atlas de la Diabetes, 2021 y 2025)
+- **Semana 10 · Miércoles** — Es una recomendación de Estados Unidos.
+  - antes: «Para los adultos, se recomienda medir la presión cada año desde los 40, y cada 3 a 5 años entre los 18 y los 39 si no hay factores de riesgo.» (Grupo de Trabajo de Servicios Preventivos de EE. UU. (USPSTF), 2021)
+  - ahora: «En Estados Unidos se recomienda medir la presión a todos los adultos: cada año desde los 40, y cada 3 a 5 años entre los 18 y los 39 si no hay factores de riesgo y la última medición fue normal.» (Grupo de Trabajo de Servicios Preventivos de EE. UU. (USPSTF), 2021)
+- **Semana 10 · Viernes** — La OMS lo da como comparación entre países.
+  - antes: «Cuando el cáncer de mama se detecta en etapa temprana y se trata a tiempo, más del 90 % de las mujeres vive al menos cinco años más.» (Organización Mundial de la Salud, Iniciativa Mundial contra el Cáncer de Mama, 2023)
+  - ahora: «En los países donde el cáncer de mama se detecta temprano y se trata a tiempo, más del 90 % de las mujeres sigue con vida cinco años después del diagnóstico; en otros lugares, la cifra baja al 40 o 66 %.» (Organización Mundial de la Salud, Iniciativa Mundial contra el Cáncer de Mama)
+- **Semana 10 · Sábado** — Confirmado; ajuste de redacción.
+  - antes: «Las Unidades de Salud de la Familia (USF) ofrecen atención primaria gratuita en todo el país.» (Ministerio de Salud Pública y Bienestar Social del Paraguay)
+  - ahora: «Las Unidades de Salud de la Familia (USF) ofrecen atención primaria sin costo en todo el país.» (Ministerio de Salud Pública y Bienestar Social del Paraguay)
+- **Semana 11 · Jueves** — Fuente concreta.
+  - antes: «El cuerpo humano tiene más de 600 músculos, que trabajan coordinados hasta en un simple paso.» (Anatomía humana)
+  - ahora: «El cuerpo humano tiene más de 600 músculos, que trabajan coordinados hasta en un simple paso.» (Cleveland Clinic, «Muscle»)
+- **Semana 11 · Sábado** — Fuente concreta.
+  - antes: «La palabra griega «koinonía», que traducimos como comunión o compañerismo, significa tener algo en común y participar juntos.» (Diccionarios del griego del Nuevo Testamento)
+  - ahora: «La palabra griega «koinonía», que traducimos como comunión o compañerismo, significa tener algo en común y participar juntos.» (Léxico griego de Strong (G2842) y Thayer)
+- **Semana 12 · Martes** — La frase citada antes era de otra versión (RVR1960).
+  - antes: «Moisés atendía al pueblo «desde la mañana hasta la tarde», y su suegro le dijo: «No está bien lo que haces».» (Éxodo 18:13-17)
+  - ahora: «Moisés atendía al pueblo «desde la mañana hasta la tarde», y su suegro le advirtió que así se iba a agotar.» (Éxodo 18:13-18 (RVC))
+- **Semana 12 · Viernes** — Fuente concreta.
+  - antes: «La palabra hebrea que en este proverbio se traduce como «visión» se usa para la revelación que Dios daba a sus profetas.» (Léxicos del hebreo bíblico)
+  - ahora: «La palabra hebrea que en este proverbio se traduce como «visión» se usa para la revelación que Dios daba a sus profetas.» (Léxico hebreo de Strong (H2377) y Brown-Driver-Briggs)
+- **Semana 12 · Sábado** — Eisenhower citaba a otro; la frase popular es una paráfrasis.
+  - antes: ««Lo importante rara vez es urgente, y lo urgente rara vez es importante», dijo Dwight Eisenhower; de esa idea nació un método para ordenar tareas.» (Dwight D. Eisenhower, discurso de 1954)
+  - ahora: «En 1954, ante el Consejo Mundial de Iglesias, Dwight Eisenhower citó a un antiguo rector: «Tengo dos clases de problemas, los urgentes y los importantes». De esa idea nació un método para ordenar tareas.» (Dwight D. Eisenhower, discurso en Evanston, 19 de agosto de 1954 (The American Presidency Project))
+- **Semana 13 · Martes** — Texto exacto de la RVC.
+  - antes: «Justo antes de hablar a los esposos, Pablo les pide algo a todos: «Sométanse unos a otros en el temor de Dios».» (Efesios 5:21)
+  - ahora: «Justo antes de hablar a los esposos, Pablo les pide algo a todos: «Cultiven entre ustedes la mutua sumisión, en el temor de Dios».» (Efesios 5:21 (RVC))
+- **Semana 13 · Miércoles** — El estudio de cuatro semanas fue con oración por un amigo, no por la pareja.
+  - antes: «Personas que oraron por el bienestar de su pareja durante cuatro semanas mostraron más disposición a perdonar.» (Lambert, Fincham y otros, Psychological Science, 2010)
+  - ahora: «Personas que oraron cada día durante cuatro semanas por el bienestar de un amigo mostraron más disposición a perdonarlo que quienes oraron sobre otros temas o solo pensaron cosas positivas de él.» (Lambert, Fincham y otros, Psychological Science, 2010)
+- **Semana 13 · Viernes** — Se agregan autores y título; es una asociación.
+  - antes: «En un estudio de la Universidad de Virginia, las parejas que compartían tiempo a solas al menos una vez por semana tenían más probabilidades de decir que su matrimonio era muy feliz.» (National Marriage Project, Universidad de Virginia, 2012)
+  - ahora: «En un estudio de la Universidad de Virginia, las parejas que compartían tiempo a solas al menos una vez por semana tenían más probabilidades de decir que su matrimonio era muy feliz.» (Wilcox y Dew, «The Date Night Opportunity», National Marriage Project, Universidad de Virginia, 2012)
+
+### Confirmados
+
+- Semana 1 · Lunes: «Casi 1 de cada 3 adultos en el mundo (31 %) no hace la actividad física mínima recomendada.» (Organización Mundial de la Salud, 2024)
+- Semana 1 · Martes: «El 85 % de las mujeres deja de participar en actividades importantes de su vida cuando no se siente bien con su aspecto.» (Dove, Global Beauty and Confidence Report, 2016)
+- Semana 2 · Lunes: «Paraguay está entre los cinco mayores exportadores de soja del mundo.» (Departamento de Agricultura de EE. UU. (USDA), informes de oleaginosas)
+- Semana 2 · Martes: «Alrededor del 14 % de los alimentos que se producen en el mundo se pierde entre la cosecha y la venta.» (FAO, El estado mundial de la agricultura y la alimentación, 2019)
+- Semana 2 · Miércoles: «Las granjas familiares producen alrededor del 80 % de los alimentos del mundo, medido en valor.» (FAO, El estado mundial de la agricultura y la alimentación, 2014)
+- Semana 2 · Jueves: «Cerca de 1 de cada 4 trabajadores del mundo trabaja en la agricultura.» (Organización Internacional del Trabajo (OIT) y Banco Mundial)
+- Semana 2 · Sábado: «Formar apenas un centímetro de suelo fértil puede llevar hasta mil años.» (FAO, Año Internacional de los Suelos, 2015)
+- Semana 3 · Martes: «Al menos el 80 % de las enfermedades del corazón, los accidentes cerebrovasculares y la diabetes tipo 2 prematuros podrían prevenirse.» (Organización Mundial de la Salud, Prevención de las enfermedades crónicas, 2005)
+- Semana 3 · Miércoles: «Casi la mitad de las personas con presión alta no sabe que la tiene.» (Organización Mundial de la Salud, Informe mundial sobre la hipertensión, 2023)
+- Semana 3 · Jueves: «La OMS se propone que el 70 % de las mujeres se haga una prueba de detección del cáncer de cuello uterino a los 35 y a los 45 años, porque detectado a tiempo es uno de los más curables.» (Organización Mundial de la Salud, 2020)
+- Semana 3 · Sábado: «En los países desarrollados, solo alrededor de la mitad de los pacientes con enfermedades crónicas cumple bien su tratamiento.» (Organización Mundial de la Salud, Adherencia a los tratamientos a largo plazo, 2003)
+- Semana 4 · Jueves: «La Biblia completa está traducida a más de 700 idiomas.» (Wycliffe Global Alliance)
+- Semana 4 · Viernes: «Quien estudia sabiendo que después va a tener que enseñarlo a otro aprende y recuerda mejor.» (Nestojko y otros, revista Memory & Cognition, 2014)
+- Semana 4 · Sábado: «El Salmo 119 es el capítulo más largo de la Biblia: 176 versículos dedicados casi por completo a la Palabra de Dios.» (Biblia, Salmo 119)
+- Semana 5 · Lunes: «El corazón bombea cerca de 7.500 litros de sangre por día, sin descanso.» (American Heart Association)
+- Semana 6 · Lunes: «En un estudio con familias de Los Ángeles, las mujeres que describían su casa como desordenada mostraron un nivel de cortisol, la hormona del estrés, que bajaba menos a lo largo del día: una señal de estrés sostenido.» (Saxbe y Repetti, UCLA, Personality and Social Psychology Bulletin, 2010)
+- Semana 6 · Martes: «Personas que pasaron un rato en una habitación ordenada eligieron con más frecuencia una fruta en vez de un chocolate que las que estuvieron en una desordenada.» (Vohs, Redden y Rahinel, Universidad de Minnesota, Psychological Science, 2013)
+- Semana 6 · Viernes: «El estudio sobre la vida adulta más largo del mundo, que sigue a sus participantes desde 1938, concluye que las buenas relaciones nos mantienen más felices y más sanos.» (Estudio de Desarrollo Adulto de Harvard (Robert Waldinger))
+- Semana 7 · Lunes: «En los países en desarrollo, solo un poco más de la mitad de los adultos (55 %) podría conseguir dinero para una emergencia en un mes sin mucha dificultad.» (Banco Mundial, Global Findex, 2021)
+- Semana 7 · Martes: «Un enjambre de langostas del desierto de un kilómetro cuadrado puede comer en un día lo mismo que unas 35.000 personas.» (Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO))
+- Semana 7 · Miércoles: «Guardar 50.000 guaraníes por semana, sin sumar intereses, da 2.600.000 en un año y 26 millones en diez años.» (Cálculo simple)
+- Semana 7 · Jueves: «Harry Markowitz recibió el Premio Nobel de Economía en 1990, en parte por mostrar con números que repartir el dinero en distintos lugares reduce el riesgo.» (Fundación Nobel, 1990)
+- Semana 8 · Lunes: «Ponerle nombre a una emoción, con una sola palabra, reduce la actividad de la amígdala, la zona del cerebro que dispara la alarma.» (Lieberman y otros, UCLA, Psychological Science, 2007)
+- Semana 8 · Martes: «Los taxistas de Londres, que memorizan miles de calles, tienen más desarrollada una parte del hipocampo, la zona del cerebro ligada a la memoria espacial.» (Maguire y otros, University College London, PNAS, 2000)
+- Semana 8 · Jueves: «Después del atentado de Boston de 2013, quienes vieron seis horas o más de noticias por día sobre el hecho mostraron más estrés agudo que algunas personas que estuvieron en el lugar.» (Holman, Garfin y Silver, Universidad de California en Irvine, PNAS, 2014)
+- Semana 9 · Lunes: «Paraguay tiene más del doble de vacunos que de habitantes: unos 13 millones de cabezas de ganado y unos 6 millones de personas.» (SENACSA; INE, Censo Nacional 2022)
+- Semana 9 · Martes: «Las vacas lecheras necesitan pasar entre 12 y 14 horas por día echadas; cuando descansan menos, producen menos leche.» (Rick Grant, W. H. Miner Agricultural Research Institute)
+- Semana 9 · Viernes: «La carne vacuna está entre los principales productos que Paraguay vende al mundo, junto con la soja.» (Banco Central del Paraguay, informes de comercio exterior)
+- Semana 10 · Martes: «Lucas, el médico que acompañó a Pablo, escribió el Evangelio que lleva su nombre y el libro de Hechos: cerca de la cuarta parte del Nuevo Testamento.» (Nuevo Testamento: Evangelio de Lucas y Hechos)
+- Semana 10 · Jueves: «Los errores en el uso de medicamentos cuestan en el mundo unos 42.000 millones de dólares por año.» (Organización Mundial de la Salud, Medicación sin daño, 2017)
+- Semana 11 · Lunes: «Las personas con vínculos sociales fuertes tuvieron un 50 % más de probabilidades de seguir con vida en el tiempo que las que tenían vínculos débiles.» (Holt-Lunstad, Smith y Layton, revista PLoS Medicine, 2010)
+- Semana 11 · Martes: «En un experimento, personas que miraban una colina empinada acompañadas por un amigo la veían menos empinada que quienes estaban solas.» (Schnall y otros, Journal of Experimental Social Psychology, 2008)
+- Semana 11 · Miércoles: «En experimentos sobre pedir ayuda, las personas creyeron que les iban a decir que no mucho más de lo que realmente pasó: los demás estaban más dispuestos a ayudar de lo que pensaban.» (Flynn y Lake, Journal of Personality and Social Psychology, 2008)
+- Semana 11 · Viernes: «Hacer un amigo casual lleva unas 50 horas compartidas, y un amigo cercano, más de 200.» (Jeffrey Hall, Universidad de Kansas, Journal of Social and Personal Relationships, 2018)
+- Semana 12 · Lunes: «Cuando Google estudió qué hacía a sus mejores jefes, entre las conductas más importantes encontró ser un buen comunicador y saber escuchar.» (Google, Proyecto Oxígeno)
+- Semana 12 · Miércoles: «Solemos subestimar el tiempo que nos lleva una tarea, aunque ya nos haya pasado antes; los psicólogos lo llaman «falacia de la planificación».» (Kahneman y Tversky, 1979; Buehler y otros, 1994)
+- Semana 12 · Jueves: «En Eclesiastés 3 aparecen catorce pares de tiempos opuestos: nacer y morir, plantar y cosechar, llorar y reír, callar y hablar.» (Eclesiastés 3:2-8)
+- Semana 13 · Lunes: «En parejas estables se observaron unas cinco interacciones positivas por cada interacción negativa durante los conflictos.» (John Gottman, Universidad de Washington)
+- Semana 13 · Jueves: «En 1 Corintios 13:4-7 el amor se describe con quince verbos: casi todo lo que dice del amor es algo que hace, no algo que siente.» (Texto griego de 1 Corintios 13:4-7)
+- Semana 13 · Sábado: «En hebreo, el título del Cantar de los Cantares significa «el mejor de los cantos»: es un poema que celebra el amor entre esposos.» (Cantar de los Cantares 1:1)
+
+### Otros datos verificados
+
+- **Línea 137 «SOS Mujer»** (Ministerio de la Mujer):
+  - es gratuita, nacional y atiende las 24 horas, todos los días;
+  - desde julio de 2026 hay también un WhatsApp: 0961 137 137;
+  - en caso de peligro inmediato, 911.
+  - Se sumó al guion de la semana 13, martes.
+- **Proverbios 12:15 (RVC):** «El necio piensa que va por buen camino, pero el sabio presta atención al consejo.» Va en `content/versiculos_sugeridos.md`.
+- **Génesis 1:26 (RVC):** texto completo confirmado. Va en `content/versiculos_sugeridos.md`.
+- **Efesios 5:21 (RVC):** «Cultiven entre ustedes la mutua sumisión, en el temor de Dios». El guion de la semana 13, martes, ahora usa esta redacción.
