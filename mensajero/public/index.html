@@ -245,6 +245,12 @@ details.fold[open]>summary::after{content:"–"}
 .ya-aviso{border-left:3px solid var(--prog,var(--gold));padding:8px 12px;border-radius:0 10px 10px 0;background:rgba(0,0,0,.18);font-size:13.5px;color:var(--ink2)}
 .ya-aviso b{color:var(--prog,var(--gold));font-weight:500}
 details.loc.ya summary{color:var(--ink3)}
+.plazo{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;flex-wrap:wrap;margin:0 0 12px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.2);font-size:13.5px;color:var(--ink2)}
+.plazo:empty{display:none}
+.plazo.cerrada{border-color:rgba(255,120,120,.45)}
+.plazo.cerrada b{color:#ffb3b3;font-weight:500}
+.plazo.gracia b{color:var(--gold);font-weight:500}
+.bloq .chk,.bloq #prep button,.bloq .reem-sel{opacity:.5;cursor:not-allowed}
 .progs{display:flex;gap:6px;flex-wrap:wrap}
 .progs button{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--ink2);background:rgba(0,0,0,.2);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .progs button[aria-selected="true"]{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.08)}
@@ -449,13 +455,14 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   <div id="semana" hidden>
   <h2 class="sec" id="s-dias">Mi semana <span class="muted" id="sem-prog" style="font-size:.7em"></span> <span class="cuenta" id="c-v"></span></h2>
   <p class="muted" style="font-size:14px;margin:-4px 0 14px" id="dias-ayuda"></p>
+  <div class="plazo" id="plazo"></div>
   <div class="card guion-wrap" id="dias"></div>
   </div>
 
   <details class="fold" id="s-prep"><summary>Mi preparación <span class="muted" id="prep-prog" style="font-size:.85em"></span> <span id="prep-pct" class="muted" style="letter-spacing:.1em"></span></summary>
     <div class="fold-body">
       <div><h4>Mi programa</h4><div class="programa" id="programa"></div></div>
-      <div class="barra"><i id="prep-bar"></i></div><div class="prep" id="prep"></div>
+      <div class="plazo" id="plazo-prep"></div><div class="barra"><i id="prep-bar"></i></div><div class="prep" id="prep"></div>
       <div class="acciones"><button class="btn" id="abrir-biblio">Elegir de la biblioteca (30)</button></div>
       <div><h4>Notas de producción</h4><textarea id="notas" placeholder="Ideas, invitados, cambios para esta semana…"></textarea></div></div></details>
   <details class="fold" id="s-reg"><summary>Registro al aire</summary><div class="fold-body">
@@ -670,7 +677,7 @@ const nombreProg = id => conProg(id, () => cfgPrograma().nombre) || `Programa ${
 
 const notaBox = (w, k, ph) => { const v = get(key(w, k)) || '';
   return `<details class="mi-nota${v ? ' tiene' : ''}"${v ? ' open' : ''}><summary>${v ? 'Mi nota' : 'Agregar nota'}</summary>
-    <textarea id="n-${w.n}-${k.replace('/', '-')}" data-n="${k}" placeholder="${ph}" aria-label="Nota">${esc(v)}</textarea></details>`; };
+    <textarea id="n-${w.n}-${k.replace('/', '-')}" data-n="${k}"${cerrada(w) ? ' readonly' : ''} placeholder="${ph}" aria-label="Nota">${esc(v)}</textarea></details>`; };
 const fcorta = d => d.toLocaleDateString('es-PY', {day: 'numeric', month: 'short'}).replace('.', '');
 
 /* ── Semana actual ── */
@@ -696,6 +703,30 @@ const prepHechas = w => listaDe(w).filter(it => get(kPrep(w, it)));
 function prepPct(w) {
   const mis = listaDe(w);
   return mis.length ? Math.round(prepHechas(w).length / mis.length * 100) : 0;
+}
+
+/* plazo de marcación: la semana N se marca durante esa semana y la siguiente; al empezar la N+2 queda cerrada.
+   Coordinación puede abrirla con su clave; cada apertura queda registrada (AAAA/wN/correccion). */
+const CLAVE_COORD = '1009';   // provisoria: con sincronización pasa al servidor
+const abiertas = new Set();
+const cerrada = w => sem.indexOf(w) + 2 <= semanaHoy() && hoyD >= dateOf(sem[sem.indexOf(w) + 2].inicio) && !abiertas.has(w.n);
+const limiteDe = w => { const j = sem.indexOf(w); return j + 1 < sem.length ? fechaDia(sem[j + 1], 6) : fechaDia(w, 13); };
+const bloqueada = () => { if (!cerrada(sem[cur])) return false; avisar('Semana cerrada: pedí la corrección a coordinación'); return true; };
+function pintarPlazo(w) {
+  const lim = limiteDe(w), largo = lim.toLocaleDateString('es-PY', {weekday: 'long', day: 'numeric', month: 'long'});
+  const corr = get(keyBase(w, 'correccion')) || [];
+  let html = '', cls = '';
+  if (cerrada(w)) { cls = 'cerrada'; html = `<span><b>Semana cerrada.</b> Se podía marcar hasta el ${largo}.</span><button class="btn mini" data-corregir>Corregir (coordinación)</button>`; }
+  else if (abiertas.has(w.n)) { cls = 'gracia'; html = `<span><b>Abierta por coordinación</b> para corregir. El cambio queda registrado.</span>`; }
+  else if (hoyD > fechaDia(w, 6) && hoyD <= lim) { cls = 'gracia'; html = `<span><b>Semana pasada:</b> podés completar tus marcas hasta el ${largo}.</span>`; }
+  else if (corr.length) html = `<span>Corregida por coordinación el ${corr.map(t => fcorta(new Date(t))).join(', ')}.</span>`;
+  for (const id of ['plazo', 'plazo-prep']) { $(id).className = 'plazo ' + cls; $(id).innerHTML = html; }
+  const b = cerrada(w); $('semana').classList.toggle('bloq', b); $('s-prep').classList.toggle('bloq', b); $('notas').readOnly = b;
+}
+function corregirSemana() {
+  const w = sem[cur], c = prompt(`Semana ${w.n} cerrada. Clave de coordinación para abrirla:`);
+  if (c === null) return; if (c.trim() !== CLAVE_COORD) return avisar('Clave incorrecta');
+  abiertas.add(w.n); set(keyBase(w, 'correccion'), [...(get(keyBase(w, 'correccion')) || []), Date.now()]); render(); avisar(`Semana ${w.n} abierta para corregir`);
 }
 
 function render() {
@@ -751,6 +782,7 @@ function render() {
   else $('prep').innerHTML = misItems().map(btnPrep).join('');
   pintarPrep();
   $('notas').value = get(key(w, 'notas')) || '';
+  pintarPlazo(w);
 
   // año
   $('anio').innerHTML = sem.map((s, i) => { const c = PAL[s.color].sw, claro = ['Blanco','Amarillo'].includes(s.color);
@@ -852,10 +884,11 @@ function informeMes(m) {
     ...(varios ? [...cs.map(c => `${c.nombre}: ${c.aire} de ${c.total} días al aire (${c.pct}%) · ${c.ent} entrevista${c.ent === 1 ? '' : 's'}`),
         `Total: ${cs.reduce((a, c) => a + c.aire, 0)} programas al aire · ${ents.length} entrevista${ents.length === 1 ? '' : 's'}`]
       : [`Días al aire: ${c1.aire} de ${c1.total} (${c1.pct}%)`, `Entrevistas: ${ents.length}${ents.length ? ' (' + ents.join(', ') + ')' : ''}`]),
-    rs.length ? `Reemplazos: ${rs.length} (${rs.join('; ')})` : '',
+    rs.length ? `Reemplazos: ${rs.length} (${rs.join('; ')})` : null,
     `Días con notas: ${notas}`,
-    prepTxt.length ? `Preparación promedio: ${prepTxt.join(' · ')}` : '', '',
-    'VERSÍCULOS Y TEMAS COMPARTIDOS', ...(dias.length ? dias : ['- Ninguno marcado.'])].filter((x, k) => x !== '' || k > 1).join('\n');
+    (c => c.length ? `Correcciones de coordinación: ${c.join('; ')}` : null)(sem.flatMap(w => (get(keyBase(w, 'correccion')) || []).filter(t => enMes(new Date(t))).map(t => `semana ${w.n} (${fcorta(new Date(t))})`))),
+    prepTxt.length ? `Preparación promedio: ${prepTxt.join(' · ')}` : null, '',
+    'VERSÍCULOS Y TEMAS COMPARTIDOS', ...(dias.length ? dias : ['- Ninguno marcado.'])].filter((x, k) => x !== null && (x !== '' || k > 1)).join('\n');
 }
 
 /* informe de preparación: semanas del mes (cada semana cuenta en el mes de su miércoles) */
@@ -1214,7 +1247,7 @@ function pintarPrep() {
 }
 
 /* ── Eventos ── */
-const ir = i => { cur = Math.max(0, Math.min(sem.length-1, i)); diaSel = null; render(); };
+const ir = i => { cur = Math.max(0, Math.min(sem.length-1, i)); diaSel = null; abiertas.clear(); render(); };   // la apertura de coordinación vale mientras se está en esa semana
 $('prev').onclick = () => ir(cur-1);
 $('next').onclick = () => ir(cur+1);
 $('hoy').onclick = () => ir(semanaHoy());
@@ -1255,7 +1288,7 @@ function marcar() {
 addEventListener('scroll', () => { cancelAnimationFrame(espia); espia = requestAnimationFrame(marcar); }, {passive: true});
 
 const hoyDe = w => { const ini = dateOf(w.inicio), f = fechaDia(w, 6); return hoyD >= ini && hoyD <= f ? hoyD.getDay() : -1; };
-const marcarChk = e => { const b = e.target.closest('.chk'); if (!b) return;
+const marcarChk = e => { const b = e.target.closest('.chk'); if (!b || bloqueada()) return;
   const w = sem[cur], k = b.dataset.k;
   if (b.dataset.reem) { const kr = keyBase(w, 'reem'+b.dataset.reem); set(kr, typeof get(kr) === 'string' ? null : ''); }
   else set(key(w, k), !get(key(w, k)));
@@ -1277,7 +1310,7 @@ $('h-subs').onclick = e => { const b = e.target.closest('[data-ir]'); if (!b) re
   diaSel = i; renderDias(sem[cur], hoyDe(sem[cur])); $('s-dias').scrollIntoView({behavior: 'smooth'}); };
 const crecer = t => { t.style.height = 'auto'; t.style.height = Math.max(t.scrollHeight + 2, t.offsetHeight) + 'px'; };
 document.addEventListener('toggle', e => { const t = e.target.querySelector?.('textarea[data-n]'); if (t && e.target.open) { crecer(t); t.focus(); } }, true);
-document.addEventListener('input', e => { const t = e.target.closest('textarea[data-n]'); if (!t) return; crecer(t);
+document.addEventListener('input', e => { const t = e.target.closest('textarea[data-n]'); if (!t || t.readOnly) return; crecer(t);
   set(key(sem[cur], t.dataset.n), t.value); const d = t.closest('details'); d.classList.toggle('tiene', !!t.value); d.querySelector('summary').textContent = t.value ? 'Mi nota' : 'Agregar nota'; });
 $('mes').onchange = e => renderRegistro(+e.target.value);
 $('copiar-informe').onclick = () => copiar(informeMes(+$('mes').value));
@@ -1288,7 +1321,7 @@ $('inf').onclick = e => { const m = e.target.closest('[data-mes]'); if (m) retur
 document.querySelectorAll('.reg-list').forEach(l => l.onclick = e => { const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } });
 $('copia-x').onclick = () => $('copia').close();
 $('programa').onchange = () => guardarPrograma();
-$('dias').onchange = e => { const s = e.target.closest('[data-reem-sel]'); if (!s) return;
+$('dias').onchange = e => { const s = e.target.closest('[data-reem-sel]'); if (!s) return; if (bloqueada()) return render();
   set(keyBase(sem[cur], 'reem'+s.dataset.reemSel), s.value); renderRegistro(+$('mes').value); };
 $('s-prog').onclick = e => {
   const g = e.target.closest('button[data-prog]'); if (g) return g.dataset.prog !== prog && cambiarProg(g.dataset.prog);
@@ -1303,10 +1336,11 @@ $('s-prog').onclick = e => {
   if (!antes && dias.length) $('semana').scrollIntoView({behavior: 'smooth'});
 };
 $('abrir-biblio').onclick = abrirBiblio;
-$('prep').onclick = e => { const b = e.target.closest('button'); if (!b) return;
+$('prep').onclick = e => { const b = e.target.closest('button'); if (!b || bloqueada()) return;
   const k = kPrep(sem[cur], ITEMS.find(i => i.id === b.dataset.p)), v = !get(k); set(k, v); set(key(sem[cur], 'prepLista'), misItems().map(it => it.id)); b.setAttribute('aria-pressed', v); pintarPrep();
 };
-$('notas').oninput = e => set(key(sem[cur], 'notas'), e.target.value);
+document.querySelectorAll('.plazo').forEach(el => el.onclick = e => { if (e.target.closest('[data-corregir]')) corregirSemana(); });
+$('notas').oninput = e => !e.target.readOnly && set(key(sem[cur], 'notas'), e.target.value);
 $('anio').onclick = e => { const b = e.target.closest('button'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } };
 $('leyenda').innerHTML = Object.entries(PAL).map(([n, p]) => { const t = sem.find(s => s.color === n)?.tema;
   return `<span style="--c:${p.sw}">${n} · ${esc(TEMA_TXT[t]||t)}</span>`; }).join('');
