@@ -21,6 +21,10 @@ P = [  # (semana, día de la planilla, punto anterior, punto nuevo, motivo)
 
 V = []  # sin erratas en las citas
 
+N = [  # (semana, columna, texto que se agrega a la nota del locutor)
+ (28,'Nota Locutor 2','Tema sensible: no opinar al aire sobre empresas, productos o propuestas de inversión concretas, ni sobre si son confiables. Si la audiencia pregunta o se quiere profundizar, conviene invitar a un profesional (contador o asesor financiero) para hablar del tema.'),
+]
+
 path = sys.argv[1]
 wb = openpyxl.load_workbook(path)
 ws = wb['Guiones 2027']; h = [c.value for c in ws[1]]
@@ -36,5 +40,8 @@ for s, d, viejo, nuevo, motivo in P:
 for s, col, viejo, nuevo in V:
     c = t.cell(s + 1, ht.index(col) + 1)
     c.value = c.value.replace(viejo, nuevo)
+for s, col, extra in N:
+    c = t.cell(s + 1, ht.index(col) + 1)
+    if extra not in c.value: c.value = c.value.rstrip() + ' ' + extra
 wb.save(path)
-print(f'{len(G)} campos de guion, {len(P)} puntos y {len(V)} citas corregidos')
+print(f'{len(G)} campos de guion, {len(P)} puntos, {len(V)} citas y {len(N)} notas del locutor corregidos')

@@ -344,7 +344,7 @@ Los criterios ya se aplicaron al escribir el borrador:
 - **Romanos 13:1** (6 de julio): respetar a las autoridades, pero ninguna autoridad humana es absoluta (Hechos 5:29). Respetar no es aprobar todo ni callar ante una injusticia.
 - **Proverbios 14:34 y 24:16:** se presentan como principios, no como garantías. «El justo» es el que confía en Dios, no el que nunca se equivoca.
 - **Mateo 25:20-21** (12 de julio): la recompensa es más responsabilidad y el gozo del Señor, no ganancias. El que ganó dos mil recibe el mismo elogio (25:23).
-- **Inversión** (semana 28): enfoque educativo, sin recomendar productos. Advertencia contra las promesas de ganancia rápida y los esquemas piramidales. No arriesgar lo que la familia necesita. Mateo 6:19-21 no condena ahorrar, sino poner ahí el corazón.
+- **Inversión** (semana 28): enfoque educativo, sin recomendar productos. Primero se cubre lo que la familia necesita, y antes de invertir se pide consejo a un profesional de confianza. Mateo 6:19-21 no condena ahorrar, sino poner ahí el corazón.
 - **Habacuc 2:2:** era una revelación de Dios y no una meta personal; se toma solo el principio de escribir con claridad.
 - **Mateo 7:7:** no es una fórmula para conseguir cualquier cosa (7:11). No se culpa a nadie de «no haber orado lo suficiente».
 - **Job 22:28** (23 de julio): lo dice Elifaz, y Dios corrige a esos amigos (42:7). El guion lo explica y usa Proverbios 16:9. Se recomienda cambiarlo por Proverbios 16:9 (`content/versiculos_sugeridos.md`, n.º 13).
@@ -361,3 +361,5 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 - Copia y tildes: semana 28 viernes («lo 2. material»), semana 28 sábado y semana 29 viernes (números sueltos), semana 29 sábado («está»), semana 30 martes («Él») y semana 30 sábado («La prAI31:AK31oduccion» → «La producción»).
 
 La alarma automática ya no marca frases de julio. Se ajustó para no marcar «no está garantizado», que es justamente la idea correcta.
+
+Ajuste pedido por Richarh (semana 28): se suavizaron las advertencias sobre «ganancias rápidas» y esquemas piramidales de martes a sábado. Es un tema sensible que puede asustar a la audiencia y generar preguntas que el locutor no puede responder: hay propuestas que parecen confiables y no lo son, y otras al revés. En su lugar, el guion anima a pedir consejo a un profesional (contador o asesor financiero). La nota del locutor del subtema 2 sugiere no opinar sobre empresas o productos concretos e invitar a un profesional si se quiere profundizar. El criterio quedó en `content/criterios_teologicos.md` para los meses siguientes.

@@ -41,6 +41,7 @@ Todo guion pasa por esta revisión **antes** de cargarse en la app. Vale igual p
 - **Fe y medicina:** no se opone la oración al tratamiento médico. Se ora y se cumple el tratamiento.
 - **Poner algo al lado de Dios como fundamento:** la familia, el trabajo o el ahorro van **después** de Dios, no a la par.
 - **Seguridad en el dinero:** ahorrar es prudencia. La seguridad de fondo está en Dios (Mateo 6; Lucas 12:15-21).
+- **Temas sensibles que piden un profesional** (inversiones, deudas grandes, salud, temas legales): el guion da principios generales y anima a pedir consejo a un profesional de confianza. No se opina al aire sobre empresas, productos o propuestas concretas, ni sobre si son confiables o estafas: el locutor no puede comprobarlo y la audiencia puede asustarse o quedarse con preguntas sin respuesta. En la nota del locutor se sugiere invitar a un profesional si se quiere profundizar.
 - **Temas que dividen a las iglesias** (bautismo, dones, escatología detallada, gobierno de la iglesia): no se toman posiciones. La audiencia es de distintas congregaciones.
 - **El centro del mensaje:** cuando el texto es evangelio (Juan 3:16), su punto central (Cristo, la gracia, la vida eterna) no queda desplazado por la aplicación práctica.
 
