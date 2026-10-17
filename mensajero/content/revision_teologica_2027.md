@@ -459,3 +459,25 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 - Tildes: semana 40 domingo («dudó de sí mismo») y jueves («está»).
 
 Cambios de versículo sugeridos: se actualizó el n.º 14 (Nehemías 4:6 en lugar de 2:18, porque la semana 40 ya usa Nehemías 2:17-18) y se agregó el n.º 17 (opcional): Hechos 9:36 para el 22 de octubre.
+
+# Noviembre 2027 (semanas 44 a 47)
+
+Script del borrador: `tools/guiones_noviembre_2027.py`. Revisión: `tools/revision_teologica_nov_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- **2 Tesalonicenses 3:12** (3 de noviembre): habla de quien no quería trabajar, no de quien no puede. No se juzga a quien está sin trabajo, y recibir ayuda no quita dignidad.
+- **Trabajo:** forma parte del diseño de Dios antes de la caída (Génesis 2:15), no es un castigo. Ningún oficio honesto es menor.
+- **Primeros auxilios (semana 45):** la fe no reemplaza la preparación ni la atención médica. Orar y llamar a emergencias van juntos. Las instrucciones son las básicas de fuentes reconocidas (American Heart Association, Cruz Roja), sin diagnósticos al aire.
+- **Santiago 5:14-15** (10 de noviembre): no se opone la oración al médico. La unción se practica de maneras distintas según la iglesia, y no se toma posición. «Si acaso ha pecado» no dice que toda enfermedad sea por un pecado.
+- **Salmo 34:17:** no promete que no habrá emergencias. El mismo salmo dice que el justo pasa muchas aflicciones (34:19).
+- **Adoración (semana 46):** no se critican estilos de otras iglesias. El lamento sincero también es adoración, y estar triste no es falta de fe.
+- **Proverbios 3:21-23:** es un principio, no una garantía de no tropezar nunca.
+
+En la lectura posterior no se encontraron frases de guion para corregir. La alarma marca «Ver el trabajo como una maldición» (semana 44, jueves 4 de noviembre): es la problemática que el guion corrige, no una enseñanza.
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 45 · Jueves: «La oración en emergencia tiene respuesta» → «Dios está cerca del que sufre (34:18)».
+- Semana 46 · Sábado: «La fortaleza y la elevación sobrenatural.» → «Dios da fuerza para seguir caminando.»
+- Copia y tildes: semana 46 miércoles (viñetas dobles), semana 45 (domingo a viernes) y semana 47 (domingo y lunes: «Él»).
+- Semana 46 · Jueves: el texto de Salmo 150:6 no tenía «¡» ni «ñ» («Senor»). Se corrigió.
