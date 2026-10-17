@@ -399,3 +399,29 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 Cambio de versículo sugerido (opcional): Nehemías 2:18 para el 18 de agosto, porque Filipenses 3:14 repite el pasaje del 19 de julio (`content/versiculos_sugeridos.md`, n.º 14).
 
 La alarma automática no marca frases de agosto.
+
+# Septiembre 2027 (semanas 35 a 39)
+
+Script del borrador: `tools/guiones_septiembre_2027.py`. Revisión: `tools/revision_teologica_sep_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- **1 Timoteo 6:10** (31 de agosto): el problema es el amor al dinero, no el dinero. En griego dice «raíz de toda clase de males», no la única causa de todo mal.
+- **Finanzas del hogar:** nadie debe usar la plata para dominar al otro. Ante deudas grandes se sugiere un profesional de confianza (criterio de temas sensibles).
+- **Proverbios 12:24** (8 de septiembre): es un principio; no toda persona que está abajo es perezosa.
+- **Disciplina:** el dominio propio es fruto del Espíritu (Gálatas 5:22-23), no solo fuerza de voluntad ni un mérito.
+- **1 Timoteo 4:8:** no se desprecia el ejercicio físico; las dos cosas tienen su lugar.
+- **Hechos 4:32** (13 de septiembre): no se presenta como «modelo cooperativo bíblico». Compartir era voluntario (5:4) y la Biblia no impone un sistema económico.
+- **1 Corintios 12 y Salmo 133:** hablan de la iglesia y del pueblo de Dios; el puente al grupo o a la cooperativa se dice en voz alta.
+- **Salud por etapas:** sin diagnósticos al aire. Se recomiendan controles médicos y, para adolescentes, ayuda profesional sin vergüenza (línea 147). No se dice que la tristeza sea falta de fe.
+- **Isaías 46:4 y Salmo 92:14:** muestran el carácter de Dios, que sostiene en cada etapa. No son una promesa de salud en la vejez.
+- **Identidad en Cristo:** la identidad es un regalo de gracia (Efesios 2:8-9), no autoestima ni mérito. Romanos 8:17 incluye compartir los sufrimientos de Cristo: ser hijo no promete una vida sin problemas.
+
+En la lectura posterior no se encontraron frases de guion para corregir. La alarma marca «nunca vas a cambiar» (semana 39, lunes 27 de septiembre): es una etiqueta negativa que el guion denuncia, no una enseñanza.
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 35 · Martes: los tres puntos estaban incompletos («El amor al dinero como origen del mal:»…). Ahora: «El amor al dinero, no el dinero, es la raíz del problema», «La codicia aparta de la fe», «La codicia trae muchos dolores».
+- Semana 36 · Miércoles: «La pereza lleva a servir a otros» → «La negligencia tiene consecuencias». Es un principio; no estigmatizar a quien trabaja para otros.
+- Semana 37 · Lunes: «El modelo cooperativo tiene raíces bíblicas» → «Compartir nace del amor, no de la obligación». Era un anacronismo.
+- Copia y tildes: semana 35 domingo y miércoles, semana 39 martes (viñetas dobles) y domingo («pasó»).
+- Tildes en el texto del versículo: Eclesiastés 12:1 («Acuérdate», «días», «años») y Romanos 8:16-17 («Espíritu», «espíritu», «también»).
