@@ -412,7 +412,7 @@ Los criterios ya se aplicaron al escribir el borrador:
 - **1 Timoteo 4:8:** no se desprecia el ejercicio físico; las dos cosas tienen su lugar.
 - **Hechos 4:32** (13 de septiembre): no se presenta como «modelo cooperativo bíblico». Compartir era voluntario (5:4) y la Biblia no impone un sistema económico.
 - **1 Corintios 12 y Salmo 133:** hablan de la iglesia y del pueblo de Dios; el puente al grupo o a la cooperativa se dice en voz alta.
-- **Salud por etapas:** sin diagnósticos al aire. Se recomiendan controles médicos y, para adolescentes, ayuda profesional sin vergüenza (línea 147). No se dice que la tristeza sea falta de fe.
+- **Salud por etapas:** sin diagnósticos al aire. Se recomiendan controles médicos y, para adolescentes, ayuda profesional sin vergüenza (médico de la familia o centro de salud; no se nombró la línea 147 porque en julio de 2026 estaba suspendida). No se dice que la tristeza sea falta de fe.
 - **Isaías 46:4 y Salmo 92:14:** muestran el carácter de Dios, que sostiene en cada etapa. No son una promesa de salud en la vejez.
 - **Identidad en Cristo:** la identidad es un regalo de gracia (Efesios 2:8-9), no autoestima ni mérito. Romanos 8:17 incluye compartir los sufrimientos de Cristo: ser hijo no promete una vida sin problemas.
 

@@ -227,7 +227,7 @@ D = [
  'Contale a un joven cómo Dios te acompañó cuando tenías su edad.',
  'La salud mental en la adolescencia merece atención. La tristeza que no pasa, el aislamiento o los cambios bruscos son señales para buscar ayuda, sin vergüenza.',
  'Minimizar lo que sienten los adolescentes: «son cosas de la edad».',
- 'Si ves señales de alarma en un adolescente, buscá ayuda profesional; en Paraguay, la línea gratuita 147 «Fono Ayuda» orienta sobre niños y adolescentes.'),
+ 'Si ves señales de alarma en un adolescente, buscá ayuda profesional: el médico de la familia o el centro de salud pueden orientarte.'),
 (38,'Jueves','Cada etapa tiene su valor',
  'Los especialistas recomiendan que los adolescentes de 13 a 18 años duerman entre 8 y 10 horas por noche.','American Academy of Sleep Medicine, recomendaciones para niños y adolescentes, 2016',
  'El proverbio celebra la fuerza de la juventud. Esa fuerza es un regalo para cuidar, no para gastar sin medida.',

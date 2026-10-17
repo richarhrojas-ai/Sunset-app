@@ -441,3 +441,53 @@ Script: `tools/verificacion_datos_ago_2027.py`. Se verificaron los 24 datos con 
 - Semana 34 · Miércoles: «En el griego, Pablo pide que la conversación sea «con gracia, sazonada con sal»: la sal daba sabor y conservaba los alimentos.» (Colosenses 4:6 (texto griego; Reina-Valera 1960))
 - Semana 34 · Jueves: «Proverbios 25 abre una colección de dichos de Salomón que copiaron los hombres de Ezequías, rey de Judá.» (Proverbios 25:1)
 - Semana 34 · Sábado: «Jesús enseñó que de lo que abunda en el corazón habla la boca.» (Mateo 12:34; Lucas 6:45)
+
+## Septiembre 2027 (semanas 35 a 39)
+
+Script: `tools/verificacion_datos_sep_2027.py`. Se verificaron los 30 datos con búsqueda web: 25 confirmados y 5 ajustados. También se confirmó el texto RVC de Proverbios 25:28 y 12:24 (los textos cargados eran de otros versículos; ver `versiculos_sugeridos.md`), Eclesiastés 12:1, Romanos 8:16-17 y Juan 1:12 (se agregó «Pero» al comienzo). La línea 147 «Fono Ayuda» se quitó del guion del 22 de septiembre porque en julio de 2026 estaba suspendida.
+
+### Ajustados
+
+- **Semana 35 · Martes** — «Toda clase» es una traducción posible, no la letra del griego.
+  - antes: «En el griego, Pablo dice que el amor al dinero es raíz de «toda clase» de males: no la única causa de todo mal, sino una raíz que produce muchos.» (1 Timoteo 6:10 (texto griego))
+  - ahora: «En el griego, Pablo dice que el amor al dinero es raíz «de todos los males», en plural; por eso muchas versiones traducen «de toda clase de males»: no la única causa de todo mal, sino una raíz que produce muchos.» (1 Timoteo 6:10 (texto griego))
+- **Semana 35 · Miércoles** — El rico solo lo planeaba, y el texto no narra su muerte.
+  - antes: «Justo después, Jesús cuenta la parábola del rico que construyó graneros más grandes para guardar su cosecha, y esa misma noche murió.» (Lucas 12:16-21)
+  - ahora: «Justo después, Jesús cuenta la parábola del rico que planeaba construir graneros más grandes para guardar su cosecha, y Dios le dijo que esa misma noche le pedirían el alma.» (Lucas 12:16-21)
+- **Semana 37 · Lunes** — Cifra más reciente; «más de un millón» se quedaba corto.
+  - antes: «En Paraguay, más de un millón de personas son socias de alguna cooperativa, según el Instituto Nacional de Cooperativismo (INCOOP).» (Instituto Nacional de Cooperativismo (INCOOP))
+  - ahora: «En Paraguay, cerca de 1,85 millones de personas son socias de alguna cooperativa, según datos del Instituto Nacional de Cooperativismo (INCOOP).» (Instituto Nacional de Cooperativismo (INCOOP), datos difundidos en julio de 2026)
+- **Semana 37 · Sábado** — Redacción del artículo («fomentará»).
+  - antes: «La Constitución del Paraguay establece que el Estado promoverá el cooperativismo.» (Constitución Nacional del Paraguay, 1992, artículo 113)
+  - ahora: «La Constitución del Paraguay establece que el Estado fomentará la empresa cooperativa y otras formas asociativas.» (Constitución Nacional del Paraguay, 1992, artículo 113)
+- **Semana 38 · Martes** — El equinoccio de 2027 es el 23 de septiembre; la fiesta es tradicional.
+  - antes: «Hoy, 21 de septiembre, Paraguay celebra el Día de la Juventud, junto con el inicio de la primavera.» (Fechas conmemorativas del Paraguay)
+  - ahora: «Hoy, 21 de septiembre, Paraguay celebra el Día de la Juventud, junto con la llegada de la primavera, que tradicionalmente se festeja en esta fecha.» (Fechas conmemorativas del Paraguay)
+
+### Confirmados
+
+- Semana 35 · Lunes: «El versículo anterior dice que dos rinden más que uno, porque juntos sacan más fruto de su trabajo.» (Eclesiastés 4:9)
+- Semana 35 · Jueves: «La palabra que Jesús usa para «riquezas» es «mamón», que en arameo significa dinero o posesiones.» (Mateo 6:24; léxico griego de Strong (G3126, mamonás))
+- Semana 35 · Viernes: «Un estudio con más de 4.500 parejas encontró que las discusiones por dinero predecían el divorcio mejor que otros tipos de discusiones.» (Dew, Britt y Huston, Family Relations, 2012)
+- Semana 35 · Sábado: «Pablo escribió estas palabras preso, agradeciendo una ofrenda que la iglesia de Filipos le había enviado.» (Filipenses 1:13; 4:10-18)
+- Semana 36 · Lunes: «En la antigüedad, una ciudad sin muralla quedaba expuesta a cualquier ataque; por eso Nehemías se dedicó a reconstruir los muros de Jerusalén.» (Nehemías 1:3; 2:17)
+- Semana 36 · Martes: «Un estudio encontró que cerca del 43 % de lo que hacemos cada día lo hacemos por hábito, casi sin pensar.» (Wood, Quinn y Kashy, Journal of Personality and Social Psychology, 2002)
+- Semana 36 · Miércoles: «Un hábito se forma repitiendo una acción en el mismo contexto: hacerla a la misma hora o en el mismo lugar ayuda a que salga casi sin pensar.» (Gardner, Lally y Wardle, British Journal of General Practice, 2012)
+- Semana 36 · Jueves: «La palabra griega que Pablo usa para «ejercítate» es la raíz de nuestra palabra «gimnasio».» (1 Timoteo 4:7; léxico griego de Strong (G1128, gymnázo))
+- Semana 36 · Viernes: «Leer diez páginas por día suma más de 3.600 páginas en un año: casi quince libros de 250 páginas.» (Cálculo simple)
+- Semana 36 · Sábado: «Proverbios dedica varios dichos a la hormiga y al perezoso como ejemplos de constancia y de descuido.» (Proverbios 6:6-11; 24:30-34)
+- Semana 37 · Martes: «La primera cooperativa moderna se considera la de los Pioneros de Rochdale, en Inglaterra, fundada en 1844.» (Alianza Cooperativa Internacional)
+- Semana 37 · Miércoles: «El Salmo 133 es uno de los «cánticos de las subidas», que los peregrinos cantaban camino a Jerusalén.» (Salmos 120 a 134 (títulos))
+- Semana 37 · Jueves: «Los principios cooperativos de la Alianza Cooperativa Internacional son siete; entre ellos, el control democrático de los socios y el compromiso con la comunidad.» (Alianza Cooperativa Internacional, Declaración sobre la Identidad Cooperativa, 1995)
+- Semana 37 · Viernes: «Pablo compara a la iglesia con un cuerpo, en el que ningún miembro puede decirle a otro que no lo necesita.» (1 Corintios 12:21)
+- Semana 38 · Lunes: «En Paraguay, las vacunas del esquema regular son gratuitas en los servicios del Ministerio de Salud.» (Ministerio de Salud Pública y Bienestar Social, Programa Ampliado de Inmunizaciones)
+- Semana 38 · Miércoles: «Según la Organización Mundial de la Salud, uno de cada siete adolescentes de 10 a 19 años vive con algún trastorno mental.» (Organización Mundial de la Salud, nota descriptiva sobre la salud mental de los adolescentes)
+- Semana 38 · Jueves: «Los especialistas recomiendan que los adolescentes de 13 a 18 años duerman entre 8 y 10 horas por noche.» (American Academy of Sleep Medicine, recomendaciones para niños y adolescentes, 2016)
+- Semana 38 · Viernes: «La presión alta muchas veces no da síntomas; por eso se recomienda medirla con regularidad.» (Organización Mundial de la Salud, nota descriptiva sobre la hipertensión)
+- Semana 38 · Sábado: «Moisés tenía 80 años cuando habló con el faraón para sacar al pueblo de Egipto.» (Éxodo 7:7)
+- Semana 39 · Lunes: «La palabra griega para «obra» en este versículo (poíema) es la raíz de nuestra palabra «poema».» (Efesios 2:10; léxico griego de Strong (G4161, poíema))
+- Semana 39 · Martes: «En el derecho romano, un hijo adoptado pasaba a tener los mismos derechos de herencia que un hijo natural.» (Derecho romano (adopción); comentarios a Gálatas 4 y Romanos 8)
+- Semana 39 · Miércoles: «Hoy, 29 de septiembre, Paraguay recuerda la victoria de Boquerón, de 1932, en la Guerra del Chaco.» (Batalla de Boquerón, 9 al 29 de septiembre de 1932)
+- Semana 39 · Jueves: «Pablo escribió Gálatas para defender que somos aceptados por Dios por la fe en Cristo, y no por cumplir la ley.» (Gálatas 2:16)
+- Semana 39 · Viernes: «Romanos 8 empieza diciendo que ya no hay condenación para los que están en Cristo Jesús.» (Romanos 8:1)
+- Semana 39 · Sábado: «Juan aclara que los hijos de Dios no nacen de la sangre ni de la voluntad humana, sino de Dios.» (Juan 1:13)
