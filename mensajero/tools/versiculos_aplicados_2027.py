@@ -7,6 +7,10 @@ V = [  # (semana, columna, texto nuevo completo, motivo)
   'Error de copia: estaba cargado el texto de Proverbios 22:15 (aprobado el 16 oct 2026)'),
  (14, 'Versiculo Martes', 'Proverbios 21:5 — Si piensas lo que haces, tendrás abundancia; si te apresuras, acabarás en la pobreza.',
   'Error de copia: estaba cargado el texto de Proverbios 21:15 (aprobado el 16 oct 2026)'),
+ (36, 'Versiculo Lunes', 'Proverbios 25:28 — Ciudad en ruinas, sin muralla protectora: ¡eso es el hombre que no frena sus impulsos!',
+  'Error de copia: estaba cargado el texto de Proverbios 15:28 (aprobado el 17 oct 2026)'),
+ (36, 'Versiculo Miercoles', 'Proverbios 12:24 — Los diligentes dominan a otros; los negligentes son dominados.',
+  'Error de copia: estaba cargado el texto de Proverbios 12:22 (aprobado el 17 oct 2026)'),
 ]
 
 path = sys.argv[1]

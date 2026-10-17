@@ -425,3 +425,37 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 - Semana 37 · Lunes: «El modelo cooperativo tiene raíces bíblicas» → «Compartir nace del amor, no de la obligación». Era un anacronismo.
 - Copia y tildes: semana 35 domingo y miércoles, semana 39 martes (viñetas dobles) y domingo («pasó»).
 - Tildes en el texto del versículo: Eclesiastés 12:1 («Acuérdate», «días», «años») y Romanos 8:16-17 («Espíritu», «espíritu», «también»).
+
+# Octubre 2027 (semanas 40 a 43)
+
+Script del borrador: `tools/guiones_octubre_2027.py`. Revisión: `tools/revision_teologica_oct_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- **1 Samuel 17** (6 de octubre): el relato no promete vencer a todo «gigante». David buscaba la gloria de Dios, y la batalla es del Señor (17:47).
+- **Liderazgo:** la humildad no es dejarse pisar; el carácter pesa más que el talento. El servicio de Jesús fue su entrega, no una técnica de liderazgo.
+- **Proverbios 31** (11 y 14 de octubre): es un retrato de la sabiduría, no una lista de exigencias para cada madre.
+- **1 Timoteo 5:8:** habla de quien se desentiende de su familia, no de quien no puede proveer. No se culpa a quien está sin trabajo.
+- **Efesios 5:21:** se toma la sumisión mutua como punto de partida. Las iglesias interpretan de distintas maneras los roles de 5:22-33, y no se toma posición.
+- **Semana del dar (42), la más delicada:** se siguió la nota de la planilla («evitar el ángulo de da y Dios te devolverá más como fórmula»).
+  - Malaquías 3:10 se explica como parte del pacto con Israel: el diezmo sostenía a los levitas y a los necesitados. Las iglesias enseñan el diezmo de maneras distintas; no se toma posición sobre el porcentaje.
+  - Proverbios 3:9-10 es un principio, no una garantía: hay creyentes generosos que pasan escasez.
+  - Lucas 6:38 se lee en su contexto (no juzgar, perdonar, 6:37) y no como fórmula para hacerse rico.
+  - 2 Corintios 9:10-11: Dios provee para que seamos generosos, no para acumular.
+- **Eclesiastés 7:1** (28 de octubre): la segunda mitad del versículo habla de una vida cumplida con buen nombre, no de desear la muerte. El guion invita a buscar ayuda a quien piense en la muerte como salida.
+- **Génesis 50:20:** Dios usó el mal para bien, pero el mal no fue bueno. No se dice «todo pasa por algo» a quien sufre.
+- **Proverbios 13:22:** no es una promesa de que los justos se quedarán con los bienes de otros.
+
+En la lectura posterior no se encontraron frases de guion para corregir. La alarma automática no marca frases de octubre.
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 42 · Lunes: «La obediencia trae bendición prometida» → «La bendición de Dios no es un pago».
+- Semana 42 · Martes: «Los graneros se llenan por confiar primero en El» → «Es un principio de sabiduría, no una fórmula».
+- Semana 42 · Miércoles: «Dar activa el principio de recibir» → «Dar con la misma generosidad con que Dios nos trata», y «La generosidad no empobrece» → «La generosidad nace de la gracia recibida».
+- Semana 41 · Lunes: «La diligencia en casa no descansa» → «La diligencia cuida a toda la familia».
+- Semana 41 · Martes: «No hacerlo niega la fe» → «Desentenderse de los suyos contradice la fe».
+- Semana 41 · Viernes: «No es jerarquía rígida, es humildad mutua» → «La humildad mutua sostiene la familia». No tomar posición en el debate sobre los roles.
+- Semana 40 · Miércoles: «El trasfondo de la afrenta personal y nacional» → «La batalla es del Señor (17:47)».
+- Tildes: semana 40 domingo («dudó de sí mismo») y jueves («está»).
+
+Cambios de versículo sugeridos: se actualizó el n.º 14 (Nehemías 4:6 en lugar de 2:18, porque la semana 40 ya usa Nehemías 2:17-18) y se agregó el n.º 17 (opcional): Hechos 9:36 para el 22 de octubre.
