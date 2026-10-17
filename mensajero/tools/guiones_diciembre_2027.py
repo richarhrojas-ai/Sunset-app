@@ -285,7 +285,7 @@ D = [
  'Jesús usa la imagen del médico para hablar de su misión con los pecadores, y la usa porque todos sabían que el enfermo necesita médico.',
  'Rechazar la medicina en nombre de la fe.',
  'Si tenés un control médico pendiente, agendalo esta semana.',
- 'Buscar tratamiento médico y orar no son caminos opuestos. Lucas, el médico, escribió dos libros de la Biblia.',
+ 'Buscar tratamiento médico y orar no son caminos opuestos. Según la tradición, Lucas, el médico, escribió dos libros de la Biblia.',
  'Rechazar la fe en nombre de la ciencia, o la ciencia en nombre de la fe.',
  'Cuando vayas al médico, orá antes y seguí sus indicaciones después.',
  'Admitir que estamos enfermos, en el cuerpo o en el alma, es el primer paso para recibir ayuda.',

@@ -575,3 +575,55 @@ Script: `tools/verificacion_datos_nov_2027.py`. Se verificaron los 24 datos con 
 - Semana 47 · Jueves: «Salomón hizo este pedido en Gabaón, en un sueño, al comienzo de su reinado.» (1 Reyes 3:4-5)
 - Semana 47 · Viernes: «El Salmo 32 empieza celebrando la dicha de quien recibe el perdón de Dios.» (Salmo 32:1-5)
 - Semana 47 · Sábado: «Antes de elegir a los doce apóstoles, Jesús pasó la noche orando.» (Lucas 6:12-13)
+
+## Diciembre 2027 (semanas 48 a 52)
+
+Script: `tools/verificacion_datos_dic_2027.py`. Se verificaron los 30 datos con búsqueda web: 24 confirmados y 6 ajustados. Se confirmó que el 25 de diciembre de 2027 cae sábado, el 31 viernes y el 1 de enero de 2028 sábado. Se confirmó el texto RVC de Santiago 5:16 e Isaías 53:5, y el de Lucas 2:10-11 (dice «mucha alegría»). De Proverbios 17:22 y Proverbios 1:5 solo se pudo ver la primera mitad: conviene revisarlos en la Biblia antes del aire. En el guion del 29 de diciembre se agregó «según la tradición» a la autoría de Lucas.
+
+### Ajustados
+
+- **Semana 48 · Miércoles** — El texto dice que David lo encargó a Asaf, no que él lo cantara.
+  - antes: «David cantó este himno cuando llevaron el arca del pacto a Jerusalén.» (1 Crónicas 16:1-7)
+  - ahora: «Cuando llevaron el arca del pacto a Jerusalén, David les encargó a Asaf y a sus hermanos que cantaran este salmo de alabanza al Señor.» (1 Crónicas 16:1-7)
+- **Semana 49 · Martes** — Proverbios 22:27 habla de la cama, no del manto.
+  - antes: «En tiempos bíblicos, quien no podía pagar podía perder hasta su manto; la ley pedía devolverlo antes de la noche.» (Éxodo 22:26-27; Proverbios 22:27)
+  - ahora: «En tiempos bíblicos, quien se endeudaba podía dejar su manto en prenda; la ley pedía devolverlo antes de que se pusiera el sol, porque era su abrigo para dormir.» (Éxodo 22:26-27; Deuteronomio 24:12-13)
+- **Semana 50 · Miércoles** — Es la formación de la palabra, no una definición literal.
+  - antes: «La palabra griega que se traduce «resistencia» (hypomoné) significa literalmente «quedarse debajo»: aguantar sin abandonar.» (Romanos 5:3; léxico griego de Strong (G5281, hypomoné))
+  - ahora: «La palabra griega que en este versículo se traduce «resistencia» (hypomoné) se forma con «debajo» y «permanecer»: quedarse firme bajo la carga, sin abandonar.» (Romanos 5:3; léxico griego de Strong (G5281, hypomoné))
+- **Semana 51 · Viernes** — Se cita lo que dice el BCP.
+  - antes: «Los bancos recuerdan que nunca piden por teléfono ni por mensaje las claves ni los códigos de verificación.» (Recomendaciones de seguridad de los bancos y del Banco Central del Paraguay)
+  - ahora: «El Banco Central del Paraguay pide desconfiar de cualquier llamada o mensaje que solicite claves, PIN, token o códigos de verificación, y no compartirlos nunca, aunque quien llama diga ser del banco.» (Banco Central del Paraguay, campaña «Seguridad Financiera Digital», 2026)
+- **Semana 51 · Sábado** — Redacción de la RVC («mucha alegría»).
+  - antes: «Hoy celebramos el nacimiento de Jesús: el ángel les dio a los pastores un anuncio de gran alegría para todo el pueblo.» (Lucas 2:10-11)
+  - ahora: «Hoy celebramos el nacimiento de Jesús: el ángel les dio a los pastores una buena noticia, motivo de mucha alegría para todo el pueblo.» (Lucas 2:10-11)
+- **Semana 52 · Miércoles** — La autoría es atribución tradicional.
+  - antes: «Lucas, autor del evangelio y del libro de los Hechos, era médico.» (Colosenses 4:14)
+  - ahora: «Lucas era médico, y la tradición cristiana lo reconoce como autor del evangelio que lleva su nombre y del libro de los Hechos.» (Colosenses 4:14; Lucas 1:1-4; Hechos 1:1)
+
+### Confirmados
+
+- Semana 48 · Lunes: «Deuteronomio 11 repite casi palabra por palabra el mandato de Deuteronomio 6: enseñar a los hijos en casa, en el camino, al acostarse y al levantarse.» (Deuteronomio 6:6-9; 11:18-21)
+- Semana 48 · Martes: «Las doce piedras representaban a las doce tribus de Israel, y se colocaron en Gilgal.» (Josué 4:2-8, 20)
+- Semana 48 · Jueves: «El carcelero de Filipos creyó esa misma noche, después de un terremoto que abrió las puertas de la cárcel.» (Hechos 16:25-34)
+- Semana 48 · Viernes: «El Salmo 128 es otro de los «cánticos de las subidas» y describe la mesa familiar, con los hijos alrededor como plantas de olivo.» (Salmo 128:1-3)
+- Semana 48 · Sábado: «El ángel aplicó esta profecía a Juan el Bautista antes de que naciera.» (Lucas 1:17)
+- Semana 49 · Lunes: «En la ley de Moisés, cada siete años se perdonaban las deudas entre israelitas, en el «año de remisión».» (Deuteronomio 15:1-2)
+- Semana 49 · Miércoles: «Proverbios 6:1-5 aconseja a quien quedó comprometido por otro que vaya cuanto antes a pedir que lo liberen, sin dejar pasar el tiempo.» (Proverbios 6:1-5)
+- Semana 49 · Jueves: «Moisés dijo estas palabras antes de que el pueblo entrara en la tierra prometida, cuando todavía estaban en el desierto.» (Deuteronomio 1:1-5; 8:1-18)
+- Semana 49 · Viernes: «Según una encuesta de la Reserva Federal de Estados Unidos, más de un tercio de los adultos no podría cubrir un gasto inesperado de 400 dólares con efectivo o su equivalente.» (Reserva Federal, Informe sobre el bienestar económico de los hogares de EE. UU., 2024)
+- Semana 49 · Sábado: «Las «cosas» que Jesús promete añadir son la comida, la bebida y la ropa de las que acaba de hablar.» (Mateo 6:31-33)
+- Semana 50 · Lunes: «En la aviación, los pilotos pueden reportar sus propios errores en sistemas confidenciales, y eso ayudó a que volar sea más seguro.» (NASA, Sistema de Reportes de Seguridad de Aviación (ASRS))
+- Semana 50 · Martes: «Isaías anuncia aquí el regreso del exilio en Babilonia como un nuevo éxodo, con un camino en el desierto.» (Isaías 43:14-21)
+- Semana 50 · Jueves: «Santiago escribe a creyentes judíos dispersos fuera de su tierra: «las doce tribus» de la dispersión.» (Santiago 1:1)
+- Semana 50 · Viernes: «Pablo escribió esto después de sufrir persecuciones, cárceles y naufragios.» (2 Corintios 11:23-27)
+- Semana 50 · Sábado: «Pablo, ya mayor y preso, todavía pedía que le llevaran sus libros y sus pergaminos.» (2 Timoteo 4:13)
+- Semana 51 · Lunes: «En Atenas, Pablo citó a poetas griegos para anunciar a Jesús a quienes no conocían las Escrituras.» (Hechos 17:28)
+- Semana 51 · Martes: «Este versículo está en la lista de los hombres que se unieron a David en Hebrón para hacerlo rey.» (1 Crónicas 12:23, 38)
+- Semana 51 · Miércoles: «Un teléfono celular común de hoy tiene muchísima más capacidad de cálculo que la computadora de guía de las naves Apolo que llegaron a la Luna en 1969.» (NASA, computadora de guía del Apolo)
+- Semana 51 · Jueves: «Eclesiastés observa la vida con ejemplos del trabajo de todos los días, como cavar un pozo, sacar piedras o cortar leña.» (Eclesiastés 10:8-10)
+- Semana 52 · Lunes: «La Organización Mundial de la Salud define la salud como un estado de completo bienestar físico, mental y social, y no solo como la ausencia de enfermedades.» (Constitución de la Organización Mundial de la Salud, 1946)
+- Semana 52 · Martes: «Según la Organización Mundial de la Salud, la depresión es una de las principales causas de discapacidad en el mundo.» (Organización Mundial de la Salud, nota descriptiva sobre la depresión)
+- Semana 52 · Jueves: «Isaías 53 fue escrito varios siglos antes de Jesús, y el Nuevo Testamento lo cita para explicar su muerte.» (Hechos 8:32-35; 1 Pedro 2:24)
+- Semana 52 · Viernes: «En un estudio, reír en grupo con videos de comedia aumentó la tolerancia al dolor de los participantes.» (Dunbar y otros, Proceedings of the Royal Society B, 2012)
+- Semana 52 · Sábado: «Proverbios compara las palabras amables con un panal: en la antigüedad, la miel también se usaba como remedio.» (Proverbios 16:24; 24:13)
