@@ -36,7 +36,7 @@ D = [
  'David va «en el nombre del Señor». El relato no promete que venceremos a todo «gigante»: muestra que David buscaba la gloria de Dios, no la suya.',
  'Usar el nombre de Dios para respaldar proyectos personales.',
  'Revisá tu proyecto: ¿busca la gloria de Dios y el bien de otros, o solo el tuyo?',
- 'David reconoce que la batalla es del Señor (17:47). Un líder con propósito hace su parte y confía el resultado a Dios.',
+ 'David reconoce que la victoria es del Señor (17:47). Un líder con propósito hace su parte y confía el resultado a Dios.',
  'Cargar con la ansiedad de controlar cada resultado.',
  'Hacé hoy tu parte con excelencia, y entregale el resultado a Dios en oración.'),
 (40,'Jueves','El que quiera ser grande',

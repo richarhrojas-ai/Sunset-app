@@ -491,3 +491,47 @@ Script: `tools/verificacion_datos_sep_2027.py`. Se verificaron los 30 datos con 
 - Semana 39 · Jueves: «Pablo escribió Gálatas para defender que somos aceptados por Dios por la fe en Cristo, y no por cumplir la ley.» (Gálatas 2:16)
 - Semana 39 · Viernes: «Romanos 8 empieza diciendo que ya no hay condenación para los que están en Cristo Jesús.» (Romanos 8:1)
 - Semana 39 · Sábado: «Juan aclara que los hijos de Dios no nacen de la sangre ni de la voluntad humana, sino de Dios.» (Juan 1:13)
+
+## Octubre 2027 (semanas 40 a 43)
+
+Script: `tools/verificacion_datos_oct_2027.py`. Se verificaron los 24 datos con búsqueda web: 19 confirmados y 5 ajustados. En 1 Samuel 17:47 la RVC dice «la victoria es del Señor» (no «la batalla»), y se corrigió el punto y el guion del 6 de octubre. Se confirmó el texto RVC de Lucas 6:38 y Números 12:3; el de Malaquías 3:10 y Proverbios 3:9-10 coincide en lo que se pudo ver.
+
+### Ajustados
+
+- **Semana 41 · Miércoles** — Cifra exacta y título completo.
+  - antes: «Según la Organización Internacional del Trabajo, las mujeres realizan en el mundo cerca de tres cuartas partes del trabajo de cuidado no remunerado.» (Organización Internacional del Trabajo, El trabajo de cuidados y los trabajadores del cuidado, 2018)
+  - ahora: «Según la Organización Internacional del Trabajo, las mujeres realizan en el mundo el 76,2 % del trabajo de cuidado no remunerado: unas tres cuartas partes.» (Organización Internacional del Trabajo, El trabajo de cuidados y los trabajadores del cuidado para un futuro con trabajo decente, 2018)
+- **Semana 41 · Jueves** — Se midió la gratitud sentida por los gestos del otro, no la expresada.
+  - antes: «Un estudio encontró que expresar gratitud a la pareja se asocia con una relación más satisfactoria para los dos.» (Algoe, Gable y Maisel, Personal Relationships, 2010)
+  - ahora: «Un estudio con parejas encontró que sentir gratitud por los pequeños gestos del otro se asociaba, al día siguiente, con una relación más conectada y satisfactoria para los dos.» (Algoe, Gable y Maisel, Personal Relationships, 2010)
+- **Semana 42 · Lunes** — Es el diezmo del tercer año.
+  - antes: «En la ley de Moisés, parte del diezmo se destinaba a los levitas, a los extranjeros, a los huérfanos y a las viudas.» (Deuteronomio 14:28-29)
+  - ahora: «En la ley de Moisés, cada tres años el diezmo de la cosecha se guardaba en cada ciudad para los levitas, los extranjeros, los huérfanos y las viudas.» (Deuteronomio 14:28-29)
+- **Semana 42 · Miércoles** — El texto no habla de un vendedor; se describe la medición del grano.
+  - antes: «La imagen viene del mercado de granos: el vendedor generoso apretaba y sacudía el grano para que la medida quedara llena hasta rebalsar.» (Lucas 6:38; comentarios bíblicos)
+  - ahora: «La imagen viene de la medición del grano: se apretaba y se sacudía para que la medida quedara llena hasta rebalsar, y se volcaba en el pliegue del manto de quien la recibía.» (Lucas 6:38; comentarios bíblicos)
+- **Semana 43 · Martes** — «Batalla» traduce agón, la competencia atlética, no la guerra.
+  - antes: «Pablo usa tres imágenes seguidas: la de un soldado, la de un corredor y la de alguien que cuida lo que se le confió.» (2 Timoteo 4:7)
+  - ahora: «Pablo usa tres imágenes seguidas: la de un atleta que lucha en una competencia, la de un corredor que llega a la meta y la de alguien que cuida fielmente lo que se le confió.» (2 Timoteo 4:7 (texto griego))
+
+### Confirmados
+
+- Semana 40 · Lunes: «Números 12 cuenta que María y Aarón, los hermanos de Moisés, lo criticaron; el texto destaca su humildad justo en ese momento.» (Números 12:1-3)
+- Semana 40 · Martes: «Nehemías era copero del rey persa Artajerjes, un cargo de mucha confianza en la corte.» (Nehemías 1:11; 2:1)
+- Semana 40 · Miércoles: «Según el texto hebreo, Goliat medía «seis codos y un palmo», cerca de tres metros; algunos manuscritos antiguos dicen cuatro codos, unos dos metros.» (1 Samuel 17:4 (texto masorético y Septuaginta))
+- Semana 40 · Jueves: «Jesús dijo esto después de que la madre de Santiago y Juan le pidiera los mejores lugares para sus hijos.» (Mateo 20:20-24)
+- Semana 40 · Viernes: «Tito era un colaborador de Pablo que quedó en Creta para organizar las iglesias y nombrar líderes.» (Tito 1:4-5)
+- Semana 40 · Sábado: «Jesús dijo estas palabras en la última cena, la misma noche en que lavó los pies de sus discípulos.» (Lucas 22:14-27; Juan 13:1-15)
+- Semana 41 · Lunes: «Proverbios 31:10-31 es un poema acróstico: en hebreo, cada versículo empieza con una letra del alfabeto, en orden.» (Proverbios 31:10-31 (texto hebreo))
+- Semana 41 · Martes: «Pablo escribe este versículo en una sección sobre el cuidado de las viudas: la familia debía hacerse cargo de las suyas antes que la iglesia.» (1 Timoteo 5:3-8, 16)
+- Semana 41 · Viernes: «Efesios 5:21 abre una sección sobre la vida en familia que habla de esposos, hijos, padres, siervos y amos.» (Efesios 5:21 a 6:9)
+- Semana 41 · Sábado: «Rut era moabita y llegó a ser bisabuela del rey David.» (Rut 4:13-17)
+- Semana 42 · Martes: «En Israel, las primicias eran los primeros frutos de la cosecha, que se ofrecían a Dios antes de usar el resto.» (Éxodo 23:19; Deuteronomio 26:1-11)
+- Semana 42 · Jueves: «David dijo estas palabras cuando el pueblo dio con generosidad para construir el templo, que edificaría su hijo Salomón.» (1 Crónicas 29:1-9)
+- Semana 42 · Viernes: «Jetró, el suegro de Moisés, era sacerdote de Madián.» (Éxodo 18:1)
+- Semana 42 · Sábado: «Pablo escribió 2 Corintios 8 y 9 para organizar una colecta para los creyentes pobres de Jerusalén.» (2 Corintios 8:1-4; Romanos 15:25-26)
+- Semana 43 · Lunes: «En Israel la tierra se heredaba dentro de la familia, y la ley preveía que volviera a sus dueños en el año del jubileo.» (Levítico 25:10, 23-28)
+- Semana 43 · Miércoles: «El Salmo 90 es el único salmo atribuido a Moisés.» (Salmo 90 (título))
+- Semana 43 · Jueves: «En hebreo hay un juego de palabras: «nombre» (shem) y «perfume» (shemen) suenan casi igual.» (Eclesiastés 7:1 (texto hebreo))
+- Semana 43 · Viernes: «José fue vendido por sus hermanos a los 17 años, y los volvió a ver más de veinte años después.» (Génesis 37:2; 41:46; 45:6)
+- Semana 43 · Sábado: «Hebreos 11 menciona a Abel como el primero de una larga lista de personas que vivieron por la fe.» (Hebreos 11:4-40)

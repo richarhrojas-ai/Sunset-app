@@ -5,7 +5,7 @@ import sys, openpyxl
 G = []  # los criterios se aplicaron en el borrador; la lectura posterior no encontró frases de guion para corregir
 
 P = [  # (semana, día de la planilla, punto anterior, punto nuevo, motivo)
- (40,'Miercoles','El trasfondo de la afrenta personal y nacional','La batalla es del Señor (17:47)',
+ (40,'Miercoles','El trasfondo de la afrenta personal y nacional','La victoria es del Señor (17:47)',
   'El punto sale del texto y evita leer el relato como promesa de vencer a todo «gigante»'),
  (41,'Lunes','La diligencia en casa no descansa','La diligencia cuida a toda la familia',
   'Proverbios 31 es un retrato de la sabiduría, no una exigencia de no descansar para cada madre'),
@@ -21,6 +21,7 @@ P = [  # (semana, día de la planilla, punto anterior, punto nuevo, motivo)
   'Lucas 6:38 está en un pasaje sobre no juzgar y perdonar (6:37); no es una fórmula de prosperidad'),
  (42,'Miercoles','La generosidad no empobrece','La generosidad nace de la gracia recibida',
   'Mismo motivo; además era una afirmación absoluta'),
+ (40,'Miercoles','La batalla es del Señor (17:47)','La victoria es del Señor (17:47)','Redacción de la RVC'),
  (40,'Domingo','Moisés dudo de si mismo','Moisés dudó de sí mismo','Tildes'),
  (40,'Jueves','La grandeza esta en servir','La grandeza está en servir','Tilde'),
 ]

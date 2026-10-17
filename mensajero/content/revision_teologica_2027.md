@@ -431,7 +431,7 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 Script del borrador: `tools/guiones_octubre_2027.py`. Revisión: `tools/revision_teologica_oct_2027.py`.
 
 Los criterios ya se aplicaron al escribir el borrador:
-- **1 Samuel 17** (6 de octubre): el relato no promete vencer a todo «gigante». David buscaba la gloria de Dios, y la batalla es del Señor (17:47).
+- **1 Samuel 17** (6 de octubre): el relato no promete vencer a todo «gigante». David buscaba la gloria de Dios, y la victoria es del Señor (17:47).
 - **Liderazgo:** la humildad no es dejarse pisar; el carácter pesa más que el talento. El servicio de Jesús fue su entrega, no una técnica de liderazgo.
 - **Proverbios 31** (11 y 14 de octubre): es un retrato de la sabiduría, no una lista de exigencias para cada madre.
 - **1 Timoteo 5:8:** habla de quien se desentiende de su familia, no de quien no puede proveer. No se culpa a quien está sin trabajo.
@@ -455,7 +455,7 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 - Semana 41 · Lunes: «La diligencia en casa no descansa» → «La diligencia cuida a toda la familia».
 - Semana 41 · Martes: «No hacerlo niega la fe» → «Desentenderse de los suyos contradice la fe».
 - Semana 41 · Viernes: «No es jerarquía rígida, es humildad mutua» → «La humildad mutua sostiene la familia». No tomar posición en el debate sobre los roles.
-- Semana 40 · Miércoles: «El trasfondo de la afrenta personal y nacional» → «La batalla es del Señor (17:47)».
+- Semana 40 · Miércoles: «El trasfondo de la afrenta personal y nacional» → «La victoria es del Señor (17:47)», como dice la RVC.
 - Tildes: semana 40 domingo («dudó de sí mismo») y jueves («está»).
 
 Cambios de versículo sugeridos: se actualizó el n.º 14 (Nehemías 4:6 en lugar de 2:18, porque la semana 40 ya usa Nehemías 2:17-18) y se agregó el n.º 17 (opcional): Hechos 9:36 para el 22 de octubre.
