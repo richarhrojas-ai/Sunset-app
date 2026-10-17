@@ -56,6 +56,19 @@ Antes de cargar guiones nuevos: versículos firmes → borrador → **revisión 
 
 Hoy se guardan en el dispositivo; con `sync.mjs` de Sunset quedan compartidas.
 
+## El guion es una base, no un libreto
+
+Cada locutor usa lo básico del guion y lo adapta a su estilo y a su lenguaje; muchas veces lo va a parafrasear. Lo que se mantiene: el versículo tal cual (RVC), la idea central del día y, si cita el dato, su fuente. Lo demás (orden, ejemplos, palabras, largo) es suyo.
+
+Para ayudarlo, cada día de lunes a sábado trae el bloque «Hacelo a tu estilo» (`ideasDia` en `index.html`), que también va al final del guion copiado:
+- la idea central del día (la del repaso del sábado para ese subtema; el sábado, la acción de la semana);
+- dos técnicas para adaptarlo, que rotan día a día sobre una lista de 15 (`IDEAS`): contar algo propio, abrir con una pregunta, usar un refrán en guaraní, leer mensajes de oyentes, convertirlo en conversación, etc.;
+- cómo hacerlo si hay poco tiempo.
+
+## Derechos de la RVC
+
+Mensajero tiene permiso de la Sociedad Bíblica del Paraguay para usar la Reina Valera Contemporánea (al aire, en la app y en los flyers).
+
 ## Pendiente
 
 - Versículos: corregidos por Richarh (oct. 2026), sin repetidos; los números de versículo se quitan del texto para el aire y el flyer.

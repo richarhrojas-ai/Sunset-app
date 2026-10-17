@@ -268,6 +268,8 @@ details.loc summary::-webkit-details-marker{display:none}
 details.loc summary::after{content:"+";color:var(--gold)}
 details.loc[open] summary::after{content:"–"}
 details.loc .in{padding:0 16px 14px;display:grid;gap:10px;font-size:14.5px;color:var(--ink2)}
+details.loc .in ul{margin:0;padding-left:18px;display:grid;gap:6px}
+details.loc .in p b{color:var(--ink)}
 .ideas{list-style:none;display:grid;gap:10px;counter-reset:i}
 .ideas li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:4px 12px}
 .ideas li::before{counter-increment:i;content:counter(i);width:30px;height:30px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:14px}
@@ -1012,14 +1014,14 @@ function textoDia(w, i, semanal) {
     r.ideas.forEach((x, k) => out.push(`${k+1}. ${w.subtemas[k].titulo}: ${x}`)); if (r.accion) out.push('', `PARA ESTA SEMANA: ${r.accion}`); out.push(''); };
   if (semanal) { intro(); resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`); return out.join('\n'); }
   if (i === 0) { intro(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, '', `HISTORIA: ${w.historia}`); return out.join('\n'); }
-  if (i === 6) { resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`); return out.join('\n'); }
+  if (i === 6) { resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`); return out.join('\n') + textoIdeas(w, 6); }
   out.push(`SUBTEMA ${BLOQUE[i]+1}: ${w.subtemas[BLOQUE[i]].titulo}`, '');
   if (g) out.push(g.titulo.toUpperCase(), '', `DATO PARA ABRIR: ${g.dato.texto} (${g.dato.fuente})`, '');
   out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, '');
   d.puntos.forEach((p, k) => { const [tt, ex] = tituloPunto(p); out.push(`${k+1}. ${tt}${ex ? ' — ' + ex : ''}`);
     if (g) { const q = g.puntos[k] || {}; out.push(q.desarrollo, `Problemática: ${q.problema}`, `En la práctica: ${q.solucion}`, ''); } });
   if (g) out.push(`PARA CERRAR: ${d.ref}`);
-  return out.join('\n');
+  return out.join('\n') + (g ? textoIdeas(w, i) : '');
 }
 // notas que acompañan al guion copiado: la del día y las de producción de la semana
 function misNotas(w, i) {
@@ -1058,6 +1060,44 @@ function paraLocutor(w, b) {
     ${s.nota ? `<div class="nota"><b>Nota</b>${esc(s.nota)}</div>` : ''}
     ${s.frase.texto ? `<blockquote class="frase">“${esc(s.frase.texto)}”<cite>— ${esc(s.frase.autor)}</cite></blockquote>` : ''}</div></details>`;
 }
+// ideas para que cada locutor adapte el guion a su estilo: se mantiene lo básico y se cambia la forma
+const IDEAS = [
+  'Antes del dato, contá en dos frases algo que te pasó a vos con este tema. Lo personal engancha más que cualquier cifra.',
+  'Empezá con una pregunta a la audiencia y dejá un segundo de silencio antes de seguir.',
+  'Elegí uno solo de los tres puntos y desarrollalo con un ejemplo de tu barrio o de tu ciudad.',
+  'Decí primero el versículo con tus palabras y después leelo tal cual: así se entiende mejor.',
+  'Invitá a los oyentes a contar por WhatsApp cómo viven este tema, y leé uno o dos mensajes al aire.',
+  'Si hablás en guaraní con tu audiencia, usá una expresión o un refrán que diga la misma idea.',
+  'Cambiá el orden: arrancá por la acción práctica y después explicá por qué.',
+  'Contalo como una historia: una persona (con un nombre inventado), un problema y lo que cambió.',
+  'Usá el dato como pregunta: «¿Sabías que…?», y da la respuesta después de una canción.',
+  'Imaginá a un oyente concreto, una madre, un trabajador o un joven, y hablale a esa persona.',
+  'Decí la idea central al principio y repetila al final con otras palabras.',
+  'Si el tema te recuerda algo que viviste en tu familia o en tu iglesia, compartilo con humildad.',
+  'Convertí la problemática en pregunta: «¿Te pasó alguna vez…?», para que el oyente se identifique.',
+  'Cerrá con una oración corta, con tus palabras, sobre lo que hablaron.',
+  'Si hay un compañero al aire, convertí los tres puntos en una conversación de preguntas y respuestas.',
+];
+const BASICO = 'Lo que se mantiene: el versículo tal cual (RVC), la idea central y, si citás el dato, su fuente. Lo demás (orden, ejemplos, palabras y largo) lo adaptás a tu estilo.';
+function ideasDia(w, i) {
+  const r = resumenDe(w), b = BLOQUE[i];
+  const central = i === 6 ? (r.accion || '') : (r.ideas[b] || w.subtemas[b].titulo);
+  const tecnicas = [IDEAS[(w.n * 7 + i) % IDEAS.length], IDEAS[(w.n * 7 + i + 5) % IDEAS.length]];
+  const corto = i === 6 ? 'Si tenés poco tiempo: la idea de cada subtema en una frase y la acción de la semana.'
+    : 'Si tenés poco tiempo: el dato, el versículo, el punto que más te toque y su acción práctica.';
+  return { central, tecnicas, corto };
+}
+function bloqueIdeas(w, i) {
+  const x = ideasDia(w, i);
+  return `<details class="loc"><summary>Hacelo a tu estilo</summary><div class="in">
+    <p><b>${i === 6 ? 'Lo que tiene que quedar' : 'La idea central'}:</b> ${esc(x.central)}</p>
+    <ul>${x.tecnicas.map(t => `<li>${esc(t)}</li>`).join('')}<li>${esc(x.corto)}</li></ul>
+    <p class="muted">${esc(BASICO)}</p></div></details>`;
+}
+function textoIdeas(w, i) {
+  const x = ideasDia(w, i);
+  return `\n\nPARA HACERLO A TU ESTILO\n${i === 6 ? 'Lo que tiene que quedar' : 'Idea central'}: ${x.central}\n${x.tecnicas.map(t => '- ' + t).join('\n')}\n- ${x.corto}\n${BASICO}`;
+}
 function renderDias(w, hoyIdx) {
   const c = cfgPrograma(), mis = c.dias, semanal = mis.length === 1 && !verTodo;
   if (!c.listo) return;
@@ -1076,7 +1116,7 @@ function renderDias(w, hoyIdx) {
       <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${esc(w.historia)}</p></div></details>${pie('Copiar guion')}`;
   else if (i === 0) cuerpo = `${cab}<div class="kick">Introducción de la semana</div>${introSemana(w)}${bloqueVersiculo(w, 0, true)}
       <div class="hist"><b>Historia ilustrativa</b><p>${esc(w.historia)}</p></div>${pie('Copiar guion')}`;
-  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${pie('Copiar guion')}`;
+  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${bloqueIdeas(w, 6)}${pie('Copiar guion')}`;
   else { const b = BLOQUE[i], g = d.guion, primero = [1,3,5].includes(i) || !visibles.includes(i-1);
     cuerpo = `${cab}<div class="kick">Subtema ${b+1} · ${esc(w.subtemas[b].titulo)}</div>${primero ? paraLocutor(w, b) : ''}
       ${g ? `<h3>${esc(g.titulo)}</h3>${g.dato.texto ? `<div class="dato"><b>Dato para abrir</b><p>${esc(g.dato.texto)}</p><cite>${esc(g.dato.fuente)}</cite></div>` : ''}
@@ -1084,7 +1124,7 @@ function renderDias(w, hoyIdx) {
         ${d.puntos.map((p, k) => { const [tt, ex] = tituloPunto(p), q = g.puntos[k] || {};
           return `<div class="punto"><span>${k+1}</span><h4>${esc(tt)}${ex ? `<small>${esc(ex)}</small>` : ''}</h4><p>${esc(q.desarrollo)}</p>
           <dl><div><dt class="pr">Problemática</dt><dd>${esc(q.problema)}</dd></div><div><dt class="so">En la práctica</dt><dd>${esc(q.solucion)}</dd></div></dl></div>`; }).join('')}
-        ${pie('Copiar guion')}`
+        ${bloqueIdeas(w, i)}${pie('Copiar guion')}`
       : `${bloqueVersiculo(w, i, true)}<div class="vacio"><p class="muted">Este día todavía no tiene guion. Copiá el prompt de la semana: ya trae el tema, los subtemas, el valor y los versículos de cada día.</p>
         <div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="prompt">Copiar prompt</button></div></div>`}`; }
   $('dias').innerHTML = `${tabs}<article class="guion" role="tabpanel">${cuerpo}</article>
