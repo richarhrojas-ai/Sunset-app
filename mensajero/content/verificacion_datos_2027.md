@@ -535,3 +535,43 @@ Script: `tools/verificacion_datos_oct_2027.py`. Se verificaron los 24 datos con 
 - Semana 43 · Jueves: «En hebreo hay un juego de palabras: «nombre» (shem) y «perfume» (shemen) suenan casi igual.» (Eclesiastés 7:1 (texto hebreo))
 - Semana 43 · Viernes: «José fue vendido por sus hermanos a los 17 años, y los volvió a ver más de veinte años después.» (Génesis 37:2; 41:46; 45:6)
 - Semana 43 · Sábado: «Hebreos 11 menciona a Abel como el primero de una larga lista de personas que vivieron por la fe.» (Hebreos 11:4-40)
+
+## Noviembre 2027 (semanas 44 a 47)
+
+Script: `tools/verificacion_datos_nov_2027.py`. Se verificaron los 24 datos con búsqueda web: 21 confirmados y 3 ajustados. Se confirmó el texto RVC de Salmo 150:6 (se le agregaron «¡» y la «ñ»), Santiago 5:14-15 y Salmo 34:17-19. Aviso: en septiembre de 2026 se informó que el SEME (141) fue intervenido y que menos de la mitad de sus ambulancias funcionaban; el número sigue siendo el oficial. Conviene confirmar con la Cruz Roja Paraguaya las fechas de sus cursos antes de anunciarlos.
+
+### Ajustados
+
+- **Semana 45 · Viernes** — Se agrega el número de los bomberos.
+  - antes: «En Paraguay, el 141 es el número del Servicio de Emergencias Médicas Extrahospitalarias (SEME), y el 911 el del sistema de emergencias.» (Ministerio de Salud Pública y Bienestar Social; Sistema 911)
+  - ahora: «En Paraguay, el 141 es el número del Servicio de Emergencias Médicas Extrahospitalarias (SEME), el 911 el del sistema de emergencias y el 132 el de los Bomberos Voluntarios.» (Ministerio de Salud Pública y Bienestar Social; Sistema 911; Cuerpo de Bomberos Voluntarios del Paraguay)
+- **Semana 46 · Martes** — El acróstico no es perfecto (falta una letra).
+  - antes: «El Salmo 34 es un acróstico: en hebreo, cada versículo empieza con una letra distinta del alfabeto.» (Salmo 34 (texto hebreo))
+  - ahora: «El Salmo 34 es un acróstico: en hebreo, sus versículos van siguiendo, uno tras otro, las letras del alfabeto.» (Salmo 34 (texto hebreo))
+- **Semana 47 · Miércoles** — El vínculo con el estrés viene de otros estudios.
+  - antes: «Una revisión de estudios sobre la postergación encontró que se asocia con peores resultados y con más estrés.» (Piers Steel, Psychological Bulletin, 2007)
+  - ahora: «Una revisión de estudios sobre la postergación encontró que se asocia con peores resultados; otros estudios la vinculan también con más estrés.» (Piers Steel, Psychological Bulletin, 2007; Tice y Baumeister, Psychological Science, 1997)
+
+### Confirmados
+
+- Semana 44 · Lunes: «En el griego, Romanos 13:7 nombra dos clases de impuestos del Imperio romano: el tributo directo (phóros) y las tasas o aduanas (télos).» (Romanos 13:7 (texto griego))
+- Semana 44 · Martes: «En el griego, el «trabaje» de este versículo indica un esfuerzo que cansa: trabajar hasta fatigarse.» (Efesios 4:28; léxico griego de Strong (G2872, kopiáo))
+- Semana 44 · Miércoles: «En Tesalónica algunos habían dejado de trabajar, quizás pensando que Jesús volvería enseguida, y vivían a costa de otros.» (2 Tesalonicenses 3:6-12; comentarios bíblicos)
+- Semana 44 · Jueves: «En la Biblia, el trabajo aparece antes de la caída: Dios puso al ser humano en el huerto para que lo cultivara y lo cuidara.» (Génesis 2:15)
+- Semana 44 · Viernes: «Jesús fue conocido en Nazaret como artesano; la palabra griega (tékton) se usaba para el carpintero o el constructor.» (Marcos 6:3; léxico griego de Strong (G5045, tékton))
+- Semana 44 · Sábado: «Pablo cita aquí dos textos: uno de la ley de Moisés y otro que coincide con palabras de Jesús.» (Deuteronomio 25:4; Lucas 10:7)
+- Semana 45 · Lunes: «La reanimación cardiopulmonar hecha por un testigo, antes de que llegue la ambulancia, puede duplicar o triplicar las posibilidades de sobrevivir a un paro cardíaco.» (American Heart Association)
+- Semana 45 · Martes: «En la RCP se recomienda comprimir el centro del pecho a un ritmo de 100 a 120 compresiones por minuto.» (American Heart Association, guías de RCP, 2020)
+- Semana 45 · Miércoles: «En el mundo antiguo, el aceite de oliva también se usaba como remedio para las heridas, como hizo el buen samaritano.» (Lucas 10:34; Isaías 1:6)
+- Semana 45 · Jueves: «El título del Salmo 34 lo relaciona con un momento de peligro en la vida de David, cuando huía de Saúl.» (Salmo 34 (título); 1 Samuel 21:10-15)
+- Semana 45 · Sábado: «La Cruz Roja Paraguaya ofrece cursos de primeros auxilios abiertos a la comunidad.» (Cruz Roja Paraguaya)
+- Semana 46 · Lunes: «Jesús dijo estas palabras a una mujer samaritana, junto al pozo de Jacob, en Sicar.» (Juan 4:5-7)
+- Semana 46 · Miércoles: «Un estudio encontró que, al cantar juntos, el ritmo del corazón de los integrantes de un coro tiende a sincronizarse.» (Vickhoff y otros, Frontiers in Psychology, 2013)
+- Semana 46 · Jueves: «El libro de los Salmos tiene cinco partes, y cada una termina con una alabanza; el Salmo 150 cierra todo el libro.» (Salmos 41:13; 72:19; 89:52; 106:48; 150)
+- Semana 46 · Viernes: «En la carta a los Hebreos, los sacrificios del templo dan lugar a otra ofrenda: la alabanza, hacer el bien y compartir.» (Hebreos 13:15-16)
+- Semana 46 · Sábado: «Habacuc empieza su libro con preguntas y quejas a Dios, y lo termina con este canto de confianza.» (Habacuc 1:2-4; 3:17-19)
+- Semana 47 · Lunes: «La palabra hebrea que se traduce «enderezará» también significa allanar un camino: quitarle los obstáculos.» (Proverbios 3:6 (texto hebreo, yashar))
+- Semana 47 · Martes: «Los capítulos 1 a 9 de Proverbios están escritos como consejos de un padre a su hijo.» (Proverbios 1:8; 4:1)
+- Semana 47 · Jueves: «Salomón hizo este pedido en Gabaón, en un sueño, al comienzo de su reinado.» (1 Reyes 3:4-5)
+- Semana 47 · Viernes: «El Salmo 32 empieza celebrando la dicha de quien recibe el perdón de Dios.» (Salmo 32:1-5)
+- Semana 47 · Sábado: «Antes de elegir a los doce apóstoles, Jesús pasó la noche orando.» (Lucas 6:12-13)
