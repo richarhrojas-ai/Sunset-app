@@ -481,3 +481,42 @@ Puntos de versículo (hoja «Temas Macro 2027»):
 - Semana 46 · Sábado: «La fortaleza y la elevación sobrenatural.» → «Dios da fuerza para seguir caminando.»
 - Copia y tildes: semana 46 miércoles (viñetas dobles), semana 45 (domingo a viernes) y semana 47 (domingo y lunes: «Él»).
 - Semana 46 · Jueves: el texto de Salmo 150:6 no tenía «¡» ni «ñ» («Senor»). Se corrigió.
+
+# Diciembre 2027 (semanas 48 a 52)
+
+Script del borrador: `tools/guiones_diciembre_2027.py`. Revisión: `tools/revision_teologica_dic_2027.py`.
+
+Los criterios ya se aplicaron al escribir el borrador:
+- **Hechos 16:31** (2 de diciembre): la fe de un padre no salva automáticamente a los hijos; cada uno tiene que hacer suya la fe. No se culpa a los padres cuyos hijos se alejaron.
+- **Transmitir la fe sin imponerla:** sin culpa ni miedo, y las dudas de los hijos se reciben con apertura.
+- **Semana de las deudas (49), tema sensible:**
+  - El tono es de esperanza, no de alarma.
+  - No se dice que toda deuda sea pecado (nota de la planilla).
+  - Salmo 37:21 habla de quien no quiere pagar, no de quien no puede.
+  - Se recomienda consejo profesional si la deuda desborda (criterio de temas sensibles).
+  - Mateo 6:33: «estas cosas» son la comida y la ropa (6:31), no riquezas.
+  - El fondo de emergencia no es falta de fe.
+- **Romanos 5:3-4 y Santiago 1:2-4:** Dios usa el sufrimiento, pero el sufrimiento no es bueno en sí; no hace falta fingir que no duele.
+- **1 Corintios 9:22:** Pablo adaptaba la forma, no el mensaje; el puente a las herramientas nuevas se dice en voz alta.
+- **Navidad:** el 24 (Nochebuena) y el 25 (Navidad, sábado) se mencionan en el guion. Se recomienda Lucas 2:10-11 para el 25 (`versiculos_sugeridos.md`, n.º 18).
+- **Semana de la sanidad (52), la más delicada:** se siguieron las notas de la planilla.
+  - Nada desalienta a buscar atención médica: orar y seguir el tratamiento van juntos.
+  - Pedir ayuda a un psicólogo o a un médico no es falta de fe.
+  - Isaías 53:5: las iglesias entienden de distintas maneras si incluye hoy la sanidad física, y no se toma posición. Se dice que su centro es el perdón (1 Pedro 2:24) y que nadie queda sin sanar por falta de fe.
+  - Proverbios 17:22 (31 de diciembre) describe, no culpa: quien está triste necesita compañía, no reproches.
+  - Santiago 5:16 no es una garantía de sanidad.
+  - Éxodo 23:25 (domingo 26) es parte del pacto con Israel.
+
+En la lectura posterior no se encontraron frases de guion para corregir. La alarma marca dos frases que se revisaron:
+- «Prudencia antes de garantizar deudas ajenas» (8 de diciembre): habla de salir de garante, no de una promesa.
+- «Dios bendice el pan y el agua» (26 de diciembre): es la promesa a Israel tal como está en el texto.
+
+Puntos de versículo (hoja «Temas Macro 2027»):
+
+- Semana 48 · Jueves: «Creer trae salvación para la casa» → «La promesa alcanza a toda la casa que cree».
+- Semana 48 · Sábado: «Evita la maldición del distanciamiento» → «Dios restaura lo que el distanciamiento rompe».
+- Semana 49 · Domingo: «Prosperidad con propósito» → «Bendición con propósito».
+- Semana 52 · Domingo: los puntos presentaban Éxodo 23:25 como una condición para no enfermarse («La condición…», «Remoción de la enfermedad»). Ahora lo presentan como promesa del pacto con Israel.
+- Semana 52 · Lunes: «Orar unos por otros trae sanidad» → «Orar unos por otros, también por la sanidad».
+- Puntuación y tildes: semana 49 jueves y semana 51 martes («práctica», «qué»).
+- Citas: «Josue» → «Josué» y «1 Cronicas» → «1 Crónicas».
