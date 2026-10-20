@@ -68,7 +68,7 @@ def revisar_teologia(semanas):
     for w in semanas:
         for i, d in enumerate(w['dias']):
             g = d.get('guion') or {}
-            textos = list(d.get('puntos', [])) + [g.get('titulo', ''), g.get('accion', '')] + list(g.get('ideas', []))
+            textos = list(d.get('puntos', [])) + [g.get('titulo', ''), g.get('accion', ''), d.get('deporte', '')] + list(g.get('ideas', []))
             for q in g.get('puntos', []):
                 textos += [q.get('desarrollo', ''), q.get('problema', ''), q.get('solucion', '')]
             for t in filter(None, textos):
@@ -152,6 +152,15 @@ def main(path):
                                 'solucion': txt(r[f'Solucion {i}'])} for i in (1, 2, 3)]
             guiones[(int(r['Semana']), dia)] = g
 
+    # frase deportiva del día (opcional): hoja «Frases Deportivas AAAA» con Semana, Dia, Deporte, Frase.
+    # Original, sin autor: una imagen del deporte que mantiene el tema del día; va antes de la historia o del guion.
+    deportivas = {}
+    hd = f'Frases Deportivas {anio}'
+    if hd in wb.sheetnames:
+        for r in rows(wb[hd]):
+            dia = next(i for i, d in enumerate(DIAS) if d.lower() == quitar_tildes(txt(r['Dia'])).lower())
+            deportivas[(int(r['Semana']), dia)] = txt(r['Frase'])
+
     semanas = []
     for r in rows(wb[hoja]):
         d, m, a = txt(r['Fecha inicio (Dom)']).split('/')
@@ -174,7 +183,8 @@ def main(path):
             'programa': txt(r['Programa']),
             'locutor': txt(r['Locutor']),
             'dias': [{**versiculo(r[f'Versiculo {d}']), 'puntos': puntos(r[f'3 Puntos {d}']),
-                      'guion': guiones.get((int(r['Semana']), i))} for i, d in enumerate(DIAS)],
+                      'guion': guiones.get((int(r['Semana']), i)),
+                      'deporte': deportivas.get((int(r['Semana']), i), '')} for i, d in enumerate(DIAS)],
             'marco': marcos.get((tema, ronda)),
         })
 

@@ -126,6 +126,9 @@ details.valor dd{color:var(--ink2)}
 .ref{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:500}
 .pts{list-style:none;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
 .pts li{font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--ink2)}
+.deporte{margin:14px 0;padding:12px 14px;border-left:3px solid var(--acc,#e8c547);background:color-mix(in srgb,var(--ink3) 8%,transparent);border-radius:0 10px 10px 0}
+.deporte b{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:4px}
+.deporte p{margin:0;font-style:italic}
 .historia{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:15px;color:var(--ink2);text-align:left}
 .historia b{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:4px}
 
@@ -1071,10 +1074,11 @@ function textoDia(w, i, semanal) {
   const resumen = () => { const r = resumenDe(w); out.push(r.titulo.toUpperCase(), '');
     if (r.dato.texto) out.push(`DATO PARA ABRIR: ${r.dato.texto} (${r.dato.fuente})`, '');
     r.ideas.forEach((x, k) => out.push(`${k+1}. ${w.subtemas[k].titulo}: ${x}`)); if (r.accion) out.push('', `PARA ESTA SEMANA: ${r.accion}`); out.push(''); };
-  if (semanal) { intro(); resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`); return out.join('\n'); }
-  if (i === 0) { intro(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, '', `HISTORIA: ${w.historia}`); return out.join('\n'); }
-  if (i === 6) { resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`); return out.join('\n') + textoIdeas(w, 6); }
-  out.push(`SUBTEMA ${BLOQUE[i]+1}: ${w.subtemas[BLOQUE[i]].titulo}`, '');
+  const dep = () => { if (d.deporte) out.push(`FRASE DEPORTIVA: ${d.deporte}`, ''); };
+  if (semanal) { intro(); resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, ''); dep(); out.push(`HISTORIA: ${w.historia}`); return out.join('\n'); }
+  if (i === 0) { intro(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, ''); dep(); out.push(`HISTORIA: ${w.historia}`); return out.join('\n'); }
+  if (i === 6) { dep(); resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`); return out.join('\n') + textoIdeas(w, 6); }
+  out.push(`SUBTEMA ${BLOQUE[i]+1}: ${w.subtemas[BLOQUE[i]].titulo}`, ''); dep();
   if (g) out.push(g.titulo.toUpperCase(), '', `DATO PARA ABRIR: ${g.dato.texto} (${g.dato.fuente})`, '');
   out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, '');
   d.puntos.forEach((p, k) => { const [tt, ex] = tituloPunto(p); out.push(`${k+1}. ${tt}${ex ? ' — ' + ex : ''}`);
@@ -1087,6 +1091,8 @@ function misNotas(w, i) {
   const dia = (get(key(w, 'vn'+i)) || '').trim(), sem = (get(key(w, 'notas')) || '').trim();
   return (dia ? `\n\nMIS NOTAS DEL ${DIAS[i].toUpperCase()}:\n${dia}` : '') + (sem ? `\n\nNOTAS DE PRODUCCIÓN DE LA SEMANA:\n${sem}` : '');
 }
+// frase deportiva del día: original, sin autor; puente para la audiencia de deportes antes de la historia o del guion
+const bloqueDeporte = d => d.deporte ? `<div class="deporte"><b>Frase deportiva</b><p>${esc(d.deporte)}</p></div>` : '';
 function bloqueVersiculo(w, i, conPuntos) {
   const d = w.dias[i];
   return `<div class="vers-base"><span class="ref">${esc(d.ref)}</span><p class="vtxt">${esc(d.texto)}</p>
@@ -1186,13 +1192,13 @@ function renderDias(w, hoyIdx) {
     return `<button role="tab" data-d="${k}" aria-selected="${k === i}" class="${k === hoyIdx ? 'hoy' : ''}"><b>${DIAS[k].slice(0, 3)}</b><small>${fk.getDate()}/${fk.getMonth()+1}${get(key(w, 'aire'+k)) ? ' ✓' : ''}</small></button>`; }).join('')}</div>`;
   const pie = (txt) => `<div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="dia">${txt}</button><button class="btn mini" data-copiar="prompt">Copiar prompt</button></div>`;
   let cuerpo;
-  if (semanal) cuerpo = `${cab}<div class="kick">Tu programa de la semana</div>${introSemana(w)}${bloqueResumen(w)}${bloqueVersiculo(w, i, true)}
+  if (semanal) cuerpo = `${cab}<div class="kick">Tu programa de la semana</div>${introSemana(w)}${bloqueResumen(w)}${bloqueVersiculo(w, i, true)}${bloqueDeporte(d)}
       <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${esc(w.historia)}</p></div></details>${pie('Copiar guion')}`;
-  else if (i === 0) cuerpo = `${cab}<div class="kick">Introducción de la semana</div>${introSemana(w)}${bloqueVersiculo(w, 0, true)}
+  else if (i === 0) cuerpo = `${cab}<div class="kick">Introducción de la semana</div>${introSemana(w)}${bloqueVersiculo(w, 0, true)}${bloqueDeporte(d)}
       <div class="hist"><b>Historia ilustrativa</b><p>${esc(w.historia)}</p></div>${pie('Copiar guion')}`;
-  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${bloqueIdeas(w, 6)}${pie('Copiar guion')}`;
+  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueDeporte(d)}${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${bloqueIdeas(w, 6)}${pie('Copiar guion')}`;
   else { const b = BLOQUE[i], g = d.guion, primero = [1,3,5].includes(i) || !visibles.includes(i-1);
-    cuerpo = `${cab}<div class="kick">Subtema ${b+1} · ${esc(w.subtemas[b].titulo)}</div>${primero ? paraLocutor(w, b) : ''}
+    cuerpo = `${cab}<div class="kick">Subtema ${b+1} · ${esc(w.subtemas[b].titulo)}</div>${primero ? paraLocutor(w, b) : ''}${bloqueDeporte(d)}
       ${g ? `<h3>${esc(g.titulo)}</h3>${g.dato.texto ? `<div class="dato"><b>Dato para abrir</b><p>${esc(g.dato.texto)}</p><cite>${esc(g.dato.fuente)}</cite></div>` : ''}
         ${bloqueVersiculo(w, i, false)}
         ${d.puntos.map((p, k) => { const [tt, ex] = tituloPunto(p), q = g.puntos[k] || {};

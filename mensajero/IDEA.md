@@ -75,6 +75,14 @@ En los días en vivo, al final de la tarjeta del día, aparece «Mensajes de oye
 
 El registro al aire muestra días en vivo y grabados; los mensajes del mes por canal van al final del registro, del informe de preparación y de los dos informes que se copian, y solo aparecen si hubo mensajes.
 
+## Frase deportiva del día
+
+El deporte es un campo fuerte de Mensajero (programa propio y coberturas). Cada día, de domingo a sábado, trae una «Frase deportiva»: una imagen del deporte (fútbol, futsal, vóley, atletismo, rally, etc.) que mantiene activo el tema del día. Va antes de la historia ilustrativa (domingo y programa de un día) o arriba del guion (lunes a sábado), y también en el guion copiado.
+
+- Son frases originales, sin autor: no se citan deportistas ni se dan resultados, así no hay nada que verificar ni atribuciones dudosas.
+- Pasan la misma revisión teológica: nada de «si tenés fe ganás», sin prometer victorias, el esfuerzo no gana el amor de Dios.
+- Fuente: `content/frases_deportivas_2027.txt` (`semana|Dia|deporte|frase`) → `tools/frases_deportivas_2027.py` las carga en la hoja «Frases Deportivas 2027» → `build_data.py` (campo `deporte` de cada día).
+
 ## Derechos de la RVC
 
 Mensajero tiene permiso de la Sociedad Bíblica del Paraguay para usar la Reina Valera Contemporánea (al aire, en la app y en los flyers).
