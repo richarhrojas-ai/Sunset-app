@@ -643,6 +643,15 @@ function escena(tema, p) {
     <radialGradient id="s"><stop offset="0" stop-color="${p.warm}" stop-opacity=".9"/><stop offset="1" stop-color="${p.warm}" stop-opacity="0"/></radialGradient></defs>
     <rect width="400" height="300" fill="url(#g)"/>`;
   const sol = (x, y, r = 30) => `<circle class="sol" cx="${x}" cy="${y}" r="${r*3}" fill="url(#s)" opacity=".55"/><circle cx="${x}" cy="${y}" r="${r}" fill="${p.warm}" opacity=".95"/>`;
+  // árbol en silueta: tronco que se abre en ramas y copa irregular de varias masas; con flor, salpicado como un lapacho
+  const arbol = (x, y, k, flor) => {
+    const P = (dx, dy) => `${(x + dx*k).toFixed(1)} ${(y + dy*k).toFixed(1)}`;
+    const copa = [[-18,-48,9],[-9,-56,11],[3,-61,12],[14,-56,10],[21,-48,8],[-13,-43,8],[-2,-48,11],[10,-45,9],[-4,-64,7],[8,-66,6]];
+    const flores = flor ? [[-17,-55],[-8,-63],[4,-68],[15,-62],[23,-52],[-24,-46],[-4,-56],[9,-52],[-12,-48],[19,-46],[0,-62],[-20,-51]] : [];
+    return `<g fill="${p.h3}"><path d="M${P(-3,0)} C${P(-2,-12)} ${P(-3,-22)} ${P(-1,-30)} L${P(-12,-41)} L${P(-10,-43)} L${P(0,-35)} L${P(1,-46)} L${P(3,-46)} L${P(3,-35)} L${P(13,-42)} L${P(15,-40)} L${P(3,-28)} C${P(2,-20)} ${P(3,-10)} ${P(4,0)}Z"/>
+      ${copa.map(([dx, dy, r]) => `<ellipse cx="${(x+dx*k).toFixed(1)}" cy="${(y+dy*k).toFixed(1)}" rx="${(r*1.25*k).toFixed(1)}" ry="${(r*.8*k).toFixed(1)}"/>`).join('')}</g>
+      ${flores.map(([dx, dy], i) => `<circle cx="${(x+dx*k).toFixed(1)}" cy="${(y+dy*k).toFixed(1)}" r="${((1.4+(i%3)*.5)*k).toFixed(1)}" fill="${flor}" opacity="${.55+(i%3)*.12}"/>`).join('')}`;
+  };
   const stars = Array.from({length: 18}, (_, i) => `<circle cx="${(i*73)%400}" cy="${(i*37)%80+46}" r="${i%3?0.7:1.1}" fill="#fff" opacity="${.25+(i%4)*.12}"/>`).join('');
   let body = '';
   switch (tema) {
@@ -663,20 +672,19 @@ function escena(tema, p) {
         <path d="M0 300 L0 276 Q140 262 260 282 T400 274 V300Z" fill="${p.h3}"/>`;
       break;
     case 'Familia': // casa con ventana encendida y árbol
-      body = sol(110,196,30) + `<path d="M0 232 Q110 206 210 222 T400 214 V300 H0Z" fill="${p.h1}"/>
+      body = sol(150,196,30) + `<path d="M0 232 Q110 206 210 222 T400 214 V300 H0Z" fill="${p.h1}"/>
         <path d="M0 300 V250 Q150 228 400 246 V300Z" fill="${p.h2}"/>
-        <path d="M244 216 L276 190 L308 216Z" fill="${p.h3}"/><rect x="250" y="214" width="52" height="34" fill="${p.h3}"/>
+        <g transform="translate(-58 0)"><path d="M244 216 L276 190 L308 216Z" fill="${p.h3}"/><rect x="250" y="214" width="52" height="34" fill="${p.h3}"/>
         <rect x="293" y="192" width="7" height="16" fill="${p.h3}"/>
         <path d="M296 190 c-6 -10 8 -14 2 -24 c-5 -8 6 -12 3 -20" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2"/>
         <rect x="262" y="222" width="12" height="11" fill="${p.warm}"/><rect x="282" y="230" width="9" height="18" fill="${p.warm}" opacity=".55"/>
-        <rect x="336" y="196" width="5" height="54" fill="${p.h3}"/>
-        <circle cx="338" cy="190" r="22" fill="${p.h3}"/><circle cx="322" cy="200" r="15" fill="${p.h3}"/><circle cx="354" cy="200" r="16" fill="${p.h3}"/>
+        ${arbol(330, 252, .85)}</g>
         <path d="M0 300 V274 Q200 258 400 276 V300Z" fill="${p.h3}"/>`;
       break;
     case 'Finanzas': // granero y brotes que crecen
       body = sol(150,192,26) + `<path d="M0 226 Q140 204 260 220 T400 212 V300 H0Z" fill="${p.h1}"/>
-        <rect x="290" y="176" width="30" height="74" fill="${p.h3}"/><ellipse cx="305" cy="176" rx="15" ry="9" fill="${p.h3}"/>
-        <path d="M320 212 L343 194 L366 212 V250 H320Z" fill="${p.h2}"/>
+        <g transform="translate(-40 0)"><rect x="290" y="176" width="30" height="74" fill="${p.h3}"/><ellipse cx="305" cy="176" rx="15" ry="9" fill="${p.h3}"/>
+        <path d="M320 212 L343 194 L366 212 V250 H320Z" fill="${p.h2}"/></g>
         <path d="M0 300 V250 Q200 236 400 252 V300Z" fill="${p.h2}"/>
         ${[0,1,2,3,4,5].map(i => { const x = 40+i*38, h = 10+i*9; return `<path d="M${x} 268 V${268-h}" stroke="${p.h3}" stroke-width="2.4"/>
           <ellipse cx="${x-5-i}" cy="${268-h+2}" rx="${5+i}" ry="${2.2+i*.4}" transform="rotate(-28 ${x} ${268-h})" fill="${p.h3}"/>
@@ -687,15 +695,15 @@ function escena(tema, p) {
       body = sol(200,176,34) + `<path d="M0 214 Q90 190 200 204 T400 196 V300 H0Z" fill="${p.h1}"/>
         <path d="M0 300 V238 Q120 214 220 232 T400 226 V300Z" fill="${p.h2}"/>
         <path d="M120 300 C170 270 236 262 212 238 S190 212 200 204 L203 204 C196 214 220 226 226 240 S200 276 280 300Z" fill="${p.warm}" opacity=".5"/>
-        <rect x="88" y="214" width="3" height="30" fill="${p.h3}"/><circle cx="89" cy="208" r="11" fill="${p.h3}"/>
+        ${arbol(140, 236, .85, p.warm)}
         <path d="M0 300 V280 Q100 268 160 284 L0 300Z" fill="${p.h3}"/><path d="M400 300 V278 Q320 268 260 290 L280 300Z" fill="${p.h3}"/>`;
       break;
     case 'Produccion y Desarrollo': // surcos, alambrado y molino
-      body = sol(110,198,26) + `<path d="M0 214 Q150 196 260 208 T400 204 V300 H0Z" fill="${p.h1}"/>
+      body = sol(150,198,26) + `<path d="M0 214 Q150 196 260 208 T400 204 V300 H0Z" fill="${p.h1}"/>
         <path d="M0 300 V222 H400 V300Z" fill="${p.h2}"/>
         <g stroke="${p.h3}" stroke-width="2" opacity=".85">${Array.from({length: 13}, (_, i) => `<line x1="210" y1="222" x2="${-200+i*67}" y2="300"/>`).join('')}</g>
-        <rect x="318" y="160" width="3.5" height="64" fill="${p.h3}"/>
-        <g transform="translate(320 160)" fill="${p.h3}">${[0,60,120,180,240,300].map(a => `<rect x="-1.5" y="-26" width="3" height="26" transform="rotate(${a})"/>`).join('')}<circle r="4"/></g>
+        <rect x="266" y="160" width="3.5" height="64" fill="${p.h3}"/>
+        <g transform="translate(268 160)" fill="${p.h3}">${[0,60,120,180,240,300].map(a => `<rect x="-1.5" y="-26" width="3" height="26" transform="rotate(${a})"/>`).join('')}<circle r="4"/></g>
         <path d="M0 300 V276 H400 V300Z" fill="${p.h3}"/>
         <g stroke="${p.h3}" stroke-width="2.5">${Array.from({length: 9}, (_, i) => `<line x1="${8+i*48}" y1="276" x2="${8+i*48}" y2="258"/>`).join('')}</g>
         <line x1="0" y1="264" x2="400" y2="264" stroke="${p.h3}" stroke-width="1.2"/>`;
@@ -704,9 +712,9 @@ function escena(tema, p) {
       body = sol(150,196,28) + `<path d="M0 214 Q110 198 230 208 T400 204 V230 H0Z" fill="${p.h1}"/>
         <rect y="228" width="400" height="72" fill="${p.h2}"/>
         <g stroke="${p.warm}" stroke-linecap="round" opacity=".55">${[0,1,2,3,4,5].map(i => `<line x1="${150-30+i*4}" y1="${236+i*8}" x2="${150+30-i*4}" y2="${236+i*8}" stroke-width="${2.6-i*.3}"/>`).join('')}</g>
-        ${[[290,0],[320,-6],[350,4]].map(([x, d]) => { const top = 150+d; return `<path d="M${x} 262 Q${x-6} ${top+50} ${x+6} ${top}" fill="none" stroke="${p.h3}" stroke-width="4"/>
+        ${[[244,0],[272,-6],[300,4]].map(([x, d]) => { const top = 150+d; return `<path d="M${x} 262 Q${x-6} ${top+50} ${x+6} ${top}" fill="none" stroke="${p.h3}" stroke-width="4"/>
           <g fill="${p.h3}" transform="translate(${x+6} ${top})">${[-150,-110,-70,-30,10,50].map(a => `<path d="M0 0 Q14 -6 30 4 Q14 0 0 3Z" transform="rotate(${a})"/>`).join('')}</g>`; }).join('')}
-        <path d="M250 300 V262 Q320 250 400 258 V300Z" fill="${p.h3}"/>
+        <path d="M210 300 V262 Q290 250 400 258 V300Z" fill="${p.h3}"/>
         <g fill="none" stroke="${p.h3}" stroke-width="1.6"><path d="M90 110 q6 -5 12 0 q6 -5 12 0"/><path d="M122 96 q5 -4 10 0 q5 -4 10 0"/></g>`;
   }
   return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" role="presentation">${sky}${stars}${body}</svg>`;
@@ -738,6 +746,8 @@ const fcorta = d => d.toLocaleDateString('es-PY', {day: 'numeric', month: 'short
 
 /* ── Semana actual ── */
 const sem = DATA.semanas;
+// la planilla escribe «Producción y Desarrollo»; las claves internas (escena, ícono, hoja del tema) van sin tilde
+sem.forEach(w => { w.tema = w.tema.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); });
 const hoyD = new Date(); hoyD.setHours(0,0,0,0);
 const dateOf = s => { const [a,m,d] = s.split('-').map(Number); return new Date(a, m-1, d); };
 function semanaHoy() {
@@ -1491,7 +1501,7 @@ $('leyenda').innerHTML = Object.entries(PAL).map(([n, p]) => { const t = sem.fin
 /* buscador: sin tildes, sobre todo el año */
 const norm = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const idx = sem.map(w => ({w, campos: [
-  ['Enfoque', w.enfoque], ['Tema', w.tema], ...w.subtemas.flatMap(s => [['Subtema', s.titulo], ['Frase', `${s.frase.texto} — ${s.frase.autor}`]]),
+  ['Enfoque', w.enfoque], ['Tema', TEMA_TXT[w.tema] || w.tema], ...w.subtemas.flatMap(s => [['Subtema', s.titulo], ['Frase', `${s.frase.texto} — ${s.frase.autor}`]]),
   ...w.dias.map((d, i) => [DIAS[i], `${d.ref} — ${d.texto}`]), ['Historia', w.historia], ['Programa', `${w.programa} · ${w.locutor}`],
   ...w.dias.flatMap((d, i) => { const g = d.guion; if (!g) return [];
     return [[`Guion ${DIAS[i].toLowerCase()}`, g.titulo], ['Dato', `${g.dato.texto} (${g.dato.fuente})`],
