@@ -216,7 +216,7 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
 3. **Usuarios:** una clave para todo el equipo o una por locutor (necesaria si el registro debe decir quién hizo cada marca).
 4. **Hoja «Mensajero»:** faltan 17 datos (historia, fundación, misión, visión, sitio web, redes, contactos por área, organigrama).
 5. **Números útiles:** reconfirmar los seis antes de la salida y cada tanto.
-6. **Tres frases célebres** con fuente parcial (Spurgeon «caracol», William Temple, Cervantes «apercebido»): confirmar o cambiar.
+6. ~~Tres frases célebres con fuente parcial~~ **Resuelto el 20/10/2026:** Cervantes confirmada (II parte, cap. XVII); Spurgeon pasa a «Proverbio recogido por Charles H. Spurgeon»; Temple con su definición completa (autor confirmado; el libro exacto, no).
 
 ## 12. Archivos
 
