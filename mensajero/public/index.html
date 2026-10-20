@@ -125,50 +125,23 @@ details.valor dl{margin-top:10px;display:grid;gap:8px;font-size:14px}
 details.valor dt{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3)}
 details.valor dd{color:var(--ink2)}
 
-/* ── DOMINGO ── */
-.domingo{padding:26px 22px;text-align:center;background:linear-gradient(160deg,color-mix(in srgb,var(--mid) 55%,transparent),color-mix(in srgb,var(--low) 25%,transparent));border:1px solid var(--line);border-radius:22px}
-.vers{font-size:18px;font-weight:300;font-style:italic;line-height:1.6;max-width:620px;margin:10px auto}
+/* ── VERSÍCULO, PUNTOS Y FRASE DEPORTIVA ── */
 .ref{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-t);font-weight:500}
 .pts{list-style:none;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
 .pts li{font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(var(--fg),.08);border:1px solid var(--line);color:var(--ink2)}
 .deporte{margin:14px 0;padding:12px 14px;border-left:3px solid var(--acc,#e8c547);background:color-mix(in srgb,var(--ink3) 8%,transparent);border-radius:0 10px 10px 0}
 .deporte b{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:4px}
 .deporte p{margin:0;font-style:italic}
-.historia{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:15px;color:var(--ink2);text-align:left}
-.historia b{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:4px}
 
-/* ── SUBTEMAS ── */
-.subtemas{display:grid;gap:12px}
-.st{position:relative;overflow:hidden}
-.st .n{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-t)}
-.st h3{font-size:21px;font-weight:400;letter-spacing:.02em;margin:4px 0 8px;line-height:1.3}
-.st .dias{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3)}
-.st p{font-size:15px;color:var(--ink2);margin-top:8px}
+/* ── PARA EL LOCUTOR: NOTA Y FRASE CÉLEBRE ── */
 .nota{margin-top:12px;padding:10px 14px;border-left:2px solid var(--amber);background:rgba(240,168,48,.08);border-radius:0 10px 10px 0;font-size:14px;color:var(--ink2)}
 .nota b{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);font-weight:500;display:block}
 .frase{margin-top:12px;font-family:'Jost';font-size:15px;font-style:italic;color:var(--ink)}
 .frase cite{display:block;font-style:normal;font-size:12px;letter-spacing:.14em;color:var(--ink3);margin-top:2px}
 
-/* ── DÍAS ── */
-.dias-grid{display:grid;gap:10px}
-.dia{border-radius:var(--r);border:1px solid var(--line);padding:16px 18px;display:grid;grid-template-columns:150px minmax(0,1fr);gap:4px 20px;align-items:start;
-  background:linear-gradient(170deg,color-mix(in srgb,var(--low) var(--k),var(--mid)) 0%,color-mix(in srgb,var(--h2) 80%,transparent) 100%)}
-.dia.hoy{border-color:var(--gold-t);box-shadow:0 0 0 1px var(--gold),0 8px 30px rgba(255,215,0,.12)}
-.dia .t{font-weight:600;font-size:13px;letter-spacing:.28em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:baseline}
-.dia .t small{font-weight:400;font-size:10px;letter-spacing:.18em;color:var(--ink3)}
-.dia .stt{font-size:12px;color:var(--ink3);margin-top:2px;letter-spacing:.04em}
-.dia .ref{display:block;text-align:left;line-height:1.5}
-.dia .dianom{display:block;font-weight:600;font-size:13px;letter-spacing:.26em;text-transform:uppercase}
-.dia .num{font-size:11px;letter-spacing:.08em;color:var(--ink3);display:block;margin:2px 0 10px}
-.dia .cuerpo{min-width:0}
-@media(max-width:560px){.dia{grid-template-columns:1fr}}
-.dia .vtxt{font-size:16px;font-style:italic;margin:0 0 8px;color:var(--ink)}
-.dia ul{list-style:none;font-size:13px;color:var(--ink2);display:grid;gap:4px;margin-bottom:12px}
-.dia ul li::before{content:"·";color:var(--gold-t);margin-right:8px;font-weight:600}
-.dia .acc{display:flex;gap:6px;flex-wrap:wrap;max-width:360px}
+/* ── TARJETA DEL DÍA ── */
 .chk{flex:1;min-height:40px;border-radius:999px;border:1px solid var(--line);font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:0 10px;color:var(--ink2);background:rgba(var(--bg),.15)}
 .chk[aria-pressed="true"]{background:var(--gold);color:#2a1a08;border-color:var(--gold-t);font-weight:500}
-.chk.rev[aria-pressed="false"]{border-style:dashed;color:var(--amber)}
 .barra-dia{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;margin-top:-4px}
 .barra-dia .acc{display:flex;gap:6px}
 .barra-dia details.mi-nota{margin-top:0}
@@ -199,7 +172,6 @@ details.valor dd{color:var(--ink2)}
 .msgs-t .restar{margin-left:auto;margin-right:10px;min-height:28px;padding:0 12px;border-radius:999px;border:1px solid rgba(var(--fg),.18);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
 .msgs-t .restar[aria-pressed="true"]{background:#ff6b6b;border-color:#ff6b6b;color:#2b0a0a;font-weight:500}
 .msgs.restando .msg-btn{border-color:#ff6b6b;background:rgba(255,107,107,.12)}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .acciones.copiar{justify-content:flex-end;gap:6px}
 .acciones.copiar .btn{min-height:36px;color:var(--ink3);background:transparent;border-color:rgba(var(--fg),.18)}
 .acciones.copiar .btn:hover{color:var(--ink)}
@@ -266,8 +238,6 @@ details.fold[open]>summary::after{content:"–"}
 .punto dt{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
 .punto dt.pr{color:#ff9f8a}.punto dt.so{color:#9fe3b0}
 .punto dd{font-size:14.5px;color:var(--ink2)}
-.cierre{text-align:center;padding:16px;border-top:1px solid var(--line)}
-.cierre p{font-size:17px;font-style:italic;margin:6px auto 0;max-width:600px}
 .acciones{display:flex;flex-wrap:wrap;gap:8px}
 .btn{min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--line);font-size:11px;letter-spacing:.18em;text-transform:uppercase;background:rgba(var(--bg),.15);color:var(--ink2)}
 .btn:hover{color:var(--ink);border-color:rgba(var(--fg),.35)}
@@ -279,14 +249,7 @@ details.fold[open]>summary::after{content:"–"}
 .inst-item p{grid-column:1;font-size:15px;color:var(--ink);white-space:pre-line}
 .inst-item p.falta{color:var(--ink3);font-style:italic;font-size:13.5px}
 .inst-item .btn{grid-column:2;grid-row:1 / span 2;align-self:center}
-.apoyo{margin-top:14px;padding:10px 14px;border-radius:14px;border:1px solid rgba(255,215,0,.35);background:rgba(255,215,0,.07);display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
-.apoyo span{flex-basis:100%;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-t)}
-.apoyo b{font-size:17px;font-weight:500}
-.apoyo small{font-size:13px;color:var(--ink2)}
 .mi-prog{margin-top:18px}
-.mi-prog .resumen{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:var(--glass)}
-.mi-prog .resumen span{font-size:14px;color:var(--ink2)}
-.mi-prog .resumen b{color:var(--ink);font-weight:500}
 .mi-prog .form{display:grid;gap:12px;padding:18px;border-radius:18px;border:1px solid rgba(255,215,0,.4);background:var(--glass)}
 .mi-prog .form h2{font-size:20px;font-weight:400}
 .mi-prog .dias-chips[role=group]{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
@@ -355,14 +318,13 @@ details.loc .in p b{color:var(--ink)}
 .hist{border-top:1px solid var(--line);padding-top:14px}
 .hist b{display:block;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:6px}
 .hist p{font-size:16px;color:var(--ink2)}
-.aviso-ntv{font-size:12.5px;color:var(--ink3)}
 dialog.copia{margin:auto;width:min(620px,calc(100% - 32px));border:1px solid var(--line);border-radius:18px;padding:18px;background:var(--h3);color:var(--ink)}
 dialog.copia::backdrop{background:rgba(5,3,10,.6)}
 dialog.copia textarea{min-height:260px;font-size:13px;margin:10px 0}
 
 /* programa y biblioteca de preparación */
 .programa{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.programa select,.programa label.tog{min-height:40px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--bg),.25);color:var(--ink);font:inherit;font-size:13.5px;padding:0 14px;display:inline-flex;align-items:center;gap:8px}
+.programa select{min-height:40px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--bg),.25);color:var(--ink);font:inherit;font-size:13.5px;padding:0 14px;display:inline-flex;align-items:center;gap:8px}
 .programa input{accent-color:var(--gold-t);width:16px;height:16px}
 .biblio{display:grid;gap:14px;padding:12px 16px 18px;overflow:auto}
 .biblio h4{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:6px}
@@ -389,12 +351,6 @@ details.mi-nota summary::before{content:"+";color:var(--gold-t);font-size:15px;l
 details.mi-nota[open] summary::before{content:"–"}
 details.mi-nota.tiene summary{color:var(--gold-t)}
 details.mi-nota textarea{min-height:72px;margin-top:6px;font-size:14px}
-.st-pie{position:relative;margin-top:12px;min-height:32px}
-.st-pie details.mi-nota{margin-top:0}
-.st-pie details.mi-nota summary{margin-right:130px}
-.chk.aire-mini{position:absolute;top:0;right:0;flex:none;min-height:30px;padding:0 12px;font-size:9.5px;letter-spacing:.16em;background:transparent;color:var(--ink3);border-color:rgba(var(--fg),.18)}
-.chk.aire-mini:hover{color:var(--ink);border-color:rgba(var(--fg),.35)}
-.chk.aire-mini[aria-pressed="true"]{background:var(--gold);color:#2a1a08;border-color:var(--gold-t);font-weight:500}
 .reg-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .reg-top select{min-height:42px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--bg),.25);color:var(--ink);font:inherit;font-size:14px;padding:0 16px;text-transform:capitalize}
 .tiles{display:block}
@@ -468,7 +424,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"] .nav button{background:color-mix(in srgb,var(--h3) 88%,transparent)}
 :root[data-tema="claro"] .bar{background:color-mix(in srgb,var(--papel) 92%,transparent)}
 :root[data-tema="claro"] .card{box-shadow:0 1px 3px rgba(31,26,43,.06)}
-:root[data-tema="claro"] :is(.vers-base,.domingo,.dia){background:color-mix(in srgb,var(--low) 13%,#fff)}
+:root[data-tema="claro"] :is(.vers-base){background:color-mix(in srgb,var(--low) 13%,#fff)}
 :root[data-tema="claro"] dialog.copia{background:#fff}
 :root[data-tema="claro"] .punto dt.pr{color:#c2410c}
 :root[data-tema="claro"] :is(.punto dt.so,.accion b){color:#15803d}
@@ -1000,7 +956,7 @@ function todosProgs(m) {
 function renderRegistro(m) {
   $('mes').value = m;
   const vs = registro(), v = vs.filter(x => x.f.getMonth() === m && x.f.getFullYear() === DATA.anio).sort((a, b) => a.f - b.f);
-  const total = diasDelMes(m), w = sem[cur], mis = cfgPrograma().dias;
+  const total = diasDelMes(m), w = sem[cur];
   const cuenta = (k, filtro) => { let n = 0; for (const s of sem) for (let i = 0; i < 7; i++) if (get(key(s, k+i)) && filtro(s, fechaDia(s, i))) n++; return n; };
   const enSem = s => s === w, enMes = (s, f) => f.getMonth() === m && f.getFullYear() === DATA.anio, todo = () => true;
   const fila = (t, k) => `<tr><th scope="row">${t}</th><td>${cuenta(k, enSem)}</td><td>${cuenta(k, enMes)}</td><td>${cuenta(k, todo)}</td></tr>`;
@@ -1194,9 +1150,8 @@ function bloqueVersiculo(w, i, conPuntos) {
 </div>`;
 }
 function barraModo(w, i) {
-  const m = modoDe(w, i), o = msgsDe(w, i);
-  const seg = `<div class="modo" role="group" aria-label="Modalidad del día"><button class="vivo" data-modo="vivo" aria-pressed="${m === 'vivo'}">En vivo</button><button data-modo="grabado" aria-pressed="${m === 'grabado'}">Grabado</button></div>`;
-  return seg;
+  const m = modoDe(w, i);
+  return `<div class="modo" role="group" aria-label="Modalidad del día"><button class="vivo" data-modo="vivo" aria-pressed="${m === 'vivo'}">En vivo</button><button data-modo="grabado" aria-pressed="${m === 'grabado'}">Grabado</button></div>`;
 }
 // mensajes de oyentes, al final de la tarjeta y solo en días en vivo: un cuadro para sumar y otro con el resultado
 let restando = false;   // «Restar» vale para un solo toque y se apaga solo
@@ -1485,7 +1440,7 @@ $('next').onclick = () => ir(cur+1);
 $('hoy').onclick = () => ir(semanaHoy());
 /* hoja de un tema: todas sus semanas, la activa resaltada y las próximas a la vista */
 function abrirTema(t) {
-  const w = sem[cur], hoy = semanaHoy(), lista = sem.filter(s => s.tema === t);
+  const hoy = semanaHoy(), lista = sem.filter(s => s.tema === t);
   const prox = lista.find(s => s.n-1 > hoy && s.n-1 !== cur);
   $('hoja').innerHTML = `<div class="hoja-head"><span class="ic">${icono(t)}</span>
       <div><h2 id="hoja-t">${esc(TEMA_TXT[t] || t)}</h2><p>${lista.length} semanas en ${DATA.anio}</p></div>
