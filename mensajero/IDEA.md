@@ -109,6 +109,12 @@ Los elementos principales quedan en el centro, porque en el teléfono la imagen 
 
 El botón redondo debajo de la fecha (arriba a la derecha) cambia la apariencia: **automática** (oscura en el celular, clara en la computadora), **oscura** o **clara**. Se guarda en cada dispositivo (`mensajero:apariencia` en el navegador), así cada locutor la deja a su gusto en el celular y en la computadora. La ilustración de arriba y la hoja de cada tema quedan siempre oscuras porque son la imagen de la semana; el resto pasa a fondo papel con letra oscura.
 
+## Menús del final y números útiles
+
+Las secciones del final van en tres grupos compactos, cada una con su ícono: **Mi trabajo** (Mi preparación, Registro al aire, Informe de preparación), **La serie 2027** (Historia bíblica y marcos, Edificando una Cultura · 2027, Buscar) y **Para la audiencia** (Números útiles, Sobre Mensajero).
+
+**Números útiles** (`UTILES` en `index.html`): 911 emergencias (Policía Nacional), 141 ambulancia SEME (desde el celular 021 141), 132 Bomberos Voluntarios, 155 línea de crisis de salud mental, 137 SOS Mujer (WhatsApp 0961 137 137) y 147 Fono Ayuda de la niñez. Revisados en octubre de 2026 en fuentes oficiales y prensa; hay que confirmarlos cada tanto. Cada número se toca para llamar y hay un botón para copiar la lista y leerla al aire.
+
 ## Derechos de la RVC
 
 Mensajero tiene permiso de la Sociedad Bíblica del Paraguay para usar la Reina Valera Contemporánea (al aire, en la app y en los flyers).
