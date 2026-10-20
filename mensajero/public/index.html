@@ -1099,12 +1099,9 @@ function barraModo(w, i) {
 function bloqueMsgs(w, i) {
   if (modoDe(w, i) !== 'vivo') return '';
   const o = msgsDe(w, i);
-  return `<div class="msgs-dia"><h4>Mensajes de oyentes</h4>
-    <div class="msgs"><div class="msgs-t"><span>Sumar · tocá el canal por cada mensaje</span></div><div class="msgs-g">${CANALES.map(c =>
-      `<button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button>`).join('')}</div></div>
-    <div class="msgs"><div class="msgs-t"><span>Resultado</span><b data-msg-total>${totalMsgs(o)}</b></div><div class="msgs-g">${CANALES.map(c =>
-      `<label class="msg"><span class="ico" title="${c.n}">${c.svg}</span><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"></label>`).join('')}</div>
-      <p class="muted" style="font-size:12px;margin:8px 0 0">Si te equivocaste, corregí el número acá.</p></div></div>`;
+  return `<div class="msgs-dia"><div class="msgs"><div class="msgs-t"><span>Mensajes de oyentes</span><b data-msg-total>${totalMsgs(o)}</b></div><div class="msgs-g">${CANALES.map(c =>
+    `<div class="msg"><button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"></div>`).join('')}</div>
+    <p class="muted" style="font-size:12px;margin:8px 0 0">Tocá el logo por cada mensaje. Si te equivocaste, corregí el número.</p></div></div>`;
 }
 // registro del día, siempre arriba de la tarjeta: al aire, entrevista y nota
 function barraDia(w, i) {
