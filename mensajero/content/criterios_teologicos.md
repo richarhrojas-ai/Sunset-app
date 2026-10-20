@@ -10,6 +10,7 @@ Todo guion pasa por esta revisión **antes** de cargarse en la app. Vale igual p
 4. **Alarma automática.** `python3 tools/build_data.py` escribe en `content/revision_planilla.txt` la sección «PARA LA REVISIÓN TEOLÓGICA», con frases de riesgo (prosperidad, promesas absolutas, retribución, fe y salud mental, gracia condicionada, falsos dilemas). La alarma no reemplaza la lectura: los errores de contexto solo se ven leyendo.
 5. **Versículos que no encajan.** Si un versículo no corresponde al subtema o tiene un error de copia, no se cambia en el momento: se anota en `content/versiculos_sugeridos.md`, con el motivo, y se aplican todos juntos cuando Richarh los aprueba.
 6. **Datos verificados.** Cada dato curioso se confirma en su fuente antes de salir al aire.
+6b. **Estilo.** Se buscan arranques repetidos a lo largo del año (por ejemplo, muchas prácticas que empiezan «Si tenés…», «Antes de…», «Esta semana,…» o problemáticas con «Pensar que…») y se varían sin cambiar el sentido. Los cambios quedan en `content/estilo_guiones_2027.json` y los aplica `tools/estilo_guiones_2027.py`, después de la verificación de datos.
 7. **Aprobación.** Richarh revisa el informe del mes y, recién después, se publica.
 
 ## 1. Leer el versículo en su contexto

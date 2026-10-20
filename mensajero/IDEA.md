@@ -67,6 +67,15 @@ Para ayudarlo, cada día de lunes a sábado trae el bloque «Hacelo a tu estilo�
 - dos técnicas para adaptarlo, que rotan día a día sobre una lista de 15 (`IDEAS`): contar algo propio, abrir con una pregunta, usar un refrán en guaraní, leer mensajes de oyentes, convertirlo en conversación, etc.;
 - cómo hacerlo si hay poco tiempo.
 
+## Una vista del día liviana
+
+Para que la tarjeta no agobie, de lunes a viernes los tres puntos están plegados: se ve el número y el título, y se abre uno con un toque.
+
+- **Un punto por programa.** En «Mi preparación» cada programa elige su franja horaria (mañana, mediodía, tarde o noche). La mañana desarrolla el punto 1, mediodía y tarde el 2, la noche el 3. Ese punto viene abierto y marcado «Tu punto de hoy», y en el guion copiado lleva «← TU PUNTO DE HOY». Así quien escucha varios programas no oye lo mismo dos veces. Sin franja, viene abierto el punto 1.
+- **Barra del día.** A la vista quedan «Al aire» y En vivo / Grabado; «Con entrevista» y «Reemplazo» están en «+ Más» (se abre solo si alguno está marcado).
+- **Dato para abrir** con una línea dorada al costado, sin recuadro punteado.
+- **Estilo.** Se variaron 266 arranques repetidos de prácticas, problemáticas y acciones del sábado, y 94 de frases deportivas («En el…», «Esta semana repasamos…»), sin cambiar el sentido (ver `content/criterios_teologicos.md`, paso 6b).
+
 ## En vivo o grabado, y mensajes de oyentes
 
 Cada programa tiene una modalidad (en «Mi preparación»): **En vivo** (grabado solo algunos días) o **Siempre grabado**. En la barra de cada día se puede cambiar a En vivo o Grabado para esa fecha.
