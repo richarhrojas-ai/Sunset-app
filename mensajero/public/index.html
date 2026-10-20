@@ -188,6 +188,8 @@ details.valor dd{color:var(--ink2)}
 .msg-btn:active{background:rgba(255,255,255,.18);transform:scale(.96)}
 .msg-btn .ico svg{width:30px;height:30px}.msg-btn .ico{width:32px;height:32px;display:grid;place-items:center}
 .msg-btn small{font-size:9.5px;color:var(--ink3)}
+.msg .menos{width:100%;max-width:64px;min-height:28px;border-radius:999px;border:1px solid rgba(255,255,255,.14);font-size:11px;color:var(--ink3)}
+.msg .menos:active{background:rgba(255,255,255,.16)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .acciones.copiar{justify-content:flex-end;gap:6px}
 .acciones.copiar .btn{min-height:36px;color:var(--ink3);background:transparent;border-color:rgba(255,255,255,.18)}
@@ -1100,8 +1102,8 @@ function bloqueMsgs(w, i) {
   if (modoDe(w, i) !== 'vivo') return '';
   const o = msgsDe(w, i);
   return `<div class="msgs-dia"><div class="msgs"><div class="msgs-t"><span>Mensajes de oyentes</span><b data-msg-total>${totalMsgs(o)}</b></div><div class="msgs-g">${CANALES.map(c =>
-    `<div class="msg"><button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"></div>`).join('')}</div>
-    <p class="muted" style="font-size:12px;margin:8px 0 0">Tocá el logo por cada mensaje. Si te equivocaste, corregí el número.</p></div></div>`;
+    `<div class="msg"><button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"><button type="button" class="menos" data-msg-menos="${c.id}" aria-label="Restar un mensaje de ${c.n}">−1</button></div>`).join('')}</div>
+    <p class="muted" style="font-size:12px;margin:8px 0 0">Tocá el logo por cada mensaje. Si marcaste de más, tocá −1 debajo del número.</p></div></div>`;
 }
 // registro del día, siempre arriba de la tarjeta: al aire, entrevista y nota
 function barraDia(w, i) {
@@ -1400,9 +1402,11 @@ $('dias').onclick = e => {
   const md = e.target.closest('[data-modo]');
   if (md) { if (bloqueada()) return; set(key(w, 'mod'+diaSel), md.dataset.modo);
     renderRegistro(+$('mes').value); return renderDias(w, hoyDe(w)); }
-  const mas = e.target.closest('[data-msg-mas]');
-  if (mas) { if (bloqueada()) return; const o = {...msgsDe(w, diaSel)}; o[mas.dataset.msgMas] = (+o[mas.dataset.msgMas] || 0) + 1;
-    set(key(w, 'msg'+diaSel), o); fijarModo(w, diaSel); const inp = $('dias').querySelector(`input[data-msg="${mas.dataset.msgMas}"]`); inp.value = o[mas.dataset.msgMas];
+  const mas = e.target.closest('[data-msg-mas],[data-msg-menos]');
+  if (mas) { if (bloqueada()) return; const id = mas.dataset.msgMas || mas.dataset.msgMenos, o = {...msgsDe(w, diaSel)};
+    const v = Math.max(0, (+o[id] || 0) + (mas.dataset.msgMas ? 1 : -1)); if (v) o[id] = v; else delete o[id];
+    set(key(w, 'msg'+diaSel), Object.keys(o).length ? o : null); fijarModo(w, diaSel);
+    $('dias').querySelector(`input[data-msg="${id}"]`).value = v || '';
     $('dias').querySelector('[data-msg-total]').textContent = totalMsgs(o); renderRegistro(+$('mes').value); }
 };
 $('dias').addEventListener('input', e => { const inp = e.target.closest('input[data-msg]'); if (!inp) return;

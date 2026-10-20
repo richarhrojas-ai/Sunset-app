@@ -71,7 +71,7 @@ Para ayudarlo, cada día de lunes a sábado trae el bloque «Hacelo a tu estilo�
 
 Cada programa tiene una modalidad (en «Mi preparación»): **En vivo** (grabado solo algunos días) o **Siempre grabado**. En la barra de cada día se puede cambiar a En vivo o Grabado para esa fecha.
 
-En los días en vivo, al final de la tarjeta del día, aparece «Mensajes de oyentes» en un solo cuadro: el logo de cada canal (SMS, WhatsApp, YouTube, Instagram, Facebook) se toca por cada mensaje y debajo queda su número, que se puede corregir; arriba, el total. En los días grabados no aparece. Queda al final porque no todos los programas lo usan.
+En los días en vivo, al final de la tarjeta del día, aparece «Mensajes de oyentes» en un solo cuadro: el logo de cada canal (SMS, WhatsApp, YouTube, Instagram, Facebook) se toca por cada mensaje; debajo queda su número (se puede escribir) y un botón «−1» para restar si se marcó de más; arriba, el total. En los días grabados no aparece. Queda al final porque no todos los programas lo usan.
 
 El registro al aire muestra días en vivo y grabados; los mensajes del mes por canal van al final del registro, del informe de preparación y de los dos informes que se copian, y solo aparecen si hubo mensajes.
 
