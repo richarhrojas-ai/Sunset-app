@@ -635,14 +635,23 @@ const aplica = (it, c) => !it.tag || (it.tag === 'diario' ? c.frec === 'diario' 
 const sugerir = c => PRIORIDAD.filter(id => { const it = ITEMS.find(i => i.id === id); return it.tag !== 'entrevista' && aplica(it, c); }).slice(0, MAX_PREP);
 const misItems = () => (get(ck('prep')) || sugerir(cfgPrograma())).map(id => ITEMS.find(i => i.id === id)).filter(Boolean);
 
-/* ── Escenas por tema (paisaje, sin íconos) ── */
+/* ── Escenas por tema (paisaje, sin íconos): cada una cuenta su tema con su propia luz ── */
 function escena(tema, p) {
-  const sky = `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="${p.top}"/><stop offset=".45" stop-color="${p.mid}"/>
-    <stop offset=".75" stop-color="${p.low}"/><stop offset="1" stop-color="${p.warm}"/></linearGradient>
-    <radialGradient id="s"><stop offset="0" stop-color="${p.warm}" stop-opacity=".9"/><stop offset="1" stop-color="${p.warm}" stop-opacity="0"/></radialGradient></defs>
+  // cada tema con su propia luz: amanecer, día, primera luz o noche (el atardecer queda para Sunset)
+  const LUZ = {'Vida Cristiana': 'amanecer', 'Crecimiento Personal': 'alba', 'Familia': 'noche', 'Salud': 'bruma'};
+  const luz = LUZ[tema] || 'dia';
+  const stops = luz === 'noche' ? [[0, p.top], [.55, p.top], [1, p.mid]]
+    : luz === 'dia' ? [[0, p.top], [.4, p.mid], [1, p.low]]
+    : luz === 'bruma' ? [[0, p.top], [.45, p.mid], [.85, p.low], [1, '#ffffff']]
+    : [[0, p.top], [.45, p.mid], [.75, p.low], [1, p.warm]];
+  const sky = `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">${stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"${c === '#ffffff' ? ' stop-opacity=".55"' : ''}/>`).join('')}</linearGradient>
+    <radialGradient id="s"><stop offset="0" stop-color="${p.warm}" stop-opacity=".9"/><stop offset="1" stop-color="${p.warm}" stop-opacity="0"/></radialGradient>
+    <mask id="luna"><rect width="400" height="300" fill="#fff"/><circle cx="141" cy="96" r="15" fill="#000"/></mask></defs>
     <rect width="400" height="300" fill="url(#g)"/>`;
   const sol = (x, y, r = 30) => `<circle class="sol" cx="${x}" cy="${y}" r="${r*3}" fill="url(#s)" opacity=".55"/><circle cx="${x}" cy="${y}" r="${r}" fill="${p.warm}" opacity=".95"/>`;
+  const stars = luz === 'noche' || luz === 'amanecer' ? Array.from({length: luz === 'noche' ? 30 : 14}, (_, i) => `<circle cx="${(i*73)%400}" cy="${(i*37)%(luz === 'noche' ? 150 : 80)+30}" r="${i%3?0.7:1.1}" fill="#fff" opacity="${.25+(i%4)*.12}"/>`).join('') : '';
+  const nube = (x, y, k, o = .1) => `<g fill="#fff" opacity="${o}"><ellipse cx="${x}" cy="${y}" rx="${34*k}" ry="${7*k}"/><ellipse cx="${x-10*k}" cy="${y-6*k}" rx="${14*k}" ry="${9*k}"/><ellipse cx="${x+8*k}" cy="${y-9*k}" rx="${16*k}" ry="${11*k}"/></g>`;
+  const aves = (x, y) => `<g fill="none" stroke="${p.h3}" stroke-width="1.6" opacity=".8"><path d="M${x} ${y} q6 -5 12 0 q6 -5 12 0"/><path d="M${x+32} ${y-14} q5 -4 10 0 q5 -4 10 0"/></g>`;
   // árbol en silueta: tronco que se abre en ramas y copa irregular de varias masas; con flor, salpicado como un lapacho
   const arbol = (x, y, k, flor) => {
     const P = (dx, dy) => `${(x + dx*k).toFixed(1)} ${(y + dy*k).toFixed(1)}`;
@@ -652,10 +661,12 @@ function escena(tema, p) {
       ${copa.map(([dx, dy, r]) => `<ellipse cx="${(x+dx*k).toFixed(1)}" cy="${(y+dy*k).toFixed(1)}" rx="${(r*1.25*k).toFixed(1)}" ry="${(r*.8*k).toFixed(1)}"/>`).join('')}</g>
       ${flores.map(([dx, dy], i) => `<circle cx="${(x+dx*k).toFixed(1)}" cy="${(y+dy*k).toFixed(1)}" r="${((1.4+(i%3)*.5)*k).toFixed(1)}" fill="${flor}" opacity="${.55+(i%3)*.12}"/>`).join('')}`;
   };
-  const stars = Array.from({length: 18}, (_, i) => `<circle cx="${(i*73)%400}" cy="${(i*37)%80+46}" r="${i%3?0.7:1.1}" fill="#fff" opacity="${.25+(i%4)*.12}"/>`).join('');
+  // plantín: tallo con pares de hojas hacia arriba; más pares cuanto más creció
+  const planta = (x, y, h, pares) => `<g fill="${p.h3}"><rect x="${x-1}" y="${y-h}" width="2" height="${h}"/>${Array.from({length: pares}, (_, j) => { const yy = y - h + j*h*.32, s = 1 - j*.18;
+    return `<path d="M${x} ${yy} q${-9*s} ${-1*s} ${-13*s} ${-10*s} q${8*s} ${1*s} ${13*s} ${10*s}Z"/><path d="M${x} ${yy+3} q${9*s} ${-1*s} ${13*s} ${-10*s} q${-8*s} ${1*s} ${-13*s} ${10*s}Z"/>`; }).join('')}</g>`;
   let body = '';
   switch (tema) {
-    case 'Vida Cristiana': // colina con la cruz y rayos de luz
+    case 'Vida Cristiana': // amanecer detrás de la colina de la cruz
       body = sol(200,196,28) + `<g stroke="${p.warm}" stroke-opacity=".16" stroke-width="2">${
         Array.from({length: 11}, (_, i) => { const a = Math.PI*(1.05+i*.09); return `<line x1="200" y1="196" x2="${200+Math.cos(a)*260}" y2="${196+Math.sin(a)*260}"/>`; }).join('')}</g>
         <path d="M0 225 Q100 198 200 214 T400 206 V300 H0Z" fill="${p.h1}"/>
@@ -663,43 +674,45 @@ function escena(tema, p) {
         <rect x="198" y="148" width="4.5" height="40" fill="${p.h3}"/><rect x="187" y="159" width="26" height="4.5" fill="${p.h3}"/>
         <path d="M0 268 Q120 252 220 272 T400 262 V300 H0Z" fill="${p.h3}"/>`;
       break;
-    case 'Liderazgo': // cordillera, camino a la cumbre y bandera
-      body = sol(300,180,24) + `<path d="M0 300 L60 196 L105 228 L180 118 L232 186 L275 152 L340 214 L400 176 V300Z" fill="${p.h1}"/>
+    case 'Liderazgo': // mañana sobre la cordillera: el camino que sube y la bandera en la cumbre
+      body = nube(110,92,1.1) + nube(300,70,.8,.07) + `<path d="M0 300 L60 196 L105 228 L180 118 L232 186 L275 152 L340 214 L400 176 V300Z" fill="${p.h2}"/>
+        <path d="M60 196 L105 228 L180 118 L232 186 L275 152 L340 214 L400 176" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="1.5"/>
         <path d="M180 118 L196 141 L186 138 L178 147 L170 136 L162 142Z" fill="#fff" opacity=".35"/>
         <line x1="180" y1="118" x2="180" y2="94" stroke="${p.h3}" stroke-width="2"/><path d="M180 95 L198 100 L180 106Z" fill="${p.warm}"/>
-        <path d="M0 300 L0 246 Q110 222 190 252 T400 238 V300Z" fill="${p.h2}"/>
+        <path d="M0 300 L0 246 Q110 222 190 252 T400 238 V300Z" fill="${p.h3}" opacity=".7"/>
         <path d="M150 300 C160 270 230 262 200 240 S170 200 182 160" fill="none" stroke="${p.warm}" stroke-opacity=".45" stroke-width="2" stroke-dasharray="4 5"/>
         <path d="M0 300 L0 276 Q140 262 260 282 T400 274 V300Z" fill="${p.h3}"/>`;
       break;
-    case 'Familia': // casa con ventana encendida y árbol
-      body = sol(150,196,30) + `<path d="M0 232 Q110 206 210 222 T400 214 V300 H0Z" fill="${p.h1}"/>
+    case 'Familia': // noche de luna: la casa con la luz encendida, el árbol y el humo de la cocina
+      body = `<circle cx="132" cy="100" r="16" fill="#f4efe6" opacity=".9" mask="url(#luna)"/>
+        <path d="M0 232 Q110 206 210 222 T400 214 V300 H0Z" fill="${p.h1}"/>
         <path d="M0 300 V250 Q150 228 400 246 V300Z" fill="${p.h2}"/>
-        <g transform="translate(-58 0)"><path d="M244 216 L276 190 L308 216Z" fill="${p.h3}"/><rect x="250" y="214" width="52" height="34" fill="${p.h3}"/>
+        <g transform="translate(-58 0)">
+        <path d="M244 216 L276 190 L308 216Z" fill="${p.h3}"/><rect x="250" y="214" width="52" height="34" fill="${p.h3}"/>
         <rect x="293" y="192" width="7" height="16" fill="${p.h3}"/>
         <path d="M296 190 c-6 -10 8 -14 2 -24 c-5 -8 6 -12 3 -20" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2"/>
         <rect x="262" y="222" width="12" height="11" fill="${p.warm}"/><rect x="282" y="230" width="9" height="18" fill="${p.warm}" opacity=".55"/>
         ${arbol(330, 252, .85)}</g>
         <path d="M0 300 V274 Q200 258 400 276 V300Z" fill="${p.h3}"/>`;
       break;
-    case 'Finanzas': // granero y brotes que crecen
-      body = sol(150,192,26) + `<path d="M0 226 Q140 204 260 220 T400 212 V300 H0Z" fill="${p.h1}"/>
+    case 'Finanzas': // día sereno: lo sembrado crece de a poco y lo cosechado se guarda en el granero
+      body = nube(130,84,1) + nube(290,104,.7,.07) + `<path d="M0 226 Q140 204 260 220 T400 212 V300 H0Z" fill="${p.h1}"/>
         <g transform="translate(-40 0)"><rect x="290" y="176" width="30" height="74" fill="${p.h3}"/><ellipse cx="305" cy="176" rx="15" ry="9" fill="${p.h3}"/>
         <path d="M320 212 L343 194 L366 212 V250 H320Z" fill="${p.h2}"/></g>
         <path d="M0 300 V250 Q200 236 400 252 V300Z" fill="${p.h2}"/>
-        ${[0,1,2,3,4,5].map(i => { const x = 40+i*38, h = 10+i*9; return `<path d="M${x} 268 V${268-h}" stroke="${p.h3}" stroke-width="2.4"/>
-          <ellipse cx="${x-5-i}" cy="${268-h+2}" rx="${5+i}" ry="${2.2+i*.4}" transform="rotate(-28 ${x} ${268-h})" fill="${p.h3}"/>
-          <ellipse cx="${x+5+i}" cy="${268-h+6}" rx="${5+i}" ry="${2.2+i*.4}" transform="rotate(28 ${x} ${268-h+6})" fill="${p.h3}"/>`; }).join('')}
+        ${[0,1,2,3,4].map(i => planta(64+i*38, 270, 12+i*9, 1+Math.floor(i/2))).join('')}
         <path d="M0 300 V268 Q200 260 400 270 V300Z" fill="${p.h3}"/>`;
       break;
-    case 'Crecimiento Personal': // camino que sube hacia el sol
-      body = sol(200,176,34) + `<path d="M0 214 Q90 190 200 204 T400 196 V300 H0Z" fill="${p.h1}"/>
+    case 'Crecimiento Personal': // primera luz: el sol apenas asoma al final del camino, y el lapacho florece
+      body = `<circle class="sol" cx="200" cy="206" r="60" fill="url(#s)" opacity=".45"/><circle cx="200" cy="206" r="18" fill="${p.warm}" opacity=".9"/>
+        <path d="M0 214 Q90 190 200 204 T400 196 V300 H0Z" fill="${p.h1}"/>
         <path d="M0 300 V238 Q120 214 220 232 T400 226 V300Z" fill="${p.h2}"/>
         <path d="M120 300 C170 270 236 262 212 238 S190 212 200 204 L203 204 C196 214 220 226 226 240 S200 276 280 300Z" fill="${p.warm}" opacity=".5"/>
         ${arbol(140, 236, .85, p.warm)}
         <path d="M0 300 V280 Q100 268 160 284 L0 300Z" fill="${p.h3}"/><path d="M400 300 V278 Q320 268 260 290 L280 300Z" fill="${p.h3}"/>`;
       break;
-    case 'Produccion y Desarrollo': // surcos, alambrado y molino
-      body = sol(150,198,26) + `<path d="M0 214 Q150 196 260 208 T400 204 V300 H0Z" fill="${p.h1}"/>
+    case 'Produccion y Desarrollo': // mediodía de campo: surcos, alambrado y el molino que saca agua
+      body = nube(120,80,1.1) + nube(300,96,.8,.07) + aves(150,128) + `<path d="M0 214 Q150 196 260 208 T400 204 V300 H0Z" fill="${p.h1}"/>
         <path d="M0 300 V222 H400 V300Z" fill="${p.h2}"/>
         <g stroke="${p.h3}" stroke-width="2" opacity=".85">${Array.from({length: 13}, (_, i) => `<line x1="210" y1="222" x2="${-200+i*67}" y2="300"/>`).join('')}</g>
         <rect x="266" y="160" width="3.5" height="64" fill="${p.h3}"/>
@@ -708,14 +721,14 @@ function escena(tema, p) {
         <g stroke="${p.h3}" stroke-width="2.5">${Array.from({length: 9}, (_, i) => `<line x1="${8+i*48}" y1="276" x2="${8+i*48}" y2="258"/>`).join('')}</g>
         <line x1="0" y1="264" x2="400" y2="264" stroke="${p.h3}" stroke-width="1.2"/>`;
       break;
-    default: // Salud: laguna con reflejo y tres palmeras
-      body = sol(150,196,28) + `<path d="M0 214 Q110 198 230 208 T400 204 V230 H0Z" fill="${p.h1}"/>
+    default: // Salud: mañana con bruma sobre la laguna, aves y palmeras
+      body = aves(110,120) + `<path d="M0 214 Q110 198 230 208 T400 204 V230 H0Z" fill="${p.h1}"/>
         <rect y="228" width="400" height="72" fill="${p.h2}"/>
-        <g stroke="${p.warm}" stroke-linecap="round" opacity=".55">${[0,1,2,3,4,5].map(i => `<line x1="${150-30+i*4}" y1="${236+i*8}" x2="${150+30-i*4}" y2="${236+i*8}" stroke-width="${2.6-i*.3}"/>`).join('')}</g>
+        <g fill="#fff">${[[0,206,.10],[60,216,.08],[0,226,.07]].map(([x, y, o]) => `<rect x="${x}" y="${y}" width="400" height="5" rx="2.5" opacity="${o}"/>`).join('')}</g>
+        <g stroke="#fff" stroke-linecap="round" opacity=".18">${[0,1,2,3,4].map(i => `<line x1="${120+i*9}" y1="${240+i*9}" x2="${190-i*7}" y2="${240+i*9}" stroke-width="${2.2-i*.3}"/>`).join('')}</g>
         ${[[244,0],[272,-6],[300,4]].map(([x, d]) => { const top = 150+d; return `<path d="M${x} 262 Q${x-6} ${top+50} ${x+6} ${top}" fill="none" stroke="${p.h3}" stroke-width="4"/>
           <g fill="${p.h3}" transform="translate(${x+6} ${top})">${[-150,-110,-70,-30,10,50].map(a => `<path d="M0 0 Q14 -6 30 4 Q14 0 0 3Z" transform="rotate(${a})"/>`).join('')}</g>`; }).join('')}
-        <path d="M210 300 V262 Q290 250 400 258 V300Z" fill="${p.h3}"/>
-        <g fill="none" stroke="${p.h3}" stroke-width="1.6"><path d="M90 110 q6 -5 12 0 q6 -5 12 0"/><path d="M122 96 q5 -4 10 0 q5 -4 10 0"/></g>`;
+        <path d="M210 300 V262 Q290 250 400 258 V300Z" fill="${p.h3}"/>`;
   }
   return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" role="presentation">${sky}${stars}${body}</svg>`;
 }

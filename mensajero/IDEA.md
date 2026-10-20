@@ -92,6 +92,19 @@ El deporte es un campo fuerte de Mensajero (programa propio y coberturas). Cada 
 - Pasan la misma revisión teológica: nada de «si tenés fe ganás», sin prometer victorias, el esfuerzo no gana el amor de Dios.
 - Fuente: `content/frases_deportivas_2027.txt` (`semana|Dia|deporte|frase`) → `tools/frases_deportivas_2027.py` las carga en la hoja «Frases Deportivas 2027» → `build_data.py` (campo `deporte` de cada día).
 
+## Imágenes de cada tema
+
+Mensajero toma la base de Sunset, pero no su sello: el atardecer queda para Sunset. Cada escena cuenta su tema con su propia luz (`escena` en `index.html`):
+- **Vida Cristiana:** amanecer con rayos detrás de la colina de la cruz.
+- **Crecimiento Personal:** primera luz al final del camino y un lapacho en flor.
+- **Liderazgo:** mañana con nubes sobre la cordillera, el camino a la cumbre y la bandera.
+- **Familia:** noche de luna, la casa con la luz encendida, el humo de la cocina y el árbol.
+- **Finanzas:** día sereno, plantines que crecen de a poco y el granero.
+- **Producción y Desarrollo:** mediodía de campo con surcos, alambrado, molino y aves.
+- **Salud:** mañana con bruma sobre la laguna, aves y palmeras.
+
+Los elementos principales quedan en el centro, porque en el teléfono la imagen se recorta a los costados.
+
 ## Derechos de la RVC
 
 Mensajero tiene permiso de la Sociedad Bíblica del Paraguay para usar la Reina Valera Contemporánea (al aire, en la app y en los flyers).
