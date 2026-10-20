@@ -71,7 +71,9 @@ Para ayudarlo, cada día de lunes a sábado trae el bloque «Hacelo a tu estilo�
 
 Cada programa tiene una modalidad (en «Mi preparación»): **En vivo** (grabado solo algunos días) o **Siempre grabado**. En la barra de cada día se puede cambiar a En vivo o Grabado para esa fecha.
 
-En los días en vivo aparece «Mensajes recibidos»: SMS, WhatsApp, YouTube, Instagram y Facebook, cada uno con su número y un botón «+1» para ir sumando durante el programa. El registro al aire muestra días en vivo, grabados y mensajes (semana, mes y año) y el total del mes por canal; el informe del mes los incluye.
+En los días en vivo, al final de la tarjeta del día, aparece «Mensajes de oyentes» con dos cuadros: **Sumar** (se toca el logo del canal por cada mensaje: SMS, WhatsApp, YouTube, Instagram, Facebook) y **Resultado** (la cantidad por canal y el total; ahí se corrige si hubo un error). En los días grabados no aparece. Queda al final porque no todos los programas lo usan.
+
+El registro al aire muestra días en vivo y grabados; los mensajes del mes por canal van al final del registro, del informe de preparación y de los dos informes que se copian, y solo aparecen si hubo mensajes.
 
 ## Derechos de la RVC
 

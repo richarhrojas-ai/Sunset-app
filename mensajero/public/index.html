@@ -182,8 +182,12 @@ details.valor dd{color:var(--ink2)}
 .msg .ico{width:26px;height:26px;display:grid;place-items:center}
 .msg .ico svg{width:24px;height:24px}
 .msg input{width:100%;max-width:64px;text-align:center;font-size:16px;padding:6px 2px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink);font-variant-numeric:tabular-nums}
-.msg .mas{width:100%;max-width:64px;min-height:32px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-size:13px;color:var(--ink2)}
-.msg .mas:active{background:rgba(255,255,255,.16)}
+.msg input{-moz-appearance:textfield;appearance:textfield}.msg input::-webkit-inner-spin-button,.msg input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.msgs-dia{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);display:grid;gap:10px}
+.msg-btn{display:grid;justify-items:center;gap:4px;padding:8px 2px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04)}
+.msg-btn:active{background:rgba(255,255,255,.18);transform:scale(.96)}
+.msg-btn .ico svg{width:30px;height:30px}.msg-btn .ico{width:32px;height:32px;display:grid;place-items:center}
+.msg-btn small{font-size:9.5px;color:var(--ink3)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .acciones.copiar{justify-content:flex-end;gap:6px}
 .acciones.copiar .btn{min-height:36px;color:var(--ink3);background:transparent;border-color:rgba(255,255,255,.18)}
@@ -484,6 +488,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
     <div class="tiles" id="tiles"></div>
     <div><h4>Días al aire</h4><ul class="reg-list" id="reg-v"></ul></div>
     <p class="muted" style="font-size:13px" id="reg-anio"></p>
+    <div id="reg-msgs"></div>
     <div class="acciones copiar"><button class="btn mini" id="copiar-informe">Copiar informe del mes</button></div></div></details>
   <details class="fold" id="s-inf"><summary>Informe de preparación <span id="inf-pct" class="muted" style="letter-spacing:.1em"></span></summary><div class="fold-body">
     <div class="reg-top"><label for="mes-p" class="kicker">Mes</label><select id="mes-p"></select></div>
@@ -868,8 +873,13 @@ function msgsMes(m) {
 }
 function canalesMes(m) {
   const t = msgsMes(m), n = totalMsgs(t); if (!n) return '';
-  return `<div class="msgs" style="margin-top:12px"><div class="msgs-t"><span>Mensajes de ${MESES[m]} por canal</span><b>${n}</b></div><div class="msgs-g">${CANALES.map(c =>
+  return `<div class="msgs" style="margin-top:4px"><div class="msgs-t"><span>Mensajes de oyentes · ${MESES[m]}</span><b>${n}</b></div><div class="msgs-g">${CANALES.map(c =>
     `<div class="msg"><span class="ico" title="${c.n}">${c.svg}</span><b style="font-variant-numeric:tabular-nums">${t[c.id] || 0}</b></div>`).join('')}</div></div>`;
+}
+const txtMsgs = t => `${totalMsgs(t)} (${CANALES.filter(k => t[k.id]).map(k => `${k.n} ${t[k.id]}`).join(', ')})`;
+function lineasMsgs(cs, varios) {   // sección final de los informes; los programas grabados no la muestran
+  const con = cs.filter(c => totalMsgs(c.msgs)); if (!con.length) return [];
+  return ['', 'MENSAJES DE OYENTES (días en vivo)', ...con.map(c => `- ${varios ? c.nombre + ': ' : 'Total: '}${txtMsgs(c.msgs)}`)];
 }
 // resumen del mes de cada programa (para varios programas)
 function cuentasMes(m) {
@@ -897,13 +907,14 @@ function renderRegistro(m) {
   const suma = (fn, filtro) => { let n = 0; for (const s of sem) for (let i = 0; i < 7; i++) if (filtro(s, fechaDia(s, i))) n += +fn(s, i) || 0; return n; };
   const filaF = (t, fn) => `<tr><th scope="row">${t}</th><td>${suma(fn, enSem)}</td><td>${suma(fn, enMes)}</td><td>${suma(fn, todo)}</td></tr>`;
   $('tiles').innerHTML = `<table class="tabla-reg"><thead><tr><th></th><th>Semana ${w.n}</th><th>${MESES[m]}</th><th>${DATA.anio}</th></tr></thead>
-    <tbody>${fila('Días al aire', 'aire')}${filaF('En vivo', (s, i) => get(key(s, 'aire'+i)) && modoDe(s, i) === 'vivo')}${filaF('Grabados', (s, i) => get(key(s, 'aire'+i)) && modoDe(s, i) === 'grabado')}${fila('Entrevistas', 'ent')}${filaReem(w, m)}${filaF('Mensajes recibidos', (s, i) => modoDe(s, i) === 'vivo' ? totalMsgs(msgsDe(s, i)) : 0)}</tbody></table>${canalesMes(m)}${todosProgs(m)}
+    <tbody>${fila('Días al aire', 'aire')}${filaF('En vivo', (s, i) => get(key(s, 'aire'+i)) && modoDe(s, i) === 'vivo')}${filaF('Grabados', (s, i) => get(key(s, 'aire'+i)) && modoDe(s, i) === 'grabado')}${fila('Entrevistas', 'ent')}${filaReem(w, m)}</tbody></table>${todosProgs(m)}
     <p class="muted" style="font-size:13px;margin-top:8px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)}: ${v.length} de ${total} días ${progs().length > 1 ? 'de «' + esc(nombreProg(prog)) + '»' : 'de tu programa'} al aire (${total ? Math.min(100, Math.round(v.length / total * 100)) : 0}%).</p>`;
   $('reg-v').innerHTML = v.map(x => `<li><time>${fcorta(x.f)}</time><button data-i="${x.w.n-1}">${esc(x.txt)} <span class="muted">· semana ${x.w.n}</span></button></li>`).join('')
     || `<li class="muted" style="display:block">Ningún día marcado al aire en ${MESES[m]}.</li>`;
   const rs = reemplazos(enMesDe(m)).sort((a, b) => a.f - b.f);
   if (rs.length) $('reg-v').innerHTML += rs.map(x => `<li><time>${fcorta(x.f)}</time><button data-i="${x.w.n-1}">Reemplazo${x.prog ? ': ' + esc(x.prog) : ''} <span class="muted">· ${DIAS[x.i].toLowerCase()}</span></button></li>`).join('');
   $('reg-anio').textContent = 'Cada día al aire es un versículo compartido y su reflexión.';
+  $('reg-msgs').innerHTML = canalesMes(m);
 }
 
 function informeMes(m) {
@@ -924,12 +935,11 @@ function informeMes(m) {
         `Total: ${cs.reduce((a, c) => a + c.aire, 0)} programas al aire · ${ents.length} entrevista${ents.length === 1 ? '' : 's'}`]
       : [`Días al aire: ${c1.aire} de ${c1.total} (${c1.pct}%)`, `Entrevistas: ${ents.length}${ents.length ? ' (' + ents.join(', ') + ')' : ''}`]),
     ...cs.map(c => `${varios ? c.nombre + ': ' : ''}En vivo: ${c.aire - c.grab} · Grabados: ${c.grab}`),
-    ...cs.map(c => { const n = totalMsgs(c.msgs); return n ? `${varios ? c.nombre + ': ' : ''}Mensajes recibidos: ${n} (${CANALES.filter(k => c.msgs[k.id]).map(k => `${k.n} ${c.msgs[k.id]}`).join(', ')})` : null; }),
     rs.length ? `Reemplazos: ${rs.length} (${rs.join('; ')})` : null,
     `Días con notas: ${notas}`,
     (c => c.length ? `Correcciones de coordinación: ${c.join('; ')}` : null)(sem.flatMap(w => (get(keyBase(w, 'correccion')) || []).filter(t => enMes(new Date(t))).map(t => `semana ${w.n} (${fcorta(new Date(t))})`))),
     prepTxt.length ? `Preparación promedio: ${prepTxt.join(' · ')}` : null, '',
-    'VERSÍCULOS Y TEMAS COMPARTIDOS', ...(dias.length ? dias : ['- Ninguno marcado.'])].filter((x, k) => x !== null && (x !== '' || k > 1)).join('\n');
+    'VERSÍCULOS Y TEMAS COMPARTIDOS', ...(dias.length ? dias : ['- Ninguno marcado.']), ...lineasMsgs(cs, varios)].filter((x, k) => x !== null && (x !== '' || k > 1)).join('\n');
 }
 
 /* informe de preparación: semanas del mes (cada semana cuenta en el mes de su miércoles) */
@@ -969,7 +979,7 @@ function renderInforme(m) {
       return `<li>${esc(t.it.t)}<b>${t.n}/${t.de}</b><span class="barra"><i style="width:${p}%"></i></span></li>`; }).join('')}</ul>
       <p class="muted" style="font-size:13px;margin-top:8px">Arriba, las que más se dejan sin hacer.</p></div>
     <div><h4>Promedio por mes · ${DATA.anio}</h4><div class="inf-anio" id="inf-anio">${anual}</div>
-      <p class="muted" style="font-size:13px;margin-top:8px">Mejor racha del año: ${d.mejor === 1 ? '1 semana' : d.mejor + ' semanas seguidas'} con 80 % o más.</p></div>`;
+      <p class="muted" style="font-size:13px;margin-top:8px">Mejor racha del año: ${d.mejor === 1 ? '1 semana' : d.mejor + ' semanas seguidas'} con 80 % o más.</p></div>${canalesMes(m)}`;
   if (progs().length > 1) { const ps = progs().map(id => conProg(id, () => ({id, d: datosPrep(m)})));
     $('inf').insertAdjacentHTML('afterbegin', `<div><h4>Tus programas · ${mes}</h4><ul class="inf-tareas" style="margin-top:8px">${ps.map(x =>
       `<li><span>${esc(nombreProg(x.id))}${x.id === prog ? ' <span class="muted">· abajo el detalle</span>' : ''}</span><b>${x.d.ws.length ? x.d.prom + '%' : '—'}</b><span class="barra"><i style="width:${x.d.prom}%"></i></span></li>`).join('')}</ul>
@@ -997,7 +1007,8 @@ function informePrep1(m) {
     'SEMANA A SEMANA',
     ...d.filas.map(f => `- Semana ${f.w.n} · ${TEMA_TXT[f.w.tema] || f.w.tema}: ${f.pct} %${f.de ? ` · al aire ${f.aire}/${f.de}` : ''}${f.falta.length && f.falta.length < listaDe(f.w).length ? ` · faltó: ${f.falta.join(', ')}` : ''}`), '',
     'TAREAS QUE MÁS SE DEJAN SIN HACER',
-    ...(pend.length ? pend.map(t => `- ${t.it.t}: ${t.n} de ${t.de} semana${t.de === 1 ? '' : 's'}`) : ['- Ninguna: todas cumplidas.'])].filter((x, k) => x !== '' || k > 2).join('\n');
+    ...(pend.length ? pend.map(t => `- ${t.it.t}: ${t.n} de ${t.de} semana${t.de === 1 ? '' : 's'}`) : ['- Ninguna: todas cumplidas.']),
+    ...(n => n ? ['', 'MENSAJES DE OYENTES (días en vivo)', `- Total: ${txtMsgs(msgsMes(m))}`] : [])(totalMsgs(msgsMes(m)))].filter((x, k) => x !== '' || k > 2).join('\n');
 }
 
 function pintarCuentas() {
@@ -1082,9 +1093,18 @@ function bloqueVersiculo(w, i, conPuntos) {
 function barraModo(w, i) {
   const m = modoDe(w, i), o = msgsDe(w, i);
   const seg = `<div class="modo" role="group" aria-label="Modalidad del día"><button class="vivo" data-modo="vivo" aria-pressed="${m === 'vivo'}">En vivo</button><button data-modo="grabado" aria-pressed="${m === 'grabado'}">Grabado</button></div>`;
-  if (m !== 'vivo') return seg;
-  return seg + `<div class="msgs"><div class="msgs-t"><span>Mensajes recibidos</span><b data-msg-total>${totalMsgs(o)}</b></div><div class="msgs-g">${CANALES.map(c =>
-    `<label class="msg"><span class="ico" title="${c.n}">${c.svg}</span><span class="sr">${c.n}</span><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"><button type="button" class="mas" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}">+1</button></label>`).join('')}</div></div>`;
+  return seg;
+}
+// mensajes de oyentes, al final de la tarjeta y solo en días en vivo: un cuadro para sumar y otro con el resultado
+function bloqueMsgs(w, i) {
+  if (modoDe(w, i) !== 'vivo') return '';
+  const o = msgsDe(w, i);
+  return `<div class="msgs-dia"><h4>Mensajes de oyentes</h4>
+    <div class="msgs"><div class="msgs-t"><span>Sumar · tocá el canal por cada mensaje</span></div><div class="msgs-g">${CANALES.map(c =>
+      `<button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button>`).join('')}</div></div>
+    <div class="msgs"><div class="msgs-t"><span>Resultado</span><b data-msg-total>${totalMsgs(o)}</b></div><div class="msgs-g">${CANALES.map(c =>
+      `<label class="msg"><span class="ico" title="${c.n}">${c.svg}</span><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"></label>`).join('')}</div>
+      <p class="muted" style="font-size:12px;margin:8px 0 0">Si te equivocaste, corregí el número acá.</p></div></div>`;
 }
 // registro del día, siempre arriba de la tarjeta: al aire, entrevista y nota
 function barraDia(w, i) {
@@ -1180,7 +1200,7 @@ function renderDias(w, hoyIdx) {
         ${bloqueIdeas(w, i)}${pie('Copiar guion')}`
       : `${bloqueVersiculo(w, i, true)}<div class="vacio"><p class="muted">Este día todavía no tiene guion. Copiá el prompt de la semana: ya trae el tema, los subtemas, el valor y los versículos de cada día.</p>
         <div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="prompt">Copiar prompt</button></div></div>`}`; }
-  $('dias').innerHTML = `${tabs}<article class="guion" role="tabpanel">${cuerpo}</article>
+  $('dias').innerHTML = `${tabs}<article class="guion" role="tabpanel">${cuerpo}${bloqueMsgs(w, i)}</article>
     <div style="margin-top:14px;text-align:center"><button class="ver-todo" data-vertodo>${verTodo ? 'Ver solo mis días' : 'Ver toda la semana'}</button></div>`;
 }
 /* flyer del versículo para redes: 1080×1350 con la escena y el color de la semana */
@@ -1385,7 +1405,7 @@ $('dias').onclick = e => {
     renderRegistro(+$('mes').value); return renderDias(w, hoyDe(w)); }
   const mas = e.target.closest('[data-msg-mas]');
   if (mas) { if (bloqueada()) return; const o = {...msgsDe(w, diaSel)}; o[mas.dataset.msgMas] = (+o[mas.dataset.msgMas] || 0) + 1;
-    set(key(w, 'msg'+diaSel), o); fijarModo(w, diaSel); const inp = mas.parentElement.querySelector('input'); inp.value = o[mas.dataset.msgMas];
+    set(key(w, 'msg'+diaSel), o); fijarModo(w, diaSel); const inp = $('dias').querySelector(`input[data-msg="${mas.dataset.msgMas}"]`); inp.value = o[mas.dataset.msgMas];
     $('dias').querySelector('[data-msg-total]').textContent = totalMsgs(o); renderRegistro(+$('mes').value); }
 };
 $('dias').addEventListener('input', e => { const inp = e.target.closest('input[data-msg]'); if (!inp) return;
