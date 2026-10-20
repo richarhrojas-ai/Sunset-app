@@ -50,6 +50,8 @@ Antes de cargar guiones nuevos: versículos firmes → borrador → **revisión 
 - `prepLista` lista de tareas que regía esa semana (así cambiar la lista no altera el % de semanas pasadas)
 - `cfg/programa` mi programa {nombre, dias (0=dom…6=sáb), horas} · `cfg/prep` mis tareas elegidas · `cfg/prepManual` si las eligió a mano
 - `notas` notas de producción
+- `modN` modalidad de ese día: `'vivo'` o `'grabado'`. Si falta, vale la del programa (`cfg/programa.modo`, por defecto `'vivo'`). Se fija al marcar «Al aire» o al cargar mensajes, así cambiar la del programa no altera días ya registrados
+- `msgN` mensajes recibidos ese día en vivo, por canal: `{sms, wa, yt, ig, fb}` (solo los que tienen número). Lista de canales en `CANALES`
 - `reemN` reemplazo de ese día (valor = programa reemplazado; sin prefijo de programa)
 - Programas 2 y 3: las mismas claves con prefijo `p2/` o `p3/` (`AAAA/wN/p2/aire1`, `cfg/p2/programa`). Las tareas de Contenido (`prep/<id>`) quedan sin prefijo: son compartidas
 - `cfg/programas` lista de programas (`['p1','p2']`) · `cfg/activo` el que se está viendo
@@ -64,6 +66,12 @@ Para ayudarlo, cada día de lunes a sábado trae el bloque «Hacelo a tu estilo�
 - la idea central del día (la del repaso del sábado para ese subtema; el sábado, la acción de la semana);
 - dos técnicas para adaptarlo, que rotan día a día sobre una lista de 15 (`IDEAS`): contar algo propio, abrir con una pregunta, usar un refrán en guaraní, leer mensajes de oyentes, convertirlo en conversación, etc.;
 - cómo hacerlo si hay poco tiempo.
+
+## En vivo o grabado, y mensajes de oyentes
+
+Cada programa tiene una modalidad (en «Mi preparación»): **En vivo** (grabado solo algunos días) o **Siempre grabado**. En la barra de cada día se puede cambiar a En vivo o Grabado para esa fecha.
+
+En los días en vivo aparece «Mensajes recibidos»: SMS, WhatsApp, YouTube, Instagram y Facebook, cada uno con su número y un botón «+1» para ir sumando durante el programa. El registro al aire muestra días en vivo, grabados y mensajes (semana, mes y año) y el total del mes por canal; el informe del mes los incluye.
 
 ## Derechos de la RVC
 
