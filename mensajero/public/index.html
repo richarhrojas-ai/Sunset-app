@@ -221,15 +221,26 @@ details.fold[open]>summary::after{content:"–"}
 .guion{display:grid;gap:16px}
 .guion .kick{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3)}
 .guion h3{font-size:24px;font-weight:500;letter-spacing:.01em;line-height:1.25;margin-top:4px}
-.dato{border:1px dashed rgba(255,215,0,.45);border-radius:14px;padding:12px 16px;background:rgba(255,215,0,.06)}
+.dato{border-left:3px solid rgba(255,215,0,.6);border-radius:0 12px 12px 0;padding:10px 14px;background:rgba(255,215,0,.05)}
 .dato b{display:block;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:4px}
 .dato p{font-size:15px;color:var(--ink)}
 .dato cite{display:block;font-style:normal;font-size:12px;color:var(--ink3);margin-top:4px}
-.punto{display:grid;grid-template-columns:34px minmax(0,1fr);gap:4px 12px}
-.punto>span{width:30px;height:30px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:14px;font-weight:500}
+.punto{border-top:1px solid var(--line);padding-top:10px}
+.punto>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:34px minmax(0,1fr) 16px;gap:4px 12px;align-items:start}
+.punto>summary::-webkit-details-marker{display:none}
+.punto>summary::after{content:"+";color:var(--gold);padding-top:4px}
+.punto[open]>summary::after{content:"–"}
+.punto .cuerpo{padding:4px 0 6px 46px;display:grid;gap:4px}
+.punto em.tuyo{display:block;font-style:normal;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:3px}
+.puntos-ayuda{font-size:12.5px;color:var(--ink3);margin:2px 0 -4px}
+.barra-dia details.mas>summary{list-style:none;cursor:pointer;min-height:34px;display:flex;align-items:center;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.barra-dia details.mas>summary::-webkit-details-marker{display:none}
+.barra-dia details.mas[open]{flex-basis:100%}
+.barra-dia details.mas .acc{margin-top:6px;flex-wrap:wrap}
+.punto summary>span{width:30px;height:30px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-size:14px;font-weight:500}
 .punto h4{font-size:18px;font-weight:500;color:var(--ink);line-height:1.3;padding-top:3px}
-.punto p{font-size:15px;color:var(--ink2);grid-column:2}
-.punto dl{grid-column:2;display:grid;gap:8px;margin-top:6px}
+.punto p{font-size:15px;color:var(--ink2)}
+.punto dl{display:grid;gap:8px;margin-top:6px}
 .punto dt{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
 .punto dt.pr{color:#ff9f8a}.punto dt.so{color:#9fe3b0}
 .punto dd{font-size:14.5px;color:var(--ink2)}
@@ -589,13 +600,19 @@ const PRIORIDAD = ['guion','tema','reflexion','versiculo','versSem','devocional'
   'paraguay','agenda','cortinas','clima','llamada','respaldo','promo','grabacion'];
 const TAG_TXT = {diario: 'solo diarios', semanal: 'solo semanales', entrevista: 'con entrevistas (sumalas si las usás)', '2h': 'de 2 h o más', '3h': 'de 3 h'};
 const cfgPrograma = () => {
-  const c = {nombre: '', horas: 1, modo: 'vivo', ...(get(ck('programa')) || {})};
+  const c = {nombre: '', horas: 1, modo: 'vivo', franja: '', ...(get(ck('programa')) || {})};
   if (!Array.isArray(c.dias)) c.dias = c.frec === 'semanal' ? [6] : c.frec === 'diario' ? [1, 2, 3, 4, 5] : [];   // [] = todavía no eligió
   c.dias = [...new Set(c.dias)].sort();
   c.frec = c.dias.length === 1 ? 'semanal' : 'diario';   // un solo día al aire = programa semanal
   c.listo = c.dias.length > 0;
   return c;
 };
+// un punto por programa: según la franja, cada programa del día desarrolla un punto distinto y la audiencia no oye lo mismo dos veces
+const FRANJAS = {manana: ['Mañana', 0], mediodia: ['Mediodía', 1], tarde: ['Tarde', 1], noche: ['Noche', 2]};
+const puntoFranja = () => FRANJAS[cfgPrograma().franja]?.[1] ?? null;
+const ayudaPuntos = () => { const k = puntoFranja();
+  return k === null ? 'Tocá un punto para abrirlo. Con uno bien contado alcanza; si te sobra tiempo, sumá otro. En «Mi preparación» podés elegir tu franja horaria.'
+    : `Tu franja es la ${FRANJAS[cfgPrograma().franja][0].toLowerCase()}: desarrollá el punto ${k+1}. Los otros quedan para los programas de otras franjas, así la audiencia no oye lo mismo dos veces.`; };
 // modalidad: el programa tiene una por defecto (en vivo o grabado) y cada día puede cambiarla
 const modoDe = (w, i) => get(key(w, 'mod'+i)) || cfgPrograma().modo;
 const fijarModo = (w, i) => { if (!get(key(w, 'mod'+i))) set(key(w, 'mod'+i), modoDe(w, i)); };
@@ -1081,7 +1098,7 @@ function textoDia(w, i, semanal) {
   out.push(`SUBTEMA ${BLOQUE[i]+1}: ${w.subtemas[BLOQUE[i]].titulo}`, '');
   if (g) out.push(g.titulo.toUpperCase(), '', `DATO PARA ABRIR: ${g.dato.texto} (${g.dato.fuente})`, '');
   out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, '');
-  d.puntos.forEach((p, k) => { const [tt, ex] = tituloPunto(p); out.push(`${k+1}. ${tt}${ex ? ' — ' + ex : ''}`);
+  d.puntos.forEach((p, k) => { const [tt, ex] = tituloPunto(p); out.push(`${k+1}. ${tt}${ex ? ' — ' + ex : ''}${puntoFranja() === k ? '  ← TU PUNTO DE HOY' : ''}`);
     if (g) { const q = g.puntos[k] || {}; out.push(q.desarrollo, `Problemática: ${q.problema}`, `En la práctica: ${q.solucion}`, ''); } });
   if (g) out.push(`PARA CERRAR: ${d.ref}`, ''); dep();
   return out.join('\n').trim() + (g ? textoIdeas(w, i) : '');
@@ -1117,11 +1134,11 @@ function bloqueMsgs(w, i) {
 function barraDia(w, i) {
   const aire = !!get(key(w, 'aire'+i)), ent = !!get(key(w, 'ent'+i)), r = get(keyBase(w, 'reem'+i)), reem = typeof r === 'string';
   const otros = progs().filter(id => id !== prog && conProg(id, () => cfgPrograma().dias.includes(i))).map(nombreProg);
-  return `<div class="barra-dia"><div class="acc"><button class="chk mini-chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button>
+  return `<div class="barra-dia"><div class="acc"><button class="chk mini-chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button>${barraModo(w, i)}</div>
+    <details class="mas"${ent || reem ? ' open' : ''}><summary>${ent || reem ? [ent && 'Entrevista ✓', reem && 'Reemplazo ✓'].filter(Boolean).join(' · ') : '+ Más'}</summary><div class="acc">
       <button class="chk mini-chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Con entrevista ✓' : 'Con entrevista'}</button>
       <button class="chk mini-chk reem" data-reem="${i}" aria-pressed="${reem}">${reem ? 'Reemplazo ✓' : 'Reemplazo'}</button></div>
-    ${reem ? `<select class="reem-sel" data-reem-sel="${i}" aria-label="Programa que reemplazaste"><option value="">¿Qué programa reemplazaste?</option>${[...new Set([...PROGRAMAS, r].filter(Boolean))].map(x => `<option${x === r ? ' selected' : ''}>${esc(x)}</option>`).join('')}</select>` : ''}
-    ${barraModo(w, i)}
+    ${reem ? `<select class="reem-sel" data-reem-sel="${i}" aria-label="Programa que reemplazaste"><option value="">¿Qué programa reemplazaste?</option>${[...new Set([...PROGRAMAS, r].filter(Boolean))].map(x => `<option${x === r ? ' selected' : ''}>${esc(x)}</option>`).join('')}</select>` : ''}</details>
     ${otros.length ? `<span class="tambien">Este día también: ${otros.map(esc).join(', ')}. Marcá cada programa en su pestaña.</span>` : ''}
     ${notaBox(w, 'vn'+i, 'Lo que quieras anotar para este día: noticias, clima, avisos, invitados, pedidos de oración, ideas que surgen al aire…')}</div>`;
 }
@@ -1164,7 +1181,7 @@ function ideasDia(w, i) {
   const central = i === 6 ? (r.accion || '') : (r.ideas[b] || w.subtemas[b].titulo);
   const tecnicas = [IDEAS[(w.n * 7 + i) % IDEAS.length], IDEAS[(w.n * 7 + i + 5) % IDEAS.length]];
   const corto = i === 6 ? 'Si tenés poco tiempo: la idea de cada subtema en una frase y la acción de la semana.'
-    : 'Si tenés poco tiempo: el dato, el versículo, el punto que más te toque y su acción práctica.';
+    : `Si tenés poco tiempo: el dato, el versículo, ${puntoFranja() === null ? 'el punto que más te toque' : 'tu punto (el ' + (puntoFranja() + 1) + ')'} y su acción práctica.`;
   return { central, tecnicas, corto };
 }
 function bloqueIdeas(w, i) {
@@ -1201,9 +1218,10 @@ function renderDias(w, hoyIdx) {
     cuerpo = `${cab}<div class="kick">Subtema ${b+1} · ${esc(w.subtemas[b].titulo)}</div>${primero ? paraLocutor(w, b) : ''}
       ${g ? `<h3>${esc(g.titulo)}</h3>${g.dato.texto ? `<div class="dato"><b>Dato para abrir</b><p>${esc(g.dato.texto)}</p><cite>${esc(g.dato.fuente)}</cite></div>` : ''}
         ${bloqueVersiculo(w, i, false)}
-        ${d.puntos.map((p, k) => { const [tt, ex] = tituloPunto(p), q = g.puntos[k] || {};
-          return `<div class="punto"><span>${k+1}</span><h4>${esc(tt)}${ex ? `<small>${esc(ex)}</small>` : ''}</h4><p>${esc(q.desarrollo)}</p>
-          <dl><div><dt class="pr">Problemática</dt><dd>${esc(q.problema)}</dd></div><div><dt class="so">En la práctica</dt><dd>${esc(q.solucion)}</dd></div></dl></div>`; }).join('')}
+        <p class="puntos-ayuda">${esc(ayudaPuntos())}</p>
+        ${d.puntos.map((p, k) => { const [tt, ex] = tituloPunto(p), q = g.puntos[k] || {}, tuyo = puntoFranja() === k;
+          return `<details class="punto"${(puntoFranja() ?? 0) === k ? ' open' : ''}><summary><span>${k+1}</span><h4>${esc(tt)}${ex ? `<small>${esc(ex)}</small>` : ''}${tuyo ? '<em class="tuyo">Tu punto de hoy</em>' : ''}</h4></summary>
+          <div class="cuerpo"><p>${esc(q.desarrollo)}</p><dl><div><dt class="pr">Problemática</dt><dd>${esc(q.problema)}</dd></div><div><dt class="so">En la práctica</dt><dd>${esc(q.solucion)}</dd></div></dl></div></details>`; }).join('')}
         ${bloqueDeporte(d)}${bloqueIdeas(w, i)}${pie('Copiar guion')}`
       : `${bloqueVersiculo(w, i, true)}<div class="vacio"><p class="muted">Este día todavía no tiene guion. Copiá el prompt de la semana: ya trae el tema, los subtemas, el valor y los versículos de cada día.</p>
         <div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="prompt">Copiar prompt</button></div></div>`}`; }
@@ -1297,7 +1315,8 @@ function pintarPrograma() {
   if (varios && prog !== 'p1') document.documentElement.dataset.prog = prog; else delete document.documentElement.dataset.prog;
   $('programa').innerHTML = `<select id="pg-nombre" aria-label="Programa"><option value="">Elegí tu programa</option>${PROGRAMAS.map(p => `<option${p === c.nombre ? ' selected' : ''}>${esc(p)}</option>`).join('')}</select>
     <select id="pg-horas" aria-label="Duración">${[1,2,3].map(h => `<option value="${h}"${c.horas === h ? ' selected' : ''}>${h} hora${h > 1 ? 's' : ''}</option>`).join('')}</select>
-    <select id="pg-modo" aria-label="Modalidad"><option value="vivo"${c.modo === 'vivo' ? ' selected' : ''}>En vivo (grabado solo algunos días)</option><option value="grabado"${c.modo === 'grabado' ? ' selected' : ''}>Siempre grabado</option></select>`;
+    <select id="pg-modo" aria-label="Modalidad"><option value="vivo"${c.modo === 'vivo' ? ' selected' : ''}>En vivo (grabado solo algunos días)</option><option value="grabado"${c.modo === 'grabado' ? ' selected' : ''}>Siempre grabado</option></select>
+    <select id="pg-franja" aria-label="Franja horaria"><option value="">Franja horaria (para repartir los puntos)</option>${Object.entries(FRANJAS).map(([v, [n]]) => `<option value="${v}"${c.franja === v ? ' selected' : ''}>${n}</option>`).join('')}</select>`;
   $('semana').hidden = !c.listo;
 }
 function cambiarProg(id) { prog = id; set('cfg/activo', id); diaSel = null; verTodo = false; render(); }
@@ -1313,7 +1332,7 @@ function quitarProg() {
   set('cfg/programas', progs().filter(x => x !== id)); cambiarProg('p1');
 }
 function guardarPrograma(dias) {
-  const c = {nombre: $('pg-nombre').value, horas: +$('pg-horas').value, modo: $('pg-modo').value, dias: dias || cfgPrograma().dias};
+  const c = {nombre: $('pg-nombre').value, horas: +$('pg-horas').value, modo: $('pg-modo').value, franja: $('pg-franja').value, dias: dias || cfgPrograma().dias};
   if (dias) { const hoy = new Date(); hoy.setHours(0,0,0,0); const h = (get(ck('historial')) || []).filter(x => x.desde < +hoy);
     if (!h.length) h.push({desde: 0, dias: [...dias].sort()}); else h.push({desde: +hoy, dias: [...dias].sort()});
     set(ck('historial'), h); }
