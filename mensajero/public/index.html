@@ -188,8 +188,10 @@ details.valor dd{color:var(--ink2)}
 .msg-btn:active{background:rgba(255,255,255,.18);transform:scale(.96)}
 .msg-btn .ico svg{width:30px;height:30px}.msg-btn .ico{width:32px;height:32px;display:grid;place-items:center}
 .msg-btn small{font-size:9.5px;color:var(--ink3)}
-.msg .menos{width:100%;max-width:64px;min-height:28px;border-radius:999px;border:1px solid rgba(255,255,255,.14);font-size:11px;color:var(--ink3)}
-.msg .menos:active{background:rgba(255,255,255,.16)}
+.msg .num{display:flex;align-items:center;width:100%;max-width:64px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);overflow:hidden}
+.msg .num input{border:0;background:transparent;border-radius:0;padding:6px 0;min-width:0;flex:1}
+.msg .menos{flex:none;width:24px;min-height:36px;align-self:stretch;font-size:15px;line-height:1;color:var(--ink3);border-right:1px solid var(--line)}
+.msg .menos:active{background:rgba(255,255,255,.16);color:var(--ink)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .acciones.copiar{justify-content:flex-end;gap:6px}
 .acciones.copiar .btn{min-height:36px;color:var(--ink3);background:transparent;border-color:rgba(255,255,255,.18)}
@@ -1102,8 +1104,8 @@ function bloqueMsgs(w, i) {
   if (modoDe(w, i) !== 'vivo') return '';
   const o = msgsDe(w, i);
   return `<div class="msgs-dia"><div class="msgs"><div class="msgs-t"><span>Mensajes de oyentes</span><b data-msg-total>${totalMsgs(o)}</b></div><div class="msgs-g">${CANALES.map(c =>
-    `<div class="msg"><button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"><button type="button" class="menos" data-msg-menos="${c.id}" aria-label="Restar un mensaje de ${c.n}">−1</button></div>`).join('')}</div>
-    <p class="muted" style="font-size:12px;margin:8px 0 0">Tocá el logo por cada mensaje. Si marcaste de más, tocá −1 debajo del número.</p></div></div>`;
+    `<div class="msg"><button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button><span class="num"><button type="button" class="menos" data-msg-menos="${c.id}" aria-label="Restar un mensaje de ${c.n}">−</button><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"></span></div>`).join('')}</div>
+    <p class="muted" style="font-size:12px;margin:8px 0 0">Tocá el logo para sumar; el «−» al lado del número resta.</p></div></div>`;
 }
 // registro del día, siempre arriba de la tarjeta: al aire, entrevista y nota
 function barraDia(w, i) {
