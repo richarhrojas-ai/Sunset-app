@@ -175,7 +175,7 @@ details.valor dd{color:var(--ink2)}
 .modo button[aria-pressed="true"]{background:rgba(255,255,255,.16);color:var(--ink);font-weight:500}
 .modo button.vivo[aria-pressed="true"]{background:#ff6b6b;color:#2b0a0a}
 .msgs{flex-basis:100%;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:rgba(0,0,0,.14)}
-.msgs-t{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.msgs-t{display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
 .msgs-t b{color:var(--ink);font-size:13px;letter-spacing:.04em}
 .msgs-g{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
 .msg{display:grid;justify-items:center;gap:4px}
@@ -188,10 +188,9 @@ details.valor dd{color:var(--ink2)}
 .msg-btn:active{background:rgba(255,255,255,.18);transform:scale(.96)}
 .msg-btn .ico svg{width:30px;height:30px}.msg-btn .ico{width:32px;height:32px;display:grid;place-items:center}
 .msg-btn small{font-size:9.5px;color:var(--ink3)}
-.msg .num{display:flex;align-items:center;width:100%;max-width:64px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);overflow:hidden}
-.msg .num input{border:0;background:transparent;border-radius:0;padding:6px 0;min-width:0;flex:1}
-.msg .menos{flex:none;width:24px;min-height:36px;align-self:stretch;font-size:15px;line-height:1;color:var(--ink3);border-right:1px solid var(--line)}
-.msg .menos:active{background:rgba(255,255,255,.16);color:var(--ink)}
+.msgs-t .restar{margin-left:auto;margin-right:10px;min-height:28px;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.18);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.msgs-t .restar[aria-pressed="true"]{background:#ff6b6b;border-color:#ff6b6b;color:#2b0a0a;font-weight:500}
+.msgs.restando .msg-btn{border-color:#ff6b6b;background:rgba(255,107,107,.12)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .acciones.copiar{justify-content:flex-end;gap:6px}
 .acciones.copiar .btn{min-height:36px;color:var(--ink3);background:transparent;border-color:rgba(255,255,255,.18)}
@@ -1100,12 +1099,13 @@ function barraModo(w, i) {
   return seg;
 }
 // mensajes de oyentes, al final de la tarjeta y solo en días en vivo: un cuadro para sumar y otro con el resultado
+let restando = false;   // «Restar» vale para un solo toque y se apaga solo
 function bloqueMsgs(w, i) {
   if (modoDe(w, i) !== 'vivo') return '';
   const o = msgsDe(w, i);
-  return `<div class="msgs-dia"><div class="msgs"><div class="msgs-t"><span>Mensajes de oyentes</span><b data-msg-total>${totalMsgs(o)}</b></div><div class="msgs-g">${CANALES.map(c =>
-    `<div class="msg"><button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button><span class="num"><button type="button" class="menos" data-msg-menos="${c.id}" aria-label="Restar un mensaje de ${c.n}">−</button><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"></span></div>`).join('')}</div>
-    <p class="muted" style="font-size:12px;margin:8px 0 0">Tocá el logo para sumar; el «−» al lado del número resta.</p></div></div>`;
+  return `<div class="msgs-dia"><div class="msgs${restando ? ' restando' : ''}"><div class="msgs-t"><span>Mensajes de oyentes</span><button type="button" class="restar" data-msg-restar aria-pressed="${restando}">Restar</button><b data-msg-total>${totalMsgs(o)}</b></div><div class="msgs-g">${CANALES.map(c =>
+    `<div class="msg"><button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"></div>`).join('')}</div>
+    <p class="muted" style="font-size:12px;margin:8px 0 0" data-msg-ayuda>${restando ? 'Tocá el canal al que querés restarle un mensaje.' : 'Tocá el logo por cada mensaje. ¿Marcaste de más? Tocá «Restar» y después el logo.'}</p></div></div>`;
 }
 // registro del día, siempre arriba de la tarjeta: al aire, entrevista y nota
 function barraDia(w, i) {
@@ -1404,12 +1404,17 @@ $('dias').onclick = e => {
   const md = e.target.closest('[data-modo]');
   if (md) { if (bloqueada()) return; set(key(w, 'mod'+diaSel), md.dataset.modo);
     renderRegistro(+$('mes').value); return renderDias(w, hoyDe(w)); }
-  const mas = e.target.closest('[data-msg-mas],[data-msg-menos]');
-  if (mas) { if (bloqueada()) return; const id = mas.dataset.msgMas || mas.dataset.msgMenos, o = {...msgsDe(w, diaSel)};
-    const v = Math.max(0, (+o[id] || 0) + (mas.dataset.msgMas ? 1 : -1)); if (v) o[id] = v; else delete o[id];
+  const pintarRestar = () => { const caja = $('dias').querySelector('.msgs-dia .msgs'); caja.classList.toggle('restando', restando);
+    caja.querySelector('[data-msg-restar]').setAttribute('aria-pressed', restando);
+    caja.querySelector('[data-msg-ayuda]').textContent = restando ? 'Tocá el canal al que querés restarle un mensaje.' : 'Tocá el logo por cada mensaje. ¿Marcaste de más? Tocá «Restar» y después el logo.'; };
+  if (e.target.closest('[data-msg-restar]')) { restando = !restando; return pintarRestar(); }
+  const mas = e.target.closest('[data-msg-mas]');
+  if (mas) { if (bloqueada()) return; const id = mas.dataset.msgMas, o = {...msgsDe(w, diaSel)};
+    const v = Math.max(0, (+o[id] || 0) + (restando ? -1 : 1)); if (v) o[id] = v; else delete o[id];
     set(key(w, 'msg'+diaSel), Object.keys(o).length ? o : null); fijarModo(w, diaSel);
     $('dias').querySelector(`input[data-msg="${id}"]`).value = v || '';
-    $('dias').querySelector('[data-msg-total]').textContent = totalMsgs(o); renderRegistro(+$('mes').value); }
+    $('dias').querySelector('[data-msg-total]').textContent = totalMsgs(o); renderRegistro(+$('mes').value);
+    if (restando) { restando = false; pintarRestar(); } }
 };
 $('dias').addEventListener('input', e => { const inp = e.target.closest('input[data-msg]'); if (!inp) return;
   const w = sem[cur], o = {...msgsDe(w, diaSel)};
