@@ -25,7 +25,7 @@ El guion **es una base, no un libreto**: el locutor mantiene el versículo tal c
 | Ingrediente | Cantidad | Estado |
 |---|---|---|
 | Semanas con tema, enfoque, 3 subtemas, valor, programa, historia | 52 | listo |
-| Versículos (RVC) con 3 puntos | 364 (domingo a sábado) | listo; 14 cambios sugeridos esperan decisión (§11) |
+| Versículos (RVC) con 3 puntos | 364 (domingo a sábado) | listo; 12 cambios sugeridos esperan decisión (§11) |
 | Guiones de lunes a sábado (título, dato con fuente, 3 puntos con desarrollo, problemática y práctica; sábado = repaso) | 312 | listo, con revisión teológica y datos verificados |
 | Frases célebres verificadas | 156 | listo |
 | Frases deportivas (originales, sin autor) | 364 | listo |
@@ -211,12 +211,12 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
 
 ## 11. Decisiones pendientes (no son del programador, pero lo afectan)
 
-1. **Versículos:** 14 cambios sugeridos esperan la decisión de Richarh (documento «Versículos a corregir 2027», `content/versiculos_sugeridos.md`). Los aprobados se aplican con `tools/versiculos_aplicados_2027.py` y se reescriben esos guiones.
-2. **Viernes Santo (26/3) y Pascua (28/3):** ¿la programación acompaña la fecha o sigue la serie?
+1. **Versículos:** 12 cambios sugeridos esperan la decisión de Richarh (documento «Versículos a corregir 2027», `content/versiculos_sugeridos.md`). Los aprobados se aplican con `tools/versiculos_aplicados_2027.py` y se reescriben esos guiones.
+2. ~~Viernes Santo, Pascua y Navidad~~ **Resuelto el 20/10/2026:** se sigue la serie; cada locutor adapta la fecha en su preparación (sin cambios en la app ni en el contenido).
 3. **Usuarios:** una clave para todo el equipo o una por locutor (necesaria si el registro debe decir quién hizo cada marca).
 4. **Hoja «Mensajero»:** faltan 17 datos (historia, fundación, misión, visión, sitio web, redes, contactos por área, organigrama).
 5. **Números útiles:** reconfirmar los seis antes de la salida y cada tanto.
-6. ~~Tres frases célebres con fuente parcial~~ **Resuelto el 20/10/2026:** Cervantes confirmada (II parte, cap. XVII); Spurgeon pasa a «Proverbio recogido por Charles H. Spurgeon»; Temple con su definición completa (autor confirmado; el libro exacto, no).
+6. ~~Tres frases célebres con fuente parcial~~ **Resuelto el 20/10/2026:** Cervantes confirmada (II parte, cap. XVII); Spurgeon pasa a «Proverbio recogido por Charles H. Spurgeon»; Temple se mantiene con su definición completa (autor confirmado; el libro exacto, no).
 
 ## 12. Archivos
 
