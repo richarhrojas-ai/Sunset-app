@@ -105,6 +105,10 @@ Mensajero toma la base de Sunset, pero no su sello: el atardecer queda para Suns
 
 Los elementos principales quedan en el centro, porque en el teléfono la imagen se recorta a los costados.
 
+## Apariencia: oscura o clara
+
+El botón redondo debajo de la fecha (arriba a la derecha) cambia la apariencia: **automática** (oscura en el celular, clara en la computadora), **oscura** o **clara**. Se guarda en cada dispositivo (`mensajero:apariencia` en el navegador), así cada locutor la deja a su gusto en el celular y en la computadora. La ilustración de arriba y la hoja de cada tema quedan siempre oscuras porque son la imagen de la semana; el resto pasa a fondo papel con letra oscura.
+
 ## Derechos de la RVC
 
 Mensajero tiene permiso de la Sociedad Bíblica del Paraguay para usar la Reina Valera Contemporánea (al aire, en la app y en los flyers).
