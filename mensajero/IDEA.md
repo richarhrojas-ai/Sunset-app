@@ -77,7 +77,7 @@ El registro al aire muestra días en vivo y grabados; los mensajes del mes por c
 
 ## Frase deportiva del día
 
-El deporte es un campo fuerte de Mensajero (programa propio y coberturas). Cada día, de domingo a sábado, trae una «Frase deportiva»: una imagen del deporte (fútbol, futsal, vóley, atletismo, rally, etc.) que mantiene activo el tema del día. Va antes de la historia ilustrativa (domingo y programa de un día) o arriba del guion (lunes a sábado), y también en el guion copiado.
+El deporte es un campo fuerte de Mensajero (programa propio y coberturas). Cada día, de domingo a sábado, trae una «Frase deportiva»: una imagen del deporte (fútbol, futsal, vóley, atletismo, rally, etc.) que mantiene activo el tema del día. Va al final de la tarjeta del día: después de la historia ilustrativa (domingo y programa de un día) o después de los puntos y el versículo (lunes a sábado), antes de «Hacelo a tu estilo». En el guion copiado también va al final.
 
 - Son frases originales, sin autor: no se citan deportistas ni se dan resultados, así no hay nada que verificar ni atribuciones dudosas.
 - Pasan la misma revisión teológica: nada de «si tenés fe ganás», sin prometer victorias, el esfuerzo no gana el amor de Dios.
