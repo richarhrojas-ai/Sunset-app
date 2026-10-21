@@ -53,7 +53,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(await p.textContent('#dias [data-msg-total]') === '2', 'mensajes: sumar 3 y «Restar» 1 da 2');
   ok(await p.getAttribute('#dias [data-msg-restar]', 'aria-pressed') === 'false', '«Restar» se apaga solo después de un toque');
   await p.click('#dias [data-modo="grabado"]'); await p.waitForTimeout(80);
-  ok(await p.$$eval('#dias .msgs-dia', x => x.length) === 0, 'día grabado: sin cuadro de mensajes');
+  ok(await p.$$eval('#dias .msgs-dia', x => x.length) === 0 && await p.$$eval('#dias .msgs-grab', x => x.length) === 1, 'día grabado: sin cuadro de mensajes y con aviso para volver a «En vivo»');
   await p.click('#dias [data-modo="vivo"]'); await p.waitForTimeout(80);
 
   // franja horaria → un punto por programa

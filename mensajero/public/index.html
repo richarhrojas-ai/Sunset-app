@@ -1164,7 +1164,7 @@ function barraModo(w, i) {
 // mensajes de oyentes, al final de la tarjeta y solo en días en vivo: un cuadro para sumar y otro con el resultado
 let restando = false;   // «Restar» vale para un solo toque y se apaga solo
 function bloqueMsgs(w, i) {
-  if (modoDe(w, i) !== 'vivo') return '';
+  if (modoDe(w, i) !== 'vivo') return `<p class="muted msgs-grab" style="font-size:12.5px;margin-top:14px">Día grabado: no se cuentan mensajes. Si salió en vivo, tocá «En vivo» arriba y aparece el cuadro de mensajes.</p>`;
   const o = msgsDe(w, i);
   return `<div class="msgs-dia"><div class="msgs${restando ? ' restando' : ''}"><div class="msgs-t"><span>Mensajes de oyentes</span><button type="button" class="restar" data-msg-restar aria-pressed="${restando}">Restar</button><b data-msg-total>${totalMsgs(o)}</b></div><div class="msgs-g">${CANALES.map(c =>
     `<div class="msg"><button type="button" class="msg-btn" data-msg-mas="${c.id}" aria-label="Sumar un mensaje por ${c.n}"><span class="ico">${c.svg}</span><small>${c.n}</small></button><input type="number" min="0" inputmode="numeric" placeholder="0" data-msg="${c.id}" value="${+o[c.id] || ''}" aria-label="Mensajes por ${c.n}"></div>`).join('')}</div>
