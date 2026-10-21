@@ -93,7 +93,10 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(await p.$$eval('#utiles a[href^="tel:"]', x => x.length) === 6, 'números útiles: seis números para llamar');
 
   // tamaño de letra
+  const tam = () => p.evaluate(() => parseFloat(getComputedStyle(document.querySelector('#dias .punto p') || document.querySelector('#dias .vtxt')).fontSize));
+  const t0 = await tam();
   await p.click('#letra'); await p.click('#letra'); await p.waitForTimeout(100);
+  ok(await tam() >= t0 * 1.25, 'letra «Muy grande» agranda de verdad el texto del guion (sin depender de zoom)');
   ok(await p.evaluate(() => document.documentElement.dataset.letra) === '2' && await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'letra «Muy grande» sin desborde horizontal');
   await p.click('#letra'); await p.waitForTimeout(80);
   ok(await p.evaluate(() => document.documentElement.dataset.letra) === '0', 'letra vuelve a «Normal»');
