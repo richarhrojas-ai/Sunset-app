@@ -118,6 +118,9 @@ Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilust
 - **La serie 2027:** *Historia bíblica y marcos*, *Edificando una Cultura · 2027* (las 52 semanas por color con barra de días al aire), *Buscar* (sin distinguir tildes ni mayúsculas; lleva a la semana).
 - **Para la audiencia:** *Números útiles* (911, 141 SEME —021 141 desde celular—, 132 Bomberos, 155 salud mental, 137 SOS Mujer y WhatsApp 0961 137 137, 147 Fono Ayuda niñez; tocar llama; copiar para leer al aire) y *Sobre Mensajero* (hoja «Mensajero»).
 
+### Tamaño de letra
+Botón «A» junto a la fecha: Normal, Grande (115 %) y Muy grande (130 %) para el contenido (no para la ilustración), guardado en cada dispositivo (`localStorage["mensajero:letra"]`). Los títulos con contenido (subtemas, ideas del repaso) van en minúscula normal y negrita, no en mayúsculas espaciadas.
+
 ### Apariencia
 Automática (oscura en el celular, clara en la computadora: `min-width: 900px` y puntero fino), oscura o clara; se guarda en cada dispositivo. La ilustración de arriba y las hojas de tema quedan siempre oscuras. Paletas de los 7 colores en el objeto `PAL`; en claro, los dorados y colores de texto pasan a tonos legibles sobre blanco.
 

@@ -92,6 +92,12 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(await p.$$eval('#res li button', x => x.length) > 0, 'buscador encuentra «perdón»');
   ok(await p.$$eval('#utiles a[href^="tel:"]', x => x.length) === 6, 'números útiles: seis números para llamar');
 
+  // tamaño de letra
+  await p.click('#letra'); await p.click('#letra'); await p.waitForTimeout(100);
+  ok(await p.evaluate(() => document.documentElement.dataset.letra) === '2' && await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'letra «Muy grande» sin desborde horizontal');
+  await p.click('#letra'); await p.waitForTimeout(80);
+  ok(await p.evaluate(() => document.documentElement.dataset.letra) === '0', 'letra vuelve a «Normal»');
+
   // apariencia
   await p.click('#apariencia'); await p.click('#apariencia'); await p.reload(); await p.waitForTimeout(200);
   ok(await p.evaluate(() => document.documentElement.dataset.tema) === 'claro', 'apariencia clara elegida a mano se mantiene al recargar');
