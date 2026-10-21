@@ -220,7 +220,7 @@ details.fold[open]>summary::after{content:"–"}
 .guion h3{font-size:calc(24px*var(--fz,1));font-weight:500;letter-spacing:.01em;line-height:1.25;margin-top:4px}
 .dato{border-left:3px solid rgba(255,215,0,.6);border-radius:0 12px 12px 0;padding:10px 14px;background:rgba(255,215,0,.05)}
 .dato b{display:block;font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--gold-t);font-weight:500;margin-bottom:4px}
-.dato p{font-size:calc(17px*var(--fz,1));color:var(--ink);line-height:1.55}
+.dato p{font-size:calc(17px*var(--fz,1));font-weight:300;color:var(--ink);line-height:1.55}
 .dato cite{display:block;font-style:normal;font-size:calc(14px*var(--fz,1));color:var(--ink3);margin-top:4px}
 .punto{border-top:1px solid var(--line);padding-top:10px}
 .punto>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:34px minmax(0,1fr) 16px;gap:4px 12px;align-items:start}
@@ -236,12 +236,12 @@ details.fold[open]>summary::after{content:"–"}
 .barra-dia details.mas:not([open])>:not(summary){display:none}
 .barra-dia details.mas .acc{margin-top:6px;flex-wrap:wrap}
 .punto summary>span{width:30px;height:30px;border-radius:50%;border:1px solid var(--gold);color:var(--gold-t);display:grid;place-items:center;font-size:calc(15px*var(--fz,1));font-weight:500}
-.punto h4{font-size:calc(18px*var(--fz,1));font-weight:500;color:var(--ink);line-height:1.3;padding-top:3px}
-.punto p{font-size:calc(16.5px*var(--fz,1));color:var(--ink);line-height:1.55}
+.punto h4{font-size:calc(18px*var(--fz,1));font-weight:600;color:var(--ink);line-height:1.3;padding-top:3px}
+.punto p{font-size:calc(16.5px*var(--fz,1));font-weight:300;color:var(--ink);line-height:1.55}
 .punto dl{display:grid;gap:8px;margin-top:6px}
 .punto dt{font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;font-weight:500}
 .punto dt.pr{color:#ff9f8a}.punto dt.so{color:#9fe3b0}
-.punto dd{font-size:calc(16px*var(--fz,1));color:var(--ink);line-height:1.5}
+.punto dd{font-size:calc(16px*var(--fz,1));font-weight:300;color:var(--ink);line-height:1.5}
 .acciones{display:flex;flex-wrap:wrap;gap:8px}
 .btn{min-height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--line);font-size:calc(12.5px*var(--fz,1));letter-spacing:.08em;text-transform:uppercase;background:rgba(var(--bg),.15);color:var(--ink2)}
 .btn:hover{color:var(--ink);border-color:rgba(var(--fg),.35)}
@@ -298,12 +298,12 @@ details.loc .in p b{color:var(--ink)}
 .ideas{list-style:none;display:grid;gap:10px;counter-reset:i}
 .ideas li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:4px 12px}
 .ideas li::before{counter-increment:i;content:counter(i);width:30px;height:30px;border-radius:50%;border:1px solid var(--gold);color:var(--gold-t);display:grid;place-items:center;font-size:calc(15px*var(--fz,1))}
-.ideas b{display:block;font-size:calc(15px*var(--fz,1));color:var(--ink2);font-weight:600;margin-bottom:2px}
-.ideas span{color:var(--ink);font-size:calc(17px*var(--fz,1));line-height:1.55}
-.accion{font-size:calc(17px*var(--fz,1));line-height:1.5;border-radius:14px;padding:12px 16px;background:rgba(159,227,176,.08);border:1px solid rgba(159,227,176,.35)}
+.ideas b{display:block;font-size:calc(16.5px*var(--fz,1));color:var(--ink);font-weight:600;margin-bottom:3px}
+.ideas span{color:var(--ink2);font-weight:300;font-size:calc(17px*var(--fz,1));line-height:1.55}
+.accion{font-weight:300;font-size:calc(17px*var(--fz,1));line-height:1.5;border-radius:14px;padding:12px 16px;background:rgba(159,227,176,.08);border:1px solid rgba(159,227,176,.35)}
 .accion b{display:block;font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:#9fe3b0;font-weight:500;margin-bottom:4px}
 .intro-subs{list-style:none;display:grid;gap:6px}
-.intro-subs li{display:flex;gap:10px;align-items:baseline;font-size:calc(15px*var(--fz,1));color:var(--ink)}
+.intro-subs li{display:flex;gap:10px;align-items:baseline;font-size:calc(16px*var(--fz,1));font-weight:600;color:var(--ink)}
 .intro-subs small{flex:none;width:74px;font-size:calc(12px*var(--fz,1));letter-spacing:.06em;text-transform:uppercase;color:var(--gold-t)}
 .subs li button{text-align:left;color:inherit}
 .subs li small{color:var(--ink3);font-size:calc(12.5px*var(--fz,1));letter-spacing:.06em;text-transform:uppercase;margin-left:8px}
