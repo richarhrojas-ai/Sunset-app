@@ -122,7 +122,7 @@ Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilust
 Automática (oscura en el celular, clara en la computadora: `min-width: 900px` y puntero fino), oscura o clara; se guarda en cada dispositivo. La ilustración de arriba y las hojas de tema quedan siempre oscuras. Paletas de los 7 colores en el objeto `PAL`; en claro, los dorados y colores de texto pasan a tonos legibles sobre blanco.
 
 ### Diseño
-Tipografía Jost (fina, espaciada), Nunito para «MENSAJERO», Dancing Script para «Suena bien, hace bien». Probado a 390 px y 1280 px sin desborde horizontal. Respeta «reducir movimiento».
+Tipografía Jost (peso 400 para el texto; letra mínima de 10,5 px y la mayoría de las etiquetas en 12–13 px; contraste de todo el texto ≥ 4,5:1 en oscuro y claro, medido sobre el fondo real), Nunito para «MENSAJERO», Dancing Script para «Suena bien, hace bien». Probado a 390 px y 1280 px sin desborde horizontal. Respeta «reducir movimiento».
 
 ## 6. Reglas de negocio
 
