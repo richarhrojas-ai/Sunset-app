@@ -927,10 +927,18 @@ function msgsMes(m) {
     const o = msgsDe(s, i); for (const c of CANALES) t[c.id] = (t[c.id] || 0) + (+o[c.id] || 0); }
   return t;
 }
+// siempre visible (salvo programas siempre grabados sin mensajes): si el mes no tiene, dice en qué meses hay
 function canalesMes(m) {
-  const t = msgsMes(m), n = totalMsgs(t); if (!n) return '';
+  const t = msgsMes(m), n = totalMsgs(t);
+  const porMes = MESES.map((_, k) => totalMsgs(msgsMes(k))), anio = porMes.reduce((a, x) => a + x, 0);
+  if (!n && !anio && cfgPrograma().modo !== 'vivo') return '';
+  const con = porMes.map((x, k) => x ? `${MESES[k].toLowerCase()} (${x})` : '').filter(Boolean);
+  const pie = n ? (anio > n ? `En el año: ${anio}.` : '')
+    : anio ? `Sin mensajes en ${MESES[m].toLowerCase()}. En el año: ${anio}, en ${con.join(', ')}. Elegí ese mes arriba.`
+    : 'Todavía no hay mensajes cargados. Se cuentan en la tarjeta de cada día en vivo, al final.';
   return `<div class="msgs" style="margin-top:4px"><div class="msgs-t"><span>Mensajes de oyentes · ${MESES[m]}</span><b>${n}</b></div><div class="msgs-g">${CANALES.map(c =>
-    `<div class="msg"><span class="ico" title="${c.n}">${c.svg}</span><b style="font-variant-numeric:tabular-nums">${t[c.id] || 0}</b></div>`).join('')}</div></div>`;
+    `<div class="msg"><span class="ico" title="${c.n}">${c.svg}</span><b style="font-variant-numeric:tabular-nums">${t[c.id] || 0}</b></div>`).join('')}</div>
+    ${pie ? `<p class="muted" style="font-size:12.5px;margin:8px 0 0">${pie}</p>` : ''}</div>`;
 }
 const txtMsgs = t => `${totalMsgs(t)} (${CANALES.filter(k => t[k.id]).map(k => `${k.n} ${t[k.id]}`).join(', ')})`;
 function lineasMsgs(cs, varios) {   // sección final de los informes; los programas grabados no la muestran
