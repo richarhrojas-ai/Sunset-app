@@ -277,3 +277,12 @@ Agregadas el 22 de octubre de 2026 para que cada día de lunes a viernes tenga u
 | 51 · 2 | "El artesano que quiere hacer bien su trabajo debe primero afilar sus herramientas." — Confucio | Analectas XV.10 (Legge XV.9): 工欲善其事，必先利其器 |
 | 52 · 1 | "¡Salve, Príncipe de paz nacido del cielo! ¡Salve, Sol de justicia! Luz y vida a todos trae, y se levanta con sanidad en sus alas." — Charles Wesley | «Hymn for Christmas Day» («Hark! The Herald Angels Sing»), Hymns and Sacred Poems, 1739 |
 | 52 · 2 | "Un poco de filosofía inclina la mente del hombre al ateísmo; pero la profundidad en la filosofía lleva las mentes de los hombres de vuelta a la religión." — Francis Bacon | Essayes or Counsels, Civill and Morall, 1625, «Of Atheism» |
+
+## Análisis de fuentes (22 oct 2026)
+
+Se revisaron las 260 frases (156 primeras y 104 segundas) contra su fuente primaria: obra, capítulo, discurso o carta.
+
+- Resultado inicial: 201 verificadas, 44 con autor y obra confirmados, 14 dudosas y 1 falsa.
+- Se reemplazaron 15 frases: 4.1, 5.3, 12.1, 12.2, 14.2, 21.3, 23.3, 27.2, 32.3, 33.1, 33.3, 38.1, 40.1, 43.3 y 49.2. Las nuevas son de Guigo II, La Rochefoucauld, Plutarco, Reagan (Fortune, 1986), Maxwell citado por Ramsey, Dickens, Hesíodo, Cicerón, Agustín, Lincoln, Samuel Johnson, Juvenal, Maxwell, Stott y Maclaren.
+- Resultado final: 214 verificadas, 46 con autor y obra confirmados (con una nota de redacción o de traducción), ninguna dudosa ni falsa.
+- Documento de revisión: `content/Frases_celebres_2027.docx`.
