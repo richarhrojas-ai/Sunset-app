@@ -43,6 +43,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(await p.$$eval('#dias details.punto', x => x.length) === 3, 'miércoles: tres puntos plegables');
   ok(await p.$$eval('#dias details.punto[open]', x => x.length) === 1, 'sin franja: un solo punto abierto');
   ok(await p.$$eval('#dias .deporte', x => x.length) === 1, 'frase deportiva en la tarjeta');
+  ok(await p.$$eval('#dias .frase-aire cite', x => x.length) === 1 && await p.$$eval('#dias details.loc .frase', x => x.length) === 0, 'frase célebre visible para el aire (ya no escondida en «Para el locutor»)');
   ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return a.indexOf('deporte') > a.findIndex(c => c.includes('punto')); }), 'frase deportiva después de los puntos');
   await p.click('#dias [data-k="aire3"]'); await p.waitForTimeout(80);
   ok(await p.getAttribute('#dias [data-k="aire3"]', 'aria-pressed') === 'true', 'marcar «Al aire»');
@@ -64,12 +65,13 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   let t = await texto(p);
   ok(/3\. .*← TU PUNTO DE HOY/.test(t), 'guion copiado marca «TU PUNTO DE HOY»');
   ok(t.indexOf('FRASE DEPORTIVA') > t.indexOf('PARA CERRAR'), 'guion copiado: frase deportiva al final');
+  ok(/FRASE PARA EL AIRE: «.+» — .+/.test(t), 'guion copiado: frase para el aire con su autor');
   ok(t.includes('PARA HACERLO A TU ESTILO'), 'guion copiado: ideas para hacerlo a tu estilo');
   await cerrarCopia(p);
 
   // domingo y sábado
   await p.click('[data-vertodo]'); await p.click('#dias [data-d="0"]'); await p.waitForTimeout(80);
-  ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return a.indexOf('deporte') === a.indexOf('hist') + 1; }), 'domingo: frase deportiva después de la historia ilustrativa');
+  ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return a.indexOf('frase-aire') === a.indexOf('hist') + 1 && a.indexOf('deporte') === a.indexOf('hist') + 2; }), 'domingo: frase para el aire y frase deportiva después de la historia ilustrativa');
   await p.click('#dias [data-d="6"]'); await p.waitForTimeout(80);
   ok(await p.$$eval('#dias ol.ideas li', x => x.length) === 3, 'sábado: resumen con las tres ideas');
 

@@ -107,7 +107,7 @@ Pestañas por día. Cada tarjeta, en este orden:
 2. **Subtema del día** y «Para el locutor» plegable (desarrollo, nota y frase célebre del subtema).
 3. **Título del guion, «Dato para abrir»** con su fuente y **versículo** (cita y texto RVC).
 4. **Tres puntos plegables** (número y título a la vista; adentro desarrollo, problemática y «En la práctica»). Según la **franja horaria** del programa se abre el punto que le toca: mañana → 1, mediodía y tarde → 2, noche → 3, marcado «Tu punto de hoy». Sin franja se abre el 1. Así la audiencia que escucha varios programas no oye lo mismo dos veces.
-5. **Frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
+5. **Frase para el aire** (la frase célebre del subtema del día, con su autor; el domingo la del subtema 1 y el sábado la del 3) y **frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
 6. **«Hacelo a tu estilo»:** idea central del día, dos técnicas que rotan sobre 15 y cómo hacerlo con poco tiempo.
 7. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, las notas del día y de producción) y **Copiar para IA** (todo lo de la semana para generar un guion con IA).
 8. **Mensajes de oyentes** (solo días en vivo): un cuadro con los logos de SMS, WhatsApp, YouTube, Instagram y Facebook. Cada toque suma 1; «Restar» y luego el logo resta 1 y se apaga solo; el número se puede escribir; arriba, el total.

@@ -134,6 +134,10 @@ details.valor dd{color:var(--ink2)}
 .pts li{font-size:calc(14px*var(--fz,1));padding:6px 12px;border-radius:999px;background:rgba(var(--fg),.08);border:1px solid var(--line);color:var(--ink2)}
 .deporte{margin:14px 0;padding:12px 14px;border-left:3px solid var(--acc,#e8c547);background:color-mix(in srgb,var(--ink3) 8%,transparent);border-radius:0 10px 10px 0}
 .deporte b{display:block;font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:4px}
+.frase-aire{margin:14px 0 0;padding:12px 14px;border-left:3px solid var(--gold);background:color-mix(in srgb,var(--gold) 7%,transparent);border-radius:0 10px 10px 0}
+.frase-aire b{display:block;font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--gold-t);font-weight:500;margin-bottom:4px}
+.frase-aire p{margin:0;font-size:calc(17.5px*var(--fz,1));font-style:italic;color:var(--ink);line-height:1.5}
+.frase-aire cite{display:block;font-style:normal;font-size:calc(14px*var(--fz,1));color:var(--ink2);margin-top:4px}
 .deporte p{margin:0;font-style:italic;font-size:calc(17px*var(--fz,1));color:var(--ink)}
 
 /* ── PARA EL LOCUTOR: NOTA Y FRASE CÉLEBRE ── */
@@ -1147,7 +1151,8 @@ function textoDia(w, i, semanal) {
   const resumen = () => { const r = resumenDe(w); out.push(r.titulo.toUpperCase(), '');
     if (r.dato.texto) out.push(`DATO PARA ABRIR: ${r.dato.texto} (${r.dato.fuente})`, '');
     r.ideas.forEach((x, k) => out.push(`${k+1}. ${w.subtemas[k].titulo}: ${x}`)); if (r.accion) out.push('', `PARA ESTA SEMANA: ${r.accion}`); out.push(''); };
-  const dep = () => { if (d.deporte) out.push(`FRASE DEPORTIVA: ${d.deporte}`, ''); };
+  const dep = () => { const fc = fraseDia(w, i); if (fc.texto) out.push(`FRASE PARA EL AIRE: «${fc.texto}» — ${fc.autor}`, '');
+    if (d.deporte) out.push(`FRASE DEPORTIVA: ${d.deporte}`, ''); };
   if (semanal) { intro(); resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, '', `HISTORIA: ${w.historia}`, ''); dep(); return out.join('\n').trim(); }
   if (i === 0) { intro(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, '', `HISTORIA: ${w.historia}`, ''); dep(); return out.join('\n').trim(); }
   if (i === 6) { resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, ''); dep(); return out.join('\n').trim() + textoIdeas(w, 6); }
@@ -1166,6 +1171,10 @@ function misNotas(w, i) {
 }
 // frase deportiva del día: original, sin autor; cierra la tarjeta del día para la audiencia de deportes
 const bloqueDeporte = d => d.deporte ? `<div class="deporte"><b>Frase deportiva</b><p>${esc(d.deporte)}</p></div>` : '';
+// frase célebre para usar al aire: la del subtema del día (domingo abre con la del subtema 1, sábado cierra con la del 3)
+const fraseDia = (w, i) => w.subtemas[BLOQUE[i] ?? (i === 0 ? 0 : 2)].frase;
+const bloqueFrase = (w, i) => { const f = fraseDia(w, i);
+  return f.texto ? `<div class="frase-aire"><b>Frase para el aire</b><p>“${esc(f.texto)}”</p><cite>— ${esc(f.autor)}</cite></div>` : ''; };
 function bloqueVersiculo(w, i, conPuntos) {
   const d = w.dias[i];
   return `<div class="vers-base"><span class="ref">${esc(d.ref)}</span><p class="vtxt">${esc(d.texto)}</p>
@@ -1210,7 +1219,7 @@ function paraLocutor(w, b) {
   const s = w.subtemas[b];
   return `<details class="loc"><summary>Para el locutor</summary><div class="in"><p>${esc(s.desarrollo)}</p>
     ${s.nota ? `<div class="nota"><b>Nota</b>${esc(s.nota)}</div>` : ''}
-    ${s.frase.texto ? `<blockquote class="frase">“${esc(s.frase.texto)}”<cite>— ${esc(s.frase.autor)}</cite></blockquote>` : ''}</div></details>`;
+    </div></details>`;
 }
 // ideas para que cada locutor adapte el guion a su estilo: se mantiene lo básico y se cambia la forma
 const IDEAS = [
@@ -1266,10 +1275,10 @@ function renderDias(w, hoyIdx) {
   const pie = (txt) => `<div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="dia">${txt}</button><button class="btn mini" data-copiar="prompt">Copiar para IA</button></div>`;
   let cuerpo;
   if (semanal) cuerpo = `${cab}<div class="kick">Tu programa de la semana</div>${introSemana(w)}${bloqueResumen(w)}${bloqueVersiculo(w, i, true)}
-      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${esc(w.historia)}</p></div></details>${bloqueDeporte(d)}${pie('Copiar guion')}`;
+      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${esc(w.historia)}</p></div></details>${bloqueFrase(w, i)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
   else if (i === 0) cuerpo = `${cab}<div class="kick">Introducción de la semana</div>${introSemana(w)}${bloqueVersiculo(w, 0, true)}
-      <div class="hist"><b>Historia ilustrativa</b><p>${esc(w.historia)}</p></div>${bloqueDeporte(d)}${pie('Copiar guion')}`;
-  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${bloqueDeporte(d)}${bloqueIdeas(w, 6)}${pie('Copiar guion')}`;
+      <div class="hist"><b>Historia ilustrativa</b><p>${esc(w.historia)}</p></div>${bloqueFrase(w, 0)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
+  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${bloqueFrase(w, 6)}${bloqueDeporte(d)}${bloqueIdeas(w, 6)}${pie('Copiar guion')}`;
   else { const b = BLOQUE[i], g = d.guion, primero = [1,3,5].includes(i) || !visibles.includes(i-1);
     cuerpo = `${cab}<div class="kick">Subtema ${b+1} · ${esc(w.subtemas[b].titulo)}</div>${primero ? paraLocutor(w, b) : ''}
       ${g ? `<h3>${esc(g.titulo)}</h3>${g.dato.texto ? `<div class="dato"><b>Dato para abrir</b><p>${esc(g.dato.texto)}</p><cite>${esc(g.dato.fuente)}</cite></div>` : ''}
@@ -1278,7 +1287,7 @@ function renderDias(w, hoyIdx) {
         ${d.puntos.map((p, k) => { const [tt, ex] = tituloPunto(p), q = g.puntos[k] || {}, tuyo = puntoFranja() === k;
           return `<details class="punto"${(puntoFranja() ?? 0) === k ? ' open' : ''}><summary><span>${k+1}</span><h4>${esc(tt)}${ex ? `<small>${esc(ex)}</small>` : ''}${tuyo ? '<em class="tuyo">Tu punto de hoy</em>' : ''}</h4></summary>
           <div class="cuerpo"><p>${esc(q.desarrollo)}</p><dl><div><dt class="pr">Problemática</dt><dd>${esc(q.problema)}</dd></div><div><dt class="so">En la práctica</dt><dd>${esc(q.solucion)}</dd></div></dl></div></details>`; }).join('')}
-        ${bloqueDeporte(d)}${bloqueIdeas(w, i)}${pie('Copiar guion')}`
+        ${bloqueFrase(w, i)}${bloqueDeporte(d)}${bloqueIdeas(w, i)}${pie('Copiar guion')}`
       : `${bloqueVersiculo(w, i, true)}<div class="vacio"><p class="muted">Este día todavía no tiene guion. Copiá el prompt de la semana: ya trae el tema, los subtemas, el valor y los versículos de cada día.</p>
         <div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="prompt">Copiar para IA</button></div></div>`}`; }
   $('dias').innerHTML = `${tabs}<article class="guion" role="tabpanel">${cuerpo}${bloqueMsgs(w, i)}</article>
