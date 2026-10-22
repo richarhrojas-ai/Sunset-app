@@ -71,7 +71,10 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
 
   // domingo y sábado
   await p.click('[data-vertodo]'); await p.click('#dias [data-d="0"]'); await p.waitForTimeout(80);
-  ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return a.indexOf('frase-aire') === a.indexOf('hist') + 1 && a.indexOf('deporte') === a.indexOf('hist') + 2; }), 'domingo: frase para el aire y frase deportiva después de la historia ilustrativa');
+  ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return a.indexOf('frase-aire') === -1 && a.indexOf('deporte') === a.indexOf('hist') + 1; }), 'domingo: frase deportiva después de la historia ilustrativa (sin frase célebre)');
+  const fraseDe = async d => { await p.click(`#dias [data-d="${d}"]`); await p.waitForTimeout(60); return p.$eval('#dias .frase-aire p', e => e.textContent); };
+  const fr = [await fraseDe(1), await fraseDe(2), await fraseDe(3), await fraseDe(4), await fraseDe(5)];
+  ok(new Set(fr).size === 5, 'lunes a viernes: cinco frases para el aire distintas');
   await p.click('#dias [data-d="6"]'); await p.waitForTimeout(80);
   ok(await p.$$eval('#dias ol.ideas li', x => x.length) === 3, 'sábado: resumen con las tres ideas');
 

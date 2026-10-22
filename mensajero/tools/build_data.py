@@ -177,6 +177,8 @@ def main(path):
                 'desarrollo': txt(r[f'Desarrollo {i}']),
                 'nota': txt(r[f'Nota Locutor {i}']),
                 'frase': frase(r[f'Frase Celebre {i}']),
+                # segunda frase (martes y jueves) para no repetir la del lunes y el miércoles; el subtema 3 tiene un solo día
+                **({'frase2': frase(r.get(f'Frase Celebre {i}b'))} if txt(r.get(f'Frase Celebre {i}b')) else {}),
             } for i in (1, 2, 3)],
             'historia': txt(r['Historia Ilustrativa']),
             'valor': txt(r['Valor (ADN)']),

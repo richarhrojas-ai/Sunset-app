@@ -1151,7 +1151,7 @@ function textoDia(w, i, semanal) {
   const resumen = () => { const r = resumenDe(w); out.push(r.titulo.toUpperCase(), '');
     if (r.dato.texto) out.push(`DATO PARA ABRIR: ${r.dato.texto} (${r.dato.fuente})`, '');
     r.ideas.forEach((x, k) => out.push(`${k+1}. ${w.subtemas[k].titulo}: ${x}`)); if (r.accion) out.push('', `PARA ESTA SEMANA: ${r.accion}`); out.push(''); };
-  const dep = () => { const fc = fraseDia(w, i); if (fc.texto) out.push(`FRASE PARA EL AIRE: «${fc.texto}» — ${fc.autor}`, '');
+  const dep = () => { const fc = fraseDia(w, i, semanal); if (fc.texto) out.push(`FRASE PARA EL AIRE: «${fc.texto}» — ${fc.autor}`, '');
     if (d.deporte) out.push(`FRASE DEPORTIVA: ${d.deporte}`, ''); };
   if (semanal) { intro(); resumen(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, '', `HISTORIA: ${w.historia}`, ''); dep(); return out.join('\n').trim(); }
   if (i === 0) { intro(); out.push(`VERSÍCULO: ${d.ref} — ${d.texto}`, '', `HISTORIA: ${w.historia}`, ''); dep(); return out.join('\n').trim(); }
@@ -1171,9 +1171,11 @@ function misNotas(w, i) {
 }
 // frase deportiva del día: original, sin autor; cierra la tarjeta del día para la audiencia de deportes
 const bloqueDeporte = d => d.deporte ? `<div class="deporte"><b>Frase deportiva</b><p>${esc(d.deporte)}</p></div>` : '';
-// frase célebre para usar al aire: la del subtema del día (domingo abre con la del subtema 1, sábado cierra con la del 3)
-const fraseDia = (w, i) => w.subtemas[BLOQUE[i] ?? (i === 0 ? 0 : 2)].frase;
-const bloqueFrase = (w, i) => { const f = fraseDia(w, i);
+// frase célebre para usar al aire, una distinta por día: lunes y miércoles la primera del subtema, martes y jueves la segunda,
+// viernes la del subtema 3. Domingo y sábado no llevan (salvo el programa de un solo día, que usa la del subtema 1).
+const fraseDia = (w, i, semanal) => { if (semanal) return w.subtemas[0].frase; const b = BLOQUE[i]; if (b === null) return {texto: ''};
+  const st = w.subtemas[b]; return (i === 2 || i === 4) && st.frase2 ? st.frase2 : st.frase; };
+const bloqueFrase = (w, i, semanal) => { const f = fraseDia(w, i, semanal);
   return f.texto ? `<div class="frase-aire"><b>Frase para el aire</b><p>“${esc(f.texto)}”</p><cite>— ${esc(f.autor)}</cite></div>` : ''; };
 function bloqueVersiculo(w, i, conPuntos) {
   const d = w.dias[i];
@@ -1275,7 +1277,7 @@ function renderDias(w, hoyIdx) {
   const pie = (txt) => `<div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="dia">${txt}</button><button class="btn mini" data-copiar="prompt">Copiar para IA</button></div>`;
   let cuerpo;
   if (semanal) cuerpo = `${cab}<div class="kick">Tu programa de la semana</div>${introSemana(w)}${bloqueResumen(w)}${bloqueVersiculo(w, i, true)}
-      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${esc(w.historia)}</p></div></details>${bloqueFrase(w, i)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
+      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${esc(w.historia)}</p></div></details>${bloqueFrase(w, i, true)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
   else if (i === 0) cuerpo = `${cab}<div class="kick">Introducción de la semana</div>${introSemana(w)}${bloqueVersiculo(w, 0, true)}
       <div class="hist"><b>Historia ilustrativa</b><p>${esc(w.historia)}</p></div>${bloqueFrase(w, 0)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
   else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${bloqueFrase(w, 6)}${bloqueDeporte(d)}${bloqueIdeas(w, 6)}${pie('Copiar guion')}`;
