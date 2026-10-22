@@ -86,17 +86,18 @@ Los scripts son idempotentes: se pueden correr de nuevo sin duplicar cambios. Re
 
 ### Portada
 - **Escena ilustrada** del tema de la semana (SVG generado en código con la paleta del color). Cada tema tiene su propia luz, **no** el atardecer de Sunset: Vida Cristiana amanecer con la cruz; Crecimiento primera luz y lapacho en flor; Liderazgo mañana en la cordillera con bandera; Familia noche de luna con la casa encendida; Finanzas día con plantines y granero; Producción mediodía con surcos, alambrado y molino; Salud mañana con bruma en la laguna. Los elementos principales van al centro (el celular recorta los costados) y por debajo de la fila de íconos (las pantallas anchas recortan arriba y abajo).
-- Logo, fechas de la semana y **botón de apariencia** (◐ automática, ☾ oscura, ☀ clara).
+- Logo y dos botones redondos: **A** (tamaño de letra) y **◐** (apariencia: automática, oscura, clara). Las fechas de la semana van en la tarjeta, junto al número de semana y el color.
 - **Siete íconos de temas**: al tocar uno se abre una hoja con todas sus semanas (activa resaltada, próxima marcada, pasadas atenuadas).
 - Tarjeta con tema, enfoque, color, número de semana y los tres subtemas; flechas y «Esta semana».
 
 ### Barra de atajos (fija)
-Ficha · Mis días · Mi semana · Preparación · Registro · Marco · Año · Buscar · Útiles · Mensajero.
+Ficha · Mi semana · Preparación · Registro · Buscar · Útiles (el resto se alcanza en los grupos del final).
 
 ### Ficha de la semana
 «Apoyamos al programa» (programa y locutor) y «Valor de Mensajero» con su guía interna plegable.
 
 ### Mis días al aire y varios programas
+Una vez elegidos, la sección queda en una línea («Tu semana: lunes a viernes» y el botón «Cambiar días»); los botones de días aparecen solo al editar.
 - El locutor marca sus días (lunes a viernes, lunes a sábado o los que elija). Un solo día = programa semanal: la tarjeta muestra introducción y resumen en un guion.
 - Hasta **3 programas** por locutor, cada uno con su color y sus propias marcas. Los cambios de días quedan en un historial con fecha, así los días pasados no cambian.
 
@@ -108,7 +109,7 @@ Pestañas por día. Cada tarjeta, en este orden:
 4. **Tres puntos plegables** (número y título a la vista; adentro desarrollo, problemática y «En la práctica»). Según la **franja horaria** del programa se abre el punto que le toca: mañana → 1, mediodía y tarde → 2, noche → 3, marcado «Tu punto de hoy». Sin franja se abre el 1. Así la audiencia que escucha varios programas no oye lo mismo dos veces.
 5. **Frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
 6. **«Hacelo a tu estilo»:** idea central del día, dos técnicas que rotan sobre 15 y cómo hacerlo con poco tiempo.
-7. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, las notas del día y de producción) y **Copiar prompt** (todo lo de la semana para generar un guion con IA).
+7. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, las notas del día y de producción) y **Copiar para IA** (todo lo de la semana para generar un guion con IA).
 8. **Mensajes de oyentes** (solo días en vivo): un cuadro con los logos de SMS, WhatsApp, YouTube, Instagram y Facebook. Cada toque suma 1; «Restar» y luego el logo resta 1 y se apaga solo; el número se puede escribir; arriba, el total.
 
 Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilustrativa y frase deportiva. Sábado: repaso (dato, idea de cada subtema, acción de la semana), versículo, frase deportiva.
@@ -120,6 +121,9 @@ Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilust
 
 ### Tamaño de letra
 Botón «A» junto a la fecha: Normal, Grande (115 %) y Muy grande (130 %) para el contenido (cada tamaño se multiplica por la variable `--fz`; no se usa `zoom`, que algunas tabletas ignoran) (no para la ilustración), guardado en cada dispositivo (`localStorage["mensajero:letra"]`). Los títulos con contenido (subtemas, ideas del repaso) van en minúscula normal y negrita, no en mayúsculas espaciadas.
+
+### Desplegables
+Todo lo que se abre lleva el mismo indicador: un círculo con una flecha a la derecha que gira al abrir (grupos del final, «Para el locutor», «Hacelo a tu estilo», los tres puntos). Los desplegables chicos («Más», «Agregar nota», «Guía interna») son botones tipo píldora con borde.
 
 ### Apariencia
 Automática (oscura en el celular, clara en la computadora: `min-width: 900px` y puntero fino), oscura o clara; se guarda en cada dispositivo. La ilustración de arriba y las hojas de tema quedan siempre oscuras. Paletas de los 7 colores en el objeto `PAL`; en claro, los dorados y colores de texto pasan a tonos legibles sobre blanco.
