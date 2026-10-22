@@ -1,0 +1,1864 @@
+[
+ {
+  "semana": 1,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Antes de dormir, anotá lo que te preocupa y lo que vas a hacer mañana al respecto. Después, entregalo en oración.",
+  "nuevo": "Hoy a la noche, anotá lo que te preocupa y lo que vas a hacer mañana al respecto. Después, entregalo en oración."
+ },
+ {
+  "semana": 2,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Antes de una decisión importante con tu plata, consultala con un profesional de confianza. Y anotá esta semana tres semillas concretas que sí quieras sembrar.",
+  "nuevo": "Consultá con un profesional de confianza cada decisión importante con tu plata. Y anotá esta semana tres semillas concretas que sí quieras sembrar."
+ },
+ {
+  "semana": 2,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Antes de dar, orá y decidí en tu corazón cuánto y a quién. Después, dalo con alegría.",
+  "nuevo": "Orá primero y decidí en tu corazón cuánto dar y a quién. Después, dalo con alegría."
+ },
+ {
+  "semana": 3,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Antes de tomar un remedio por tu cuenta, consultá en la farmacia o en el centro de salud.",
+  "nuevo": "¿Remedio por tu cuenta? Mejor consultá primero en la farmacia o en el centro de salud."
+ },
+ {
+  "semana": 5,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de dormir, repasá el día: ¿qué guardaste hoy que no te hace bien? Soltalo en oración.",
+  "nuevo": "Al acostarte, repasá el día: ¿qué guardaste hoy que no te hace bien? Soltalo en oración."
+ },
+ {
+  "semana": 5,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de prometer algo esta semana, preguntate si lo podés cumplir. Prometé menos y cumplí todo.",
+  "nuevo": "Prometé menos y cumplí todo: esta semana, antes de cada promesa, preguntate si la podés cumplir."
+ },
+ {
+  "semana": 8,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de aceptar un compromiso nuevo esta semana, tomate un momento y preguntate si de verdad podés.",
+  "nuevo": "Cuando te pidan un compromiso nuevo esta semana, tomate un momento y preguntate si de verdad podés."
+ },
+ {
+  "semana": 10,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Antes de compartir un consejo de salud, preguntá: ¿quién lo dice y en qué se basa?",
+  "nuevo": "¿Te llegó un consejo de salud? Antes de compartirlo, preguntá quién lo dice y en qué se basa."
+ },
+ {
+  "semana": 12,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de comunicar algo importante, resumilo en una sola frase clara. Si estás enojado, esperá antes de enviarlo.",
+  "nuevo": "Resumí en una sola frase clara eso importante que tenés que comunicar. Y si estás enojado, esperá antes de enviarlo."
+ },
+ {
+  "semana": 14,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de una compra grande o de un préstamo, esperá 48 horas y hacé las cuentas por escrito.",
+  "nuevo": "Esperá 48 horas antes de una compra grande o de un préstamo, y hacé las cuentas por escrito."
+ },
+ {
+  "semana": 16,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Antes de una decisión de trabajo difícil, preguntate: ¿esto lo haría si confiara de verdad en Dios?",
+  "nuevo": "Frente a una decisión de trabajo difícil, preguntate: ¿esto lo haría si confiara de verdad en Dios?"
+ },
+ {
+  "semana": 18,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Antes de servir hoy, decí en silencio: «Esto es para vos, Señor».",
+  "nuevo": "Hoy, cuando sirvas, decí en silencio: «Esto es para vos, Señor»."
+ },
+ {
+  "semana": 19,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Antes de descartar una crítica, preguntale a alguien de confianza si hay algo de verdad en ella.",
+  "nuevo": "¿Te criticaron? Antes de descartarlo, preguntale a alguien de confianza si hay algo de verdad en eso."
+ },
+ {
+  "semana": 23,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Antes de invertir, hacé una prueba pequeña: vendé a diez personas y escuchá lo que dicen.",
+  "nuevo": "Probá en pequeño antes de invertir: vendé a diez personas y escuchá lo que dicen."
+ },
+ {
+  "semana": 23,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Antes de entrar en un negocio que te ofrecen, preguntá: ¿cómo gana plata realmente? Si no lo entendés, no entres.",
+  "nuevo": "¿Te ofrecen un negocio? Preguntá cómo gana plata realmente. Si no lo entendés, no entres."
+ },
+ {
+  "semana": 25,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Antes de aconsejar a alguien esta semana, preguntate qué de eso necesitás vos.",
+  "nuevo": "Cuando aconsejes a alguien esta semana, preguntate qué de eso necesitás vos."
+ },
+ {
+  "semana": 26,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Antes de una decisión que afecta al equipo, consultá a dos o tres personas.",
+  "nuevo": "Consultá a dos o tres personas cada vez que una decisión afecte al equipo."
+ },
+ {
+  "semana": 26,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Antes de corregir, preguntate: ¿esto ayuda a la persona a crecer?",
+  "nuevo": "Para corregir bien, primero preguntate: ¿esto ayuda a la persona a crecer?"
+ },
+ {
+  "semana": 28,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de invertir, pedí consejo a un profesional de confianza, como un contador o un asesor financiero.",
+  "nuevo": "Pedí consejo a un profesional de confianza, como un contador o un asesor financiero, antes de invertir."
+ },
+ {
+  "semana": 28,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Antes de pensar en invertir, asegurate de tener cubiertos la comida, el alquiler y las deudas de tu casa.",
+  "nuevo": "Primero la comida, el alquiler y las deudas de tu casa: asegurate de tenerlos cubiertos antes de pensar en invertir."
+ },
+ {
+  "semana": 29,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Antes de armar tu plan, presentáselo a Dios en oración.",
+  "nuevo": "Presentale a Dios tu plan en oración, antes de armarlo."
+ },
+ {
+  "semana": 31,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Antes de dormir, entregale a Dios en oración lo que te preocupa, por nombre.",
+  "nuevo": "Esta noche, al acostarte, entregale a Dios en oración lo que te preocupa, por nombre."
+ },
+ {
+  "semana": 35,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de una compra grande, consultala con tu pareja.",
+  "nuevo": "Hablá con tu pareja antes de una compra grande."
+ },
+ {
+  "semana": 36,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Antes de dormir, anotá tres cosas por las que das gracias.",
+  "nuevo": "Tres cosas por las que das gracias: anotalas hoy antes de dormir."
+ },
+ {
+  "semana": 39,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Antes de una decisión importante, recordá en voz alta: «Cristo me amó y se entregó por mí».",
+  "nuevo": "Recordá en voz alta, frente a una decisión importante: «Cristo me amó y se entregó por mí»."
+ },
+ {
+  "semana": 41,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Antes de decidir algo de la casa, preguntá: ¿qué pensás vos?",
+  "nuevo": "En las decisiones de la casa, preguntá primero: ¿qué pensás vos?"
+ },
+ {
+  "semana": 42,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Antes de gastar tu próximo ingreso, separá primero lo que vas a dar.",
+  "nuevo": "Separá primero lo que vas a dar, antes de gastar tu próximo ingreso."
+ },
+ {
+  "semana": 46,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Antes de pensar hoy en tu problema, pensá en tres cosas que Dios es.",
+  "nuevo": "Hoy, antes de pensar en tu problema, recordá tres cosas que Dios es."
+ },
+ {
+  "semana": 47,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de decidir algo hoy, hacé una oración corta pidiendo sabiduría.",
+  "nuevo": "Una oración corta pidiendo sabiduría: hacela hoy antes de decidir algo."
+ },
+ {
+  "semana": 47,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Antes de una decisión que afecta a tu familia o a tu equipo, orá por ellos.",
+  "nuevo": "Orá por tu familia o por tu equipo antes de tomar una decisión que los afecte."
+ },
+ {
+  "semana": 49,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de tomar una deuda, preguntate: ¿esto me ayuda a generar ingresos o es solo un gasto?",
+  "nuevo": "¿Te vas a endeudar? Preguntate primero: ¿esto me ayuda a generar ingresos o es solo un gasto?"
+ },
+ {
+  "semana": 50,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de un cambio, preguntale a alguien de confianza qué riesgos ve.",
+  "nuevo": "Preguntale a alguien de confianza qué riesgos ve en el cambio que estás por hacer."
+ },
+ {
+  "semana": 51,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Antes de usar una aplicación nueva, averiguá qué datos te pide y si es confiable.",
+  "nuevo": "Averiguá qué datos te pide una aplicación nueva y si es confiable, antes de usarla."
+ },
+ {
+  "semana": 51,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Antes de comprar una herramienta nueva, aprendé a usar bien la que ya tenés.",
+  "nuevo": "Aprendé a usar bien la herramienta que ya tenés antes de comprar una nueva."
+ },
+ {
+  "semana": 6,
+  "dia": "Lunes",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, antes de comprar algo para la casa, regalale a tu familia una hora juntos sin pantallas.",
+  "nuevo": "Regalale a tu familia una hora juntos sin pantallas esta semana, antes de comprar algo para la casa."
+ },
+ {
+  "semana": 8,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, la última media hora del día sin pantallas: una lectura, una oración o una charla.",
+  "nuevo": "La última media hora del día, sin pantallas: una lectura, una oración o una charla. Probalo esta semana."
+ },
+ {
+  "semana": 11,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, contale a alguien de tu iglesia o de tu familia algo que Dios te enseñó.",
+  "nuevo": "Contale estos días a alguien de tu iglesia o de tu familia algo que Dios te enseñó."
+ },
+ {
+  "semana": 11,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, compartí con alguien de confianza una necesidad real, para que ore por vos.",
+  "nuevo": "Compartí con alguien de confianza una necesidad real, para que ore por vos."
+ },
+ {
+  "semana": 11,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, sumate a un grupo pequeño, una célula o una reunión de oración, aunque sea una vez.",
+  "nuevo": "Sumate, aunque sea una vez, a un grupo pequeño, una célula o una reunión de oración."
+ },
+ {
+  "semana": 13,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, salgan a caminar o a tomar un tereré los dos solos, y hablen de ustedes.",
+  "nuevo": "Con tu pareja, salgan a caminar o a tomar un tereré los dos solos, y hablen de ustedes."
+ },
+ {
+  "semana": 14,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana anotá en una hoja tus ingresos del mes y tus gastos fijos. Ese es el comienzo de tu presupuesto.",
+  "nuevo": "Tomá una hoja y anotá tus ingresos del mes y tus gastos fijos. Ese es el comienzo de tu presupuesto."
+ },
+ {
+  "semana": 15,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, antes de cada actividad de la iglesia, pedile a Dios que te cambie a vos, no solo que te ayude a cumplir.",
+  "nuevo": "Pedile a Dios, antes de cada actividad de la iglesia, que te cambie a vos, no solo que te ayude a cumplir."
+ },
+ {
+  "semana": 15,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, a lo que leas sumale una pregunta: ¿qué me muestra esto de la gracia de Jesús?",
+  "nuevo": "A todo lo que leas estos días, sumale una pregunta: ¿qué me muestra esto de la gracia de Jesús?"
+ },
+ {
+  "semana": 16,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, festejá con tu equipo o con tu familia un logro del trabajo, aunque sea pequeño.",
+  "nuevo": "Festejá con tu equipo o con tu familia un logro del trabajo, aunque sea pequeño."
+ },
+ {
+  "semana": 16,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana comprá en un negocio pequeño y honesto de tu barrio, y decile al dueño que valorás su trabajo.",
+  "nuevo": "Comprá en un negocio pequeño y honesto de tu barrio, y decile al dueño que valorás su trabajo."
+ },
+ {
+  "semana": 18,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Esta semana, hacé una tarea que normalmente dejás a otros, sin comentarlo.",
+  "nuevo": "Sin comentarlo, hacé una tarea que normalmente dejás a otros."
+ },
+ {
+  "semana": 18,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, orá por alguien sin decírselo.",
+  "nuevo": "Orá en silencio por alguien, sin decírselo."
+ },
+ {
+  "semana": 19,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, defendé un tiempo de descanso como defenderías una reunión importante.",
+  "nuevo": "Defendé un tiempo de descanso como defenderías una reunión importante."
+ },
+ {
+  "semana": 20,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, compartí con tus hijos algo que Dios te enseñó a vos.",
+  "nuevo": "Junto a tus hijos, compartí algo que Dios te enseñó a vos."
+ },
+ {
+  "semana": 20,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, hablá bien de tus padres o de tus suegros delante de tus hijos.",
+  "nuevo": "Delante de tus hijos, hablá bien de tus padres o de tus suegros."
+ },
+ {
+  "semana": 21,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, apoyá a un emprendimiento o a un trabajador humilde de tu zona comprándole.",
+  "nuevo": "Apoyá a un emprendimiento o a un trabajador humilde de tu zona comprándole algo."
+ },
+ {
+  "semana": 24,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, agradezcan en voz alta antes de cada comida en familia.",
+  "nuevo": "En cada comida en familia, agradezcan en voz alta antes de empezar."
+ },
+ {
+  "semana": 24,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, hacé al menos una comida por día sin pantallas.",
+  "nuevo": "Al menos una comida por día, sin pantallas. Probalo esta semana."
+ },
+ {
+  "semana": 24,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, en casa, no hagan comentarios sobre el cuerpo o lo que come cada uno; hablen de lo rico y de lo que agradecen.",
+  "nuevo": "En casa, cero comentarios sobre el cuerpo o lo que come cada uno; hablen de lo rico y de lo que agradecen."
+ },
+ {
+  "semana": 26,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Esta semana, tené paciencia con alguien del equipo que está aprendiendo, y decile qué está haciendo bien.",
+  "nuevo": "Con un compañero que está aprendiendo, tené paciencia y decile qué está haciendo bien."
+ },
+ {
+  "semana": 26,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, cubrí a un compañero en algo que le está costando.",
+  "nuevo": "Cubrí a un compañero en algo que le está costando."
+ },
+ {
+  "semana": 27,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, hacé algo concreto por tu cuadra: saludá al vecino nuevo, limpiá la vereda o ayudá a alguien mayor.",
+  "nuevo": "Por tu cuadra, algo concreto: saludá al vecino nuevo, limpiá la vereda o ayudá a alguien mayor."
+ },
+ {
+  "semana": 28,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Esta semana, aprendé un concepto financiero básico con una fuente seria, como los materiales de educación financiera del Banco Central del Paraguay.",
+  "nuevo": "Aprendé un concepto financiero básico con una fuente seria, como los materiales de educación financiera del Banco Central del Paraguay."
+ },
+ {
+  "semana": 28,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Esta semana, invertí tiempo en tu familia con la misma seriedad con que cuidás tu dinero.",
+  "nuevo": "Invertí tiempo en tu familia con la misma seriedad con que cuidás tu dinero."
+ },
+ {
+  "semana": 30,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Esta semana, cuando puedas, hacé tus compras en un comercio de tu zona.",
+  "nuevo": "Cuando puedas, hacé tus compras en un comercio de tu zona."
+ },
+ {
+  "semana": 31,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, apagá las pantallas 30 minutos antes de dormir.",
+  "nuevo": "Treinta minutos antes de dormir, apagá las pantallas."
+ },
+ {
+  "semana": 32,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, orá por alguien sin contárselo a nadie.",
+  "nuevo": "En lo secreto, orá por alguien sin contárselo a nadie."
+ },
+ {
+  "semana": 35,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, que tus hijos te vean dar algo con alegría.",
+  "nuevo": "Que tus hijos te vean dar algo con alegría."
+ },
+ {
+  "semana": 38,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Esta semana, preparen en familia una comida casera con verduras.",
+  "nuevo": "En familia, preparen una comida casera con verduras."
+ },
+ {
+  "semana": 41,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Esta semana, hagan en familia una lista de todas las tareas de la casa, también las que no se ven.",
+  "nuevo": "Armen en familia una lista de todas las tareas de la casa, también las que no se ven."
+ },
+ {
+  "semana": 42,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, poné a Dios primero también en tu presupuesto.",
+  "nuevo": "Poné a Dios primero también en tu presupuesto."
+ },
+ {
+  "semana": 47,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, tomá una decisión de la casa conversándola con tu familia.",
+  "nuevo": "Conversá con tu familia la próxima decisión de la casa y tómenla juntos."
+ },
+ {
+  "semana": 48,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Esta semana, contale a tu familia una historia de cómo Dios te ayudó.",
+  "nuevo": "Contale a tu familia una historia de cómo Dios te ayudó."
+ },
+ {
+  "semana": 49,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, mirá el total real de lo que debés, sin esconderlo.",
+  "nuevo": "Mirá el total real de lo que debés, sin esconderlo."
+ },
+ {
+  "semana": 1,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un momento fijo de la semana sin trabajo ni pendientes y defendelo como una cita importante.",
+  "nuevo": "Separá un momento fijo de la semana sin trabajo ni pendientes y defendelo como una cita importante."
+ },
+ {
+  "semana": 2,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un proyecto que abandonaste por impaciencia y dale una fecha realista para retomarlo.",
+  "nuevo": "Buscá un proyecto que abandonaste por impaciencia y dale una fecha realista para retomarlo."
+ },
+ {
+  "semana": 4,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí una enseñanza y aplicala hoy mismo con alguien concreto: pedir perdón, ayudar, agradecer.",
+  "nuevo": "Hoy mismo, aplicá una enseñanza con alguien concreto: pedir perdón, ayudar, agradecer."
+ },
+ {
+  "semana": 4,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un plan de 30 días (por ejemplo, un capítulo de Proverbios por día) y marcá cada día cumplido.",
+  "nuevo": "Probá un plan de 30 días (por ejemplo, un capítulo de Proverbios por día) y marcá cada día cumplido."
+ },
+ {
+  "semana": 5,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí una cosa que les pedís a otros y hacela vos primero durante toda la semana.",
+  "nuevo": "Eso que les pedís a otros, hacelo vos primero durante toda la semana."
+ },
+ {
+  "semana": 5,
+  "dia": "Jueves",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un compromiso pendiente (una deuda, un favor prometido, una llamada) y cumplilo esta semana.",
+  "nuevo": "Cumplí esta semana un compromiso pendiente: una deuda, un favor prometido, una llamada."
+ },
+ {
+  "semana": 6,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un lugar fijo para llaves, documentos y cargadores. Pocas cosas, siempre en el mismo lugar.",
+  "nuevo": "Llaves, documentos y cargadores: dales un lugar fijo. Pocas cosas, siempre en el mismo lugar."
+ },
+ {
+  "semana": 6,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un cajón o un rincón y ordenalo hoy en quince minutos. Lo que no usás, regalalo.",
+  "nuevo": "Quince minutos alcanzan para ordenar hoy un cajón o un rincón. Lo que no usás, regalalo."
+ },
+ {
+  "semana": 6,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Elegí una rutina de diez minutos diarios: los platos limpios antes de dormir y la mesa despejada. Constancia antes que maratón.",
+  "nuevo": "Diez minutos diarios de rutina: los platos limpios antes de dormir y la mesa despejada. Constancia antes que maratón."
+ },
+ {
+  "semana": 7,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un monto que puedas guardar todas las semanas sin falta, aunque sea pequeño. La constancia importa más que el monto.",
+  "nuevo": "Definí un monto que puedas guardar todas las semanas sin falta, aunque sea pequeño. La constancia importa más que el monto."
+ },
+ {
+  "semana": 8,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Elegí un versículo para esta semana y repetilo cada vez que sientas ansiedad o desánimo.",
+  "nuevo": "Anotá un versículo para esta semana y repetilo cada vez que sientas ansiedad o desánimo."
+ },
+ {
+  "semana": 12,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí una tarea que siempre hacés vos y que otro puede aprender. Enseñala esta semana.",
+  "nuevo": "Enseñale a otro esta semana una tarea que siempre hacés vos y que puede aprender."
+ },
+ {
+  "semana": 12,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Elegí qué es lo propio de esta etapa de tu vida y qué puede esperar.",
+  "nuevo": "Distinguí qué es lo propio de esta etapa de tu vida y qué puede esperar."
+ },
+ {
+  "semana": 14,
+  "dia": "Lunes",
+  "campo": "Solucion 3",
+  "viejo": "Elegí con tu familia una meta concreta para este año y calculen cuánto deberían separar por mes para lograrla.",
+  "nuevo": "Con tu familia, pónganse una meta concreta para este año y calculen cuánto deberían separar por mes para lograrla."
+ },
+ {
+  "semana": 14,
+  "dia": "Jueves",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un gasto diario que podés reducir esta semana y anotá cuánto ahorrás.",
+  "nuevo": "Recortá esta semana un gasto diario y anotá cuánto ahorrás."
+ },
+ {
+  "semana": 15,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un rasgo del fruto (paciencia, mansedumbre…) que querés ver crecer y orá por él cada día de esta semana.",
+  "nuevo": "Orá cada día de esta semana por un rasgo del fruto (paciencia, mansedumbre…) que querés ver crecer."
+ },
+ {
+  "semana": 15,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Elegí una sola disciplina para esta semana (oración, lectura o silencio) y dale un horario fijo.",
+  "nuevo": "Dale un horario fijo a una sola disciplina esta semana: oración, lectura o silencio."
+ },
+ {
+  "semana": 15,
+  "dia": "Jueves",
+  "campo": "Solucion 2",
+  "viejo": "Elegí diez minutos diarios para una disciplina y mantenelos toda la semana.",
+  "nuevo": "Dedicá diez minutos diarios a una disciplina y mantenelos toda la semana."
+ },
+ {
+  "semana": 17,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un movimiento que disfrutes (caminar, andar en bicicleta, jugar a la pelota con los chicos) y hacelo tres veces esta semana.",
+  "nuevo": "Caminar, andar en bicicleta, jugar a la pelota con los chicos: buscá el movimiento que disfrutes y hacelo tres veces esta semana."
+ },
+ {
+  "semana": 17,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un hábito de movimiento y anotá cada día si lo cumpliste.",
+  "nuevo": "Proponete un hábito de movimiento y anotá cada día si lo cumpliste."
+ },
+ {
+  "semana": 18,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un gesto pequeño y concreto para hacer cada día de esta semana.",
+  "nuevo": "Cada día de esta semana, hacé un gesto pequeño y concreto."
+ },
+ {
+  "semana": 20,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un momento fijo de la semana para conversar con tus hijos sobre la vida y la fe.",
+  "nuevo": "Reservá un momento fijo de la semana para conversar con tus hijos sobre la vida y la fe."
+ },
+ {
+  "semana": 22,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí una tarea de hoy y hacela con todas tus ganas, como si fuera la más importante.",
+  "nuevo": "Tomá una tarea de hoy y hacela con todas tus ganas, como si fuera la más importante."
+ },
+ {
+  "semana": 22,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Elegí una de tus habilidades y pensá cómo usarla mejor en tu trabajo este mes.",
+  "nuevo": "Este mes, mirá cuál de tus habilidades podés usar mejor en tu trabajo, y cómo."
+ },
+ {
+  "semana": 24,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un solo hábito nuevo para esta semana: más agua, una fruta por día o una porción de verduras.",
+  "nuevo": "Sumá un solo hábito nuevo esta semana: más agua, una fruta por día o una porción de verduras."
+ },
+ {
+  "semana": 25,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí una enseñanza que recibiste y ponela en práctica esta semana.",
+  "nuevo": "Poné en práctica esta semana una enseñanza que recibiste."
+ },
+ {
+  "semana": 29,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Elegí un día de la semana para revisar tu avance, aunque sea cinco minutos.",
+  "nuevo": "Cinco minutos alcanzan: fijá un día de la semana para revisar tu avance."
+ },
+ {
+  "semana": 31,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí una hora fija para acostarte esta semana, también el fin de semana.",
+  "nuevo": "Fijá una hora para acostarte esta semana, también el fin de semana."
+ },
+ {
+  "semana": 32,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un lugar fijo de tu casa para orar esta semana.",
+  "nuevo": "Buscá un lugar fijo de tu casa para orar esta semana."
+ },
+ {
+  "semana": 33,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un tiempo fijo esta semana para leer la Biblia con calma.",
+  "nuevo": "Apartá un tiempo fijo esta semana para leer la Biblia con calma."
+ },
+ {
+  "semana": 36,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí una tarea que venís postergando y hacela hoy, aunque no tengas ganas.",
+  "nuevo": "Aunque no tengas ganas, hacé hoy esa tarea que venís postergando."
+ },
+ {
+  "semana": 36,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un solo hábito nuevo y fijale una hora y un lugar.",
+  "nuevo": "Un solo hábito nuevo alcanza: fijale una hora y un lugar."
+ },
+ {
+  "semana": 36,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un hábito espiritual pequeño, como leer un capítulo por día, y sostenelo esta semana.",
+  "nuevo": "Probá un hábito espiritual pequeño, como leer un capítulo por día, y sostenelo esta semana."
+ },
+ {
+  "semana": 36,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un solo hábito pequeño para sostener todo este mes.",
+  "nuevo": "Durante todo este mes, sostené un solo hábito pequeño."
+ },
+ {
+  "semana": 43,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un compromiso que dejaste a medias y retomalo esta semana.",
+  "nuevo": "Retomá esta semana un compromiso que dejaste a medias."
+ },
+ {
+  "semana": 43,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Elegí a una persona más joven para acompañarla en la fe este año.",
+  "nuevo": "Buscá a una persona más joven para acompañarla en la fe este año."
+ },
+ {
+  "semana": 46,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí una situación difícil de esta semana y agradecele a Dios en medio de ella.",
+  "nuevo": "En medio de una situación difícil de esta semana, agradecele a Dios."
+ },
+ {
+  "semana": 46,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un momento fijo del día para adorar, aunque sean dos minutos.",
+  "nuevo": "Separá un momento fijo del día para adorar, aunque sean dos minutos."
+ },
+ {
+  "semana": 50,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Elegí un paso pequeño e incómodo que venís postergando por miedo, y dalo esta semana.",
+  "nuevo": "¿Qué paso pequeño e incómodo venís postergando por miedo? Dalo esta semana."
+ },
+ {
+  "semana": 50,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un área en la que querés crecer el año que viene.",
+  "nuevo": "Escribí un área en la que querés crecer el año que viene."
+ },
+ {
+  "semana": 51,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Elegí un primer paso mínimo: aprender una sola función nueva esta semana.",
+  "nuevo": "Aprendé una sola función nueva esta semana: es un primer paso mínimo."
+ },
+ {
+  "semana": 1,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Si fallaste ayer, hoy hacé la versión mínima del hábito. La regla: nunca fallar dos días seguidos.",
+  "nuevo": "¿Fallaste ayer? Hoy hacé la versión mínima del hábito. La regla: nunca fallar dos días seguidos."
+ },
+ {
+  "semana": 2,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Si estás esperando una oportunidad, usá el tiempo para capacitarte: hay cursos gratuitos del SNPP y otras instituciones.",
+  "nuevo": "Mientras esperás una oportunidad, usá el tiempo para capacitarte: hay cursos gratuitos del SNPP y otras instituciones."
+ },
+ {
+  "semana": 2,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Si tu cosecha o tu trabajo rindió, compartí una parte con una familia que pasa necesidad.",
+  "nuevo": "Cuando tu cosecha o tu trabajo rinda, compartí una parte con una familia que pasa necesidad."
+ },
+ {
+  "semana": 3,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Si te sentís sin fuerzas, contalo a tu médico y a alguien de confianza. Pedir ayuda es parte del tratamiento.",
+  "nuevo": "¿Te sentís sin fuerzas? Contalo a tu médico y a alguien de confianza. Pedir ayuda es parte del tratamiento."
+ },
+ {
+  "semana": 5,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Si sos joven, elegí un área donde podés dar el ejemplo ya: puntualidad, palabra, trato. Si sos adulto, dale a un joven una responsabilidad real.",
+  "nuevo": "Para los jóvenes: elegí un área donde podés dar el ejemplo ya: puntualidad, palabra, trato. Para los adultos: dale a un joven una responsabilidad real."
+ },
+ {
+  "semana": 5,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Si te llega un comentario sobre alguien, no lo reenvíes. Si es grave, hablalo con la persona.",
+  "nuevo": "No reenvíes el comentario que te llega sobre alguien. Si es grave, hablalo con la persona."
+ },
+ {
+  "semana": 7,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Si pensás en hacer crecer tus ahorros, conversalo primero con un profesional de confianza, como un contador.",
+  "nuevo": "Conversá primero con un profesional de confianza, como un contador, si pensás en hacer crecer tus ahorros."
+ },
+ {
+  "semana": 7,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Si guardás tus ahorros en casa, averiguá esta semana cómo abrir una cuenta de ahorro en una cooperativa o un banco.",
+  "nuevo": "¿Guardás tus ahorros en casa? Averiguá esta semana cómo abrir una cuenta de ahorro en una cooperativa o un banco."
+ },
+ {
+  "semana": 8,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Si algo te pesa hace tiempo, contáselo hoy a una persona de confianza.",
+  "nuevo": "Contale hoy a una persona de confianza eso que te pesa hace tiempo."
+ },
+ {
+  "semana": 9,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Si tenés animales, revisá hoy que tengan agua limpia, sombra y comida suficiente.",
+  "nuevo": "Revisá hoy que tus animales tengan agua limpia, sombra y comida suficiente."
+ },
+ {
+  "semana": 9,
+  "dia": "Lunes",
+  "campo": "Solucion 3",
+  "viejo": "Si conocés a alguien que trabaja en una estancia o en un tambo, agradecele hoy su constancia.",
+  "nuevo": "Agradecele hoy su constancia a alguien que trabaja en una estancia o en un tambo."
+ },
+ {
+  "semana": 9,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Si tenés mascotas, cuidá sus vacunas y no las abandones. Adoptar un animal es un compromiso para toda su vida.",
+  "nuevo": "Cuidá las vacunas de tus mascotas y no las abandones. Adoptar un animal es un compromiso para toda su vida."
+ },
+ {
+  "semana": 9,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Si tenés gente a cargo, reconocé hoy, con nombre y apellido, el trabajo constante de alguien.",
+  "nuevo": "Con nombre y apellido, reconocé hoy el trabajo constante de alguien que tenés a cargo."
+ },
+ {
+  "semana": 10,
+  "dia": "Lunes",
+  "campo": "Solucion 3",
+  "viejo": "Si sos hombre, sacá un turno para tu control. Si tenés un padre, un esposo o un hermano que no va, acompañalo.",
+  "nuevo": "Hombres: saquen turno para su control. Y si tu padre, tu esposo o tu hermano no va, acompañalo."
+ },
+ {
+  "semana": 10,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Si tenés miedo de ir, pedile a alguien de confianza que te acompañe, y oren juntos antes.",
+  "nuevo": "¿Te da miedo ir? Pedile a alguien de confianza que te acompañe, y oren juntos antes."
+ },
+ {
+  "semana": 10,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Si te indicaron un tratamiento, cumplilo completo, aunque te sientas bien antes de terminarlo.",
+  "nuevo": "Cumplí completo el tratamiento que te indicaron, aunque te sientas bien antes de terminarlo."
+ },
+ {
+  "semana": 11,
+  "dia": "Lunes",
+  "campo": "Solucion 3",
+  "viejo": "Si te alejaste por una herida, orá por eso y buscá a una persona de confianza para conversarlo, sin apuro.",
+  "nuevo": "Orá por esa herida que te alejó y buscá a una persona de confianza para conversarlo, sin apuro."
+ },
+ {
+  "semana": 12,
+  "dia": "Lunes",
+  "campo": "Solucion 3",
+  "viejo": "Si sentís que te enojás, pedí unos minutos y volvé a hablar cuando estés en calma.",
+  "nuevo": "Cuando sientas que te enojás, pedí unos minutos y volvé a hablar en calma."
+ },
+ {
+  "semana": 13,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Si vos o alguien que conocés sufre violencia, pedí ayuda: hablá con tu pastor y llamá a la línea 137 «SOS Mujer», gratuita y las 24 horas, o escribí al WhatsApp 0961 137 137. Si hay peligro inmediato, llamá al 911.",
+  "nuevo": "Ante la violencia, contra vos o contra alguien que conocés, pedí ayuda: hablá con tu pastor y llamá a la línea 137 «SOS Mujer», gratuita y las 24 horas, o escribí al WhatsApp 0961 137 137. Si hay peligro inmediato, llamá al 911."
+ },
+ {
+  "semana": 13,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Si su matrimonio está en crisis, busquen juntos a un consejero o a un pastor de confianza. Pedir ayuda también es una forma de amar.",
+  "nuevo": "Busquen juntos a un consejero o a un pastor de confianza si su matrimonio está en crisis. Pedir ayuda también es una forma de amar."
+ },
+ {
+  "semana": 15,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Si estás cansado, decíselo a Dios con sinceridad. Eso también es oración.",
+  "nuevo": "Decile a Dios con sinceridad que estás cansado. Eso también es oración."
+ },
+ {
+  "semana": 16,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Si tenés un negocio, agradecé a Dios esta semana por lo que te permitió construir, y a la gente que trabaja con vos.",
+  "nuevo": "Agradecé a Dios esta semana por lo que te permitió construir en tu negocio, y a la gente que trabaja con vos."
+ },
+ {
+  "semana": 16,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Si buscás trabajo, sumá una capacitación gratuita (por ejemplo, del SNPP) y presentate siempre puntual.",
+  "nuevo": "Mientras buscás trabajo, sumá una capacitación gratuita (por ejemplo, del SNPP) y presentate siempre puntual."
+ },
+ {
+  "semana": 16,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Si tenés un negocio, revisá esta semana que tus pagos a empleados y proveedores estén al día.",
+  "nuevo": "Revisá esta semana que los pagos de tu negocio a empleados y proveedores estén al día."
+ },
+ {
+  "semana": 16,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Si tu negocio atraviesa una crisis, compartilo con alguien de confianza y oren juntos pidiendo sabiduría.",
+  "nuevo": "Compartí con alguien de confianza la crisis que atraviesa tu negocio, y oren juntos pidiendo sabiduría."
+ },
+ {
+  "semana": 16,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Si tenés un negocio, cumplí esta semana con algo que nadie te exige, pero que cuida a tu gente o a tus clientes.",
+  "nuevo": "Cumplí esta semana, en tu negocio, con algo que nadie te exige pero que cuida a tu gente o a tus clientes."
+ },
+ {
+  "semana": 17,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Si tenés una limitación, preguntá en tu unidad de salud familiar qué movimientos podés hacer de forma segura.",
+  "nuevo": "Preguntá en tu unidad de salud familiar qué movimientos podés hacer de forma segura con tu limitación."
+ },
+ {
+  "semana": 19,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Si recibís críticas por algo bueno que estás haciendo, no respondas en caliente: orá y seguí trabajando.",
+  "nuevo": "Ante las críticas por algo bueno que estás haciendo, no respondas en caliente: orá y seguí trabajando."
+ },
+ {
+  "semana": 19,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Si te equivocaste en algo que afectó a otros, reconocelo con humildad y decí qué vas a corregir.",
+  "nuevo": "Reconocé con humildad el error que afectó a otros, y decí qué vas a corregir."
+ },
+ {
+  "semana": 19,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Si estás muy cansado, postergá las decisiones importantes hasta haber descansado.",
+  "nuevo": "Con mucho cansancio encima, postergá las decisiones importantes hasta haber descansado."
+ },
+ {
+  "semana": 20,
+  "dia": "Lunes",
+  "campo": "Solucion 3",
+  "viejo": "Si tu hijo se alejó, seguí orando por él y mostrale amor sin condiciones; no lo des por perdido.",
+  "nuevo": "Seguí orando por tu hijo que se alejó y mostrale amor sin condiciones; no lo des por perdido."
+ },
+ {
+  "semana": 20,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Si estás enojado, esperá a calmarte antes de corregir.",
+  "nuevo": "Primero calmá el enojo; recién después corregí."
+ },
+ {
+  "semana": 21,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Si conocés a alguien que busca trabajo, ayudalo con un contacto, una recomendación o compartiendo su currículum.",
+  "nuevo": "Ayudá a alguien que busca trabajo con un contacto, una recomendación o compartiendo su currículum."
+ },
+ {
+  "semana": 21,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Si tenés un emprendimiento pequeño, fijá dos horas por semana para trabajarlo con constancia.",
+  "nuevo": "Dos horas por semana: fijalas para trabajar con constancia tu emprendimiento pequeño."
+ },
+ {
+  "semana": 21,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Si este mes no alcanza, recortá primero en la columna de lo deseable.",
+  "nuevo": "¿Este mes no alcanza? Recortá primero en la columna de lo deseable."
+ },
+ {
+  "semana": 22,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Si te ofrecen un atajo deshonesto para avanzar, decí que no. Tu nombre vale más.",
+  "nuevo": "Decí que no al atajo deshonesto que te ofrezcan para avanzar. Tu nombre vale más."
+ },
+ {
+  "semana": 23,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Si empezaste en pequeño, sacale una foto a tu comienzo: algún día te va a recordar de dónde saliste.",
+  "nuevo": "Sacale una foto a tu comienzo pequeño: algún día te va a recordar de dónde saliste."
+ },
+ {
+  "semana": 23,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Si tu emprendimiento pasa por un mal momento, hablalo con alguien de confianza y no lo cargues como culpa.",
+  "nuevo": "Hablá con alguien de confianza sobre el mal momento de tu emprendimiento, y no lo cargues como culpa."
+ },
+ {
+  "semana": 23,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Si sos emprendedor, buscá a otro emprendedor para contarse lo que los ayudó a sostenerse.",
+  "nuevo": "Buscá a otro emprendedor y cuéntense lo que los ayudó a sostenerse."
+ },
+ {
+  "semana": 25,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Si fallaste en algo que enseñás, reconocelo delante de quien acompañás.",
+  "nuevo": "Delante de quien acompañás, reconocé si fallaste en algo que enseñás."
+ },
+ {
+  "semana": 26,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Si escuchás un chisme sobre alguien del equipo, cortalo y hablá con la persona.",
+  "nuevo": "Cortá el chisme que escuches sobre alguien del equipo, y hablá con la persona."
+ },
+ {
+  "semana": 28,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Si estás pensando en invertir, conversalo primero con un profesional de confianza.",
+  "nuevo": "¿Pensás invertir? Conversalo primero con un profesional de confianza."
+ },
+ {
+  "semana": 28,
+  "dia": "Jueves",
+  "campo": "Solucion 2",
+  "viejo": "Si querés invertir, empezá con un monto chico y aprendé en el camino.",
+  "nuevo": "Empezá con un monto chico si querés invertir, y aprendé en el camino."
+ },
+ {
+  "semana": 30,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Si vendés, revisá hoy tus balanzas, tus medidas y tus precios.",
+  "nuevo": "Balanzas, medidas y precios: si vendés, revisalos hoy."
+ },
+ {
+  "semana": 30,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Si cambiaste algo de tu producto, avisale al cliente.",
+  "nuevo": "Avisale al cliente si cambiaste algo de tu producto."
+ },
+ {
+  "semana": 30,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Si negociás un precio, hacelo con respeto, sin desmerecer el producto.",
+  "nuevo": "Al negociar un precio, hacelo con respeto, sin desmerecer el producto."
+ },
+ {
+  "semana": 30,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Si tenés un emprendimiento, respondé hoy los mensajes pendientes de tus clientes.",
+  "nuevo": "Respondé hoy los mensajes pendientes de los clientes de tu emprendimiento."
+ },
+ {
+  "semana": 31,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Si hace semanas que dormís mal, consultá a un médico: pedir ayuda también es cuidar el cuerpo que Dios te dio.",
+  "nuevo": "Consultá a un médico si hace semanas que dormís mal: pedir ayuda también es cuidar el cuerpo que Dios te dio."
+ },
+ {
+  "semana": 31,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Si servís en tu iglesia, conversá con tu líder para organizar turnos y descansos.",
+  "nuevo": "Junto a tu líder, organizá turnos y descansos para tu servicio en la iglesia."
+ },
+ {
+  "semana": 32,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Si estás pasando una temporada difícil, buscá a alguien de tu iglesia para orar juntos.",
+  "nuevo": "En esta temporada difícil, buscá a alguien de tu iglesia para orar juntos."
+ },
+ {
+  "semana": 33,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Si liderás algo, en casa, en el trabajo o en la iglesia, apartá hoy un tiempo para tu propia vida espiritual.",
+  "nuevo": "Vos que liderás, en casa, en el trabajo o en la iglesia, apartá hoy un tiempo para tu propia vida espiritual."
+ },
+ {
+  "semana": 34,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Si heriste a alguien de tu casa con palabras, pedile perdón antes de orar esta noche.",
+  "nuevo": "Pedile perdón a quien heriste con palabras en tu casa, antes de orar esta noche."
+ },
+ {
+  "semana": 35,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Si tu pareja se equivocó con un gasto, háblenlo para buscar una salida, no para culpar.",
+  "nuevo": "Con tu pareja, hablen del gasto equivocado para buscar una salida, no para culpar."
+ },
+ {
+  "semana": 35,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Si tu hijo gastó todo, acompañalo sin retarlo y ayudalo a pensar qué haría distinto.",
+  "nuevo": "Acompañá sin retos a tu hijo que gastó todo, y ayudalo a pensar qué haría distinto."
+ },
+ {
+  "semana": 36,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Si dejaste un hábito, retomalo hoy sin culparte: un día perdido no borra el camino.",
+  "nuevo": "Retomá hoy, sin culparte, el hábito que dejaste: un día perdido no borra el camino."
+ },
+ {
+  "semana": 37,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Si sos socio de una cooperativa, participá de la próxima asamblea.",
+  "nuevo": "Participá de la próxima asamblea de tu cooperativa, si sos socio."
+ },
+ {
+  "semana": 37,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Si manejás algo de un grupo, plata o herramientas, rendí cuentas aunque nadie te lo pida.",
+  "nuevo": "Rendí cuentas de lo que manejás de un grupo, plata o herramientas, aunque nadie te lo pida."
+ },
+ {
+  "semana": 38,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Si sos joven, elegí un hábito de cuidado: dormir mejor, moverte o comer más sano.",
+  "nuevo": "Siendo joven, sumá un hábito de cuidado: dormir mejor, moverte o comer más sano."
+ },
+ {
+  "semana": 40,
+  "dia": "Lunes",
+  "campo": "Solucion 3",
+  "viejo": "Si tenés que corregir algo en tu equipo o en tu casa, hacelo con firmeza y sin humillar.",
+  "nuevo": "Corregí con firmeza y sin humillar cuando tengas que hacerlo en tu equipo o en tu casa."
+ },
+ {
+  "semana": 41,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Si alguien de tu familia está sin trabajo, acompañalo y ayudalo a buscar, sin reproches.",
+  "nuevo": "Al familiar que está sin trabajo, acompañalo y ayudalo a buscar, sin reproches."
+ },
+ {
+  "semana": 42,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Si conocés a alguien generoso que pasa un momento difícil, acompañalo sin juzgarlo.",
+  "nuevo": "Acompañá sin juzgar a esa persona generosa que pasa un momento difícil."
+ },
+ {
+  "semana": 43,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Si tropezaste, pedí perdón y seguí corriendo.",
+  "nuevo": "¿Tropezaste? Pedí perdón y seguí corriendo."
+ },
+ {
+  "semana": 43,
+  "dia": "Jueves",
+  "campo": "Solucion 2",
+  "viejo": "Si te cuesta seguir, buscá ayuda hoy: hablá con alguien de confianza o acercate a un centro de salud.",
+  "nuevo": "Buscá ayuda hoy si te cuesta seguir: hablá con alguien de confianza o acercate a un centro de salud."
+ },
+ {
+  "semana": 43,
+  "dia": "Viernes",
+  "campo": "Solucion 1",
+  "viejo": "Si alguien te cuenta un dolor, escuchá primero, antes de dar explicaciones.",
+  "nuevo": "Escuchá primero cuando alguien te cuenta un dolor, antes de dar explicaciones."
+ },
+ {
+  "semana": 44,
+  "dia": "Miercoles",
+  "campo": "Solucion 3",
+  "viejo": "Si estás en una situación difícil, animate a pedir ayuda a tu iglesia o a tu familia.",
+  "nuevo": "Animate a pedir ayuda a tu iglesia o a tu familia en esta situación difícil."
+ },
+ {
+  "semana": 45,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Si hay varias personas, señalá a una y pedile directamente que llame a emergencias.",
+  "nuevo": "Señalá a una persona entre varias y pedile directamente que llame a emergencias."
+ },
+ {
+  "semana": 45,
+  "dia": "Jueves",
+  "campo": "Solucion 2",
+  "viejo": "Si estás pasando una angustia, contásela hoy a Dios y a alguien de confianza.",
+  "nuevo": "Hoy mismo, contale tu angustia a Dios y a alguien de confianza."
+ },
+ {
+  "semana": 46,
+  "dia": "Martes",
+  "campo": "Solucion 2",
+  "viejo": "Si estás triste, contáselo a Dios con sinceridad: eso también es adoración.",
+  "nuevo": "Contale a Dios con sinceridad tu tristeza: eso también es adoración."
+ },
+ {
+  "semana": 47,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Si sabés qué es lo correcto, decidilo hoy.",
+  "nuevo": "Si ya sabés qué es lo correcto, decidilo hoy."
+ },
+ {
+  "semana": 48,
+  "dia": "Jueves",
+  "campo": "Solucion 3",
+  "viejo": "Si un hijo se alejó, mantené la puerta abierta: más amor y menos reproches.",
+  "nuevo": "Mantené la puerta abierta al hijo que se alejó: más amor y menos reproches."
+ },
+ {
+  "semana": 49,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Si querés ayudar, pensá qué podés dar sin poner en riesgo a tu familia.",
+  "nuevo": "Calculá qué podés dar para ayudar sin poner en riesgo a tu familia."
+ },
+ {
+  "semana": 50,
+  "dia": "Lunes",
+  "campo": "Solucion 3",
+  "viejo": "Si cargás con un error del pasado, confesáselo a Dios y recibí su perdón.",
+  "nuevo": "Confesale a Dios ese error del pasado que cargás, y recibí su perdón."
+ },
+ {
+  "semana": 50,
+  "dia": "Jueves",
+  "campo": "Solucion 2",
+  "viejo": "Si empezaste algo nuevo, comprometete a sostenerlo un mes antes de evaluarlo.",
+  "nuevo": "Comprometete a sostener un mes lo nuevo que empezaste, antes de evaluarlo."
+ },
+ {
+  "semana": 52,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Si tenés un control médico pendiente, agendalo esta semana.",
+  "nuevo": "Agendá esta semana ese control médico pendiente."
+ },
+ {
+  "semana": 52,
+  "dia": "Jueves",
+  "campo": "Solucion 2",
+  "viejo": "Si alguien está enfermo, acompañalo sin juzgar su fe.",
+  "nuevo": "Acompañá a quien está enfermo sin juzgar su fe."
+ },
+ {
+  "semana": 52,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Si tenés un tratamiento, seguilo con constancia y presentale cada día tu salud a Dios.",
+  "nuevo": "Seguí con constancia tu tratamiento y presentale cada día tu salud a Dios."
+ },
+ {
+  "semana": 6,
+  "dia": "Miercoles",
+  "campo": "Solucion 2",
+  "viejo": "Hacé hoy una tarea de la casa que normalmente hace otro, sin que te lo pidan.",
+  "nuevo": "Sin que te lo pidan, hacé hoy una tarea de la casa que normalmente hace otro."
+ },
+ {
+  "semana": 18,
+  "dia": "Miercoles",
+  "campo": "Solucion 1",
+  "viejo": "Hacé hoy un servicio que nadie vea: lavar, ordenar, preparar algo para otro.",
+  "nuevo": "Lavá, ordená o prepará algo para otro hoy, en un servicio que nadie vea."
+ },
+ {
+  "semana": 33,
+  "dia": "Jueves",
+  "campo": "Solucion 2",
+  "viejo": "Hacé hoy el primer paso de tu meta, aunque sea pequeño.",
+  "nuevo": "Da hoy el primer paso de tu meta, aunque sea pequeño."
+ },
+ {
+  "semana": 39,
+  "dia": "Lunes",
+  "campo": "Solucion 2",
+  "viejo": "Hacé hoy una buena obra, no para demostrar nada, sino como respuesta de gratitud.",
+  "nuevo": "Como respuesta de gratitud, no para demostrar nada, hacé hoy una buena obra."
+ },
+ {
+  "semana": 40,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Hacé hoy una tarea de servicio que nadie quiere hacer en tu casa o en tu trabajo.",
+  "nuevo": "En tu casa o en tu trabajo, ocupate hoy de la tarea de servicio que nadie quiere hacer."
+ },
+ {
+  "semana": 43,
+  "dia": "Jueves",
+  "campo": "Solucion 1",
+  "viejo": "Hacé hoy algo bueno por alguien sin que nadie se entere.",
+  "nuevo": "Sin que nadie se entere, hacé hoy algo bueno por alguien."
+ },
+ {
+  "semana": 44,
+  "dia": "Viernes",
+  "campo": "Solucion 2",
+  "viejo": "Hacé hoy tu trabajo con excelencia, aunque nadie lo valore.",
+  "nuevo": "Trabajá hoy con excelencia, aunque nadie lo valore."
+ },
+ {
+  "semana": 46,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Hacé hoy un bien concreto como parte de tu adoración.",
+  "nuevo": "Ofrecé hoy un bien concreto como parte de tu adoración."
+ },
+ {
+  "semana": 5,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Pensá en alguien que te mira como ejemplo. Elegí una cosa concreta que querés que aprenda de vos y vivila hoy.",
+  "nuevo": "¿Quién te mira como ejemplo? Elegí una cosa concreta que querés que aprenda de vos y vivila hoy."
+ },
+ {
+  "semana": 11,
+  "dia": "Martes",
+  "campo": "Solucion 3",
+  "viejo": "Pensá en alguien que está pasando un mal momento y llamalo hoy.",
+  "nuevo": "Llamá hoy a alguien que está pasando un mal momento."
+ },
+ {
+  "semana": 25,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Pensá en alguien más joven en la fe y proponele encontrarse una vez por semana durante un mes.",
+  "nuevo": "Proponele a alguien más joven en la fe encontrarse una vez por semana durante un mes."
+ },
+ {
+  "semana": 37,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Pensá en una necesidad de tu barrio o de tu trabajo que se podría resolver mejor entre varios.",
+  "nuevo": "Mirá a tu alrededor: ¿qué necesidad de tu barrio o de tu trabajo se podría resolver mejor entre varios?"
+ },
+ {
+  "semana": 40,
+  "dia": "Martes",
+  "campo": "Solucion 1",
+  "viejo": "Pensá en un proyecto atascado y en quién podría sumarse si lo invitás.",
+  "nuevo": "Repasá un proyecto atascado: ¿quién podría sumarse si lo invitás?"
+ },
+ {
+  "semana": 43,
+  "dia": "Viernes",
+  "campo": "Solucion 3",
+  "viejo": "Pensá en una herida familiar que no querés pasarles a tus hijos, y pedile a Dios ayuda para sanarla.",
+  "nuevo": "Pedile a Dios ayuda para sanar esa herida familiar que no querés pasarles a tus hijos."
+ },
+ {
+  "semana": 51,
+  "dia": "Lunes",
+  "campo": "Solucion 1",
+  "viejo": "Pensá en una herramienta que podría ayudarte en tu trabajo sin cambiar lo esencial de lo que hacés.",
+  "nuevo": "Identificá una herramienta que podría ayudarte en tu trabajo sin cambiar lo esencial de lo que hacés."
+ },
+ {
+  "semana": 14,
+  "dia": "Lunes",
+  "campo": "Problematica 3",
+  "viejo": "Pensar que planificar la plata es cosa de ricos o de contadores.",
+  "nuevo": "“Planificar la plata es cosa de ricos o de contadores”."
+ },
+ {
+  "semana": 17,
+  "dia": "Jueves",
+  "campo": "Problematica 2",
+  "viejo": "Pensar que lo espiritual no tiene nada que ver con el cuidado del cuerpo.",
+  "nuevo": "Separar lo espiritual del cuidado del cuerpo, como si no tuvieran nada que ver."
+ },
+ {
+  "semana": 18,
+  "dia": "Viernes",
+  "campo": "Problematica 2",
+  "viejo": "Pensar que solo vale la pena el servicio grande.",
+  "nuevo": "La idea de que solo vale la pena el servicio grande."
+ },
+ {
+  "semana": 21,
+  "dia": "Jueves",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que los gastos chicos no importan.",
+  "nuevo": "“Total, son gastos chicos; no importan”."
+ },
+ {
+  "semana": 22,
+  "dia": "Martes",
+  "campo": "Problematica 3",
+  "viejo": "Pensar que ya es tarde para estudiar o aprender un oficio nuevo.",
+  "nuevo": "El miedo a que ya sea tarde para estudiar o aprender un oficio nuevo."
+ },
+ {
+  "semana": 24,
+  "dia": "Miercoles",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que la fe no tiene nada que ver con lo cotidiano.",
+  "nuevo": "Dejar la fe para el domingo, como si no tuviera nada que ver con lo cotidiano."
+ },
+ {
+  "semana": 25,
+  "dia": "Viernes",
+  "campo": "Problematica 3",
+  "viejo": "Pensar que discipular es una tarea solo de pastores.",
+  "nuevo": "“Discipular es tarea de los pastores, no mía”."
+ },
+ {
+  "semana": 27,
+  "dia": "Martes",
+  "campo": "Problematica 2",
+  "viejo": "Pensar que respetar a la autoridad significa aprobar todo lo que hace o callar ante una injusticia.",
+  "nuevo": "Confundir respetar a la autoridad con aprobar todo lo que hace o callar ante una injusticia."
+ },
+ {
+  "semana": 28,
+  "dia": "Lunes",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que administrar bien o invertir es solo cosa de ricos.",
+  "nuevo": "¿Administrar bien o invertir? Parece cosa de ricos."
+ },
+ {
+  "semana": 29,
+  "dia": "Miercoles",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que si algo no se dio, fue porque no oramos lo suficiente.",
+  "nuevo": "La culpa de pensar que, si algo no se dio, fue por no orar lo suficiente."
+ },
+ {
+  "semana": 30,
+  "dia": "Miercoles",
+  "campo": "Problematica 2",
+  "viejo": "Pensar que comprar en el barrio o en otro lado da lo mismo.",
+  "nuevo": "“Da igual dónde compre”."
+ },
+ {
+  "semana": 31,
+  "dia": "Miercoles",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que mientras más ocupados, mejor estamos.",
+  "nuevo": "La costumbre de medir el bienestar por lo ocupados que andamos."
+ },
+ {
+  "semana": 35,
+  "dia": "Martes",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que el problema es solo de los ricos.",
+  "nuevo": "“Ese problema es solo de los ricos”."
+ },
+ {
+  "semana": 37,
+  "dia": "Martes",
+  "campo": "Problematica 3",
+  "viejo": "Pensar que lo que yo sé hacer no le sirve a nadie.",
+  "nuevo": "“Lo que yo sé hacer no le sirve a nadie”."
+ },
+ {
+  "semana": 38,
+  "dia": "Miercoles",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que los adolescentes «están bien» solo porque tienen energía.",
+  "nuevo": "Dar por hecho que los adolescentes «están bien» solo porque tienen energía."
+ },
+ {
+  "semana": 40,
+  "dia": "Miercoles",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que sin recursos no se puede emprender nada que valga la pena.",
+  "nuevo": "Creer que sin recursos es imposible emprender algo que valga la pena."
+ },
+ {
+  "semana": 41,
+  "dia": "Martes",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que quien trae el sueldo ya cumplió con todo.",
+  "nuevo": "El que trae el sueldo y siente que ya cumplió con todo."
+ },
+ {
+  "semana": 42,
+  "dia": "Martes",
+  "campo": "Problematica 2",
+  "viejo": "Pensar que si alguien pasa necesidad es porque no dio lo suficiente.",
+  "nuevo": "La sospecha de que, si alguien pasa necesidad, es porque no dio lo suficiente."
+ },
+ {
+  "semana": 42,
+  "dia": "Viernes",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que, si no tengo plata, no tengo nada para dar.",
+  "nuevo": "“No tengo plata, entonces no tengo nada para dar”."
+ },
+ {
+  "semana": 43,
+  "dia": "Lunes",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que el legado es solo dejar bienes.",
+  "nuevo": "Reducir el legado a dejar bienes."
+ },
+ {
+  "semana": 44,
+  "dia": "Jueves",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que un trabajo sencillo no da ningún fruto.",
+  "nuevo": "La sensación de que un trabajo sencillo no da ningún fruto."
+ },
+ {
+  "semana": 45,
+  "dia": "Lunes",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que la fe nos exime de prepararnos.",
+  "nuevo": "Confundir la fe con una excusa para no prepararnos."
+ },
+ {
+  "semana": 45,
+  "dia": "Jueves",
+  "campo": "Problematica 2",
+  "viejo": "Pensar que si algo malo pasó es porque Dios no escuchó.",
+  "nuevo": "“Si pasó algo malo, es porque Dios no me escuchó”."
+ },
+ {
+  "semana": 46,
+  "dia": "Jueves",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que la alabanza es solo para los que cantan bien.",
+  "nuevo": "¿Alabar a Dios? Eso parece solo para los que cantan bien."
+ },
+ {
+  "semana": 47,
+  "dia": "Martes",
+  "campo": "Problematica 3",
+  "viejo": "Pensar que una mala decisión arruina todo para siempre.",
+  "nuevo": "El miedo a que una mala decisión arruine todo para siempre."
+ },
+ {
+  "semana": 48,
+  "dia": "Jueves",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que la fe de un padre alcanza automáticamente a los hijos.",
+  "nuevo": "Dar por sentado que la fe de un padre alcanza automáticamente a los hijos."
+ },
+ {
+  "semana": 48,
+  "dia": "Viernes",
+  "campo": "Problematica 3",
+  "viejo": "Pensar que un hogar cristiano no tiene problemas.",
+  "nuevo": "La ilusión de que un hogar cristiano no tiene problemas."
+ },
+ {
+  "semana": 49,
+  "dia": "Lunes",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que toda deuda es pecado, o que ninguna es peligrosa.",
+  "nuevo": "Los dos extremos: creer que toda deuda es pecado, o que ninguna es peligrosa."
+ },
+ {
+  "semana": 50,
+  "dia": "Miercoles",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que hay que estar contento con el dolor.",
+  "nuevo": "Confundir la fortaleza con tener que estar contento con el dolor."
+ },
+ {
+  "semana": 52,
+  "dia": "Lunes",
+  "campo": "Problematica 1",
+  "viejo": "Pensar que estar sano es solo no tener un diagnóstico.",
+  "nuevo": "Confundir estar sano con no tener un diagnóstico."
+ },
+ {
+  "semana": 52,
+  "dia": "Martes",
+  "campo": "Problematica 2",
+  "viejo": "Pensar que la tristeza profunda se cura solo con fuerza de voluntad.",
+  "nuevo": "La exigencia de curar la tristeza profunda solo con fuerza de voluntad."
+ },
+ {
+  "semana": 10,
+  "dia": "Lunes",
+  "campo": "Problematica 1",
+  "viejo": "Creer que estamos sanos porque no sentimos nada.",
+  "nuevo": "“No siento nada, así que estoy sano”."
+ },
+ {
+  "semana": 17,
+  "dia": "Viernes",
+  "campo": "Problematica 1",
+  "viejo": "Creer que el ejercicio solo cuenta en un gimnasio.",
+  "nuevo": "“Si no voy al gimnasio, no hago ejercicio”."
+ },
+ {
+  "semana": 28,
+  "dia": "Jueves",
+  "campo": "Problematica 1",
+  "viejo": "Creer que un error con la plata te descalifica para siempre.",
+  "nuevo": "La vergüenza de un error con la plata, como si te descalificara para siempre."
+ },
+ {
+  "semana": 36,
+  "dia": "Lunes",
+  "campo": "Problematica 2",
+  "viejo": "Creer que la disciplina depende solo de uno y frustrarse al fallar.",
+  "nuevo": "La frustración de fallar cuando uno cree que la disciplina depende solo de sí mismo."
+ },
+ {
+  "semana": 39,
+  "dia": "Viernes",
+  "campo": "Problematica 2",
+  "viejo": "Creer que si sos hijo de Dios no deberías sufrir.",
+  "nuevo": "“Si soy hijo de Dios, no debería sufrir”."
+ },
+ {
+  "semana": 45,
+  "dia": "Lunes",
+  "campo": "Problematica 2",
+  "viejo": "Creer que solo los médicos pueden ayudar.",
+  "nuevo": "La idea de que solo los médicos pueden ayudar."
+ },
+ {
+  "semana": 49,
+  "dia": "Jueves",
+  "campo": "Problematica 1",
+  "viejo": "Creer que todo depende de uno, para bien o para mal.",
+  "nuevo": "“Todo depende de mí”, para bien o para mal."
+ },
+ {
+  "semana": 3,
+  "dia": "Miercoles",
+  "campo": "Problematica 1",
+  "viejo": "Personas que dicen \"yo estoy sano, nunca voy al médico\" hasta que aparece un problema grave.",
+  "nuevo": "“Yo estoy sano, nunca voy al médico”, hasta que aparece un problema grave."
+ },
+ {
+  "semana": 4,
+  "dia": "Miercoles",
+  "campo": "Problematica 3",
+  "viejo": "Personas que usan versículos para señalar a los demás y no para mirarse a sí mismas.",
+  "nuevo": "La costumbre de usar versículos para señalar a los demás y no para mirarnos a nosotros mismos."
+ },
+ {
+  "semana": 8,
+  "dia": "Lunes",
+  "campo": "Problematica 2",
+  "viejo": "Personas que no saben decir que no y terminan agotadas y resentidas.",
+  "nuevo": "La dificultad para decir que no, que termina en agotamiento y resentimiento."
+ },
+ {
+  "semana": 8,
+  "dia": "Viernes",
+  "campo": "Problematica 1",
+  "viejo": "Personas que cargan tristeza durante meses sin contarle a nadie.",
+  "nuevo": "La tristeza que se carga durante meses sin contársela a nadie."
+ },
+ {
+  "semana": 11,
+  "dia": "Lunes",
+  "campo": "Problematica 1",
+  "viejo": "Personas que creen en Dios pero viven su fe completamente solas, sin nadie que las acompañe.",
+  "nuevo": "El creyente que vive su fe completamente solo, sin nadie que lo acompañe."
+ },
+ {
+  "semana": 11,
+  "dia": "Jueves",
+  "campo": "Problematica 1",
+  "viejo": "Personas que se sienten de más en la iglesia porque no cantan, no predican ni tocan un instrumento.",
+  "nuevo": "La sensación de estar de más en la iglesia por no cantar, no predicar ni tocar un instrumento."
+ },
+ {
+  "semana": 16,
+  "dia": "Viernes",
+  "campo": "Problematica 1",
+  "viejo": "Personas que sienten que su trabajo no vale nada.",
+  "nuevo": "¿Para qué sirve mi trabajo? A veces parece que no vale nada."
+ },
+ {
+  "semana": 18,
+  "dia": "Martes",
+  "campo": "Problematica 1",
+  "viejo": "Personas que creen que no tienen nada para aportar.",
+  "nuevo": "“Yo no tengo nada para aportar”."
+ },
+ {
+  "semana": 8,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, escribí cada noche en pocas líneas qué sentiste en el día y llevalo a Dios en oración.",
+  "nuevo": "Durante la semana, escribí cada noche en pocas líneas qué sentiste en el día y llevalo a Dios en oración."
+ },
+ {
+  "semana": 25,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, elegí a una persona para acompañar en la fe durante el próximo mes, y anotá cuándo la vas a llamar.",
+  "nuevo": "Elegí a una persona para acompañar en la fe durante el próximo mes, y anotá cuándo la vas a llamar."
+ },
+ {
+  "semana": 28,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, siéntense en familia, definan una meta de ahorro con un propósito y, antes de cualquier inversión, pidan consejo a un profesional.",
+  "nuevo": "En familia, siéntense a definir una meta de ahorro con un propósito y, antes de cualquier inversión, pidan consejo a un profesional."
+ },
+ {
+  "semana": 29,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, escribí una meta concreta, sus tres primeros pasos y el día en que vas a revisarla, y entregásela a Dios diciendo: «Si el Señor quiere».",
+  "nuevo": "El desafío: escribí una meta concreta, sus tres primeros pasos y el día en que vas a revisarla, y entregásela a Dios diciendo: «Si el Señor quiere»."
+ },
+ {
+  "semana": 31,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, elegí un hábito de descanso y sostenelo siete días, y cada noche entregale a Dios tus preocupaciones.",
+  "nuevo": "Para los próximos siete días: elegí un hábito de descanso, sostenelo, y cada noche entregale a Dios tus preocupaciones."
+ },
+ {
+  "semana": 32,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, orá cinco minutos por día en un lugar fijo, y al final de la semana anotá cómo te fue.",
+  "nuevo": "Orá cinco minutos por día en un lugar fijo, y al final de la semana anotá cómo te fue."
+ },
+ {
+  "semana": 33,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, compartí con tu familia o tu equipo la visión en una frase y los tres primeros pasos, y que el fruto apunte a la gloria de Dios.",
+  "nuevo": "Hasta el sábado que viene, compartí con tu familia o tu equipo la visión en una frase y los tres primeros pasos, y que el fruto apunte a la gloria de Dios."
+ },
+ {
+  "semana": 35,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, tengan en familia una conversación sobre la plata: qué tenemos, qué necesitamos y en qué estamos de acuerdo.",
+  "nuevo": "Una conversación en familia sobre la plata: qué tenemos, qué necesitamos y en qué estamos de acuerdo. Ese es el desafío de esta semana."
+ },
+ {
+  "semana": 36,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, elegí un solo hábito pequeño, fijale hora y lugar, y marcá en un calendario cada día que lo cumplas.",
+  "nuevo": "Un solo hábito pequeño: elegilo, fijale hora y lugar, y marcá en un calendario cada día que lo cumplas."
+ },
+ {
+  "semana": 38,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, revisá los controles de salud de cada uno en tu casa, empezando por el tuyo, y agenden lo que falte.",
+  "nuevo": "Revisá estos días los controles de salud de cada uno en tu casa, empezando por el tuyo, y agenden lo que falte."
+ },
+ {
+  "semana": 39,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, escribí tres cosas que Dios dice de vos en su Palabra y leelas cada mañana.",
+  "nuevo": "Escribí tres cosas que Dios dice de vos en su Palabra y leelas cada mañana de esta semana."
+ },
+ {
+  "semana": 41,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, hagan juntos la lista de tareas de la casa, repártanla conversando y agradezcan en voz alta lo que hace cada uno.",
+  "nuevo": "En casa, hagan juntos la lista de tareas, repártanla conversando y agradezcan en voz alta lo que hace cada uno."
+ },
+ {
+  "semana": 42,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, da algo que no sea dinero: tu tiempo, un consejo o una habilidad, a alguien que lo necesite.",
+  "nuevo": "Antes del próximo sábado, da algo que no sea dinero: tu tiempo, un consejo o una habilidad, a alguien que lo necesite."
+ },
+ {
+  "semana": 43,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, escribile una carta o un mensaje a alguien más joven contándole lo que aprendiste de Dios y lo que te gustaría que recuerde.",
+  "nuevo": "Durante estos días, escribile una carta o un mensaje a alguien más joven contándole lo que aprendiste de Dios y lo que te gustaría que recuerde."
+ },
+ {
+  "semana": 45,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, anoten en familia los números de emergencia, pónganlos en un lugar visible y averigüen dónde hacer un curso de primeros auxilios.",
+  "nuevo": "En familia, anoten los números de emergencia, pónganlos en un lugar visible y averigüen dónde hacer un curso de primeros auxilios."
+ },
+ {
+  "semana": 46,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, empezá cada día con una frase de alabanza y cerralo anotando tres cosas por las que das gracias.",
+  "nuevo": "Cada día de esta semana, empezá con una frase de alabanza y cerrá anotando tres cosas por las que das gracias."
+ },
+ {
+  "semana": 48,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, empiecen un devocional de cinco minutos en familia: un versículo, una pregunta y una oración.",
+  "nuevo": "Para los próximos siete días, un devocional de cinco minutos en familia: un versículo, una pregunta y una oración."
+ },
+ {
+  "semana": 49,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, anotá todas tus deudas, elegí la primera para pagar y separá un monto pequeño para emergencias, poniendo a Dios primero.",
+  "nuevo": "Hasta el sábado que viene, anotá todas tus deudas, elegí la primera para pagar y separá un monto pequeño para emergencias, poniendo a Dios primero."
+ },
+ {
+  "semana": 50,
+  "dia": "Sabado",
+  "campo": "Solucion 1",
+  "viejo": "Esta semana, escribí tres cosas en las que creciste este año y una en la que querés crecer el próximo, y presentáselas a Dios.",
+  "nuevo": "Tomate un rato esta semana para escribir tres cosas en las que creciste este año y una en la que querés crecer el próximo, y presentáselas a Dios."
+ }
+]
