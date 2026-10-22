@@ -166,3 +166,114 @@ Muchas son traducciones propias del original; si una suena rara al aire, se pued
 | 52 · 1 | Reemplazada | "La salud es un estado de completo bienestar físico, mental y social, y no solamente la ausencia de afecciones o enfermedades." — Organización Mundial de la Salud | Constitución de la OMS (1946) | "La parte nunca podrá estar bien, a menos que el todo también lo este." — Platón |
 | 52 · 2 | Reemplazada | "El Dios de la Biblia es también el Dios del genoma. Se le puede adorar en la catedral o en el laboratorio." — Francis S. Collins | ¿Cómo habla Dios? (2006), cap. 9 | "No hay salud sin salud mental." — David Satcher |
 | 52 · 3 | Reemplazada | "Yo lo vendé, y Dios lo sanó." — Ambroise Paré | Apologie et traité (1585) | "Tu cuerpo es templo de la naturaleza y del espíritu divino. Consérvalo sano, respétalo." — Henri Frederic Amiel |
+
+## Segunda frase de los subtemas 1 y 2 (martes y jueves)
+
+Agregadas el 22 de octubre de 2026 para que cada día de lunes a viernes tenga una frase distinta. Cada una se verificó con búsqueda web contra su obra o una fuente seria; las que no pudieron confirmarse se reemplazaron. Fuente: `content/frases_2027_b.txt` → `tools/frases_segundas_2027.py`.
+
+| Semana · subtema | Frase | Fuente |
+| --- | --- | --- |
+| 1 · 1 | "El hombre no es ni ángel ni bestia, y la desgracia quiere que quien quiere hacer de ángel haga de bestia." — Blaise Pascal | Pensamientos (1670), fr. 358 Brunschvicg / 678 Lafuma |
+| 1 · 2 | "El hierro se oxida si no se usa; el agua estancada pierde su pureza y con el frío se congela; así también la inacción le quita vigor a la mente." — Leonardo da Vinci | Cuadernos, Códice Atlántico f. 289v (ed. J. P. Richter, The Notebooks of Leonardo da Vinci) |
+| 2 · 1 | "Nada te turbe, nada te espante; todo se pasa, Dios no se muda; la paciencia todo lo alcanza." — Teresa de Ávila | Poesías, letrilla «Nada te turbe» (hallada en su breviario, s. XVI) |
+| 2 · 2 | "El trabajo tenaz lo vence todo, y también la necesidad que aprieta en los tiempos duros." — Virgilio | Geórgicas I, 145-146 (29 a. C.) |
+| 3 · 1 | "Hay cinco puntos esenciales para asegurar la salud de las casas: aire puro, agua pura, desagüe eficiente, limpieza y luz." — Florence Nightingale | Notes on Nursing (1859), cap. II «Health of Houses» |
+| 3 · 2 | "Corremos despreocupados hacia el precipicio, después de haber puesto algo delante para no verlo." — Blaise Pascal | Pensamientos (1670), fr. 183 Brunschvicg / 166 Lafuma |
+| 4 · 1 | "Algunos libros son para probarlos, otros para tragarlos, y unos pocos para masticarlos y digerirlos." — Francis Bacon | Ensayos (1625), «De los estudios» |
+| 4 · 2 | "En la Sagrada Escritura se ha de buscar la verdad, no la elocuencia; se ha de buscar el provecho más que la sutileza de las palabras." — Tomás de Kempis | La imitación de Cristo, libro I, cap. 5 |
+| 5 · 1 | "El talento se forma en la quietud; el carácter, en la corriente del mundo." — Johann Wolfgang von Goethe | Torquato Tasso (1790), acto I, esc. 2, vv. 304-305 |
+| 5 · 2 | "Es más fácil sostener tus principios el cien por ciento del tiempo que sostenerlos el noventa y ocho por ciento." — Clayton M. Christensen | «How Will You Measure Your Life?», Harvard Business Review, julio-agosto 2010 (ampliado en el libro homónimo, 2012) |
+| 6 · 1 | "La paz de todas las cosas es la tranquilidad del orden." — Agustín de Hipona | La ciudad de Dios, XIX, 13 |
+| 6 · 2 | "La limpieza está, ciertamente, cerca de la piedad." — John Wesley | Sermón 88, «Sobre el vestir» (On Dress) |
+| 7 · 1 | "Tengas lo que tengas, gastá menos." — Samuel Johnson | Carta a James Boswell, 7 dic. 1782 (en Boswell, Vida de Samuel Johnson, 1791) |
+| 7 · 2 | "De sabios es guardarse hoy para mañana y no aventurarse todo en un día." — Miguel de Cervantes | Don Quijote de la Mancha, primera parte, cap. XXIII (habla Sancho) |
+| 8 · 1 | "Dale palabras al dolor: la pena que no habla le susurra al corazón agobiado y lo empuja a romperse." — William Shakespeare | Macbeth, acto IV, esc. 3 (Malcolm a Macduff) |
+| 8 · 2 | "Quien está en todas partes no está en ninguna." — Séneca | Cartas a Lucilio, carta 2, 2 |
+| 9 · 1 | "El ojo del amo engorda al caballo." — Jenofonte | Económico, XII, 20 |
+| 9 · 2 | "La ética es responsabilidad, ampliada sin límites, hacia todo lo que vive." — Albert Schweitzer | Kultur und Ethik (Filosofía de la cultura II, 1923) |
+| 10 · 1 | "No basta que el médico haga lo que debe; también el paciente, quienes lo asisten y las circunstancias tienen que colaborar." — Hipócrates | Aforismos, I, 1 (Corpus hipocrático) |
+| 10 · 2 | "Le pediré a Dios que en su misericordia nos proteja. Después fumigaré, ayudaré a purificar el aire, daré medicina y la tomaré." — Martín Lutero | Si se puede huir de una plaga mortal (1527), Luther's Works vol. 43 |
+| 11 · 1 | "La amistad nace en el momento en que uno le dice a otro: ¿Qué? ¿Vos también? Pensé que nadie más que yo." — C. S. Lewis | Los cuatro amores (1960), cap. 4 «La amistad» |
+| 11 · 2 | "El Cristo en el propio corazón es más débil que el Cristo en la palabra del hermano." — Dietrich Bonhoeffer | Vida en comunidad (1939), cap. 1 |
+| 12 · 1 | "El gran enemigo de la comunicación, descubrimos, es la ilusión de haberla logrado." — William H. Whyte | «Is Anybody Listening?», revista Fortune (1950) |
+| 12 · 2 | "Cuando su obra se completa y su tarea termina, todos dicen: lo hicimos nosotros." — Lao-Tsé | Tao Te Ching, cap. 17 (trad. Charles Muller) |
+| 13 · 1 | "No es su amor el que sostiene el matrimonio, sino que desde ahora es el matrimonio el que sostiene su amor." — Dietrich Bonhoeffer | Sermón de bodas desde la celda (mayo 1943), en Resistencia y sumisión |
+| 13 · 2 | "El amor se debe poner más en las obras que en las palabras." — Ignacio de Loyola | Ejercicios espirituales, n. 230 |
+| 14 · 1 | "Cuidado con los pequeños gastos: una pequeña vía de agua hunde un gran barco." — Benjamin Franklin | The Way to Wealth (prefacio de Poor Richard's Almanack, 1758) |
+| 14 · 2 | "¡Simplicidad, simplicidad, simplicidad! Que tus asuntos sean dos o tres, y no cien ni mil; en vez de un millón, contá media docena, y llevá tus cuentas en la uña del pulgar." — Henry David Thoreau | Walden (1854), cap. «Where I Lived, and What I Lived For» |
+| 15 · 1 | "Ciertamente, el día del juicio no nos preguntarán qué leímos, sino qué hicimos; ni cuán bien hablamos, sino cuán santamente vivimos." — Tomás de Kempis | La imitación de Cristo, libro I, cap. 3 (c. 1418-1427) |
+| 15 · 2 | "La gracia no se opone al esfuerzo; se opone a querer ganársela. Ganar es una actitud; el esfuerzo es una acción." — Dallas Willard | The Great Omission (2006) |
+| 16 · 1 | "Un negocio que no produce nada más que dinero es un negocio pobre." — Henry Ford | Columna "Mr. Ford's Own Page", Dearborn Independent, enero de 1919 (reproducida en el New York Tribune) |
+| 16 · 2 | "Si pierden dinero para la empresa, seré comprensivo; si le hacen perder una pizca de reputación, seré implacable." — Warren Buffett | Testimonio ante una subcomisión de la Cámara de Representantes de EE. UU., caso Salomon Brothers, 4 de septiembre de 1991 |
+| 17 · 1 | "Comer solo no mantiene sano a un hombre; también tiene que hacer ejercicio." — Hipócrates | Sobre la dieta (Regimen), libro I, trad. W. H. S. Jones, Loeb Hippocrates vol. IV (1931) |
+| 17 · 2 | "Sobre todo, no pierdas las ganas de caminar: cada día camino hasta llegar a un estado de bienestar, y caminando he llegado a mis mejores pensamientos." — Søren Kierkegaard | Carta a su cuñada Henriette (Jette) Kierkegaard, 1847 (SKS, Breve) |
+| 18 · 1 | "La atención es la forma más rara y más pura de la generosidad." — Simone Weil | Carta a Joë Bousquet, 13 de abril de 1942 (publicada en Cahiers du Sud, 1950, y en Correspondance) |
+| 18 · 2 | "El bien creciente del mundo depende en parte de actos que la historia no registra; y que no nos vaya tan mal se debe en buena parte a los muchos que vivieron fielmente una vida oculta." — George Eliot | Middlemarch, Finale (1871-1872) |
+| 19 · 1 | "Si alguien puede demostrarme que pienso o actúo mal, con gusto cambiaré; porque busco la verdad, y la verdad nunca dañó a nadie." — Marco Aurelio | Meditaciones, libro VI, 21 |
+| 19 · 2 | "Las tropas, la aviación y la marina hicieron todo lo que la valentía y la devoción al deber podían hacer. Si hay alguna culpa o falta en este intento, es solo mía." — Dwight D. Eisenhower | Nota "en caso de fracaso" escrita la víspera del Día D, 5 de junio de 1944 (Biblioteca Eisenhower, NARA 186470) |
+| 20 · 1 | "Que los jóvenes no sean solamente amados, sino que ellos mismos se den cuenta de que son amados." — Juan Bosco | Carta de Roma a la comunidad de Valdocco, 10 de mayo de 1884 |
+| 20 · 2 | "Los niños saben más de lo que parece, y si les dijeran que escribiesen lo que saben, muy buenas cosas escribirían." — José Martí | La Edad de Oro, n.º 1, "A los niños que lean La Edad de Oro" (Nueva York, julio de 1889) |
+| 21 · 1 | "La diligencia es madre de la buena ventura, y la pereza, su contraria, jamás llegó al término que pide un buen deseo." — Miguel de Cervantes | Don Quijote de la Mancha, segunda parte, cap. 43 (1615), consejos a Sancho |
+| 21 · 2 | "Comprá lo que no necesitás y muy pronto tendrás que vender lo que sí necesitás." — Benjamin Franklin | The Way to Wealth (1758) |
+| 22 · 1 | "Hay que seguir aprendiendo mientras haya algo que no sabemos; y, si creemos al proverbio, mientras vivamos." — Séneca | Cartas a Lucilio, carta 76, 3 |
+| 22 · 2 | "Bienaventurado el que ha encontrado su trabajo; que no pida otra bienaventuranza." — Thomas Carlyle | Past and Present, libro III, cap. 11, "Labour" (1843) |
+| 23 · 1 | "Hacé lo que puedas, con lo que tengas, donde estés." — Squire Bill Widener (citado por Theodore Roosevelt) | Theodore Roosevelt, An Autobiography, cap. 9 "Outdoors and Indoors" (1913) |
+| 23 · 2 | "Es bueno confiar el comienzo de toda gran empresa a Argos, con sus cien ojos, y el final a Briareo, con sus cien manos: primero vigilar, y después apurarse." — Francis Bacon | Ensayos, "Of Delays" (De las demoras), edición de 1625 |
+| 24 · 1 | "No se puede pensar bien, amar bien ni dormir bien si no se ha comido bien." — Virginia Woolf | Un cuarto propio (A Room of One's Own), cap. 1 (1929) |
+| 24 · 2 | "Un hábito es un hábito: nadie puede tirarlo por la ventana; hay que convencerlo de bajar la escalera, un escalón a la vez." — Mark Twain | Pudd'nhead Wilson, epígrafe del "Calendario" (The Century Magazine, enero de 1894) |
+| 25 · 1 | "Los discípulos no se pueden producir en serie. No podemos meter a la gente en un programa y esperar que salgan discípulos al final de la línea de producción. Hacer discípulos lleva tiempo y atención personal." — LeRoy Eims | The Lost Art of Disciple Making (1978), p. 45 |
+| 25 · 2 | "Es mejor callar y ser cristiano que hablar y no serlo. Bueno es enseñar, si el que habla también hace." — Ignacio de Antioquía | Carta a los Efesios, 15 (c. 107-110) |
+| 26 · 1 | "Obrá de tal modo que trates a la humanidad, tanto en tu persona como en la de cualquier otro, siempre al mismo tiempo como fin y nunca simplemente como medio." — Immanuel Kant | Fundamentación de la metafísica de las costumbres (1785), AA IV:429 |
+| 26 · 2 | "No sé cómo puede salir adelante un hombre en quien no se puede confiar. ¿Cómo andaría un carro sin la barra que lo une a los bueyes?" — Confucio | Analectas, libro II, 22 (trad. James Legge, 1861) |
+| 27 · 1 | "Los antiguos que querían gobernar bien sus Estados primero ponían en orden sus familias." — Confucio (Gran Saber) | Da Xue (El Gran Saber), texto clásico confuciano, sección inicial (欲治其國者，先齊其家) |
+| 27 · 2 | "El ser humano está por naturaleza más inclinado a formar pareja que a formar ciudades, porque la casa es anterior y más necesaria que la ciudad." — Aristóteles | Ética a Nicómaco, libro VIII, cap. 12 (1162a), trad. W. D. Ross |
+| 28 · 1 | "Los capitales aumentan por la frugalidad y disminuyen por la prodigalidad y la mala conducta." — Adam Smith | La riqueza de las naciones, libro II, cap. 3, párr. 14 (1776) |
+| 28 · 2 | "El principal problema del inversor, e incluso su peor enemigo, probablemente sea él mismo." — Benjamin Graham | El inversor inteligente, cap. 8 (ed. rev. 1973) |
+| 29 · 1 | "Primero decite a vos mismo qué querés ser; después hacé lo que tenés que hacer." — Epicteto | Disertaciones, libro III, cap. 23, 1 |
+| 29 · 2 | "Nunca se rindan: nunca, nunca, nunca, en nada, grande o pequeño, importante o insignificante; nunca se rindan, salvo ante convicciones de honor y sensatez." — Winston Churchill | Discurso en la Harrow School, 29 de octubre de 1941 |
+| 30 · 1 | "Vender una cosa más cara de lo que vale, o comprarla más barata de lo que vale, es en sí mismo injusto e ilícito." — Tomás de Aquino | Suma Teológica II-II, q. 77, a. 1 |
+| 30 · 2 | "Producir con recursos locales para necesidades locales es la forma más racional de vida económica." — E. F. Schumacher | Lo pequeño es hermoso, cap. Economía budista (1973) |
+| 31 · 1 | "El sueño que desenreda la madeja enmarañada de las preocupaciones, bálsamo de las mentes heridas, principal alimento en el banquete de la vida." — William Shakespeare | Macbeth, acto II, escena 2 (c. 1606) |
+| 31 · 2 | "Tanto el sueño como el desvelo, cuando son desmedidos, hacen daño." — Hipócrates | Aforismos, sección II, aforismo 3 (trad. F. Adams) |
+| 32 · 1 | "La oración es, por decirlo con más audacia, una conversación con Dios." — Clemente de Alejandría | Stromata, libro VII, cap. 7 (c. 200) |
+| 32 · 2 | "¿Adónde te escondiste, Amado, y me dejaste con gemido? Como el ciervo huiste, habiéndome herido; salí tras ti clamando, y eras ido." — Juan de la Cruz | Cántico espiritual, estrofa 1 (1577-1584) |
+| 33 · 1 | "La visión es el arte de ver lo invisible." — Jonathan Swift | Pensamientos sobre diversos temas, en Miscellanies (1711) |
+| 33 · 2 | "Nuestra tarea principal no es ver lo que se vislumbra a lo lejos, sino hacer lo que está claramente al alcance de la mano." — Thomas Carlyle | Signs of the Times, Edinburgh Review (1829) |
+| 34 · 1 | "Por eso tenemos dos oídos y una sola boca: para escuchar más y hablar menos." — Zenón de Citio | Diógenes Laercio, Vidas de los filósofos ilustres, libro VII, 23-24 |
+| 34 · 2 | "La palabra es plata; el silencio es oro. La palabra es del tiempo; el silencio, de la eternidad." — Thomas Carlyle | Sartor Resartus, libro III, cap. 3 (1834), citando una inscripción suiza |
+| 35 · 1 | "¿Qué hay más grande para dos almas humanas que sentir que están unidas para toda la vida, para fortalecerse una a la otra en todo trabajo y apoyarse una en la otra en toda tristeza?" — George Eliot | Adam Bede (1859), cap. 54 «The Meeting on the Hill» |
+| 35 · 2 | "La codicia, el deseo de tener más de lo que necesitamos, debe arrancarse temprano y con cuidado, y sembrarse en su lugar la disposición a compartir con los demás." — John Locke | Algunos pensamientos sobre la educación, §110 (1693) |
+| 36 · 1 | "La inspiración es para aficionados; los demás simplemente nos presentamos y nos ponemos a trabajar." — Chuck Close | Entrevista con Joe Fig (abril 2006), en Inside the Painter's Studio (2009) |
+| 36 · 2 | "No permitas que ocurra una sola excepción hasta que el nuevo hábito esté firmemente arraigado en tu vida." — William James | Principios de psicología, cap. IV El hábito (1890) |
+| 37 · 1 | "Si vivís solo, ¿a quién le vas a lavar los pies? ¿A quién vas a cuidar?" — Basilio de Cesarea | Reglas extensas, pregunta 7 (c. 360) |
+| 37 · 2 | "Solos podemos hacer muy poco; juntos podemos hacer muchísimo." — Helen Keller | Discurso de sus giras de los años veinte, recogido por J. P. Lash en Helen and Teacher (1980) |
+| 38 · 1 | "Amen la infancia; favorezcan sus juegos, sus placeres, su amable instinto." — Jean-Jacques Rousseau | Emilio, o De la educación, libro II (1762) |
+| 38 · 2 | "Cada etapa de la vida tiene su propia sazón: la fragilidad de los niños, el ímpetu de los jóvenes, la seriedad de la edad madura y la madurez de la vejez." — Cicerón | Sobre la vejez (Cato Maior de Senectute), 10, 33 (44 a. C.) |
+| 39 · 1 | "Casi toda la suma de nuestra sabiduría consiste en dos puntos: el conocimiento que el hombre debe tener de Dios y el que debe tener de sí mismo." — Juan Calvino | Institución de la religión cristiana, libro I, cap. 1, 1 (1559; trad. Cipriano de Valera) |
+| 39 · 2 | "Cuanto es el hombre delante de Dios, tanto es, y no más." — Francisco de Asís | Admoniciones, n.º 19 (c. 1223-1226) |
+| 40 · 1 | "Aprendí que el valor no era la ausencia de miedo, sino el triunfo sobre él. El valiente no es quien no siente miedo, sino quien vence ese miedo." — Nelson Mandela | Long Walk to Freedom (El largo camino hacia la libertad), 1994, parte final |
+| 40 · 2 | "Dios Todopoderoso ha puesto delante de mí dos grandes objetivos: la supresión del comercio de esclavos y la reforma de las costumbres." — William Wilberforce | Diario personal, 28 de octubre de 1787 (citado por Pollock y por M. J. D. Roberts, Cambridge UP) |
+| 41 · 1 | "Muchas manos hacen liviano el trabajo." — John Heywood | A Dialogue Containing the Number of All the Proverbs in the English Tongue, 1546, parte II, cap. 5 ("Many hands make light warke") |
+| 41 · 2 | "El principio más profundo de la naturaleza humana es el anhelo de ser apreciado." — William James | Carta a su clase de Filosofía 2A de Radcliffe College, 6 de abril de 1896; The Letters of William James, vol. II, p. 33 |
+| 42 · 1 | "Toma mi plata y mi oro: ni una blanca quiero retener." — Frances Ridley Havergal | Himno «Take My Life and Let It Be», 1874, estrofa 4 ("Take my silver and my gold; not a mite would I withhold") |
+| 42 · 2 | "Hay quienes dan con alegría, y esa alegría es su recompensa." — Khalil Gibran | El profeta (The Prophet), 1923, «Sobre el dar» |
+| 43 · 1 | "Las vidas de los grandes nos recuerdan que podemos hacer sublime la nuestra y, al partir, dejar tras nosotros huellas en las arenas del tiempo." — Henry Wadsworth Longfellow | «A Psalm of Life», Knickerbocker Magazine, oct. 1838; Voices of the Night, 1839, estrofa 7 |
+| 43 · 2 | "Liberás a un prisionero, pero descubrís que el verdadero prisionero eras vos." — Lewis B. Smedes | Forgive and Forget: Healing the Hurts We Don't Deserve, 1984 (extracto en Christianity Today, dic. 1984) |
+| 44 · 1 | "No hay un solo palmo en todo el dominio de nuestra existencia humana sobre el cual Cristo, que es soberano de todo, no clame: ¡Mío!" — Abraham Kuyper | Discurso «Soberanía de las esferas», inauguración de la Universidad Libre de Ámsterdam, 20 de octubre de 1880 (trad. en J. D. Bratt, Abraham Kuyper: A Centennial Reader) |
+| 44 · 2 | "Si miramos lo de afuera, hay diferencia entre lavar los platos y predicar la Palabra de Dios; pero en cuanto a agradar a Dios, ninguna." — William Tyndale | The Parable of the Wicked Mammon (1528); ed. Parker Society, Doctrinal Treatises (1848), p. 102 |
+| 45 · 1 | "Ante las enfermedades, acostumbrate a dos cosas: ayudar, o al menos no hacer daño." — Hipócrates | Epidemias, libro I, sec. 2 (gr. ἀσκεῖν περὶ τὰ νοσήματα δύο, ὠφελεῖν ἢ μὴ βλάπτειν) |
+| 45 · 2 | "Si podés conservar la calma cuando todos a tu alrededor la pierden y te culpan por ello… serás un hombre, hijo mío." — Rudyard Kipling | Poema «If—», en Rewards and Fairies, 1910 (versos 1-2 y final) |
+| 46 · 1 | "Cuando la paz, como un río, acompaña mi camino, o cuando las penas ruedan como olas del mar, sea cual sea mi suerte, me enseñaste a decir: está bien con mi alma." — Horatio G. Spafford | Himno «It Is Well with My Soul», 1873; Gospel Hymns No. 2, 1876, estrofa 1 |
+| 46 · 2 | "Tú que tanto me has dado, dame una cosa más: un corazón agradecido." — George Herbert | «Gratefulnesse», en The Temple, 1633, versos 1-2 |
+| 47 · 1 | "Guía mis pasos; no pido ver la escena lejana: un paso me basta." — John Henry Newman | «Lead, Kindly Light» («The Pillar of the Cloud»), 1833; British Magazine, 1834 |
+| 47 · 2 | "Nuestras dudas son traidoras y nos hacen perder el bien que a menudo podríamos ganar, por temor a intentarlo." — William Shakespeare | Medida por medida, acto I, escena 4 (Lucio a Isabella) |
+| 48 · 1 | "Soy doctor y predicador, y sin embargo hago como un niño: cada mañana leo y recito, palabra por palabra, los Mandamientos, el Credo, el Padrenuestro y los Salmos." — Martín Lutero | Catecismo Mayor, Prefacio, 1529 (trad. Bente y Dau, 1921) |
+| 48 · 2 | "Los niños nunca han sido muy buenos para escuchar a sus mayores, pero nunca han dejado de imitarlos." — James Baldwin | «Fifth Avenue, Uptown», Esquire, julio de 1960; reimpreso en Nobody Knows My Name, 1961 |
+| 49 · 1 | "El préstamo a menudo se pierde a sí mismo y pierde también al amigo." — William Shakespeare | Hamlet, acto I, escena 3 (consejo de Polonio a Laertes) |
+| 49 · 2 | "La esperanza significa esperar cuando las cosas son desesperadas; si no, no es ninguna virtud." — G. K. Chesterton | Heretics (1905), cap. XII «Paganism and Mr. Lowes Dickinson» |
+| 50 · 1 | "Nadie debería avergonzarse de reconocer que se equivocó, que no es sino decir, con otras palabras, que hoy es más sabio que ayer." — Alexander Pope | «Thoughts on Various Subjects», en Swift-Pope, Miscellanies, 1727 |
+| 50 · 2 | "Respecto del miedo y la audacia, el valor es el término medio: el que se excede en audacia es temerario, y el que se excede en miedo, cobarde." — Aristóteles | Ética a Nicómaco, libro II, cap. 7 (1107a33-b4) |
+| 51 · 1 | "Damos forma a nuestras herramientas y, después, ellas nos dan forma a nosotros." — John M. Culkin | «A Schoolman's Guide to Marshall McLuhan», Saturday Review, 18 de marzo de 1967 |
+| 51 · 2 | "El artesano que quiere hacer bien su trabajo debe primero afilar sus herramientas." — Confucio | Analectas XV.10 (Legge XV.9): 工欲善其事，必先利其器 |
+| 52 · 1 | "¡Salve, Príncipe de paz nacido del cielo! ¡Salve, Sol de justicia! Luz y vida a todos trae, y se levanta con sanidad en sus alas." — Charles Wesley | «Hymn for Christmas Day» («Hark! The Herald Angels Sing»), Hymns and Sacred Poems, 1739 |
+| 52 · 2 | "Un poco de filosofía inclina la mente del hombre al ateísmo; pero la profundidad en la filosofía lleva las mentes de los hombres de vuelta a la religión." — Francis Bacon | Essayes or Counsels, Civill and Morall, 1625, «Of Atheism» |

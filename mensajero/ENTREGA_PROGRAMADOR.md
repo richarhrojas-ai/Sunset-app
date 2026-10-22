@@ -27,7 +27,7 @@ El guion **es una base, no un libreto**: el locutor mantiene el versículo tal c
 | Semanas con tema, enfoque, 3 subtemas, valor, programa, historia | 52 | listo |
 | Versículos (RVC) con 3 puntos | 364 (domingo a sábado) | listo; 12 cambios sugeridos esperan decisión (§11) |
 | Guiones de lunes a sábado (título, dato con fuente, 3 puntos con desarrollo, problemática y práctica; sábado = repaso) | 312 | listo, con revisión teológica y datos verificados |
-| Frases célebres verificadas | 156 | listo |
+| Frases célebres verificadas | 260 (3 por semana + una segunda para los subtemas 1 y 2) | listo |
 | Frases deportivas (originales, sin autor) | 364 | listo |
 | Historia bíblica y marcos (por tema y ronda) | 52 | listo |
 | Guía de los 5 valores | 5 | listo |
@@ -43,7 +43,7 @@ Fuente de verdad: `content/planillas/Mensajero_TemasMacro_2027.xlsx`. **Nadie ed
 
 | Hoja | Una fila por | Columnas que lee la app |
 |---|---|---|
-| Temas Macro 2027 | semana (52) | Semana, Fecha inicio (Dom) dd/mm/aaaa, Color, Tema, Ronda, Enfoque, Subtema 1–3, Desarrollo 1–3, Nota Locutor 1–3, Frase Celebre 1–3 («frase» — Autor), Historia Ilustrativa, Valor (ADN), Programa, Locutor, Versiculo Domingo…Sabado («Cita — texto»), 3 Puntos Domingo…Sabado (uno por línea) |
+| Temas Macro 2027 | semana (52) | Semana, Fecha inicio (Dom) dd/mm/aaaa, Color, Tema, Ronda, Enfoque, Subtema 1–3, Desarrollo 1–3, Nota Locutor 1–3, Frase Celebre 1–3 y 1b–2b («frase» — Autor), Historia Ilustrativa, Valor (ADN), Programa, Locutor, Versiculo Domingo…Sabado («Cita — texto»), 3 Puntos Domingo…Sabado (uno por línea) |
 | Guiones 2027 | día de lunes a sábado (312) | Semana, Dia, Titulo, Dato curioso, Fuente dato, Desarrollo 1–3, Problematica 1–3, Solucion 1–3. El sábado: Desarrollo 1–3 = idea de cada subtema y Solucion 1 = acción de la semana |
 | Frases Deportivas 2027 | día de domingo a sábado (364) | Semana, Dia, Deporte, Frase |
 | Historia y Marcos | tema + ronda | Tema, Ronda, Historia Biblica - Titulo / Texto, Marco Teorico - Afirmacion / Fuente, Marco Biblico - Versiculos clave (separados por \|) / Contexto / Conexion |
@@ -77,7 +77,7 @@ Orden para regenerar todo desde cero (desde `mensajero/`):
 3. `tools/verificacion_datos_<mes>_2027.py` → datos verificados en su fuente.
 4. `tools/ajuste_temas_sensibles_2027.py` y `tools/versiculos_aplicados_2027.py` → ajustes y versículos aprobados.
 5. `tools/estilo_guiones_2027.py` → variación de arranques repetidos (`content/estilo_guiones_2027.json`).
-6. `tools/frases_2027.py` y `tools/frases_deportivas_2027.py` (fuente `content/frases_deportivas_2027.txt`).
+6. `tools/frases_2027.py`, `tools/frases_segundas_2027.py` (fuente `content/frases_2027_b.txt`) y `tools/frases_deportivas_2027.py` (fuente `content/frases_deportivas_2027.txt`).
 7. `python3 tools/build_data.py` → genera el JSON y escribe `content/revision_planilla.txt` (versículos repetidos, avisos y frases para revisión teológica; hoy: 0 repetidos, 0 avisos, 9 frases ya revisadas a mano).
 
 Los scripts son idempotentes: se pueden correr de nuevo sin duplicar cambios. Requisito: Python 3 con `openpyxl`.
@@ -107,7 +107,7 @@ Pestañas por día. Cada tarjeta, en este orden:
 2. **Subtema del día** y «Para el locutor» plegable (desarrollo, nota y frase célebre del subtema).
 3. **Título del guion, «Dato para abrir»** con su fuente y **versículo** (cita y texto RVC).
 4. **Tres puntos plegables** (número y título a la vista; adentro desarrollo, problemática y «En la práctica»). Según la **franja horaria** del programa se abre el punto que le toca: mañana → 1, mediodía y tarde → 2, noche → 3, marcado «Tu punto de hoy». Sin franja se abre el 1. Así la audiencia que escucha varios programas no oye lo mismo dos veces.
-5. **Frase para el aire** (la frase célebre del subtema del día, con su autor; el domingo la del subtema 1 y el sábado la del 3) y **frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
+5. **Frase para el aire** (frase célebre con su autor, distinta cada día: lunes y miércoles la primera del subtema, martes y jueves la segunda —columnas «Frase Celebre 1b» y «2b»—, viernes la del subtema 3; domingo y sábado no llevan, salvo el programa de un solo día) y **frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
 6. **«Hacelo a tu estilo»:** idea central del día, dos técnicas que rotan sobre 15 y cómo hacerlo con poco tiempo.
 7. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, las notas del día y de producción) y **Copiar para IA** (todo lo de la semana para generar un guion con IA).
 8. **Mensajes de oyentes** (solo días en vivo): un cuadro con los logos de SMS, WhatsApp, YouTube, Instagram y Facebook. Cada toque suma 1; «Restar» y luego el logo resta 1 y se apaga solo; el número se puede escribir; arriba, el total.
