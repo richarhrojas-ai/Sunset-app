@@ -120,6 +120,18 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(p.errores.length === 0, 'computadora: sin errores de JavaScript');
   await p.close();
 
+  // ── fechas especiales ──
+  p = await abrir(b, {fecha: '2027-03-26T10:00:00'});
+  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
+  ok((await p.textContent('#dias .especial b') || '').includes('Viernes Santo') && (await p.textContent('#dias .vers-base .ref')).includes('1 Pedro 2:24'), 'Viernes Santo: aviso de especial y versículo propio');
+  await p.click('[data-vertodo]'); await p.click('#dias [data-d="0"]'); await p.waitForTimeout(80);
+  ok(await p.$$eval('#dias .especial', x => x.length) === 0, 'el domingo anterior no es especial');
+  await p.close();
+  p = await abrir(b, {fecha: '2027-12-25T10:00:00'});
+  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
+  ok((await p.textContent('#dias .especial b') || '').includes('Navidad') && (await p.textContent('#dias .vers-base .ref')).includes('Lucas 2:10-11'), 'Navidad: aviso de especial y Lucas 2:10-11');
+  await p.close();
+
   // ── antes del año ──
   p = await abrir(b, {fecha: '2026-12-20T10:00:00'});
   ok((await p.textContent('#h-tema')).length > 0 && p.errores.length === 0, 'antes del 3 de enero de 2027 abre la semana 1 sin errores');

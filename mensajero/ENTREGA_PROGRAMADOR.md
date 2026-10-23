@@ -218,7 +218,8 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
 
 ## 11. Decisiones pendientes (no son del programador, pero lo afectan)
 
-1. **Versículos:** 12 cambios sugeridos esperan la decisión de Richarh (documento «Versículos a corregir 2027», `content/versiculos_sugeridos.md`). Los aprobados se aplican con `tools/versiculos_aplicados_2027.py` y se reescriben esos guiones.
+1. **Versículos:** resuelto el 23 oct 2026. Los 18 cambios están aplicados con `tools/versiculos_aplicados_2027.py`, que también reescribe el guion de esos días. Falta solo cotejar con la RVC impresa seis textos que no se pudieron confirmar en línea (Salmo 101:2-3, Mateo 6:3-4, Hageo 1:6-7, 1 Tesalonicenses 2:3-4, Proverbios 16:21 y 1 Corintios 13:3).
+   - **Fechas especiales:** Viernes Santo (26 mar), Domingo de Pascua (28 mar) y Navidad (25 dic) tienen versículo propio. La app los marca con un aviso «Especial» en la tarjeta del día y en el guion copiado (constante `ESPECIALES` en `index.html`, por fecha). Para 2028 hay que actualizar esas fechas.
 2. ~~Viernes Santo, Pascua y Navidad~~ **Resuelto el 20/10/2026:** se sigue la serie; cada locutor adapta la fecha en su preparación (sin cambios en la app ni en el contenido).
 3. **Usuarios:** una clave para todo el equipo o una por locutor (necesaria si el registro debe decir quién hizo cada marca).
 4. **Hoja «Mensajero»:** faltan 17 datos (historia, fundación, misión, visión, sitio web, redes, contactos por área, organigrama).
@@ -234,7 +235,7 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
 | `content/planillas/Mensajero_TemasMacro_2027.xlsx` | Fuente de verdad del contenido |
 | `content/criterios_teologicos.md` | Criterios de escritura y revisión |
 | `content/revision_teologica_2027.md`, `verificacion_datos_2027.md`, `frases_2027.md` | Informes de revisión |
-| `content/versiculos_sugeridos.md`, `Versiculos_a_corregir_2027.docx` | Versículos por decidir |
+| `content/versiculos_sugeridos.md`, `Versiculos_a_corregir_2027.docx` | Registro de los cambios de versículo (todos decididos) |
 | `content/frases_deportivas_2027.txt`, `Frases_deportivas_2027.docx` | Frases deportivas (fuente y versión para revisar) |
 | `content/estilo_guiones_2027.json` | Pasada de estilo |
 | `tools/` | Scripts del flujo de contenido (§4) |

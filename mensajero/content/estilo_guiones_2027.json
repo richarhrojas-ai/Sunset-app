@@ -14,13 +14,6 @@
   "nuevo": "Consultá con un profesional de confianza cada decisión importante con tu plata. Y anotá esta semana tres semillas concretas que sí quieras sembrar."
  },
  {
-  "semana": 2,
-  "dia": "Viernes",
-  "campo": "Solucion 3",
-  "viejo": "Antes de dar, orá y decidí en tu corazón cuánto y a quién. Después, dalo con alegría.",
-  "nuevo": "Orá primero y decidí en tu corazón cuánto dar y a quién. Después, dalo con alegría."
- },
- {
   "semana": 3,
   "dia": "Miercoles",
   "campo": "Solucion 2",
@@ -40,13 +33,6 @@
   "campo": "Solucion 2",
   "viejo": "Antes de prometer algo esta semana, preguntate si lo podés cumplir. Prometé menos y cumplí todo.",
   "nuevo": "Prometé menos y cumplí todo: esta semana, antes de cada promesa, preguntate si la podés cumplir."
- },
- {
-  "semana": 8,
-  "dia": "Lunes",
-  "campo": "Solucion 2",
-  "viejo": "Antes de aceptar un compromiso nuevo esta semana, tomate un momento y preguntate si de verdad podés.",
-  "nuevo": "Cuando te pidan un compromiso nuevo esta semana, tomate un momento y preguntate si de verdad podés."
  },
  {
   "semana": 10,
@@ -75,13 +61,6 @@
   "campo": "Solucion 1",
   "viejo": "Antes de una decisión de trabajo difícil, preguntate: ¿esto lo haría si confiara de verdad en Dios?",
   "nuevo": "Frente a una decisión de trabajo difícil, preguntate: ¿esto lo haría si confiara de verdad en Dios?"
- },
- {
-  "semana": 18,
-  "dia": "Jueves",
-  "campo": "Solucion 1",
-  "viejo": "Antes de servir hoy, decí en silencio: «Esto es para vos, Señor».",
-  "nuevo": "Hoy, cuando sirvas, decí en silencio: «Esto es para vos, Señor»."
  },
  {
   "semana": 19,
@@ -245,13 +224,6 @@
   "nuevo": "Regalale a tu familia una hora juntos sin pantallas esta semana, antes de comprar algo para la casa."
  },
  {
-  "semana": 8,
-  "dia": "Miercoles",
-  "campo": "Solucion 3",
-  "viejo": "Esta semana, la última media hora del día sin pantallas: una lectura, una oración o una charla.",
-  "nuevo": "La última media hora del día, sin pantallas: una lectura, una oración o una charla. Probalo esta semana."
- },
- {
   "semana": 11,
   "dia": "Lunes",
   "campo": "Solucion 1",
@@ -320,13 +292,6 @@
   "campo": "Solucion 2",
   "viejo": "Esta semana, hacé una tarea que normalmente dejás a otros, sin comentarlo.",
   "nuevo": "Sin comentarlo, hacé una tarea que normalmente dejás a otros."
- },
- {
-  "semana": 18,
-  "dia": "Jueves",
-  "campo": "Solucion 3",
-  "viejo": "Esta semana, orá por alguien sin decírselo.",
-  "nuevo": "Orá en silencio por alguien, sin decírselo."
  },
  {
   "semana": 19,
@@ -784,13 +749,6 @@
   "nuevo": "Mientras esperás una oportunidad, usá el tiempo para capacitarte: hay cursos gratuitos del SNPP y otras instituciones."
  },
  {
-  "semana": 2,
-  "dia": "Viernes",
-  "campo": "Solucion 2",
-  "viejo": "Si tu cosecha o tu trabajo rindió, compartí una parte con una familia que pasa necesidad.",
-  "nuevo": "Cuando tu cosecha o tu trabajo rinda, compartí una parte con una familia que pasa necesidad."
- },
- {
   "semana": 3,
   "dia": "Viernes",
   "campo": "Solucion 1",
@@ -1020,20 +978,6 @@
   "campo": "Solucion 3",
   "viejo": "Si te ofrecen un atajo deshonesto para avanzar, decí que no. Tu nombre vale más.",
   "nuevo": "Decí que no al atajo deshonesto que te ofrezcan para avanzar. Tu nombre vale más."
- },
- {
-  "semana": 23,
-  "dia": "Martes",
-  "campo": "Solucion 2",
-  "viejo": "Si empezaste en pequeño, sacale una foto a tu comienzo: algún día te va a recordar de dónde saliste.",
-  "nuevo": "Sacale una foto a tu comienzo pequeño: algún día te va a recordar de dónde saliste."
- },
- {
-  "semana": 23,
-  "dia": "Martes",
-  "campo": "Solucion 3",
-  "viejo": "Si tu emprendimiento pasa por un mal momento, hablalo con alguien de confianza y no lo cargues como culpa.",
-  "nuevo": "Hablá con alguien de confianza sobre el mal momento de tu emprendimiento, y no lo cargues como culpa."
  },
  {
   "semana": 23,
@@ -1533,13 +1477,6 @@
   "nuevo": "La sospecha de que, si alguien pasa necesidad, es porque no dio lo suficiente."
  },
  {
-  "semana": 42,
-  "dia": "Viernes",
-  "campo": "Problematica 1",
-  "viejo": "Pensar que, si no tengo plata, no tengo nada para dar.",
-  "nuevo": "“No tengo plata, entonces no tengo nada para dar”."
- },
- {
   "semana": 43,
   "dia": "Lunes",
   "campo": "Problematica 1",
@@ -1685,13 +1622,6 @@
   "campo": "Problematica 3",
   "viejo": "Personas que usan versículos para señalar a los demás y no para mirarse a sí mismas.",
   "nuevo": "La costumbre de usar versículos para señalar a los demás y no para mirarnos a nosotros mismos."
- },
- {
-  "semana": 8,
-  "dia": "Lunes",
-  "campo": "Problematica 2",
-  "viejo": "Personas que no saben decir que no y terminan agotadas y resentidas.",
-  "nuevo": "La dificultad para decir que no, que termina en agotamiento y resentimiento."
  },
  {
   "semana": 8,
