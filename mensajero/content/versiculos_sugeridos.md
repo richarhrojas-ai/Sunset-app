@@ -2,6 +2,8 @@
 
 Fechas especiales: Viernes Santo (26 mar), Domingo de Pascua (28 mar) y Navidad (25 dic) llevan versículo propio y, en el caso de los días con guion, guion propio; la app los marca con «Especial». La serie sigue al día siguiente.
 
+Textos RVC cotejados el 23 oct 2026 con bible.com (versión 146) y sbuec.org; en Génesis 1:26, Hageo 1:6-7, Mateo 6:3-4 y Proverbios 16:21 se usó la redacción exacta de la RVC.
+
 Los aprobados se aplican con `tools/versiculos_aplicados_2027.py`. Se juntan aquí las recomendaciones que surgen al escribir y revisar cada mes. **No se aplican** hasta que Richarh las apruebe; después se cambian todas juntas en la planilla y se ajustan los guiones afectados.
 
 | # | Semana · día (fecha) | Versículo actual | Sugerencia | Motivo | Estado |

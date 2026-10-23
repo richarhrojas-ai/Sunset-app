@@ -218,7 +218,7 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
 
 ## 11. Decisiones pendientes (no son del programador, pero lo afectan)
 
-1. **Versículos:** resuelto el 23 oct 2026. Los 18 cambios están aplicados con `tools/versiculos_aplicados_2027.py`, que también reescribe el guion de esos días. Falta solo cotejar con la RVC impresa seis textos que no se pudieron confirmar en línea (Salmo 101:2-3, Mateo 6:3-4, Hageo 1:6-7, 1 Tesalonicenses 2:3-4, Proverbios 16:21 y 1 Corintios 13:3).
+1. **Versículos:** resuelto el 23 oct 2026. Los 18 cambios están aplicados con `tools/versiculos_aplicados_2027.py`, que también reescribe el guion de esos días. Todos los textos están cotejados con la RVC publicada por las Sociedades Bíblicas Unidas (bible.com, versión 146, y sbuec.org).
    - **Fechas especiales:** Viernes Santo (26 mar), Domingo de Pascua (28 mar) y Navidad (25 dic) tienen versículo propio. La app los marca con un aviso «Especial» en la tarjeta del día y en el guion copiado (constante `ESPECIALES` en `index.html`, por fecha). Para 2028 hay que actualizar esas fechas.
 2. ~~Viernes Santo, Pascua y Navidad~~ **Resuelto el 20/10/2026:** se sigue la serie; cada locutor adapta la fecha en su preparación (sin cambios en la app ni en el contenido).
 3. **Usuarios:** una clave para todo el equipo o una por locutor (necesaria si el registro debe decir quién hizo cada marca).
