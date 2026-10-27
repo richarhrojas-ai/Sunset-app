@@ -1,185 +1,185 @@
 1|Domingo|atletismo|Un atleta no se prepara solo el día de la final: se cuida todos los días. Tu cuerpo es templo del Espíritu, y cuidarlo con orden también honra a Dios.
-1|Lunes|futbol|Ningún técnico trata a su mejor jugador como enemigo: lo cuida y lo prepara. Tu cuerpo no es tu rival; es parte de tu adoración a Dios.
-1|Martes|natacion|El nadador que se hidrata y estira no es vanidoso, es agradecido con lo que tiene. Cuidarte también es decirle gracias a Dios por la vida.
+1|Lunes|fútbol|Ningún técnico trata a su mejor jugador como enemigo: lo cuida y lo prepara. Tu cuerpo no es tu rival; es parte de tu adoración a Dios.
+1|Martes|natación|El nadador que se hidrata y estira no es vanidoso, es agradecido con lo que tiene. Cuidarte también es decirle gracias a Dios por la vida.
 1|Miercoles|ciclismo|En el ciclismo, pedalear un poquito cada día rinde más que un tirón un domingo. Hábitos pequeños, energía grande; y el alma también necesita su entrenamiento.
-1|Jueves|voley|Mirá el salto de un rematador de vóley: músculos, reflejos y equilibrio en un segundo. Tu cuerpo es obra formidable de Dios; tratalo con el respeto que merece.
+1|Jueves|vóley|Mirá el salto de un rematador de vóley: músculos, reflejos y equilibrio en un segundo. Tu cuerpo es obra formidable de Dios; tratalo con el respeto que merece.
 1|Viernes|futsal|Cambio en el futsal: el que sale a descansar no abandona al equipo, y vuelve a entrar entero. Descansar no es perder el tiempo, es parte del diseño de Dios.
-1|Sabado|maraton|El maratonista sabe que la carrera se corre con las piernas y con la cabeza. Esta semana vimos que cuidar el cuerpo y el alma que Dios nos dio va junto.
-2|Domingo|futbol|El canchero que deja descansar una parte del césped tiene la cancha lista por años. Así el agricultor que rota sus cultivos cuida la tierra que Dios sostiene con fidelidad.
+1|Sabado|maratón|El maratonista sabe que la carrera se corre con las piernas y con la cabeza. Cuidar el cuerpo y el alma que Dios nos dio va junto.
+2|Domingo|fútbol|El canchero que deja descansar una parte del césped tiene la cancha lista por años. Así el agricultor que rota sus cultivos cuida la tierra que Dios sostiene con fidelidad.
 2|Lunes|entrenador|Lo que entrenás en la semana es lo que aparece el domingo en la cancha. Lo que se siembra se cosecha, y con Dios no hay atajos ni trampas.
 2|Martes|atletismo|El velocista no ve crecer su fuerza mientras duerme, pero ahí también se está formando. Así crece el reino de Dios: más allá de lo que vos controlás.
 2|Miercoles|rally|El Rally del Chaco cruza campos que alguien trabajó con sus manos. Trabajar la tierra es un desafío y también una bendición, donde el esfuerzo se une a la provisión de Dios.
 2|Jueves|ajedrez|Apurar una jugada de ajedrez suele costar caro. El agricultor espera la lluvia con paciencia: lo que necesita su tiempo no se apura.
-2|Viernes|hinchada|La hinchada que alienta aun cuando el equipo va abajo siembra ánimo sin mezquinar. Sembrar con generosidad es dar con alegría, pensando en el hermano que necesita.
-2|Sabado|remo|Cada palada parece pequeña, pero sostenida lleva lejos al bote. Lo de estos días: sembrar, aun con lágrimas, puede preceder a la alegría de la cosecha.
-3|Domingo|basquet|El base que lee la defensa antes del pase evita la pelota perdida. El prudente ve el peligro y se protege; en la salud, revisar antes es mejor que lamentar después.
-3|Lunes|futbol|El arquero que acomoda la barrera antes del tiro libre está cuidando a todo el equipo. Prevenir también es una manera de amar a los tuyos.
+2|Viernes|canchero|El canchero cuida el césped como si fuera suyo, aunque la cancha es del club y la van a usar otros. La tierra es del Señor: la cuidamos para los que vienen detrás.
+2|Sabado|remo|Cada palada parece pequeña, pero sostenida lleva lejos al bote. Sembrar, aun con lágrimas, puede preceder a la alegría de la cosecha.
+3|Domingo|básquet|El base que lee la defensa antes del pase evita la pelota perdida. El prudente ve el peligro y se protege; en la salud, revisar antes es mejor que lamentar después.
+3|Lunes|fútbol|El arquero que acomoda la barrera antes del tiro libre está cuidando a todo el equipo. Prevenir también es una manera de amar a los tuyos.
 3|Martes|handball|Brazo con brazo, la defensa de handball se arma entre todos. Los hábitos que protegen a la familia también se construyen juntos, en casa, cada día.
 3|Miercoles|tenis|El tenista que siente una molestia y la hace revisar a tiempo puede evitar una lesión mayor. Detectar a tiempo puede salvar vidas: escuchá las señales de tu cuerpo.
 3|Jueves|boxeo|Hasta el boxeador más valiente pasa por el control médico antes de subir al ring. Animarse a hacerse los estudios no es miedo: es prudencia y humildad.
 3|Viernes|ajedrez|El ajedrecista sabe que con la cabeza caliente no se juega bien. Un corazón en paz da vida al cuerpo; la envidia y el estrés, en cambio, desgastan.
-3|Sabado|utilero|Sin que nadie lo aplauda, el utilero revisa cada botín antes del partido. Así cerramos el tema: prevenir es amar, y bendecimos a Dios por su cuidado de cada día.
+3|Sabado|utilero|Sin que nadie lo aplauda, el utilero revisa cada botín antes del partido. Prevenir es amar, y bendecimos a Dios por su cuidado de cada día.
 4|Domingo|rally|Curva por curva, el copiloto de rally lee la hoja de ruta en voz alta. La Palabra de Dios es esa lámpara que ilumina el camino, lo cercano y lo lejano.
 4|Lunes|arbitraje|Leer el reglamento no es lo mismo que estudiarlo como lo hace un árbitro. Con la Biblia pasa igual: leerla es bueno, estudiarla te forma.
-4|Martes|futbol|De nada sirve la charla técnica si después no se hace en la cancha. La Palabra se medita y se practica, para andar en el camino de Dios.
-4|Miercoles|voley|El entrenador de vóley mira el video del partido una y otra vez, buscando detalles. Estudiar la Biblia con método es ir más allá de la superficie, porque la Palabra está viva.
-4|Jueves|maraton|Nadie corre una maratón sin un plan que se pueda cumplir, semana a semana. Con la Biblia también: mejor un plan sencillo y constante que uno enorme que se abandona.
+4|Martes|fútbol|De nada sirve la charla técnica si después no se hace en la cancha. La Palabra se medita y se practica, para andar en el camino de Dios.
+4|Miercoles|vóley|El entrenador de vóley mira el video del partido una y otra vez, buscando detalles. Estudiar la Biblia con método es ir más allá de la superficie, porque la Palabra está viva.
+4|Jueves|maratón|Nadie corre una maratón sin un plan que se pueda cumplir, semana a semana. Con la Biblia también: mejor un plan sencillo y constante que uno enorme que se abandona.
 4|Viernes|radio|Cuántos vivieron un partido entero solo escuchando al relator por la radio. La fe también entra por el oído: escuchar la Palabra la fortalece.
-4|Sabado|natacion|El nadador que entrena con constancia hace del agua su lugar. Esta semana vimos que la Palabra estudiada y vivida se vuelve propia y llena de gozo el corazón.
-5|Domingo|futbol|A un capitán de la Albirroja no se lo elige por el peinado, sino por lo que muestra adentro. Dios mira el corazón, y ahí empieza todo liderazgo.
+4|Sabado|natación|El nadador que entrena con constancia hace del agua su lugar. La Palabra estudiada y vivida se vuelve propia y llena de gozo el corazón.
+5|Domingo|fútbol|A un capitán de la Albirroja no se lo elige por el peinado, sino por lo que muestra adentro. Dios mira el corazón, y ahí empieza todo liderazgo.
 5|Lunes|ciclismo|¿Sabías que muchas subidas en bici se ganan o se pierden primero en la cabeza? El liderazgo empieza por dentro: cuidá tu corazón, porque de ahí salen tus decisiones.
 5|Martes|entrenador|El entrenador que pide puntualidad y llega primero no necesita gritar. Primero el ejemplo, después la palabra: el líder enseña con su vida.
 5|Miercoles|futsal|En el futsal de barrio, a veces el más chico es el que más corre y contagia ganas. Nadie es demasiado joven para ser ejemplo en palabra, conducta, amor y fe.
 5|Jueves|arbitraje|Un árbitro tarda años en ganarse el respeto de las canchas. Tu buen nombre vale más que tu plata, y se cuida en cada decisión.
-5|Viernes|basquet|Técnica sin compromiso no sostiene a ningún equipo de básquet. Corazón íntegro y manos hábiles: el carácter es el que sostiene la capacidad.
-5|Sabado|tenis|Tenis amateur: muchas veces el propio jugador canta si la pelota fue afuera. Para llevarse de la semana: el líder se forma por dentro, íntegro aun cuando nadie mira.
-6|Domingo|futbol|Antes de cada temporada, un equipo define a qué juega y con quién. En casa también hay que elegir a quién servir; esa decisión marca el rumbo de la familia.
+5|Viernes|básquet|Técnica sin compromiso no sostiene a ningún equipo de básquet. Corazón íntegro y manos hábiles: el carácter es el que sostiene la capacidad.
+5|Sabado|tenis|Tenis amateur: muchas veces el propio jugador canta si la pelota fue afuera. El líder se forma por dentro, íntegro aun cuando nadie mira.
+6|Domingo|fútbol|Antes de cada temporada, un equipo define a qué juega y con quién. En casa también hay que elegir a quién servir; esa decisión marca el rumbo de la familia.
 6|Lunes|handball|Un buen sistema de juego no se arma a los gritos, sino con sabiduría y entendimiento. Así también se edifica una casa: con sabiduría, día a día.
 6|Martes|utilero|Cada camiseta en su lugar: así deja el vestuario el utilero, y eso le da paz al plantel. El orden en casa no es rigidez, también es una forma de amar.
 6|Miercoles|remo|En el remo, el timonel está atento a la marcha del bote todo el tiempo. Estar atentos a la marcha de la casa es una diligencia que, aunque nadie aplauda, se nota.
 6|Jueves|atletismo|El atleta entrena duro, pero sabe que el aliento y la vida no los fabrica él. Si Dios no edifica la casa, el esfuerzo solo no alcanza; lo que Él edifica permanece.
-6|Viernes|futbol|Un estadio bien cimentado aguanta la tormenta y a la hinchada saltando. La casa sobre la roca es la que se edifica oyendo y obedeciendo la Palabra.
-6|Sabado|ajedrez|Con calma se ve todo el tablero de ajedrez. Así cerramos el tema: un hogar donde la paz de Dios gobierna el corazón, con gratitud y sin imposiciones.
-7|Domingo|futbol|El técnico prudente guarda piernas para el segundo tiempo y no las gasta todas al principio. El sabio guarda; la prudencia con lo que tenés también habla de tu carácter.
-7|Lunes|maraton|El que se prepara para una maratón sale a entrenar cada mañana sin que nadie lo mande. Como la hormiga, se prepara en el verano para el invierno.
-7|Martes|basquet|El equipo que cuida sus tiempos muertos tiene uno guardado para el final apretado. José juntó en los años buenos para proteger a su pueblo en los años malos.
+6|Viernes|fútbol|Un estadio bien cimentado aguanta la tormenta y a la hinchada saltando. La casa sobre la roca es la que se edifica oyendo y obedeciendo la Palabra.
+6|Sabado|ajedrez|Con calma se ve todo el tablero de ajedrez. Así se vive en un hogar donde la paz de Dios gobierna el corazón: con gratitud y sin imposiciones.
+7|Domingo|fútbol|El técnico prudente guarda piernas para el segundo tiempo y no las gasta todas al principio. El sabio guarda; la prudencia con lo que tenés también habla de tu carácter.
+7|Lunes|maratón|El que se prepara para una maratón sale a entrenar cada mañana sin que nadie lo mande. Como la hormiga, se prepara en el verano para el invierno.
+7|Martes|básquet|El equipo que cuida sus tiempos muertos tiene uno guardado para el final apretado. José juntó en los años buenos para proteger a su pueblo en los años malos.
 7|Miercoles|ciclismo|Etapa por etapa, no de un solo salto: así se avanza en una vuelta ciclista. Con el ahorro pasa igual, de a poco y con mano constante se llega lejos.
 7|Jueves|entrenador|Ningún técnico arma un plantel con un solo jugador para todos los puestos. Repartir el riesgo es prudencia, y este consejo del Eclesiastés tiene más de una lectura.
 7|Viernes|rally|En el rally, el piloto revisa combustible y cubiertas antes de cada tramo. Conocé bien el estado de tus finanzas, porque las riquezas no duran para siempre.
-7|Sabado|remo|Antes de largar la regata, el remero calcula sus fuerzas. Siete días después queda esto: ahorrar es prepararse, con la seguridad de fondo puesta en Dios y no en la plata.
-8|Domingo|natacion|Hasta el mejor nadador sale del agua cuando el cuerpo le avisa. Escuchar las señales del alma importa, y la paz de Dios guarda tu corazón aun cuando no todo está resuelto.
-8|Lunes|futbol|A veces, en el vestuario, lo más valiente es decir: hoy no estoy bien. Hablar con honestidad sobre lo que sentís también es parte de una vida íntegra.
+7|Sabado|remo|Antes de largar la regata, el remero calcula sus fuerzas. Ahorrar es prepararse, con la seguridad de fondo puesta en Dios y no en la plata.
+8|Domingo|natación|Hasta el mejor nadador sale del agua cuando el cuerpo le avisa. Escuchar las señales del alma importa, y la paz de Dios guarda tu corazón aun cuando no todo está resuelto.
+8|Lunes|fútbol|A veces, en el vestuario, lo más valiente es decir: hoy no estoy bien. Como el salmista, ponerle nombre al desánimo es el primer paso para volver a esperar en Dios.
 8|Martes|ajedrez|El ajedrecista que aprende a pensar distinto el juego cambia la partida entera. La transformación empieza en la mente, y es Dios quien la va renovando.
-8|Miercoles|hinchada|Antes que cualquier resultado, hay algo que tu mente necesita escuchar más fuerte que una tribuna entera: Dios te ama, y dio a su Hijo para darte vida eterna.
+8|Miercoles|fútbol|El arquero no se distrae con todo lo que pasa en la tribuna: fija los ojos en la pelota. Elegí qué ponés delante de tus ojos; lo que mirás también forma tu mente.
 8|Jueves|tenis|Un tenista puede sentir nervios antes del saque, y eso no lo define. El miedo no es tu identidad: Dios nos da poder, amor y dominio propio.
 8|Viernes|boxeo|Hasta el boxeador más fuerte tiene a alguien en su esquina que lo cuida entre round y round. Pedir ayuda, también a un profesional, es sabiduría y no debilidad.
-8|Sabado|atletismo|Nadie corre todos los tramos de una posta solo. Lo de estos días: cuidar el alma sabiendo que Dios está cerca del quebrantado, y que no tenés que cargar todo solo.
-9|Domingo|preparacion fisica|El preparador físico que conoce de cerca a cada jugador nota el cansancio antes que nadie. Conocer bien lo que tenés a cargo, cada día, es responsabilidad del que cuida.
+8|Sabado|atletismo|Nadie corre todos los tramos de una posta solo. Dios está cerca del quebrantado: cuidá tu alma sabiendo que no tenés que cargar todo solo.
+9|Domingo|preparación física|El preparador físico que conoce de cerca a cada jugador nota el cansancio antes que nadie. Conocer bien lo que tenés a cargo, cada día, es responsabilidad del que cuida.
 9|Lunes|arbitraje|El árbitro tiene autoridad en la cancha, pero no para hacer lo que quiera. El dominio sobre los animales es un encargo de Dios, no un permiso para abusar.
 9|Martes|entrenador|El buen técnico sabe cuándo darle descanso al plantel. Así es Dios como pastor: provee descanso y alimento, y su cuidado nos enseña a cuidar.
-9|Miercoles|futbol|Se nota en la cancha quién trata bien a los demás, aun cuando nadie mira. El justo cuida la vida de sus animales, y ese trato le importa a Dios.
-9|Jueves|maraton|En la maratón, el trabajo fiel de muchos meses se nota en los últimos kilómetros. Jacob cuidó el ganado con fidelidad, y la bendición de Dios acompañó ese trabajo.
-9|Viernes|voley|El líbero se tira al piso para salvar la pelota de su compañero. Jesús, el buen pastor, fue mucho más lejos: dio su vida por las ovejas.
-9|Sabado|handball|Compañero golpeado en el handball: el equipo lo protege hasta que se recupera. Siete días después, la idea queda clara: cuidar como cuida Dios, con ternura, cargando al más débil.
+9|Miercoles|fútbol|Se nota en la cancha quién trata bien a los demás, aun cuando nadie mira. El justo cuida la vida de sus animales, y ese trato le importa a Dios.
+9|Jueves|maratón|En la maratón, el trabajo fiel de muchos meses se nota en los últimos kilómetros. Jacob cuidó el ganado con fidelidad, y la bendición de Dios acompañó ese trabajo.
+9|Viernes|vóley|El líbero se tira al piso para salvar la pelota de su compañero. Jesús, el buen pastor, fue mucho más lejos: dio su vida por las ovejas.
+9|Sabado|handball|Compañero golpeado en el handball: el equipo lo protege hasta que se recupera. Así cuida Dios: con ternura, cargando al más débil.
 10|Domingo|tenis|Entre set y set, el tenista se sienta, respira y suelta la tensión. Entregale a Dios tus angustias, también las de la salud, y descansá en su cuidado.
-10|Lunes|futbol|Cuando un jugador se lesiona, nadie le reprocha que entre el médico a la cancha. Reconocer que necesitás ayuda es el primer paso, y buscarla no es debilidad.
+10|Lunes|fútbol|Cuando un jugador se lesiona, nadie le reprocha que entre el médico a la cancha. Reconocer que necesitás ayuda es el primer paso, y buscarla no es debilidad.
 10|Martes|ciclismo|Detrás de un equipo de ciclismo siempre hay un médico que acompaña la carrera. Lucas, el médico amado, fue parte del equipo de Pablo: la medicina y la fe caminan juntas.
 10|Miercoles|atletismo|Cuando un atleta cae en la pista, alguien se acerca a ayudarlo a levantarse. Sáname, Señor, es una oración humilde de quien confía en el Dios que sana y salva.
-10|Jueves|basquet|El jugador que ora antes del partido también hace caso al kinesiólogo. Dios obra a través de medios: la fe y el tratamiento médico no se oponen.
-10|Viernes|natacion|El nadador que escucha a su entrenador corrige la brazada antes de lastimarse. El sabio escucha el consejo, y en la salud eso incluye a los profesionales.
-10|Sabado|futsal|Un pase a tiempo vale más que diez apurados al final del partido de futsal. Para cerrar la semana: cuidarse a tiempo, con Dios como escudo que afirma nuestros pasos.
+10|Jueves|básquet|El jugador que ora antes del partido también hace caso al kinesiólogo. Dios obra a través de medios: la fe y el tratamiento médico no se oponen.
+10|Viernes|natación|El nadador que escucha a su entrenador corrige la brazada antes de lastimarse. El sabio escucha el consejo, y en la salud eso incluye a los profesionales.
+10|Sabado|futsal|Un pase a tiempo vale más que diez apurados al final del partido de futsal. Cuidarse a tiempo también es sabiduría, con Dios como escudo que afirma nuestros pasos.
 11|Domingo|hinchada|Un hincha solo se oye poco, pero la hinchada junta llena el estadio. Como el carbón en la brasa, la fe se mantiene encendida cuando nos reunimos en el nombre de Jesús.
-11|Lunes|futbol|Ningún equipo sale a la cancha con un solo jugador. La fe nunca fue para vivirla solo: la iglesia primitiva perseveraba unida en la enseñanza, la comunión y la oración.
-11|Martes|voley de playa|En el vóley de playa son dos, y cuando uno cae, el otro lo ayuda a levantarse. Mejor dos que uno: qué bueno tener a alguien que te ponga de pie.
+11|Lunes|fútbol|Ningún equipo sale a la cancha con un solo jugador. La fe nunca fue para vivirla solo: la iglesia primitiva perseveraba unida en la enseñanza, la comunión y la oración.
+11|Martes|vóley de playa|En el vóley de playa son dos, y cuando uno cae, el otro lo ayuda a levantarse. Mejor dos que uno: qué bueno tener a alguien que te ponga de pie.
 11|Miercoles|rally|Si piloto y copiloto no se dicen todo con claridad, el auto de rally se sale del camino. Caminar en la luz es comunión transparente con Dios y con los hermanos.
 11|Jueves|handball|Ningún puesto sobra en el handball: cada uno cumple su función. Somos un solo cuerpo con muchos miembros, y cada uno depende de los demás.
 11|Viernes|tenis|En el entrenamiento, el compañero que te devuelve fuerte la pelota es el que te hace mejorar. El hierro se afila con hierro: nadie crece completamente solo.
-11|Sabado|ciclismo|Turnándose para cortar el viento, los ciclistas del pelotón llegan más lejos juntos. Así cerramos el tema: la fe se vive en comunidad, con un mismo amor.
+11|Sabado|ciclismo|Turnándose para cortar el viento, los ciclistas del pelotón llegan más lejos juntos. La fe se vive en comunidad, con un mismo amor.
 12|Domingo|arbitraje|Un árbitro que habla con calma desactiva más de una discusión en la cancha. La respuesta suave calma el enojo; el tono importa tanto como lo que decís.
-12|Lunes|futbol|El buen capitán escucha a sus compañeros antes de dar la indicación. Ser pronto para oír y tardo para hablar evita errores y ayuda a liderar sin enojo.
+12|Lunes|fútbol|El buen capitán escucha a sus compañeros antes de dar la indicación. Ser pronto para oír y tardo para hablar evita errores y ayuda a liderar sin enojo.
 12|Martes|entrenador|Un director técnico no puede atajar, defender y hacer los goles a la vez. Como Moisés, el líder aprende a delegar en personas capaces y a no cargar todo solo.
-12|Miercoles|maraton|El maratonista arma su plan, pero en la ruta se adapta al viento y al calor. Planificá con cuidado y soltá, porque es Dios quien dirige tus pasos.
-12|Jueves|basquet|Un tiempo muerto pedido en el momento justo cambia el ritmo del partido de básquet. Hay un tiempo para cada cosa, y saber discernirlo es sabiduría.
-12|Viernes|natacion|Sin la línea del carril, el nadador se desvía sin darse cuenta. Cuando falta la Palabra, el pueblo se dispersa; ella nos da orden y propósito.
-12|Sabado|remo|El timonel marca el ritmo y el bote avanza parejo. En una línea: liderar con responsabilidad, con sabiduría y aprovechando bien el tiempo.
-13|Domingo|tenis|En el tenis de dobles, dos estilos distintos juegan para el mismo lado de la red. En el matrimonio, dejar y unirse para ser una sola carne cambia las prioridades.
-13|Lunes|futbol|El capitán que se tira a bloquear el remate para cuidar al equipo entiende algo del amor. Ser cabeza en el hogar es entregarse, como Cristo se entregó.
-13|Martes|voley|La armadora y la que remata se necesitan y se respetan. En el matrimonio, amor y honra se complementan, con el mismo valor.
-13|Miercoles|atletismo|Antes de una largada, algunos atletas saben que alguien en la tribuna está orando por ellos. Orar el uno por el otro es una responsabilidad de amor en la pareja.
+12|Miercoles|maratón|El maratonista arma su plan, pero en la ruta se adapta al viento y al calor. Planificá con cuidado y soltá, porque es Dios quien dirige tus pasos.
+12|Jueves|básquet|Un tiempo muerto pedido en el momento justo cambia el ritmo del partido de básquet. Hay un tiempo para cada cosa, y saber discernirlo es sabiduría.
+12|Viernes|atletismo|En la posta, uno corre el tramo más duro para que el compañero pueda llegar. En la cruz, Jesús cargó lo que no podíamos cargar: por sus heridas fuimos sanados.
+12|Sabado|remo|El timonel marca el ritmo y el bote avanza parejo. Liderar es eso: marcar el paso con responsabilidad, con sabiduría y aprovechando bien el tiempo.
+13|Domingo|fútbol|Un partido no termina hasta el silbato final, aunque muchos lo den por perdido. En Pascua celebramos que la muerte no tiene la última palabra: Jesús es la resurrección y la vida.
+13|Lunes|fútbol|El capitán que se tira a bloquear el remate para cuidar al equipo entiende algo del amor. Ser cabeza en el hogar es entregarse, como Cristo se entregó.
+13|Martes|vóley|La armadora y la que remata se necesitan y se respetan. En el matrimonio, amor y honra se complementan, con el mismo valor.
+13|Miercoles|tenis|En el tenis de dobles, los compañeros se cubren y no se hablan con dureza en medio del partido. En el matrimonio, el respeto y el amor juegan del mismo lado de la red.
 13|Jueves|utilero|El utilero no busca lo suyo: lava, ordena y sirve para que otros jueguen. Así es el amor que se ve en lo que hace: paciente, bondadoso, sin buscar lo propio.
 13|Viernes|futsal|¡Qué alegría encontrar al compañero justo para tirar la pared en el futsal! Tu pareja es un regalo, un favor de Dios y no solo cuestión de suerte.
-13|Sabado|hinchada|Llueva o truene, la hinchada sigue a su equipo: el amor verdadero no se apaga. Para llevarse de la semana: ni las muchas aguas pueden extinguirlo.
+13|Sabado|hinchada|Llueva o truene, la hinchada sigue a su equipo: el amor verdadero no se apaga. Ni las muchas aguas pueden extinguirlo.
 14|Domingo|rally|Nadie larga en el Rally del Chaco sin calcular el combustible del tramo. Con la plata pasa lo mismo: el plan se hace antes de largar, no en medio del polvo.
-14|Lunes|maraton|El maratonista no abandona cuando le pesan las piernas; sostener el presupuesto mes a mes también es cuestión de constancia, paso a paso.
+14|Lunes|maratón|El maratonista no abandona cuando le pesan las piernas; sostener el presupuesto mes a mes también es cuestión de constancia, paso a paso.
 14|Martes|ajedrez|En el ajedrez, la jugada apurada suele costar una pieza; pensá la siguiente movida con calma, también antes de gastar.
-14|Miercoles|futbol|El buen defensor lee la jugada antes de que llegue el pase, atento pero sin malicia; así se cuida la plata: prudente y con el corazón limpio.
-14|Jueves|basquet|Cada segundo del reloj cuenta, y el buen base de básquet lo administra con cabeza. El tiempo y los recursos que Dios te da también se juegan con sabiduría.
+14|Miercoles|fútbol|El buen defensor lee la jugada antes de que llegue el pase, atento pero sin malicia; así se cuida la plata: prudente y con el corazón limpio.
+14|Jueves|básquet|Cada segundo del reloj cuenta, y el buen base de básquet lo administra con cabeza. El tiempo y los recursos que Dios te da también se juegan con sabiduría.
 14|Viernes|futsal|Cada jugador de futsal entra a la cancha a aportar lo que tiene en las piernas. Dar también es eso: aportar con constancia, según lo que recibiste.
-14|Sabado|utilero|Las camisetas no son del utilero, pero las cuida como si lo fueran. Nos llevamos esto: ser administradores confiables de lo que Dios nos prestó.
+14|Sabado|utilero|Las camisetas no son del utilero, pero las cuida como si lo fueran. Así somos llamados a cuidar lo que Dios nos prestó: como administradores confiables.
 15|Domingo|ciclismo|El ciclista que se suelta del pelotón sigue pedaleando, pero se desgasta solo; separados de Cristo podemos seguir andando, pero el fruto viene de permanecer en Él.
-15|Lunes|futbol|Ningún entrenador fabrica en una semana la química de un equipo; el fruto del Espíritu tampoco se fuerza: crece con el tiempo en quien permanece.
+15|Lunes|fútbol|Ningún entrenador fabrica en una semana la química de un equipo; el fruto del Espíritu tampoco se fuerza: crece con el tiempo en quien permanece.
 15|Martes|atletismo|El atleta que sale a correr de madrugada y vuelve con sed sabe lo que es necesitar agua de verdad; así también puede tener sed el alma: sed de Dios.
-15|Miercoles|natacion|El nadador cansado aprende a respirar antes de seguir braceando; esperar en el Señor no es abandonar la carrera, es recibir fuerzas nuevas.
+15|Miercoles|natación|El nadador cansado aprende a respirar antes de seguir braceando; esperar en el Señor no es abandonar la carrera, es recibir fuerzas nuevas.
 15|Jueves|tenis|Hasta el tenista con más años de circuito sigue puliendo su revés cada temporada; en la gracia y el conocimiento de Jesús nunca dejamos de crecer.
-15|Viernes|voley de playa|Después de un set bajo el sol, la sed no se disimula; cuando el alma está seca, ese mismo anhelo nos lleva a buscar a Dios como el ciervo busca el agua.
-15|Sabado|futbol formativo|El jugador que se formó desde chico en el club de su barrio lleva raíces que se notan; esta semana vimos que la fe crece arraigada en Cristo, con tiempo.
-16|Domingo|futbol|Un club serio le paga a tiempo a su gente, gane o pierda el domingo; una empresa que encomienda sus proyectos a Dios también se nota en lo cumplidora.
+15|Viernes|vóley de playa|Después de un set bajo el sol, la sed no se disimula; cuando el alma está seca, ese mismo anhelo nos lleva a buscar a Dios como el ciervo busca el agua.
+15|Sabado|fútbol formativo|El jugador que se formó desde chico en el club de su barrio lleva raíces que se notan; la fe crece arraigada en Cristo, con tiempo.
+16|Domingo|fútbol|Un club serio le paga a tiempo a su gente, gane o pierda el domingo; una empresa que encomienda sus proyectos a Dios también se nota en lo cumplidora.
 16|Lunes|remo|En el remo, ningún remero puede adjudicarse solo el avance del bote; reconocer que la capacidad de producir viene de Dios nos libra del orgullo.
 16|Martes|arbitraje|El buen árbitro se prepara toda la semana para noventa minutos que casi nadie le agradece; hacer bien tu trabajo, con constancia, suele abrir puertas.
 16|Miercoles|futsal|Después del último pitazo, el equipo que dejó todo disfruta el vestuario con alegría; disfrutar el fruto de tu trabajo también es un regalo de Dios.
 16|Jueves|boxeo|El boxeador confía en su esquina entre round y round; poner la confianza en Dios es saber quién te sostiene cuando la pelea se pone dura.
 16|Viernes|handball|El pivote se lleva los golpes para abrirle espacio al compañero, aunque el gol lo grite otro; trabajar como para el Señor cambia el porqué y el cómo de lo que hacemos.
-16|Sabado|atletismo|Mano a mano pasa el testimonio, y la carrera de postas necesita a todos. Para cerrar la semana, pedimos como el salmista: Señor, confirmá la obra de nuestras manos.
-17|Domingo|maraton|Nadie termina una maratón soñándola desde el sillón; como el río que corre se mantiene limpio, el cuerpo que se mueve un poco cada día se cuida mejor.
+16|Sabado|atletismo|Mano a mano pasa el testimonio, y la carrera de postas necesita a todos. Por eso pedimos como el salmista: Señor, confirmá la obra de nuestras manos.
+17|Domingo|maratón|Nadie termina una maratón soñándola desde el sillón; como el río que corre se mantiene limpio, el cuerpo que se mueve un poco cada día se cuida mejor.
 17|Lunes|atletismo|Pablo miraba a los atletas que entrenaban con disciplina por una corona que se marchita; nosotros también corremos con propósito, por algo que dura para siempre.
 17|Martes|ciclismo|Subida larga: el ciclista que controla su ritmo llega mejor que el que se desboca al principio. El dominio propio también se entrena, de a poco.
-17|Miercoles|natacion|Ningún nadador compite con la ropa puesta: se saca lo que pesa para avanzar; correr con paciencia la carrera también es soltar lo que nos estorba.
-17|Jueves|voley|Para saltar al bloqueo una y otra vez hace falta fuerza en las piernas; el salmista reconocía que hasta esa fuerza viene de Dios.
-17|Viernes|futbol|Un partidito con amigos en la canchita del barrio ya es movimiento; desde el principio, Dios diseñó el cuerpo para la actividad, para labrar y cuidar.
-17|Sabado|preparacion fisica|Pensando en toda la temporada, el preparador físico cuida a sus jugadores. Así cerramos el tema: cuidar tu cuerpo es cuidar un regalo.
+17|Miercoles|natación|Ningún nadador compite con la ropa puesta: se saca lo que pesa para avanzar; correr con paciencia la carrera también es soltar lo que nos estorba.
+17|Jueves|vóley|Para saltar al bloqueo una y otra vez hace falta fuerza en las piernas; el salmista reconocía que hasta esa fuerza viene de Dios.
+17|Viernes|fútbol|Un partidito con amigos en la canchita del barrio ya es movimiento; desde el principio, Dios diseñó el cuerpo para la actividad, para labrar y cuidar.
+17|Sabado|preparación física|Pensando en toda la temporada, el preparador físico cuida a sus jugadores. Cuidar tu cuerpo es cuidar un regalo.
 18|Domingo|canchero|Antes de que llegue el primer hincha, alguien ya marcó la cancha y colgó las redes; servir por amor muchas veces es trabajar donde no llegan las cámaras.
 18|Lunes|futsal|El capitán de futsal muchas veces es el primero en volver a marcar. Jesús nos mostró que la grandeza está en servir, no en ser servido.
-18|Martes|basquet|En el básquet hay quien rebotea, quien asiste y quien tira de tres; cada uno recibió un don, y se activa cuando lo ponés al servicio del equipo.
-18|Miercoles|futbol|Imaginá al técnico juntando los botines embarrados de sus jugadores después de la práctica; eso hizo el Maestro al lavar los pies: en el servicio no hay jerarquías.
-18|Jueves|arbitraje|El juez de línea corre toda la banda y casi nadie sabe su nombre; trabajar de corazón para el Señor no depende de los aplausos de la tribuna.
-18|Viernes|futbol infantil|El profe que se queda con el chico que casi no juega hace algo que Jesús no pasa por alto: lo que hacemos por el más pequeño, a Él se lo hacemos.
-18|Sabado|atletismo adaptado|Atado a un compañero no vidente, el atleta guía corre feliz si el otro llega. Queda de la semana: hay más dicha en dar que en recibir.
+18|Martes|básquet|En el básquet hay quien rebotea, quien asiste y quien tira de tres; cada uno recibió un don, y se activa cuando lo ponés al servicio del equipo.
+18|Miercoles|fútbol|Imaginá al técnico juntando los botines embarrados de sus jugadores después de la práctica; eso hizo el Maestro al lavar los pies: en el servicio no hay jerarquías.
+18|Jueves|arbitraje|El juez de línea corre toda la banda y casi nadie sabe su nombre. Servir sin aplausos es eso: que la mano izquierda no se entere, porque el Padre ve en lo secreto.
+18|Viernes|fútbol infantil|El profe que se queda con el chico que casi no juega hace algo que Jesús no pasa por alto: lo que hacemos por el más pequeño, a Él se lo hacemos.
+18|Sabado|atletismo adaptado|Atado a un compañero no vidente, el atleta guía corre feliz si el otro llega. Hay más dicha en dar que en recibir.
 19|Domingo|rally|Auto encajado en el barro: piloto y copiloto no discuten la largada, buscan la siguiente salida. Atribulados, pero no destruidos.
-19|Lunes|futbol|El arquero que escucha silbidos de la tribuna y sigue atajando entiende a Nehemías: frente a la oposición, acordarse de Dios vence el temor y deja seguir construyendo.
+19|Lunes|fútbol|El arquero que escucha silbidos de la tribuna y sigue atajando entiende a Nehemías: frente a la oposición, acordarse de Dios vence el temor y deja seguir construyendo.
 19|Martes|ajedrez|Mirá el tablero de ajedrez entero, sin creer que cada peón es una trampa. El buen líder está alerta y firme en la fe, sin vivir con sospecha.
 19|Miercoles|entrenador|Los buenos entrenadores también perdieron partidos y aprendieron de eso; recordá a quienes te enseñaron la Palabra, mirá su ejemplo e imitá su fe.
 19|Jueves|tenis|«Todo lo puedo» no es un grito para ganar un partido de tenis: Pablo hablaba de estar contento en la abundancia y en la escasez; Cristo sostiene también cuando perdemos.
 19|Viernes|ciclismo|Hasta en las grandes vueltas ciclistas hay días de descanso, y nadie los llama cobardía; ser valiente también es parar a tiempo, sabiendo que Dios te acompaña.
-19|Sabado|voley|Un set perdido no define el valor de un equipo de vóley; esta semana recordamos que Dios obra en todo, también en los desafíos, aunque no lo entendamos todo.
-20|Domingo|futbol infantil|El buen profe de la escuelita de fútbol no empuja al chico a crecer de golpe: acompaña, corrige y espera. Los hijos son un regalo de Dios, no un trofeo propio.
-20|Lunes|natacion|Lo que un chico aprende de pequeño en la pileta, a flotar y a no tenerle miedo al agua, lo acompaña toda la vida; la formación temprana deja huella.
-20|Martes|basquet|El buen entrenador de formativas es firme con la disciplina sin humillar a nadie; Pablo pide eso a los padres: criar sin provocar a ira, con firmeza y amor juntos.
+19|Sabado|vóley|Un set perdido no define el valor de un equipo de vóley; Dios obra en todo, también en los desafíos, aunque no lo entendamos todo.
+20|Domingo|fútbol infantil|El buen profe de la escuelita de fútbol no empuja al chico a crecer de golpe: acompaña, corrige y espera. Los hijos son un regalo de Dios, no un trofeo propio.
+20|Lunes|natación|Lo que un chico aprende de pequeño en la pileta, a flotar y a no tenerle miedo al agua, lo acompaña toda la vida; la formación temprana deja huella.
+20|Martes|básquet|El buen entrenador de formativas es firme con la disciplina sin humillar a nadie; Pablo pide eso a los padres: criar sin provocar a ira, con firmeza y amor juntos.
 20|Miercoles|arbitraje|El árbitro que cobra a tiempo evita que el partido se descontrole; corregir a los hijos a tiempo, con amor, no es crueldad: es cuidarlos.
 20|Jueves|ciclismo|A andar en bici no se enseña con un discurso, sino caminando al lado, una tarde y otra; la fe también se enseña así, en lo de todos los días.
 20|Viernes|atletismo|Ninguna medalla se compara con ver a un hijo caminar en la verdad; para muchos padres esa es la alegría más profunda.
-20|Sabado|hinchada|Primer partido del nieto, y el abuelo le pasa mucho más que una camiseta. Lo que queda de estos días: criar con amor e integridad deja un legado de generación en generación.
-21|Domingo|futbol|Una red de arco con un agujerito deja pasar la pelota igual que una rota; las pequeñas fugas de plata, si nadie las repara, también vacían el bolsillo.
-21|Lunes|voley|En el vóley nadie puede quedarse mirando cuando la pelota cae en su zona; quien puede trabajar, que trabaje: el esfuerzo propio va antes del ingreso.
+20|Sabado|hinchada|Primer partido del nieto, y el abuelo le pasa mucho más que una camiseta. Criar con amor e integridad deja un legado de generación en generación.
+21|Domingo|fútbol|Una red de arco con un agujerito deja pasar la pelota igual que una rota; las pequeñas fugas de plata, si nadie las repara, también vacían el bolsillo.
+21|Lunes|vóley|En el vóley nadie puede quedarse mirando cuando la pelota cae en su zona; quien puede trabajar, que trabaje: el esfuerzo propio va antes del ingreso.
 21|Martes|atletismo|El fondista no gana metros con un sprint de un día, sino con kilómetros constantes; la mano diligente suele abrir caminos que la desidia cierra.
 21|Miercoles|boxeo|Estar contra las cuerdas por una deuda quita libertad, como al boxeador acorralado; si hoy estás ahí, no estás solo: pedí consejo y avanzá de a un paso.
 21|Jueves|tenis|Pocas cosas sostienen tanto un partido largo de tenis como el punto chico, el que parece no importar. La fidelidad en lo poco forma el carácter para lo mucho.
-21|Viernes|futsal|El buen arquero de futsal ordena a su defensa sin gritos ni humillaciones; cerrar las fugas de la casa también pide una sabiduría que habla con calma y compasión.
-21|Sabado|futbol|Repartir buenos pases no empobrece a nadie: hace crecer a todo el equipo. Después de ordenar lo que entra y sale, queda claro que la generosidad enriquece la vida.
-22|Domingo|futbol|El jugador que se queda practicando tiros libres no pierde tiempo, lo invierte; como el carpintero que se detiene a afilar la sierra, capacitarte también es estar atento y firme.
-22|Lunes|basquet|El suplente que está siempre listo entra y responde con lo que entrenó; estar preparados es también saber explicar, con respeto, la esperanza que tenemos en Cristo.
+21|Viernes|futsal|El equipo de futsal que corre todo el partido pero no cierra la defensa recibe goles por el mismo hueco. Antes de trabajar más, mirá por dónde se escapa tu plata.
+21|Sabado|fútbol|Repartir buenos pases no empobrece a nadie: hace crecer a todo el equipo. Después de ordenar lo que entra y sale, queda claro que la generosidad enriquece la vida.
+22|Domingo|fútbol|El jugador que se queda practicando tiros libres no pierde tiempo, lo invierte; como el carpintero que se detiene a afilar la sierra, capacitarte también es estar atento y firme.
+22|Lunes|básquet|El suplente que está siempre listo entra y responde con lo que entrenó; estar preparados es también saber explicar, con respeto, la esperanza que tenemos en Cristo.
 22|Martes|remo|Último tramo de la regata: el remero pone toda su fuerza en cada palada. Lo que tengas hoy entre manos, hacelo con todo, sin mediocridad.
 22|Miercoles|ajedrez|El ajedrecista estudia partidas, las juega y después enseña a los nuevos del club; Esdras hizo lo mismo con la Palabra: estudiarla, vivirla y enseñarla.
-22|Jueves|preparacion fisica|Los abdominales que nadie ve en la pretemporada se notan en el segundo tiempo; servir de corazón es ser fiel aunque nadie esté mirando.
-22|Viernes|natacion|El nadador que respeta cada viraje, aunque nadie lo controle, se gana algo más valioso que un récord: la confianza; Daniel se distinguió por esa integridad constante.
+22|Jueves|preparación física|Los abdominales que nadie ve en la pretemporada se notan en el segundo tiempo; servir de corazón es ser fiel aunque nadie esté mirando.
+22|Viernes|natación|El nadador que respeta cada viraje, aunque nadie lo controle, se gana algo más valioso que un récord: la confianza; Daniel se distinguió por esa integridad constante.
 22|Sabado|ciclismo|Uno corta el viento para que el otro respire: así se turnan en el pelotón. Crecer y ayudar a crecer, animándonos unos a otros: eso nos llevamos.
-23|Domingo|futbol de potrero|Muchos empezaron a jugar con una pelota de trapo en un baldío; la viuda tenía apenas una vasija de aceite, y Dios usó lo poco que había en su casa.
+23|Domingo|fútbol de potrero|Muchos empezaron a jugar con una pelota de trapo en un baldío; la viuda tenía apenas una vasija de aceite, y Dios usó lo poco que había en su casa.
 23|Lunes|rally|Mientras el auto avanza, el copiloto de rally va leyendo el camino que viene. Emprender puede dar miedo, pero Dios va delante tuyo y no te abandona.
-23|Martes|futsal|Muchos jugadores de futsal empezaron en una canchita de cemento del barrio; un comienzo pequeño no es una vergüenza ni define el final.
-23|Miercoles|voley|El sacador no sabe si su saque va a ser punto, pero saca igual, con su mejor técnica; sembrá en la mañana y en la tarde, aunque no sepas qué va a dar fruto.
+23|Martes|futsal|Muchos jugadores de futsal empezaron en una canchita de cemento del barrio, entrenando temprano. Cada mañana es un comienzo nuevo: confiá en Dios y pedile que te muestre el camino.
+23|Miercoles|vóley|El sacador no sabe si su saque va a ser punto, pero saca igual, con su mejor técnica; sembrá en la mañana y en la tarde, aunque no sepas qué va a dar fruto.
 23|Jueves|arbitraje|Antes de cobrar, el buen árbitro mira bien la jugada y no se deja llevar por el griterío; antes de decidir, examiná con calma: no todo lo que se oye es cierto.
 23|Viernes|handball|Pase corto bien hecho, una y otra vez: eso sostiene a un equipo de handball. Ser fiel en lo poco también es parte de emprender, y Jesús celebra esa fidelidad.
-23|Sabado|atletismo|Las medallas se oxidan y los trofeos juntan polvo en la vitrina; esta semana hablamos de emprender con fe y con cuidado, recordando que la vida verdadera la da Jesús.
-24|Domingo|futbol|Durante la concentración, el cuerpo técnico cuida lo que come el plantel. Desde el principio Dios proveyó plantas y semillas: lo que comemos también es parte de su cuidado.
+23|Sabado|atletismo|Las medallas se oxidan y los trofeos juntan polvo en la vitrina. Emprendé con fe y con cuidado, sabiendo que la vida verdadera la da Jesús.
+24|Domingo|fútbol|Durante la concentración, el cuerpo técnico cuida lo que come el plantel. Desde el principio Dios proveyó plantas y semillas: lo que comemos también es parte de su cuidado.
 24|Lunes|atletismo|Daniel pidió diez días de prueba con comida sencilla, como el atleta que ajusta lo que come y mira cómo responde; una decisión en la mesa también puede ser un acto de fe.
-24|Martes|maraton|En la maratón, tomar demasiado de golpe hace tanto daño como no tomar nada; hasta lo bueno, en exceso, cae mal: la medida es sabiduría práctica.
-24|Miercoles|voley|El equipo de vóley que comparte la merienda después del entrenamiento también vive algo valioso; comer y beber, hasta lo más cotidiano, puede ser para la gloria de Dios.
+24|Martes|maratón|En la maratón, tomar demasiado de golpe hace tanto daño como no tomar nada; hasta lo bueno, en exceso, cae mal: la medida es sabiduría práctica.
+24|Miercoles|vóley|El equipo de vóley que comparte la merienda después del entrenamiento también vive algo valioso; comer y beber, hasta lo más cotidiano, puede ser para la gloria de Dios.
 24|Jueves|ciclismo|El ciclista que no come en la etapa se queda sin piernas, y el que come de más pedalea pesado; ni exceso ni descuido: la medida cuida el cuerpo y el bolsillo.
 24|Viernes|hinchada|El tereré y la chipa compartidos en la tribuna también son regalos; el salmista reconocía que el pan que sostiene la vida sale de la mano de Dios.
-24|Sabado|basquet|Un mal día de comidas no hace que el basquetbolista se castigue: ajusta y sigue. Para cerrar la semana: comer con gratitud y medida, como cuidado y no como culpa.
-25|Domingo|futbol formativo|Un buen técnico de formativas no se conforma con que el chico sepa el reglamento: lo acompaña hasta que juega; así nos mandó Jesús hacer discípulos, prometiendo estar con nosotros.
+24|Sabado|básquet|Un mal día de comidas no hace que el basquetbolista se castigue: ajusta y sigue. Comer con gratitud y medida es cuidado, no culpa.
+25|Domingo|fútbol formativo|Un buen técnico de formativas no se conforma con que el chico sepa el reglamento: lo acompaña hasta que juega; así nos mandó Jesús hacer discípulos, prometiendo estar con nosotros.
 25|Lunes|atletismo|Testimonio que no se entrega se pierde, aunque hayas corrido bien tu tramo de la posta. La fe también se pasa de mano en mano, a otros que la sigan llevando.
-25|Martes|natacion|Como el agua quieta de la pileta refleja al nadador antes de tirarse, el corazón se refleja en el del otro; discipular es mostrarse tal cual uno es.
+25|Martes|natación|Como el agua quieta de la pileta refleja al nadador antes de tirarse, el corazón se refleja en el del otro; discipular es mostrarse tal cual uno es.
 25|Miercoles|futsal|Los chicos del futsal copian hasta cómo festeja su referente; por eso Pablo decía: imítenme como yo imito a Cristo. El ejemplo enseña más que el discurso.
 25|Jueves|ajedrez|El ajedrecista que conoce bien los principios juega con libertad, sin miedo a cada movimiento; permanecer en la Palabra de Jesús nos hace conocer la verdad que libera.
 25|Viernes|tenis|Mirar videos del saque no alcanza: hay que salir a la cancha de tenis y practicarlo. Lo que aprendiste, ponelo en práctica, y la paz de Dios te acompaña.
-25|Sabado|remo|Cada bote que avanza lleva algo del viejo entrenador de remo que formó a sus remeros. Así cerramos el tema: invertir en otros deja una huella que dura.
-26|Domingo|futbol|Como el entrenador que, en vez de presionar a su jugador, lo rodeó de confianza, un equipo unido resiste más: el cordón de tres dobleces no se rompe fácil.
-26|Lunes|voley|Firme en el bloqueo y valiente en el ataque, sí; pero un equipo de vóley se sostiene cuando todo se hace con amor, también la corrección.
-26|Martes|basquet|En el básquet, el base paciente que espera a que todos se acomoden arma mejores jugadas; la unidad del equipo se cuida con paciencia y esfuerzo.
-26|Miercoles|futbol|Un buen técnico escucha a sus ayudantes, al preparador físico y al médico antes de decidir; en los muchos consejeros hay seguridad, y decidir solo es un riesgo.
+25|Sabado|remo|Cada bote que avanza lleva algo del viejo entrenador de remo que formó a sus remeros. Invertir en otros deja una huella que dura.
+26|Domingo|fútbol|Como el entrenador que, en vez de presionar a su jugador, lo rodeó de confianza, un equipo unido resiste más: el cordón de tres dobleces no se rompe fácil.
+26|Lunes|vóley|El buen capitán de vóley anima a su equipo sin engaños ni gritos que humillan. Motivar sin manipular es buscar agradar a Dios, no el aplauso de la tribuna.
+26|Martes|básquet|En el básquet, el base paciente que espera a que todos se acomoden arma mejores jugadas; la unidad del equipo se cuida con paciencia y esfuerzo.
+26|Miercoles|fútbol|Un buen técnico escucha a sus ayudantes, al preparador físico y al médico antes de decidir; en los muchos consejeros hay seguridad, y decidir solo es un riesgo.
 26|Jueves|rally|¿Viste cuando se pincha una goma en pleno rally? Piloto y copiloto la cambian juntos. En un equipo nadie debería cargar solo: eso es cumplir la ley de Cristo.
 26|Viernes|hinchada|La hinchada que alienta cuando el equipo va abajo no lo hace por casualidad, lo hace a propósito; considerémonos unos a otros para estimularnos al amor y a las buenas obras.
-26|Sabado|futsal|El que da la asistencia en el futsal festeja el gol como propio. Así se resume la semana: el equipo se sostiene cuando cada uno busca también el bien del otro.
+26|Sabado|futsal|El que da la asistencia en el futsal festeja el gol como propio. El equipo se sostiene cuando cada uno busca también el bien del otro.
 27|Domingo|fútbol|Lo que un equipo vive en el vestuario se nota en la cancha; lo que una familia vive puertas adentro sale al barrio, como sal y luz que no se esconden.
 27|Lunes|hinchada|La hinchada que cuida su estadio disfruta mejor cada partido; buscar el bien de tu ciudad también es cuidar la casa donde vive tu familia.
 27|Martes|arbitraje|Ningún partido se juega sin reglas ni sin árbitro; respetar la autoridad y cumplir tu parte también es jugar limpio como familia dentro de la sociedad.
@@ -199,7 +199,7 @@
 29|Martes|handball|Antes del partido de handball, el entrenador dibuja la jugada en la pizarra para que todos la vean clara; escribí tu meta y vas a saber mejor cómo ir tras ella.
 29|Miercoles|fútbol|El delantero que pide la pelota, busca el espacio y no deja de moverse muestra hambre; con Dios es parecido: pedí, buscá y llamá con perseverancia y confianza.
 29|Jueves|ciclismo|Kilómetro final de la subida más dura: el ciclista no se baja, sigue pedaleando con paciencia. Gozate en la esperanza, aguantá en la prueba y seguí constante en la oración.
-29|Viernes|rally|Tramo terminado en el Rally del Chaco: el copiloto lo revisa antes de encarar el siguiente. Mirar atrás con honestidad y poner tus planes en manos de Dios te ayuda a seguir.
+29|Viernes|rally|Tramo terminado: el copiloto de rally revisa sus notas antes de encarar el siguiente. Examinar el camino, buscar al Señor y volver a él: así se corrige el rumbo.
 29|Sabado|natación|El nadador planifica cada largo, pero no controla el agua; hacé tus planes con ganas y con humildad, diciendo: si el Señor quiere, haremos esto o aquello.
 30|Domingo|arbitraje|El árbitro que cobra parejo para los dos equipos se gana el respeto de todos; en el comercio pasa igual: la balanza justa también le importa a Dios.
 30|Lunes|boxeo|Antes de una pelea de boxeo, el peso se controla en una balanza que no puede mentir; en tu negocio, la pesa cabal agrada a Dios y la trampa le desagrada.
@@ -225,7 +225,7 @@
 33|Domingo|fútbol|Dos jugadores pueden hacer el mismo ejercicio en la práctica: uno cumple una rutina, el otro se prepara para una final. La visión le da sentido a lo que hacés.
 33|Lunes|handball|Un buen capitán de handball se cuida a sí mismo y cuida a sus compañeros; liderar es velar por tu propia vida y por quienes Dios te confió.
 33|Martes|ajedrez|El ajedrecista no ve todo el plan desde la primera jugada; aunque hoy no veas el cuadro completo, Dios tiene pensamientos de bien y de esperanza.
-33|Miercoles|remo|Un bote de remo avanza derecho cuando todos miran el mismo punto; la visión necesita una dirección clara y constante, como quien prosigue hacia la meta.
+33|Miercoles|remo|En el remo, el timonel habla claro y con calma para que todos remen al mismo ritmo. Una visión se convierte en pasos concretos cuando se comunica con palabras amables.
 33|Jueves|arbitraje|El árbitro que estudia el reglamento a fondo cobra con seguridad; conocer bien la Palabra te ayuda a usarla con cuidado y a servir a Dios con dedicación.
 33|Viernes|futsal|Un entrenador de futsal ve en un chico más de lo que el chico ve en sí mismo; Dios puede hacer mucho más de lo que pedimos o imaginamos.
 33|Sabado|tenis|Cuando un tenista juega limpio y saluda a su rival, todos lo notan; que tus obras se vean, pero que la gloria sea para el Padre, la verdadera fuente de la luz.
@@ -276,21 +276,21 @@
 40|Martes|remo|En el remo nadie avanza solo: alguien tiene que decir «¡vamos!» y todos reman juntos. Nehemías invitó al pueblo a levantar los muros codo a codo.
 40|Miercoles|fútbol|Frente a un rival más grande, el equipo chico sabe de dónde saca el ánimo. David no salió confiado en la armadura, sino en el nombre del Señor.
 40|Jueves|utilero|El utilero llega primero y se va último, y sin él no sale nadie a la cancha. Jesús enseñó que el grande es el que sirve.
-40|Viernes|árbitro|Un buen árbitro no se gana el respeto por el silbato, sino por su carácter dentro y fuera de la cancha. Así se mide también un líder íntegro.
-40|Sabado|básquet|El base que mejor dirige es el que más asistencias da. Para llevarse de la semana: con Jesús, liderar es servir.
+40|Viernes|arbitraje|Un buen árbitro no se gana el respeto por el silbato, sino por su carácter dentro y fuera de la cancha. Así se mide también un líder íntegro.
+40|Sabado|básquet|El base que mejor dirige es el que más asistencias da. Con Jesús, liderar es servir.
 41|Domingo|vóley|Nadie toca la pelota dos veces seguidas en el vóley: cada uno cumple su parte y el punto se construye entre todos. Un hogar funciona parecido.
 41|Lunes|entrenador|El entrenador que prepara la semana antes del partido le ahorra apuros a todo el plantel. Una casa organizada también se cuida con anticipación.
 41|Martes|fútbol|Un buen defensor no abandona a su compañero cuando el rival ataca por su lado: lo cubre. Cuidar a los nuestros también es parte de vivir la fe.
 41|Miercoles|handball|Roces hay todo el partido en el handball, y el equipo sigue unido si se dan la mano después de cada choque. En casa, la paciencia y el perdón hacen lo mismo.
 41|Jueves|hinchada|El aplauso de la hinchada al que corrió todo el partido vale mucho. En casa también hace falta reconocer el esfuerzo de quien sostiene el día a día.
 41|Viernes|ciclismo|En el pelotón, los ciclistas se turnan para ir adelante cortando el viento: hoy tirás vos, mañana yo. Así se vive la humildad mutua en familia.
-41|Sabado|maratón|Kilómetro 40: alguien frena para acompañar a otro hasta la meta; la lealtad pesa más que el reloj. Siete días después, queda un hogar que camina junto, aun en lo difícil.
+41|Sabado|maratón|Kilómetro 40: alguien frena para acompañar a otro hasta la meta; la lealtad pesa más que el reloj. Así es un hogar que camina junto, aun en lo difícil.
 42|Domingo|fútbol|El que regala un pase de gol con alegría lo disfruta tanto como el que la empuja. Dios ama al dador alegre, no al que da con tristeza u obligación.
 42|Lunes|atletismo|El relevista suelta el testigo confiando en las manos del compañero. Dar a Dios es un acto de confianza, no un pago para recibir algo a cambio.
 42|Martes|fútbol|Antes del partido, muchos equipos se juntan en ronda para orar. Honrar a Dios con lo primero es poner las cosas en orden, no una cábala.
 42|Miercoles|básquet|El veterano que de chico tuvo quien le enseñara a tirar al aro hoy regala sus sábados a los chicos del barrio. La generosidad nace de la gracia que primero recibimos.
 42|Jueves|natación|Los brazos para nadar, el aire en los pulmones, el talento para competir: nada de eso lo fabricamos. Todo viene de Dios, y de lo suyo le damos.
-42|Viernes|entrenador|El técnico veterano que comparte lo que sabe con el ayudante joven multiplica el trabajo de todos. Jetro le dio su consejo a Moisés, y Moisés tuvo la humildad de escuchar.
+42|Viernes|entrenador|El técnico que regala su tiempo a los chicos del barrio, sin cobrar y sin cámaras, deja mucho más que tácticas. Dar sin amor es una transacción; dar con amor cambia vidas.
 42|Sabado|rally|En el Rally del Chaco el navegante no maneja, pero da lo que sabe en cada curva. Dar es eso: tiempo, talento y recursos que Dios mismo nos provee.
 43|Domingo|fútbol|El que abre una escuelita de fútbol en el barrio quizá nunca vea a esos chicos jugar en primera. Como el abuelo que planta un árbol, el legado se siembra sin garantías.
 43|Lunes|ajedrez|El abuelo que enseña a sus nietos a mover las piezas del ajedrez deja algo que dura más que una partida ganada. Una buena herencia piensa en varias generaciones.
@@ -305,42 +305,42 @@
 44|Miercoles|maratón|El maratonista no llega con un pique, sino con un ritmo constante. Trabajar con sosiego, día a día, para comer el propio pan es parte de una vida digna.
 44|Jueves|futsal|En el vestuario se puede hablar mucho, pero el partido de futsal se juega en la cancha. En toda labor hay fruto; el puro discurso no construye nada.
 44|Viernes|vóley|Mirá a los chicos que juegan al vóley en la playa del lago hasta que cae el sol: disfrutan cada pelota. Alegrarse en el propio trabajo también es un regalo de Dios.
-44|Sabado|árbitro|El árbitro, el juez de línea y quien limpia las tribunas merecen su justo pago. Repasamos esta semana: digno es el obrero de su salario.
+44|Sabado|arbitraje|El árbitro, el juez de línea y quien limpia las tribunas merecen su justo pago. Digno es el obrero de su salario.
 45|Domingo|fútbol|Partido de barrio, alguien cae lesionado, y lo primero no es el resultado sino acercarse a ayudar. El buen samaritano no pasó de largo.
 45|Lunes|natación|Cuando al nadador se le acaban las fuerzas, saber que hay un guardavidas atento le devuelve la calma. Dios es nuestro pronto auxilio en la angustia.
 45|Martes|atletismo|Si un corredor se desploma en la pista, los jueces no esperan que termine la carrera para asistirlo. Actuar a tiempo ante el peligro ajeno es una responsabilidad real.
 45|Miercoles|entrenador|Ningún entrenador atiende solo una lesión seria: pide camilla, médico y ayuda. En la enfermedad tampoco tenemos que estar solos; llamamos a otros y oramos juntos.
 45|Jueves|hinchada|En medio del ruido de un estadio lleno, una madre reconoce la voz de su hijo en la cancha. Así de cerca está Dios del que clama en su angustia.
 45|Viernes|rally|El equipo de rescate de un rally entrena para mantener la calma cuando todo se complica. El pánico se enfrenta con la promesa de Dios: «No tengas miedo, yo estoy contigo».
-45|Sabado|vóley|Cientos de recepciones en la práctica de vóley, para estar listos cuando llega el saque difícil. Queda de la semana: prepararnos para ayudar e invocar a Dios en la angustia.
+45|Sabado|vóley|Cientos de recepciones en la práctica de vóley, para estar listos cuando llega el saque difícil. Prepararse para ayudar y clamar a Dios en la angustia también se entrena.
 46|Domingo|hinchada|La hinchada canta con el alma aunque el marcador no acompañe. Venir ante Dios con alegría no depende del resultado, sino del corazón.
 46|Lunes|fútbol|Una cosa es ponerse la camiseta para la foto y otra es llevarla en el corazón. Dios busca adoradores en espíritu y en verdad, no solo de forma.
 46|Martes|remo|El remero sale al río con frío, con calor o con lluvia, tenga ganas o no. Bendecir a Dios en todo tiempo es parecido: no depende de las circunstancias.
 46|Miercoles|básquet|Hay noches de lágrimas y noches de canto en el vestuario de básquet. Santiago dice: ¿alguien sufre? Que ore; ¿alguien está alegre? Que cante alabanzas.
 46|Jueves|maratón|Desde el corredor de maratón hasta el abuelo que camina despacito por la costanera, todos respiran. Y todo lo que respira puede alabar al Señor.
 46|Viernes|boxeo|El boxeador que se levanta de madrugada a entrenar sabe que cuesta. La alabanza también es un sacrificio: se ofrece aun cuando no es fácil.
-46|Sabado|ciclismo|Pinchó, quedó lejos del pelotón, y el ciclista igual sigue pedaleando. Con Habacuc cerramos el tema: aunque falte todo, Dios da fuerzas para seguir caminando.
+46|Sabado|ciclismo|Pinchó, quedó lejos del pelotón, y el ciclista igual sigue pedaleando. Aunque falte todo, Dios da fuerzas para seguir caminando.
 47|Domingo|fútbol|El arquero tiene un segundo para decidir hacia dónde tirarse, sin toda la información. Por eso necesitamos pedirle sabiduría a Dios, que la da sin reproche.
 47|Lunes|rally|El piloto de rally confía en las notas de su navegante aunque todavía no vea la próxima curva. Confiar en Dios más que en nuestro propio entendimiento se parece a eso.
 47|Martes|ajedrez|El ajedrecista que estudió bien sus aperturas mueve con calma, sin que le tiemble la mano. Guardar la sabiduría de Dios nos deja caminar con confianza.
 47|Miercoles|tenis|El tenista que espera el viento perfecto para sacar se queda con la pelota en la mano. El que mira el viento no siembra: hay que actuar con lo que se tiene.
 47|Jueves|handball|Un buen capitán de handball no pide la mejor camiseta, pide entender a su equipo. Salomón pidió un corazón que sepa discernir, y eso le agradó a Dios.
 47|Viernes|futsal|En el futsal, el técnico guía desde el costado con la mirada y la voz. Dios promete enseñarnos el camino; no tenemos que decidir solos.
-47|Sabado|fútbol|Minuto cero de un clásico: cada uno tiene su plan de juego en la cabeza. Siete días después, la conclusión: muchos planes hay en el corazón, pero el consejo del Señor permanece.
+47|Sabado|fútbol|Minuto cero de un clásico: cada uno tiene su plan de juego en la cabeza. Muchos planes hay en el corazón, pero el consejo del Señor permanece.
 48|Domingo|básquet|Los chicos aprenden a tirar al aro mirando a papá en el patio. La fe también se transmite así: contando y mostrando las obras de Dios a la próxima generación.
 48|Lunes|fútbol|Camino al entrenamiento, en el colectivo o en la moto, hay charlas que valen oro. Deuteronomio nos invita a hablar de Dios en casa y en el camino.
 48|Martes|atletismo|Una medalla colgada en la pared hace que los nietos pregunten: ¿y esto de dónde salió? Las señales de fe en casa también abren la puerta para contar la historia de Dios.
 48|Miercoles|hinchada|Como la familia que va junta a alentar con los mismos colores, hay hogares que se juntan para dar gloria a Dios. Adorar en familia también se aprende.
 48|Jueves|natación|Cada nadador de la posta hace su propio tramo, aunque el equipo sea uno. La promesa alcanza a toda la casa, y cada uno está invitado a creer.
 48|Viernes|vóley|Rotación en el vóley: el equipo gira siempre en el mismo sentido y por eso no se pierde. Dichosa la familia que honra al Señor y anda en sus caminos.
-48|Sabado|fútbol|Hay padres e hijos que se reencontraron alentando juntos a la Albirroja después de años de distancia. Repasamos: Dios puede volver el corazón de los padres hacia los hijos.
+48|Sabado|fútbol|Hay padres e hijos que se reencontraron alentando juntos a la Albirroja después de años de distancia. Dios puede volver el corazón de los padres hacia los hijos.
 49|Domingo|ciclismo|El ciclista que carga más peso del que puede llevar no llega lejos en la subida. Una deuda mal medida también hunde más de lo que ayuda; medir bien es sabiduría.
 49|Lunes|fútbol|Al terminar el torneo del barrio, el equipo arregla cuentas con el transporte y la cancha, pero el cariño entre compañeros sigue. La única deuda que siempre queda es el amor.
 49|Martes|futsal|Antes de entrar a la cancha, el jugador de futsal mide si está para jugar. Antes de salir de garante, también conviene medir el riesgo con prudencia y buen consejo.
 49|Miercoles|boxeo|Cuando el boxeador queda contra las cuerdas, lo sabio es salir pronto, sin desesperar. Con un compromiso financiero riesgoso pasa igual: no postergues buscar la salida, y pedí ayuda.
 49|Jueves|fútbol|El goleador que dice «lo hice solo» se olvida del pase, del entrenador y de quien le dio las piernas. No fue solo nuestra fuerza: todo viene de Dios.
 49|Viernes|vóley|Un buen equipo de vóley siempre tiene a alguien en el banco para lo inesperado. Un pequeño respaldo ayuda a cumplir lo que debemos y a seguir siendo generosos.
-49|Sabado|atletismo|Primero lo más importante: así ordena el atleta su semana, y lo demás se acomoda. Para cerrar: buscar primero el reino de Dios y su justicia, confiando en que Él provee.
+49|Sabado|atletismo|Primero lo más importante: así ordena el atleta su semana, y lo demás se acomoda. Buscá primero el reino de Dios y su justicia, confiando en que Él provee.
 50|Domingo|fútbol|El jugador que esconde una lesión la empeora; el que la cuenta empieza a sanar. Con el pecado pasa igual: callarlo pesa, confesarlo nos lleva al perdón de Dios.
 50|Lunes|tenis|El tenista que mira su error en el video, en lugar de esconderlo, puede corregirlo. El que confiesa sus faltas y se aparta de ellas alcanza misericordia.
 50|Martes|futsal|El equipo que perdió la final no puede quedarse mirando la repetición para siempre. Dios dice: no te aferres a lo pasado, mirá que yo hago algo nuevo.
@@ -351,14 +351,14 @@
 51|Domingo|entrenador|El entrenador que inventa una jugada nueva usa una creatividad que tiene su origen en Dios. Como a Bezalel, Dios también hoy da sabiduría para crear con excelencia.
 51|Lunes|fútbol|Las pelotas y los botines cambiaron muchísimo, pero el juego sigue siendo el mismo. Pablo cambiaba la forma para alcanzar a otros, sin cambiar nunca el evangelio.
 51|Martes|vóley|El técnico de vóley que estudia al rival sabe qué hacer en cada set. Los hijos de Isacar entendían los tiempos y sabían lo que había que hacer.
-51|Miercoles|árbitro|El árbitro que estudia cada cambio del reglamento sigue aprendiendo aunque tenga años de carrera. El corazón entendido nunca deja de buscar conocimiento.
+51|Miercoles|arbitraje|El árbitro que estudia cada cambio del reglamento sigue aprendiendo aunque tenga años de carrera. El corazón entendido nunca deja de buscar conocimiento.
 51|Jueves|ciclismo|El ciclista que ajusta su bici antes de la carrera rinde mejor que el que sale apurado. Afilar el hacha antes de cortar es sabiduría práctica.
 51|Viernes|rally|El piloto de rally baja la velocidad cuando su navegante le avisa del peligro. Con la tecnología también: el prudente ve el riesgo y se protege.
-51|Sabado|fútbol|En Navidad las canchas se aquietan y la familia se junta. El sabio nunca deja de aprender, y hoy volvemos a aprender del mayor regalo: Jesús, nacido para salvarnos.
+51|Sabado|fútbol|En Navidad las canchas se aquietan y la familia se junta. No teman: hay una buena noticia para todo el pueblo. Hoy nació el Salvador, Cristo el Señor.
 52|Domingo|básquet|El kinesiólogo trata la lesión y el entrenador cuida el ánimo; el jugador de básquet necesita las dos cosas. Cuerpo, mente y espíritu sanan mejor juntos.
 52|Lunes|handball|Cuando un jugador de handball se lesiona, en muchos equipos el plantel lo rodea y ora por él. Orar unos por otros, también por la sanidad, es una invitación de Dios.
 52|Martes|tenis|Hay heridas que no aparecen en la radiografía, como la del tenista después de una derrota dura. Dios sana a los quebrantados de corazón y venda también esas heridas.
 52|Miercoles|atletismo|El atleta que avisa a tiempo que algo le duele no es débil: es sabio. Reconocer que necesitamos médico, o ayuda, es el primer paso para sanar.
 52|Jueves|fútbol|Un defensor que se tira a bloquear un remate recibe el golpe por su equipo: apenas una sombra de lo que hizo Jesús, por cuyas llagas fuimos curados.
 52|Viernes|futsal|Las risas en el vestuario después del entrenamiento le hacen bien al equipo. El corazón alegre es buen remedio; y si la tristeza pesa mucho, pedir ayuda también es cuidarse.
-52|Sabado|entrenador|Silbato final, penal errado, y una palabra amable del entrenador levanta el ánimo del jugador. Lo de estos días: las palabras bondadosas son dulces para el alma y salud para el cuerpo.
+52|Sabado|entrenador|Silbato final, penal errado, y una palabra amable del entrenador levanta el ánimo del jugador. Las palabras bondadosas son dulces para el alma y salud para el cuerpo.
