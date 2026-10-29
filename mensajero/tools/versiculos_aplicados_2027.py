@@ -49,6 +49,13 @@ V += [
   '• No teman: Dios trae una buena noticia\n• Una alegría para todo el pueblo\n• Hoy nació el Salvador, Cristo el Señor', A % 18 + '; especial de Navidad'),
 ]
 
+# Correcciones de escritura dentro del texto cargado (tildes y eñes), sin cambiar el versículo
+ORTO = [  # (semana, día, texto mal escrito, texto correcto)
+ (1, 'Domingo', 'templo del Espiritu Santo, que esta en ustedes', 'templo del Espíritu Santo, que está en ustedes'),
+ (9, 'Domingo', 'cuida bien a tus rebanos', 'cuida bien a tus rebaños'),
+ (9, 'Miercoles', 'El justo sabe cuando su bestia', 'El justo sabe cuándo su bestia'),
+]
+
 # Guion del día (Titulo, Dato curioso, Fuente dato, y Desarrollo/Problematica/Solucion 1-3)
 G = {
  (2, 'Viernes'): ('La tierra es del Señor', None, None,
@@ -193,6 +200,10 @@ for s, dia, nuevo, puntos, motivo in V:
     t.cell(s + 1, h.index('Versiculo ' + dia) + 1).value = nuevo
     if puntos:
         t.cell(s + 1, h.index('3 Puntos ' + dia) + 1).value = puntos
+for s, dia, malo, bueno in ORTO:
+    c = t.cell(s + 1, h.index('Versiculo ' + dia) + 1)
+    if malo in (c.value or ''):
+        c.value = c.value.replace(malo, bueno)
 g = wb['Guiones 2027']; hg = [c.value for c in g[1]]
 filas = {(r[0].value, r[1].value): r for r in g.iter_rows(min_row=2) if r[0].value}
 for k, vals in G.items():
