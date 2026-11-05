@@ -15,7 +15,7 @@ DATA = json.loads(re.search(r'/\*DATA\*/(.*?)/\*/DATA\*/', HTML.read_text(encodi
 LIBROS = {'Genesis': 'Génesis', 'Galatas': 'Gálatas', 'Exodo': 'Éxodo', 'Josue': 'Josué', 'Jeremias': 'Jeremías', 'Isaias': 'Isaías',
           'Eclesiastes': 'Eclesiastés', 'Levitico': 'Levítico', 'Nehemias': 'Nehemías', 'Salmo': 'Salmos', 'Numeros': 'Números',
           'Cronicas': 'Crónicas', 'Malaquias': 'Malaquías'}
-ESPECIALES = {'2027-03-26': 'Viernes Santo', '2027-03-28': 'Domingo de Pascua', '2027-12-25': 'Navidad'}
+ESPECIALES = {'2027-01-01': 'Año Nuevo', '2027-03-26': 'Viernes Santo', '2027-03-28': 'Domingo de Pascua', '2027-12-25': 'Navidad'}
 DIAS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
 MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
 TEMAS = {'Produccion y Desarrollo': 'Producción y Desarrollo'}
@@ -50,14 +50,14 @@ ind = wb.active
 ind.title = 'Indicaciones'
 for linea in [
     'Versículos para flyers 2027 · Mensajero 100.9 FM · Edificando una Cultura', '',
-    'Qué hay: un versículo por día, del domingo 3 de enero de 2027 al sábado 1 de enero de 2028 (364 flyers), en la hoja «Flyers 2027».',
+    'Qué hay: un versículo por día, del viernes 1 de enero de 2027 al sábado 1 de enero de 2028 (366 flyers). Las semanas van numeradas como en el calendario impreso: la semana 1 tiene solo el viernes 1 y el sábado 2 de enero, en la hoja «Flyers 2027».',
     'Son los versículos definitivos: los mismos que usa la app de los locutores, con los cambios aprobados el 23 de octubre de 2026.', '',
     'Para el diseño:',
     '• Copiar el texto tal cual: es la Reina Valera Contemporánea (RVC). No cambiar palabras, no resumir y no pasar a otra versión.',
     '• La cita va siempre visible (libro, capítulo y versículos).',
     '• Créditos en cada flyer, en letra chica: «Reina Valera Contemporánea® © Sociedades Bíblicas Unidas, 2009, 2011. Usado con permiso de la Sociedad Bíblica del Paraguay.»',
     '• Los saltos de línea dentro de algunos versículos (salmos, proverbios) son del texto poético: se pueden respetar o unir en una sola línea.',
-    '• Fechas especiales (filas amarillas): Viernes Santo (26 de marzo), Domingo de Pascua (28 de marzo) y Navidad (25 de diciembre). Merecen un diseño especial.',
+    '• Fechas especiales (filas amarillas): Año Nuevo (1 de enero), Viernes Santo (26 de marzo), Domingo de Pascua (28 de marzo) y Navidad (25 de diciembre). Merecen un diseño especial.',
     f'• Columna «Caracteres»: en naranja los textos de más de {LARGO} caracteres; necesitan letra más chica o formato vertical.',
     '• Color de la semana: es el color de la serie de esa semana en la app; sirve como guía de paleta.', '',
     'Ante cualquier duda sobre un texto, consultar antes de publicar: un error en un versículo se nota más que cualquier detalle de diseño.']:
@@ -73,6 +73,8 @@ n = 0
 for w in DATA['semanas']:
     inicio = datetime.date.fromisoformat(w['inicio'])
     for i, d in enumerate(w['dias']):
+        if not d['ref']:  # semana 1: días del año anterior
+            continue
         n += 1
         f = inicio + datetime.timedelta(i)
         texto = para_flyer(d['texto'])

@@ -199,8 +199,19 @@ def main(path):
                               'texto': '' if texto.startswith('(por completar') else texto,
                               'aire': txt(r.get('Para el aire')).lower().startswith('s')})
 
-    data = {'anio': anio, 'semanas': semanas, 'valores': valores, 'mensajero': mensajero}
     revisar(anio, semanas)
+    # semana 1 del calendario impreso: solo viernes 1 y sábado 2 de enero (content/semana_01_AAAA.json).
+    # La planilla sigue numerada desde la semana del primer domingo; acá se corre +1 para coincidir con el calendario.
+    s1 = ROOT / 'content' / f'semana_01_{anio}.json'
+    if s1.exists():
+        w1 = json.loads(s1.read_text(encoding='utf-8'))
+        w1 = {k: v for k, v in w1.items() if not k.startswith('_') and k != 'frases_fuentes'}
+        vacio = {'ref': '', 'texto': '', 'puntos': [], 'guion': None, 'deporte': ''}
+        w1['dias'] = [{**vacio, **{k: v for k, v in d.items() if k != 'deporte_tipo'}} for d in w1['dias']]
+        for w in semanas:
+            w['n'] += 1
+        semanas.insert(0, w1)
+    data = {'anio': anio, 'semanas': semanas, 'valores': valores, 'mensajero': mensajero}
     html = ROOT / 'public' / 'index.html'
     src = html.read_text(encoding='utf-8')
     blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')

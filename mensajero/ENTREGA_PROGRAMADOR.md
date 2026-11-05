@@ -216,10 +216,19 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
 - Una semana cerrada no se puede cambiar sin la clave de coordinación, que ya no está en el código del navegador.
 - El contenido no se puede descargar sin la clave.
 
+## 10 bis. Semana 1 y numeración (nov 2026)
+
+- **Igual que el calendario impreso:** la semana 1 es azul (Finanzas) y tiene solo dos días, el viernes 1 y el sábado 2 de enero. Las demás semanas pasan a ser 2-53, y la del 3 de enero es la 2 (lila).
+- **Dónde está:** el contenido de la semana 1 está en `content/semana_01_2027.json`. La planilla sigue numerada 1-52 desde el 3 de enero. `build_data.py` agrega la semana 1 al principio y le suma 1 al número de las demás.
+- **En los datos:** la semana 1 lleva `desde: 5`, el primer día con contenido. Los días anteriores están vacíos.
+- **En la app:** `activos(w)` y `misDe(w)` filtran esos días vacíos en las pestañas, en las cuentas «al aire», en el prompt y en el buscador. El encabezado muestra «1–2 ene».
+- **Lo guardado antes:** se migra una sola vez. Las claves `2027/wN/…` pasan a `2027/w(N+1)/…`, y la marca `meta/semana1` evita que se repita.
+- **Para 2028:** si el año vuelve a empezar a mitad de semana, se repite el mismo esquema con `semana_01_2028.json`.
+
 ## 11. Decisiones pendientes (no son del programador, pero lo afectan)
 
 1. **Versículos:** resuelto el 23 oct 2026. Los 18 cambios están aplicados con `tools/versiculos_aplicados_2027.py`, que también reescribe el guion de esos días. Todos los textos están cotejados con la RVC publicada por las Sociedades Bíblicas Unidas (bible.com, versión 146, y sbuec.org).
-   - **Fechas especiales:** Viernes Santo (26 mar), Domingo de Pascua (28 mar) y Navidad (25 dic) tienen versículo propio. La app los marca con un aviso «Especial» en la tarjeta del día y en el guion copiado (constante `ESPECIALES` en `index.html`, por fecha). Para 2028 hay que actualizar esas fechas.
+   - **Fechas especiales:** Año Nuevo (1 ene), Viernes Santo (26 mar), Domingo de Pascua (28 mar) y Navidad (25 dic) tienen versículo propio. La app los marca con un aviso «Especial» en la tarjeta del día y en el guion copiado (constante `ESPECIALES` en `index.html`, por fecha). Para 2028 hay que actualizar esas fechas.
 2. ~~Viernes Santo, Pascua y Navidad~~ **Resuelto el 20/10/2026:** se sigue la serie; cada locutor adapta la fecha en su preparación (sin cambios en la app ni en el contenido).
 3. **Usuarios:** una clave para todo el equipo o una por locutor (necesaria si el registro debe decir quién hizo cada marca).
 4. **Hoja «Mensajero»:** faltan 17 datos (historia, fundación, misión, visión, sitio web, redes, contactos por área, organigrama).

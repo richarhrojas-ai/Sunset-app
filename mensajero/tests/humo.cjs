@@ -22,8 +22,8 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
 
   // ── celular ──
   let p = await abrir(b);
-  ok(await p.evaluate(() => DATA.semanas.length === 52), '52 semanas cargadas');
-  ok(await p.evaluate(() => DATA.semanas.every(w => w.dias.every((d, i) => i === 0 || d.guion) && w.dias.every(d => d.deporte))), 'guion de lunes a sábado y frase deportiva en los 364 días');
+  ok(await p.evaluate(() => DATA.semanas.length === 53 && DATA.semanas[0].color === 'Azul' && DATA.semanas[1].n === 2 && DATA.semanas[1].color === 'Lila'), '53 semanas como el calendario: la 1 azul (1 y 2 de enero), la 2 lila');
+  ok(await p.evaluate(() => DATA.semanas.every(w => w.dias.every((d, i) => i < (w.desde || 1) || d.guion) && w.dias.every((d, i) => i < (w.desde || 0) || d.deporte))), 'guion de lunes a sábado y frase deportiva en los 366 días');
   ok(await p.evaluate(() => document.documentElement.dataset.tema) === 'oscuro', 'apariencia automática: oscura en el celular');
   ok((await p.textContent('#h-tema')).includes('Producción'), 'portada del 3 de marzo: semana de Producción y Desarrollo');
   ok(await p.evaluate(() => [...document.querySelectorAll('#scene svg [transform="translate(268 180)"]')].length === 1), 'escena de Producción con su molino (no la de Salud)');
@@ -130,6 +130,23 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   p = await abrir(b, {fecha: '2027-12-25T10:00:00'});
   await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
   ok((await p.textContent('#dias .especial b') || '').includes('Navidad') && (await p.textContent('#dias .vers-base .ref')).includes('Lucas 2:10-11'), 'Navidad: aviso de especial y Lucas 2:10-11');
+  await p.close();
+
+  // ── semana 1: solo viernes 1 y sábado 2 de enero ──
+  p = await abrir(b, {fecha: '2027-01-01T10:00:00'});
+  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
+  ok((await p.textContent('#h-meta')).includes('Semana 1') && (await p.textContent('#h-meta')).includes('Azul'), '1 de enero: semana 1, azul');
+  ok(await p.$$eval('#dias [role=tab]', x => x.length) === 2 && (await p.textContent('#dias .especial b')).includes('Año Nuevo'), 'semana 1: solo viernes y sábado, con el aviso de Año Nuevo');
+  await p.click('#dias [data-d="6"]'); await p.waitForTimeout(80);
+  ok(await p.$$eval('#dias ol.ideas li', x => x.length) === 3, 'semana 1: el sábado tiene su resumen');
+  await p.click('#next'); await p.waitForTimeout(80);
+  ok((await p.textContent('#h-meta')).includes('Semana 2') && (await p.textContent('#h-meta')).includes('Lila'), 'la semana del 3 de enero es la 2, lila');
+  ok(p.errores.length === 0, 'semana 1 sin errores de JavaScript' + (p.errores.length ? ' → ' + p.errores.join(' | ') : ''));
+  await p.close();
+  p = await b.newPage({viewport: {width: 390, height: 844}});
+  await p.addInitScript(() => { if (!sessionStorage.x) { sessionStorage.x = 1; localStorage.setItem('mensajero:entries', JSON.stringify({'2027/w9/aire3': {v: true, t: 1}})); } });
+  await p.goto(URL); await p.waitForTimeout(200);
+  ok(await p.evaluate(() => { const e = JSON.parse(localStorage.getItem('mensajero:entries')); return e['2027/w10/aire3'] && !e['2027/w9/aire3']; }), 'lo guardado con el número de semana viejo pasa a la semana siguiente');
   await p.close();
 
   // ── antes del año ──

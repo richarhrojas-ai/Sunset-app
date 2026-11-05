@@ -1,0 +1,103 @@
+{
+  "_nota": "Semana 1 del calendario 2027: solo viernes 1 y sábado 2 de enero (azul, Finanzas). build_data.py la pone primera y corre +1 el número de las semanas de la planilla (la planilla sigue numerada 1-52). 'desde' es el primer día con contenido (5 = viernes).",
+  "n": 1,
+  "inicio": "2026-12-27",
+  "desde": 5,
+  "color": "Azul",
+  "tema": "Finanzas",
+  "ronda": 0,
+  "enfoque": "Empezar el año con las cuentas en orden",
+  "subtemas": [
+    {
+      "titulo": "Dar gracias por el año que pasó",
+      "desarrollo": "Antes de hacer planes, conviene mirar atrás con gratitud. Reconocer lo que Dios proveyó el año anterior, aun en los meses difíciles, cambia la manera de encarar las cuentas del año nuevo.",
+      "nota": "Se trata en el resumen del sábado. Evitar presentar la gratitud como una fórmula para recibir más.",
+      "frase": {"texto": "La gratitud no es solo la mayor de las virtudes, sino la madre de todas las demás.", "autor": "Cicerón"}
+    },
+    {
+      "titulo": "Planificar el año con Dios",
+      "desarrollo": "Planificar no es desconfiar de Dios ni querer controlar el futuro: es administrar con sabiduría lo que Él confía, sabiendo que es Él quien dirige los pasos.",
+      "nota": "Se trata en el resumen del sábado. Buen momento para invitar a la familia a planificar junta.",
+      "frase": {"texto": "Los planes no valen nada; planificar lo es todo.", "autor": "Dwight D. Eisenhower"}
+    },
+    {
+      "titulo": "Empezar el año con las cuentas en orden",
+      "desarrollo": "Enero llega con los gastos de las fiestas, las cuotas y la vuelta a clases. Empezar el año sabiendo cuánto se debe y eligiendo una meta clara ayuda a no arrastrar el desorden todo el año.",
+      "nota": "Es el 1 de enero, feriado: tono festivo y esperanzador. Nada de culpa por lo gastado en las fiestas; el mensaje es empezar con orden.",
+      "frase": {"texto": "No es pobre el que tiene poco, sino el que desea más.", "autor": "Séneca"}
+    }
+  ],
+  "frases_fuentes": {
+    "Cicerón": "Discurso en defensa de Plancio (Pro Plancio), 80",
+    "Dwight D. Eisenhower": "Discurso en la Conferencia de la Reserva Ejecutiva de Defensa Nacional, Washington, 14 de noviembre de 1957",
+    "Séneca": "Cartas a Lucilio, 2, 6"
+  },
+  "historia": "Un matrimonio joven terminó diciembre con la billetera vacía y varias cuotas por pagar. El 1 de enero, en vez de lamentarse, se sentaron a la mesa con un cuaderno: anotaron lo que debían, dieron gracias por lo que no les había faltado y eligieron una sola meta para el año. Un año después, ese cuaderno seguía en el mismo cajón, lleno de anotaciones.",
+  "valor": "Integridad",
+  "programa": "El Impulso",
+  "locutor": "Nery Cristaldo",
+  "marco": {
+    "historiaTitulo": "Israel frente al Jordán: un camino nuevo (Josué 3:1-17)",
+    "historia": "Después de cuarenta años en el desierto, el pueblo de Israel acampó a orillas del Jordán. Los oficiales recorrieron el campamento con una indicación clara: cuando vieran el arca del pacto en marcha, debían seguirla a cierta distancia, para saber por dónde ir, porque nunca antes habían pasado por ese camino (Josué 3:3-4). Josué pidió al pueblo que se preparara, porque al día siguiente el Señor haría maravillas entre ellos (3:5). Cuando los sacerdotes pusieron los pies en el agua, el río se detuvo y todo el pueblo cruzó en seco. Fue un comienzo nuevo, con preparación del pueblo y con Dios marcando el rumbo.",
+    "teorico": "Las personas tienden a encarar metas nuevas en fechas que marcan un comienzo, como el inicio de una semana, de un mes o de un año. Los investigadores llamaron a este fenómeno «efecto del nuevo comienzo»: esas fechas ayudan a separar los errores pasados de los planes futuros.",
+    "fuente": "Dai, H., Milkman, K. L. y Riis, J., «The Fresh Start Effect: Temporal Landmarks Motivate Aspirational Behavior», Management Science 60(10), 2014",
+    "claves": ["Josué 3:4 - ustedes nunca antes han pasado por este camino", "Salmos 65:11 - Dios engalana el año con su bondad", "Salmos 37:5 - poner el camino en las manos del Señor"],
+    "contexto": "Josué 3 narra el cruce del Jordán, el paso del desierto a la tierra prometida. El pueblo no conocía el camino, pero tenía una guía clara y una preparación previa.",
+    "conexion": "Empezar el año es entrar en un camino que no conocemos. La fe no reemplaza la preparación: la acompaña. Ordenar las cuentas y planificar es parte de prepararse, y confiar en Dios es dejar que Él marque el rumbo."
+  },
+  "dias": [
+    {}, {}, {}, {}, {},
+    {
+      "ref": "Salmos 65:11",
+      "texto": "Con tu bondad engalanas el año; a tu paso vas esparciendo abundancia.",
+      "puntos": ["Dios engalana el año con su bondad", "Lo que tenemos es provisión que Él esparce", "Empezar el año agradecidos y con orden"],
+      "guion": {
+        "titulo": "Un año engalanado con su bondad",
+        "dato": {
+          "texto": "Los romanos empezaron a contar el año civil desde el 1 de enero en el 153 a. C., cuando los cónsules pasaron a asumir su cargo ese día.",
+          "fuente": "Tito Livio, Periocha 47; Encyclopaedia Britannica, «New Year's Day»"
+        },
+        "puntos": [
+          {
+            "desarrollo": "El salmista no le agradece a Dios por un año perfecto, sino por su bondad, que adorna todo el año. Empezar dando gracias ordena el corazón antes que las cuentas.",
+            "problema": "Empezar el año con quejas por todo lo que faltó.",
+            "solucion": "Hoy, antes de que termine el día, escribí cinco cosas que Dios te dio el año pasado."
+          },
+          {
+            "desarrollo": "«A tu paso vas esparciendo abundancia»: lo que tenemos no es solo fruto de nuestro esfuerzo; también es provisión de Dios, y por eso se cuida.",
+            "problema": "Los gastos de las fiestas en tarjeta o en cuotas, que llegan todos juntos en enero.",
+            "solucion": "Sumá lo que gastaste en las fiestas con tarjeta o en cuotas y anotá cuánto vas a pagar por mes."
+          },
+          {
+            "desarrollo": "El año nuevo es un buen momento para empezar de nuevo, pero el orden no llega solo con el calendario: llega con decisiones pequeñas.",
+            "problema": "Listas de propósitos que se olvidan en febrero.",
+            "solucion": "Elegí una sola meta de dinero para este año, escribila y ponela donde la veas todos los días."
+          }
+        ]
+      },
+      "deporte": "Primer partido de la temporada: el marcador está en cero para todos. Empezá el año agradecido y con un plan.",
+      "deporte_tipo": "fútbol"
+    },
+    {
+      "ref": "Salmos 37:5",
+      "texto": "Pon tu camino en las manos del Señor; confía en él, y él se encargará de todo.",
+      "puntos": ["Poner el año en las manos de Dios", "Planificar confiando en Él", "Él se encarga de lo que no controlamos"],
+      "guion": {
+        "titulo": "Repaso: un año en sus manos",
+        "dato": {
+          "texto": "Investigadores de la Universidad de Pensilvania encontraron que las personas van más al gimnasio y se proponen más metas al comienzo de una semana, de un mes o de un año. Lo llamaron «efecto del nuevo comienzo».",
+          "fuente": "Dai, Milkman y Riis, Management Science, 2014"
+        },
+        "tipo": "resumen",
+        "ideas": [
+          "Dar gracias por el año que pasó ordena el corazón antes que las cuentas.",
+          "Planificar con Dios no es adivinar el futuro: es poner metas y dejar que Él dirija los pasos.",
+          "Las cuentas en orden empiezan con una decisión pequeña: saber cuánto se debe y elegir una meta."
+        ],
+        "accion": "Esta semana, sentate con tu familia, repasen juntos los gastos de las fiestas y elijan una meta de ahorro para el año. Pónganla en las manos de Dios en oración."
+      },
+      "deporte": "El ciclista revisa la ruta antes de salir, pero pedalea confiando. Poné tu camino en las manos del Señor.",
+      "deporte_tipo": "ciclismo"
+    }
+  ]
+}
