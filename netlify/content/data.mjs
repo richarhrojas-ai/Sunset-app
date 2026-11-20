@@ -2833,5 +2833,1140 @@ export default {
     "s": ""
    }
   ]
+ },
+ "temas": {
+  "Relaciones": [
+   [
+    {
+     "k": "richarh",
+     "t": "Tú eres el espejo. Lo que ves en el otro casi siempre empieza en ti.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "idea",
+     "t": "Tres preguntas ordenan cualquier relación: ¿quién soy yo en mis relaciones?, ¿quién es el otro realmente? y ¿cómo decido sin destruirme?",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "richarh",
+     "t": "Lo que se repite en los vínculos no es casualidad: es información.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "recordar",
+     "t": "Antes de culpar esta semana, pregunta: ¿qué parte de lo que veo en el otro empieza en mí?",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "richarh",
+     "t": "Comprender no es justificar. Ver con claridad no es juzgar. La diferencia lo cambia todo.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "idea",
+     "t": "La emoción inicial no se controla: se reconoce. Lo que sí puede entrenarse es el espacio entre lo que sientes y lo que haces.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "richarh",
+     "t": "La responsabilidad emocional es un acto de dignidad, no de culpa.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "dato",
+     "t": "Intentar suprimir un pensamiento o una emoción suele intensificarlo después (efecto rebote).",
+     "s": "Daniel Wegner, 1987",
+     "v": 1
+    }
+   ],
+   [
+    {
+     "k": "richarh",
+     "t": "No todo vínculo continúa, pero la vida sí.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "richarh",
+     "t": "La sabiduría relacional no evita el dolor. Evita el desgaste innecesario.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "idea",
+     "t": "Antes de leer a alguien, aprende a observar sin concluir: primero lo que ves, después lo que supones.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "recordar",
+     "t": "Anota esta semana un hecho observado en alguien, sin interpretarlo, y espera a tener más datos antes de concluir.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "richarh",
+     "t": "Sostener no es aguantar. Es permanecer con dignidad en lo que asumiste.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "richarh",
+     "t": "No insistir no siempre es rendirse. A veces es el acto más respetuoso que puedes ofrecer.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "idea",
+     "t": "Cómo trata una persona a quienes no pueden devolverle nada es el indicador más honesto de quién es.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "recordar",
+     "t": "Observa esta semana cómo alguien trata al mesero, al conserje o al más joven del grupo.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "richarh",
+     "t": "La inseguridad no es falta de capacidad. Es una brecha entre lo que alguien puede hacer y lo que cree merecer.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "richarh",
+     "t": "La dependencia no es falta de inteligencia. Es falta de práctica en confiar en el propio criterio.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "idea",
+     "t": "Las emociones son señales neutrales. El problema aparece cuando quedan atrapadas en el pasado y deciden por ti sin que lo notes.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "recordar",
+     "t": "Cuando algo te altere esta semana, ponle nombre a la emoción antes de responder.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "richarh",
+     "t": "Elegir conscientemente a quién dejamos cerca no es elitismo; es autocuidado radical.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "richarh",
+     "t": "El blindaje más sofisticado no empuja. Redirige. Y lo hace con tanta gracia que quien choca contra él casi no lo nota.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "idea",
+     "t": "A veces lo que te detiene es una atadura vieja que ya no te sujeta, como el elefante que nunca intentó soltar la estaca. Conviene preguntarse cuál es la tuya.",
+     "s": "Idea de Jorge Bucay, retomada por Richarh Rojas"
+    },
+    {
+     "k": "recordar",
+     "t": "Escribe cuál de estas emociones te ha detenido más este año: ansiedad, miedo, resentimiento, enojo, culpa, confusión, inseguridad, soledad o falta de paz.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "richarh",
+     "t": "El autoconocimiento sin repetición no cambia nada. Solo informa.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "richarh",
+     "t": "El amor maduro no fuerza, no controla, no se sacrifica sin sentido.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "richarh",
+     "t": "La claridad es más valiosa que las técnicas.",
+     "s": "Richarh Rojas"
+    },
+    {
+     "k": "recordar",
+     "t": "Elige una sola cosa que aprendiste de ti esta semana y repítela cada día hasta que sea hábito.",
+     "s": ""
+    }
+   ]
+  ],
+  "Liderazgo": [
+   [
+    {
+     "k": "principio",
+     "t": "Liderazgo es influencia: nada más, nada menos.",
+     "s": "John Maxwell, Las 21 leyes irrefutables del liderazgo"
+    },
+    {
+     "k": "frase",
+     "t": "El que quiera ser grande entre ustedes, que sea su servidor.",
+     "s": "Jesús, Marcos 10:43 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "dato",
+     "t": "En el estudio Aristóteles de Google, el factor que más distinguió a los mejores equipos fue la seguridad psicológica.",
+     "s": "Google, Project Aristotle (2015)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Hoy pregunta a alguien de tu equipo: «¿qué necesitas de mí para hacerlo mejor?» y escucha sin defenderte.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "El líder siervo pone primero las necesidades de otros y mide su éxito por cómo crecen quienes lidera.",
+     "s": "Robert Greenleaf, The Servant as Leader (1970)"
+    },
+    {
+     "k": "idea",
+     "t": "Jesús lavó los pies de sus discípulos (Juan 13:1-17): el liderazgo se prueba en el servicio concreto, no en el título.",
+     "s": "Lectura posible de Juan 13"
+    },
+    {
+     "k": "autor",
+     "t": "Los gerentes hacen las cosas bien; los líderes hacen las cosas correctas.",
+     "s": "Warren Bennis, On Becoming a Leader (1989)"
+    },
+    {
+     "k": "recordar",
+     "t": "Haz hoy una tarea humilde que normalmente delegarías, sin avisar a nadie.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Empieza con el porqué: la gente no sigue lo que haces, sigue por qué lo haces.",
+     "s": "Simon Sinek, Start With Why (2009)"
+    },
+    {
+     "k": "autor",
+     "t": "Los líderes comen al final: cuidan primero a su gente y la gente responde con lealtad.",
+     "s": "Simon Sinek, Los líderes comen al final (2014)"
+    },
+    {
+     "k": "dato",
+     "t": "Equipos con seguridad psicológica aprenden más de sus errores porque los reportan en vez de esconderlos.",
+     "s": "Amy Edmondson, Administrative Science Quarterly, 1999",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Escribe en una frase el porqué de tu equipo, tu familia o tu proyecto. Compártelo hoy.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Cinco prácticas del liderazgo ejemplar: modelar el camino, inspirar una visión, desafiar el proceso, habilitar a otros y alentar el corazón.",
+     "s": "James Kouzes y Barry Posner, El desafío del liderazgo"
+    },
+    {
+     "k": "idea",
+     "t": "Nehemías inspeccionó el muro de noche y en silencio antes de pedir ayuda (Nehemías 2:11-18): primero diagnóstico, después movilización.",
+     "s": "Lectura posible de Nehemías 2"
+    },
+    {
+     "k": "autor",
+     "t": "El primer trabajo de un líder es definir la realidad y el último es dar las gracias.",
+     "s": "Max De Pree, Leadership Is an Art (1989)"
+    },
+    {
+     "k": "recordar",
+     "t": "Agradece hoy por escrito a alguien que sostiene tu trabajo y dile exactamente qué hizo bien.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "El liderazgo situacional: ajusta el estilo (dirigir, entrenar, apoyar, delegar) al nivel de madurez de cada persona en cada tarea.",
+     "s": "Paul Hersey y Ken Blanchard, 1969"
+    },
+    {
+     "k": "frase",
+     "t": "Sin dirección sabia el pueblo cae; mas en la multitud de consejeros hay seguridad.",
+     "s": "Proverbios 11:14 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "dato",
+     "t": "La mayoría de los empleados que renuncian lo hacen por la relación con su jefe más que por la empresa (idea muy difundida; confirmar la fuente antes de citarla).",
+     "s": "Encuestas de Gallup sobre gestión",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Ten hoy una conversación uno a uno de 15 minutos con alguien de tu equipo, solo para escuchar.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Delegar no es soltar: es confiar con claridad en qué se espera, hasta cuándo y con qué recursos.",
+     "s": "Principio de delegación (práctica común de gestión)"
+    },
+    {
+     "k": "idea",
+     "t": "Jetro le dijo a Moisés: lo que haces no está bien, te agotarás tú y el pueblo (Éxodo 18:17-18). Un líder que no delega termina agotando a los demás.",
+     "s": "Lectura posible de Éxodo 18"
+    },
+    {
+     "k": "autor",
+     "t": "El coraje se contagia: el líder que muestra vulnerabilidad da permiso a los demás para ser auténticos.",
+     "s": "Brené Brown, Dare to Lead (2018)"
+    },
+    {
+     "k": "recordar",
+     "t": "Reconoce hoy delante de otros un error tuyo, con la solución que propones.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Antes de pedir cambio, genera urgencia, forma una coalición y comunica una visión clara y sencilla.",
+     "s": "John Kotter, Liderando el cambio (1996)"
+    },
+    {
+     "k": "frase",
+     "t": "Que cada uno busque no solo su propio bien, sino también el de los demás.",
+     "s": "Filipenses 2:4 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "dato",
+     "t": "Alrededor de dos de cada tres iniciativas de cambio en organizaciones no logran sus objetivos (cifra muy difundida de origen discutido).",
+     "s": "Atribuida a Kotter y a consultoras de gestión",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Define el cambio que quieres liderar y escribe en tres líneas qué lograrás en 90 días.",
+     "s": ""
+    }
+   ]
+  ],
+  "Espiritual": [
+   [
+    {
+     "k": "autor",
+     "t": "Nos hiciste para ti, y nuestro corazón está inquieto hasta que descanse en ti.",
+     "s": "Agustín de Hipona, Confesiones, I,1"
+    },
+    {
+     "k": "principio",
+     "t": "Las disciplinas espirituales no ganan el amor de Dios: ponen al corazón donde puede recibirlo.",
+     "s": "Richard Foster, Alabanza a la disciplina (1978)"
+    },
+    {
+     "k": "idea",
+     "t": "Jesús recomienda orar «en secreto» (Mateo 6:6): lo espiritual crece en lo que nadie ve.",
+     "s": "Lectura posible de Mateo 6:6"
+    },
+    {
+     "k": "recordar",
+     "t": "Reserva diez minutos de silencio hoy, sin pedir nada. Solo estar.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "frase",
+     "t": "Estén quietos, y sepan que yo soy Dios.",
+     "s": "Salmo 46:10 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "autor",
+     "t": "La práctica de la presencia de Dios consiste en conversar con Él en medio de las tareas más comunes.",
+     "s": "Hermano Lorenzo, La práctica de la presencia de Dios (siglo XVII)"
+    },
+    {
+     "k": "dato",
+     "t": "Un metaanálisis halló evidencia moderada de que los programas de meditación mejoran la ansiedad, la depresión y el dolor.",
+     "s": "Goyal y cols., JAMA Internal Medicine, 2014",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Elige una tarea rutinaria de hoy y hazla conscientemente en la presencia de Dios.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "El Sabbat es un palacio en el tiempo: un día para ser en vez de hacer.",
+     "s": "Abraham Heschel, El Sabbat (1951)"
+    },
+    {
+     "k": "idea",
+     "t": "Dios descansó el séptimo día (Génesis 2:2-3) antes de que existiera ningún pecado ni agotamiento: el descanso forma parte del diseño.",
+     "s": "Lectura posible de Génesis 2:2-3"
+    },
+    {
+     "k": "principio",
+     "t": "No hay espiritualidad sana sin salud emocional: conocerte a ti mismo y conocer a Dios caminan juntos.",
+     "s": "Peter Scazzero, Espiritualidad emocionalmente sana (2006)"
+    },
+    {
+     "k": "recordar",
+     "t": "Aparta un tramo de tu semana, aunque sea una tarde, sin trabajo ni pantallas.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "La espiritualidad es una larga obediencia en la misma dirección: constancia más que intensidad.",
+     "s": "Eugene Peterson, Una larga obediencia en la misma dirección (1980)"
+    },
+    {
+     "k": "frase",
+     "t": "Lámpara es a mis pies tu palabra, y lumbrera a mi camino.",
+     "s": "Salmo 119:105 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "principio",
+     "t": "Lectio divina: leer despacio, meditar, orar y descansar en un pasaje breve de la Biblia.",
+     "s": "Práctica monástica antigua, recuperada por Foster y otros"
+    },
+    {
+     "k": "recordar",
+     "t": "Lee hoy un solo versículo tres veces. La tercera, pregunta: ¿qué me está diciendo a mí?",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "La vida con Dios no es un sistema de reglas sino una relación diaria; hay que organizarla para que Dios pueda ocuparse de nosotros.",
+     "s": "Dallas Willard, La divina conspiración (1998)"
+    },
+    {
+     "k": "idea",
+     "t": "David, en el Salmo 23, no pide que se acaben los valles: dice que no teme porque no está solo.",
+     "s": "Lectura posible del Salmo 23"
+    },
+    {
+     "k": "dato",
+     "t": "Numerosos estudios asocian la práctica religiosa regular con mejor salud mental y mayor longevidad, aunque la relación es compleja.",
+     "s": "Harold Koenig, Handbook of Religion and Health",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Escribe una oración de tres líneas con lo que más necesitas esta semana.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "El primer paso de la vida interior es dejar de huir de ti mismo: la soledad, bien vivida, es un lugar de encuentro.",
+     "s": "Henri Nouwen, Fuerza para ser fiel / El regreso del hijo pródigo"
+    },
+    {
+     "k": "frase",
+     "t": "Acérquense a Dios, y él se acercará a ustedes.",
+     "s": "Santiago 4:8 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "principio",
+     "t": "Ayuno, oración y estudio abren espacio para escuchar; no son méritos, son oídos.",
+     "s": "Richard Foster, Alabanza a la disciplina"
+    },
+    {
+     "k": "recordar",
+     "t": "Pasa hoy una comida sin pantallas y pregunta qué hay detrás de lo que sientes.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "Dios no ha cambiado de idea sobre ti: sigue más interesado en tu carácter que en tu comodidad.",
+     "s": "Idea recurrente en C. S. Lewis, Mero cristianismo (1952)",
+     "v": 1
+    },
+    {
+     "k": "idea",
+     "t": "Cuando Elías esperó a Dios, no lo encontró en el viento ni en el terremoto, sino en un silbo apacible (1 Reyes 19:11-13).",
+     "s": "1 Reyes 19:11-13"
+    },
+    {
+     "k": "principio",
+     "t": "La oración contemplativa no busca respuestas rápidas sino presencia.",
+     "s": "Tradición contemplativa cristiana"
+    },
+    {
+     "k": "recordar",
+     "t": "Cierra tu día con un minuto de gratitud en silencio.",
+     "s": ""
+    }
+   ]
+  ],
+  "Finanzas": [
+   [
+    {
+     "k": "principio",
+     "t": "Págate primero: separa una parte de lo que ganas antes de gastar.",
+     "s": "George Clason, El hombre más rico de Babilonia (1926)"
+    },
+    {
+     "k": "dato",
+     "t": "Regla del 72: divide 72 entre la tasa de interés anual y obtienes en cuántos años se duplica tu dinero. Al 6 %, unos 12 años.",
+     "s": "Aritmética financiera"
+    },
+    {
+     "k": "frase",
+     "t": "El que es fiel en lo muy poco, también es fiel en lo mucho.",
+     "s": "Jesús, Lucas 16:10 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Anota esta semana cada gasto. No para juzgarlo: para verlo.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "La riqueza es lo que no ves: el dinero que no gastaste.",
+     "s": "Morgan Housel, La psicología del dinero (2020)"
+    },
+    {
+     "k": "principio",
+     "t": "Fondo de emergencia: guarda de tres a seis meses de gastos antes de invertir.",
+     "s": "Recomendación habitual de planificación financiera"
+    },
+    {
+     "k": "frase",
+     "t": "El rico se enseñorea de los pobres, y el que toma prestado es siervo del que presta.",
+     "s": "Proverbios 22:7 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Calcula hoy cuántos meses de gastos básicos cubre tu ahorro.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "dato",
+     "t": "Las pérdidas duelen cerca del doble de lo que alegran las ganancias equivalentes (aversión a la pérdida).",
+     "s": "Daniel Kahneman y Amos Tversky, 1979",
+     "v": 1
+    },
+    {
+     "k": "autor",
+     "t": "Los millonarios típicos viven muy por debajo de sus posibilidades y ahorran con constancia, no con ostentación.",
+     "s": "Thomas Stanley y William Danko, El millonario de al lado (1996)"
+    },
+    {
+     "k": "principio",
+     "t": "Regla 50/30/20: 50 % necesidades, 30 % deseos, 20 % ahorro y deudas.",
+     "s": "Elizabeth Warren, All Your Worth (2005)"
+    },
+    {
+     "k": "recordar",
+     "t": "Cancela hoy una suscripción o gasto que no usas.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Invierte con paciencia y diversifica: en lugar de buscar la aguja en el pajar, compra el pajar entero.",
+     "s": "John Bogle, fundador de Vanguard (indexación)"
+    },
+    {
+     "k": "frase",
+     "t": "Los pensamientos del diligente ciertamente tienden a la abundancia; mas todo el que se apresura, ciertamente va a la pobreza.",
+     "s": "Proverbios 21:5 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "dato",
+     "t": "Ahorrar 100 al mes al 7 % anual durante 30 años da unos 120.000, de los cuales solo 36.000 son aportes tuyos; el resto lo pone el interés compuesto.",
+     "s": "Cálculo de interés compuesto",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Define una cantidad fija para ahorrar cada mes y hazla automática.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Primero sal de deudas caras: lista tus deudas de menor a mayor y paga una a una (método bola de nieve).",
+     "s": "Dave Ramsey, Transformación total de su dinero"
+    },
+    {
+     "k": "idea",
+     "t": "Jesús habló de dinero con frecuencia (la parábola de los talentos, Mateo 25:14-30): administrarlo es parte de la vida espiritual.",
+     "s": "Lectura posible de Mateo 25"
+    },
+    {
+     "k": "autor",
+     "t": "Todo lo que tenemos es de Dios y lo administramos para otros; el dinero revela dónde está el corazón.",
+     "s": "Randy Alcorn, El principio del tesoro (2001)"
+    },
+    {
+     "k": "recordar",
+     "t": "Escribe tus deudas y su tasa de interés. Pon una fecha para la primera que saldarás.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "La mayoría de los errores con el dinero no son de matemática sino de conducta: miedo, impaciencia y comparación.",
+     "s": "Morgan Housel, La psicología del dinero"
+    },
+    {
+     "k": "principio",
+     "t": "Tres cuentas: gastos, ahorro e inversión. Separar el dinero por propósito evita gastar lo que no es para gastar.",
+     "s": "Práctica común de planificación financiera"
+    },
+    {
+     "k": "frase",
+     "t": "Los que deseen enriquecerse caen en tentación y lazo; porque el amor al dinero es raíz de todos los males.",
+     "s": "1 Timoteo 6:9-10 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Antes de una compra no planeada, espera 48 horas.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Generosidad planeada: decide de antemano cuánto darás; lo que se decide con calma se cumple.",
+     "s": "Práctica de mayordomía cristiana"
+    },
+    {
+     "k": "dato",
+     "t": "Gastar dinero en otros aumentó la felicidad más que gastarlo en uno mismo.",
+     "s": "Dunn, Aknin y Norton, Science, 2008",
+     "v": 1
+    },
+    {
+     "k": "frase",
+     "t": "Honra al Señor con tus bienes y con las primicias de todos tus frutos.",
+     "s": "Proverbios 3:9 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Haz hoy una donación o regalo concreto, aunque sea pequeño.",
+     "s": ""
+    }
+   ]
+  ],
+  "Crecimiento": [
+   [
+    {
+     "k": "autor",
+     "t": "Una mentalidad de crecimiento cree que las capacidades se desarrollan con esfuerzo y estrategia; la fija cree que ya vienen dadas.",
+     "s": "Carol Dweck, Mindset (2006)"
+    },
+    {
+     "k": "dato",
+     "t": "Mejorar un 1 % cada día durante un año equivale a ser 37 veces mejor (1,01 elevado a 365 = 37,8).",
+     "s": "James Clear, Hábitos atómicos; cálculo matemático"
+    },
+    {
+     "k": "frase",
+     "t": "El hierro con hierro se afila; y así el hombre afila el rostro de su amigo.",
+     "s": "Proverbios 27:17 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Escoge una habilidad y practícala 15 minutos al día esta semana.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Práctica deliberada: metas concretas, retroalimentación inmediata y salir un poco de la zona cómoda.",
+     "s": "Anders Ericsson, Peak (2016)"
+    },
+    {
+     "k": "autor",
+     "t": "La perseverancia sostenida en una meta (grit) predice el logro más que el talento solo.",
+     "s": "Angela Duckworth, Grit (2016)"
+    },
+    {
+     "k": "dato",
+     "t": "Formar un hábito tomó en promedio 66 días, con una variación de 18 a 254.",
+     "s": "Lally y cols., 2009",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Define tu hábito mínimo de hoy: algo que puedas hacer incluso en un día malo.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "Creer en tu capacidad de lograr algo (autoeficacia) influye en lo que intentas, cuánto persistes y cómo enfrentas los fracasos.",
+     "s": "Albert Bandura, 1977"
+    },
+    {
+     "k": "principio",
+     "t": "Empieza con el fin en mente y trabaja en lo que está en tu círculo de influencia.",
+     "s": "Stephen Covey, Los 7 hábitos de la gente altamente efectiva"
+    },
+    {
+     "k": "frase",
+     "t": "No sean conformes a este siglo, sino transformados por la renovación de su entendimiento.",
+     "s": "Romanos 12:2 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Escribe tres creencias sobre ti que te limitan y cuestiona con evidencia una de ellas.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "El flujo aparece cuando el desafío y la habilidad están equilibrados: ni tan fácil que aburra ni tan difícil que angustie.",
+     "s": "Mihaly Csikszentmihalyi, Fluir (1990)"
+    },
+    {
+     "k": "principio",
+     "t": "No te elevas al nivel de tus metas, caes al nivel de tus sistemas.",
+     "s": "James Clear, Hábitos atómicos"
+    },
+    {
+     "k": "dato",
+     "t": "Quienes escriben sus metas y sus planes tienen más probabilidad de cumplirlas que quienes solo las piensan.",
+     "s": "Gail Matthews, Dominican University, 2015",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Diseña un sistema para una meta: cuándo, dónde y qué harás cada día.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "Para crecer, hay que estar dispuesto a ser un principiante otra vez: la vulnerabilidad es el camino del aprendizaje.",
+     "s": "Brené Brown, Frágil (2012)"
+    },
+    {
+     "k": "idea",
+     "t": "Pablo escribió que olvidaba lo que quedaba atrás y se extendía a lo que estaba delante (Filipenses 3:13-14): crecer es seguir avanzando sin cargar el pasado.",
+     "s": "Lectura posible de Filipenses 3"
+    },
+    {
+     "k": "principio",
+     "t": "Lo que te trajo hasta aquí no te llevará allá: identifica el hábito que más te frena y cámbialo.",
+     "s": "Marshall Goldsmith, What Got You Here Won't Get You There (2007)"
+    },
+    {
+     "k": "recordar",
+     "t": "Pide hoy una crítica sincera a alguien de confianza y agradécela sin defenderte.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "La pregunta clave no es «¿soy bueno?» sino «¿qué puedo aprender?».",
+     "s": "Carol Dweck, Mindset"
+    },
+    {
+     "k": "principio",
+     "t": "Ciclo de aprendizaje: experiencia, reflexión, conceptos y práctica. Sin reflexión, la experiencia se repite.",
+     "s": "David Kolb, Aprendizaje experiencial (1984)"
+    },
+    {
+     "k": "frase",
+     "t": "Enséñanos a contar de tal modo nuestros días, que traigamos al corazón sabiduría.",
+     "s": "Salmo 90:12 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Dedica 10 minutos de esta noche a escribir qué aprendiste esta semana.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "El hombre que se acerca al final de su vida no se pregunta cuánto tuvo, sino si su vida tuvo sentido.",
+     "s": "Viktor Frankl, El hombre en busca de sentido (idea central)"
+    },
+    {
+     "k": "principio",
+     "t": "Aplica la regla de los 5 años: ¿esto que hoy me preocupa importará dentro de cinco años?",
+     "s": "Principio práctico de perspectiva"
+    },
+    {
+     "k": "dato",
+     "t": "Para dominar una habilidad compleja se necesitan miles de horas de práctica, pero no un número mágico: importa la calidad de la práctica.",
+     "s": "Anders Ericsson, matiz sobre la «regla de las 10.000 horas»",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Identifica una habilidad que quieres dominar y busca hoy a alguien que ya la domine.",
+     "s": ""
+    }
+   ]
+  ],
+  "Estrategias": [
+   [
+    {
+     "k": "principio",
+     "t": "La esencia de la estrategia es elegir qué no hacer.",
+     "s": "Michael Porter, «What Is Strategy?», Harvard Business Review (1996)"
+    },
+    {
+     "k": "idea",
+     "t": "Antes de construir una torre, uno se sienta a calcular el costo (Lucas 14:28-30). Estrategia es honestidad con los recursos.",
+     "s": "Lectura posible de Lucas 14:28-30"
+    },
+    {
+     "k": "principio",
+     "t": "Pre-mortem: imagina que tu plan fracasó y escribe por qué. Detectas riesgos antes de gastarlos.",
+     "s": "Gary Klein, Harvard Business Review (2007)"
+    },
+    {
+     "k": "recordar",
+     "t": "Escribe tus tres prioridades de la semana y una cosa que dejarás de hacer para cumplirlas.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Una buena estrategia tiene un diagnóstico claro, una política que guía y acciones coherentes entre sí.",
+     "s": "Richard Rumelt, Buena estrategia, mala estrategia (2011)"
+    },
+    {
+     "k": "frase",
+     "t": "Los planes se frustran por falta de consejo; mas con muchos consejeros se aprueban.",
+     "s": "Proverbios 15:22 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "autor",
+     "t": "La táctica es saber qué hacer cuando hay algo que hacer; la estrategia es saber qué hacer cuando no hay nada que hacer.",
+     "s": "Savielly Tartakower (atribuida)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Define el problema que de verdad quieres resolver este trimestre en una sola frase.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "Las partidas se ganan acumulando pequeñas ventajas, no con una jugada genial; el ajedrez enseña a pensar a largo plazo.",
+     "s": "Garry Kasparov, Cómo la vida imita al ajedrez (2007)"
+    },
+    {
+     "k": "principio",
+     "t": "Cuello de botella: el rendimiento de todo el sistema lo marca su eslabón más débil. Mejorar otra cosa no sirve.",
+     "s": "Eliyahu Goldratt, La meta (1984)"
+    },
+    {
+     "k": "dato",
+     "t": "Cerca del 80 % de los resultados suele venir del 20 % de las causas (principio de Pareto).",
+     "s": "Vilfredo Pareto; Richard Koch, El principio 80/20",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Encuentra el cuello de botella de tu semana y dedícale la primera hora.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "Compite donde nadie compite: crea un espacio nuevo en vez de pelear en uno saturado (océano azul).",
+     "s": "W. Chan Kim y Renée Mauborgne, La estrategia del océano azul (2005)"
+    },
+    {
+     "k": "idea",
+     "t": "Nehemías combinó oración y guardia: «oramos a nuestro Dios, y por causa de ellos pusimos guarda» (Nehemías 4:9).",
+     "s": "Nehemías 4:9"
+    },
+    {
+     "k": "principio",
+     "t": "Ciclo OODA: observar, orientarse, decidir y actuar más rápido que el entorno cambia.",
+     "s": "John Boyd, estratega militar"
+    },
+    {
+     "k": "recordar",
+     "t": "Observa hoy un cambio en tu entorno que otros no están viendo.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Jugar para ganar: define dónde jugarás, cómo ganarás y qué capacidades necesitas.",
+     "s": "Roger Martin y A. G. Lafley, Jugar para ganar (2013)"
+    },
+    {
+     "k": "frase",
+     "t": "Con dirección sabia harás la guerra; y en la multitud de consejeros está la victoria.",
+     "s": "Proverbios 24:6 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "dato",
+     "t": "Los pronosticadores más precisos revisan sus predicciones con frecuencia y cambian de opinión cuando cambian los datos.",
+     "s": "Philip Tetlock, Superpronosticadores (2015)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Revisa un plan tuyo con datos nuevos y cámbialo si hace falta; no es debilidad.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Distingue entre lo urgente y lo importante; la estrategia vive en lo importante que no es urgente.",
+     "s": "Stephen Covey, hábito 3 (matriz atribuida a Eisenhower)"
+    },
+    {
+     "k": "autor",
+     "t": "Eficiencia es hacer las cosas bien; eficacia es hacer las cosas correctas.",
+     "s": "Peter Drucker, The Effective Executive (1967)"
+    },
+    {
+     "k": "idea",
+     "t": "Salomón dijo que hay tiempo para todo (Eclesiastés 3:1-8): la estrategia también es discernir el momento.",
+     "s": "Lectura posible de Eclesiastés 3"
+    },
+    {
+     "k": "recordar",
+     "t": "Pregúntate hoy: ¿este es el momento de actuar, de esperar o de soltar?",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "principio",
+     "t": "Pocas prioridades bien ejecutadas superan a muchas a medias.",
+     "s": "Greg McKeown, Esencialismo (2014)"
+    },
+    {
+     "k": "dato",
+     "t": "Quienes dividen una meta en pasos concretos con fechas tienen más probabilidad de cumplirla.",
+     "s": "Gollwitzer y Sheeran, 2006 (intenciones de implementación)",
+     "v": 1
+    },
+    {
+     "k": "frase",
+     "t": "Haz tus obras con consejo y prudencia, y encomiéndalas a Dios.",
+     "s": "Idea de Proverbios 16:3 y 20:18 (paráfrasis)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Escribe tu próxima acción concreta para cada una de tus tres prioridades.",
+     "s": ""
+    }
+   ]
+  ],
+  "V. Cristiana": [
+   [
+    {
+     "k": "idea",
+     "t": "Dos mandamientos resumen la ley: amar a Dios con todo el corazón y al prójimo como a ti mismo (Mateo 22:37-39).",
+     "s": "Mateo 22:37-39"
+    },
+    {
+     "k": "autor",
+     "t": "La gracia barata se predica sin exigir discipulado; la gracia costosa llama a seguir a Jesús.",
+     "s": "Dietrich Bonhoeffer, El precio de la gracia (1937)"
+    },
+    {
+     "k": "idea",
+     "t": "La fe sin obras está muerta (Santiago 2:17): lo que crees se prueba en cómo tratas a quien no puede devolverte nada.",
+     "s": "Lectura posible de Santiago 2:17"
+    },
+    {
+     "k": "recordar",
+     "t": "Haz hoy una obra pequeña y anónima que nadie sepa que fue tuya.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "La vida cristiana no se trata de ti: se trata de Dios y de lo que Él quiere hacer a través de ti.",
+     "s": "Rick Warren, Una vida con propósito (2002)"
+    },
+    {
+     "k": "frase",
+     "t": "Ustedes son la luz del mundo; así alumbre su luz delante de los hombres.",
+     "s": "Mateo 5:14-16 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "principio",
+     "t": "Una comunidad cristiana no es un ideal que se exige, sino un regalo que se recibe y se cuida.",
+     "s": "Dietrich Bonhoeffer, Vida en comunidad (1939)"
+    },
+    {
+     "k": "recordar",
+     "t": "Contacta hoy a alguien de tu iglesia o grupo al que hace tiempo no ves.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "Lo asombroso de la gracia es que no se gana, no se merece y no se agota.",
+     "s": "Philip Yancey, ¿Qué tiene de asombrosa la gracia? (1997)"
+    },
+    {
+     "k": "idea",
+     "t": "En la parábola del hijo pródigo (Lucas 15:11-32), el padre corre al encuentro antes de oír la disculpa completa.",
+     "s": "Lectura posible de Lucas 15"
+    },
+    {
+     "k": "autor",
+     "t": "El perdón no cambia el pasado, pero ensancha el futuro.",
+     "s": "Idea de Lewis Smedes, Perdonar y olvidar (1984)",
+     "v": 1
+    },
+    {
+     "k": "recordar",
+     "t": "Pide perdón hoy a alguien, sin justificarte, o perdona a alguien que te lo debe.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "Lo que adoramos sin saberlo (éxito, aprobación, comodidad) termina gobernándonos; solo el Dios verdadero libera.",
+     "s": "Tim Keller, Dioses falsos (2009)"
+    },
+    {
+     "k": "frase",
+     "t": "Todo lo que hagan, háganlo de corazón, como para el Señor y no para los hombres.",
+     "s": "Colosenses 3:23 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "principio",
+     "t": "Servir cuesta: la cruz es el centro de la vida cristiana, no un adorno.",
+     "s": "John Stott, La cruz de Cristo (1986)"
+    },
+    {
+     "k": "recordar",
+     "t": "Pregúntate hoy: ¿qué estoy colocando por encima de Dios sin darme cuenta?",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "Un cristiano no es perfecto; es alguien que sigue regresando a Dios cada día.",
+     "s": "Idea recurrente en C. S. Lewis, Mero cristianismo",
+     "v": 1
+    },
+    {
+     "k": "idea",
+     "t": "Jesús llamó a sus discípulos amigos, no siervos (Juan 15:15): la vida cristiana es relación antes que rendimiento.",
+     "s": "Lectura posible de Juan 15:15"
+    },
+    {
+     "k": "principio",
+     "t": "Vive tu fe en lo ordinario: el trabajo, la familia y la calle son lugares de adoración.",
+     "s": "Tradición reformada sobre la vocación"
+    },
+    {
+     "k": "recordar",
+     "t": "Ora hoy por tres personas por su nombre y, si puedes, díselo.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "Una fe viva produce obras de amor: el cristianismo se ve en cómo tratamos a los más pequeños.",
+     "s": "Mateo 25:35-40; Madre Teresa de Calcuta (idea)",
+     "v": 1
+    },
+    {
+     "k": "frase",
+     "t": "Cada uno según el don que ha recibido, minístrelo a los otros.",
+     "s": "1 Pedro 4:10 (paráfrasis; cotejar en RVC)",
+     "v": 1
+    },
+    {
+     "k": "principio",
+     "t": "Descubre tus dones y úsalos: el cuerpo de Cristo necesita cada parte.",
+     "s": "1 Corintios 12"
+    },
+    {
+     "k": "recordar",
+     "t": "Pregunta hoy a alguien cercano en qué te ve útil para servir.",
+     "s": ""
+    }
+   ],
+   [
+    {
+     "k": "autor",
+     "t": "La alegría cristiana no depende de las circunstancias, sino de la presencia de Dios.",
+     "s": "Tradición bíblica (Filipenses 4:4-7; Nehemías 8:10)"
+    },
+    {
+     "k": "idea",
+     "t": "Pablo escribió «regocíjense siempre» desde una cárcel (Filipenses 4:4): el gozo cristiano no ignora el dolor.",
+     "s": "Lectura posible de Filipenses 4:4"
+    },
+    {
+     "k": "principio",
+     "t": "Practica la acción de gracias: es el antídoto más barato contra la queja y la ansiedad.",
+     "s": "Filipenses 4:6"
+    },
+    {
+     "k": "recordar",
+     "t": "Antes de dormir, da gracias a Dios por tres cosas concretas de hoy.",
+     "s": ""
+    }
+   ]
+  ]
  }
 };
