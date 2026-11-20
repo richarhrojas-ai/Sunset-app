@@ -2,6 +2,7 @@
   'use strict';
 
   let YEARS = [];
+  let RECURSOS = {};
   const STORE_KEY = 'sunset_v2';
   const SYNC_KEY = 'sunset_sync_key';       // la clave de acceso; también autoriza la sincronización
   const CONTENT_KEY = 'sunset_content';     // contenido del año guardado en el dispositivo (para abrir sin conexión)
@@ -48,6 +49,7 @@
   // Colores de la semana: el acento de su árbol (claro, para leerse sobre el fondo nocturno).
   function prepare(data) {
   YEARS = data.years;
+  RECURSOS = data.recursos || {};
   YEARS.forEach(function (Y) {
     Y.start = new Date(Y.firstSunday + 'T00:00:00');
     Y.themes = Y.colors.map(function (c) {
@@ -941,6 +943,7 @@
     renderVerse();
     renderAgenda();
     renderAgo();
+    renderRecursos();
     renderIntent();
     renderWeekBar();
     renderDims();
@@ -1064,6 +1067,49 @@
     });
     if (g.funciono) { const i = el('div', 'ago-day'); i.appendChild(el('h3', null, 'Qué funcionó y qué mejorar')); i.appendChild(el('p', null, g.funciono)); body.appendChild(i); }
     if (g.intencion) { const i = el('div', 'ago-day'); i.appendChild(el('h3', null, 'Lo que quería para la semana siguiente')); i.appendChild(el('p', null, g.intencion)); body.appendChild(i); }
+    box.appendChild(body);
+  }
+
+  // «Para profundizar»: material por palabra (frases, datos, principios, ideas, qué recordar, tus libros y autores)
+  // para las 3 palabras principales de la semana y el tema de interés de su color.
+  const RES_KINDS = [['richarh', 'De Richarh Rojas'], ['principio', 'Principio'], ['idea', 'Idea'], ['frase', 'Frase'], ['dato', 'Dato'], ['autor', 'Aprendo de'], ['recordar', 'Para recordar']];
+  function renderRecursos() {
+    const box = $('recursos');
+    const wk = Y.weeks[viewing - 1];
+    const words = activeWords(Y, viewing).map((a) => ({ word: a.word, dim: Y.dimensions[a.dim] }));
+    const interest = Y.board[2][wk.col];
+    if (!words.some((w) => w.word === interest)) words.push({ word: interest, dim: Y.dimensions[2] });
+    const withData = words.filter((w) => (RECURSOS[w.word] || []).length);
+    box.textContent = '';
+    box.hidden = !withData.length;
+    box.open = false;
+    if (!withData.length) return;
+    const sum = el('summary');
+    sum.appendChild(icon('bulb'));
+    sum.appendChild(el('span', null, 'Para profundizar esta semana'));
+    sum.appendChild(icon('down', 'chev'));
+    box.appendChild(sum);
+    const body = el('div', 'fold-body');
+    body.appendChild(el('p', 'fold-hint', 'Frases, datos, principios e ideas sobre las palabras de la semana' + (words.length > 3 ? ' y su tema de interés' : '') + '. Lo marcado «por verificar» conviene confirmarlo en su fuente antes de usarlo en público.'));
+    withData.forEach(function (w) {
+      const sec = el('section', 'res-word');
+      sec.appendChild(el('h3', null, w.word + (w.word === interest ? ' · tema de interés' : '')));
+      const items = RECURSOS[w.word];
+      RES_KINDS.forEach(function (kd) {
+        items.filter((i) => i.k === kd[0]).forEach(function (i) {
+          const row = el('div', 'res-item res-' + i.k);
+          row.appendChild(el('span', 'res-kind', kd[1]));
+          row.appendChild(el('p', 'res-text', i.t));
+          if (i.s || i.v) {
+            const src = el('p', 'res-src', i.s || '');
+            if (i.v) src.appendChild(el('em', 'res-pend', ' · por verificar'));
+            row.appendChild(src);
+          }
+          sec.appendChild(row);
+        });
+      });
+      body.appendChild(sec);
+    });
     box.appendChild(body);
   }
 

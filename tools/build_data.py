@@ -197,9 +197,12 @@ def main():
     sources = sorted(SRC_DIR.glob("sunset-contenido-*.xlsx"))
     assert sources, f"No hay planillas en {SRC_DIR.relative_to(ROOT)}"
     years = [build_year(src) for src in sources]
+    # Recursos por palabra (frases, datos, principios...): content/recursos/palabras.json, opcional.
+    rec_file = ROOT / "content" / "recursos" / "palabras.json"
+    recursos = json.loads(rec_file.read_text(encoding="utf-8")) if rec_file.exists() else {}
     OUT.write_text(
         "// Generado por tools/build_data.py desde content/planillas/ — no editar a mano.\n"
-        "export default " + json.dumps({"years": years}, ensure_ascii=False, indent=1) + ";\n",
+        "export default " + json.dumps({"years": years, "recursos": recursos}, ensure_ascii=False, indent=1) + ";\n",
         encoding="utf-8",
     )
     print(f"OK → {OUT.relative_to(ROOT)}")
