@@ -56,6 +56,12 @@ ORTO = [  # (semana, día, texto mal escrito, texto correcto)
  (9, 'Miercoles', 'El justo sabe cuando su bestia', 'El justo sabe cuándo su bestia'),
 ]
 
+# Revisión teológica (20 nov 2026): solo cambian los 3 puntos del día, no el versículo
+PUNTOS = [  # (semana de la planilla, día, 3 puntos)
+ (4, 'Jueves', '• La delicia por la ley trae estabilidad\n• Como árbol junto al agua, no se seca\n• Da fruto a su tiempo'),
+ (52, 'Domingo', '• Servir solo a Dios: la fidelidad del pueblo del pacto\n• Dios se ocupa de lo cotidiano: el pan y el agua\n• Una promesa a Israel, no una garantía de no enfermar: Dios cuida a su pueblo también en la enfermedad'),
+]
+
 # Guion del día (Titulo, Dato curioso, Fuente dato, y Desarrollo/Problematica/Solucion 1-3)
 G = {
  (2, 'Viernes'): ('La tierra es del Señor', None, None,
@@ -190,6 +196,9 @@ G = {
   'Lo que le da valor a lo que damos no es el tamaño, sino el corazón. Una hora dada con amor vale más que mucho dinero dado de mala gana.',
   'Dar plata para no tener que dar tiempo.',
   'Regalale una hora de tu tiempo a alguien que necesita compañía o ayuda.'),
+ (44, 'Jueves'): (None, None, None, None, None, None, None, None, None,
+  'Dios puso al ser humano en el huerto para cultivarlo y cuidarlo antes de la caída (Génesis 2:15): el trabajo es parte de su diseño. Lo que se volvió pesado después fue la fatiga (Génesis 3:17-19), no el trabajo en sí.',
+  None, None),
 }
 CAMPOS = ['Titulo', 'Dato curioso', 'Fuente dato'] + [f'{c} {i}' for i in (1, 2, 3) for c in ('Desarrollo', 'Problematica', 'Solucion')]
 
@@ -204,6 +213,8 @@ for s, dia, malo, bueno in ORTO:
     c = t.cell(s + 1, h.index('Versiculo ' + dia) + 1)
     if malo in (c.value or ''):
         c.value = c.value.replace(malo, bueno)
+for s, dia, pts in PUNTOS:
+    t.cell(s + 1, h.index('3 Puntos ' + dia) + 1).value = pts
 g = wb['Guiones 2027']; hg = [c.value for c in g[1]]
 filas = {(r[0].value, r[1].value): r for r in g.iter_rows(min_row=2) if r[0].value}
 for k, vals in G.items():

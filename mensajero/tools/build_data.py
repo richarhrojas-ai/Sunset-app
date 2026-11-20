@@ -64,6 +64,9 @@ RIESGOS = [
 
 
 def revisar_teologia(semanas):
+    # frases ya revisadas y aceptadas: content/revision_teologica_aceptadas.txt (una por línea, el comienzo de la frase)
+    f = ROOT / 'content' / 'revision_teologica_aceptadas.txt'
+    aceptadas = [l.strip() for l in f.read_text(encoding='utf-8').splitlines() if l.strip() and not l.startswith('#')] if f.exists() else []
     out = []
     for w in semanas:
         for i, d in enumerate(w['dias']):
@@ -71,7 +74,7 @@ def revisar_teologia(semanas):
             textos = list(d.get('puntos', [])) + [g.get('titulo', ''), g.get('accion', ''), d.get('deporte', '')] + list(g.get('ideas', []))
             for q in g.get('puntos', []):
                 textos += [q.get('desarrollo', ''), q.get('problema', ''), q.get('solucion', '')]
-            for t in filter(None, textos):
+            for t in filter(lambda x: x and not any(x.startswith(a) for a in aceptadas), textos):
                 for pat, motivo in RIESGOS:
                     if re.search(pat, t, re.I):
                         out.append(f'Semana {w["n"]} · {DIAS_TXT[i]}: {motivo} → «{t[:90]}{"…" if len(t) > 90 else ""}»')
@@ -199,7 +202,6 @@ def main(path):
                               'texto': '' if texto.startswith('(por completar') else texto,
                               'aire': txt(r.get('Para el aire')).lower().startswith('s')})
 
-    revisar(anio, semanas)
     # semana 1 del calendario impreso: solo viernes 1 y sábado 2 de enero (content/semana_01_AAAA.json).
     # La planilla sigue numerada desde la semana del primer domingo; acá se corre +1 para coincidir con el calendario.
     s1 = ROOT / 'content' / f'semana_01_{anio}.json'
@@ -210,7 +212,10 @@ def main(path):
         w1['dias'] = [{**vacio, **{k: v for k, v in d.items() if k != 'deporte_tipo'}} for d in w1['dias']]
         for w in semanas:
             w['n'] += 1
+        revisar(anio, semanas)  # con la numeración del calendario (2-53), antes de sumar la semana 1, que tiene días vacíos
         semanas.insert(0, w1)
+    else:
+        revisar(anio, semanas)
     data = {'anio': anio, 'semanas': semanas, 'valores': valores, 'mensajero': mensajero}
     html = ROOT / 'public' / 'index.html'
     src = html.read_text(encoding='utf-8')
