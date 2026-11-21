@@ -500,8 +500,8 @@ a.btn{text-decoration:none;}
 :root[data-theme="day"]{
   color-scheme:light;
   --card-shadow:0 6px 22px rgba(60,40,20,.11),0 1px 2px rgba(60,40,20,.08);
-  --txt:rgba(29,20,40,.92);--txt2:rgba(29,20,40,.76);--txt3:rgba(29,20,40,.66);
-  --ink:#1d1428;--gold-ink:#7f5200;
+  --txt:#120d18;--txt2:#2a2331;--txt3:#3d3544;
+  --ink:#0d0912;--gold-ink:#7f5200;
   --glass:rgba(255,255,255,.8);--glass-hi:rgba(255,255,255,.85);--glass-solid:color-mix(in srgb,var(--bg-low) 30%,#fff);--glass2:rgba(40,25,60,.05);
   --line:rgba(40,25,60,.17);--line2:rgba(40,25,60,.32);
   --well:rgba(255,255,255,.78);--base:rgba(255,255,255,.82);--champ:rgba(40,25,60,.07);--champ2:rgba(40,25,60,.13);--card-mix:22%;
@@ -560,3 +560,9 @@ a.btn{text-decoration:none;}
 .theme-btn .ico{width:14px;height:14px;}
 .theme-btn:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
 :root[data-theme="day"] .theme-btn{background:rgba(255,255,255,.55);color:var(--ink);}
+
+/* Modo día: letra negra marcada y un punto más gruesa, para leer con luz */
+:root[data-theme="day"] body{font-weight:400;}
+:root[data-theme="day"] :is(.card-text,.today-text,.sunday-hook,.verse,.intent,.res-text,.q-text,.dq-q,.sat-list li,.story,.field-hint,.fold-hint,.note,.grat,.sheet-text,.quick-phrase p,.sum-block p,.diary-text,.ago-day p,.result-text,.mood-note,.streak,.in-play,.eval-pct-label,.tree-name,.word-qs li,.agenda-list li,.modal-box p,.modal-box li){font-weight:400;}
+:root[data-theme="day"] :is(.sunday-title,.week-num,.eval-pct,.sum-big,.modal-box h2,.sheet-head h2,.dim-cap-word,.meter-head output,.diary-doc h1){font-weight:300;}
+:root[data-theme="day"] .signature{color:var(--ink);}

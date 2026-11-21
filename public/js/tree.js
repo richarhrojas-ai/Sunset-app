@@ -19,7 +19,7 @@
     Amarillo: { name: 'Lapacho amarillo', sci: 'Handroanthus albus', accent: '#f7cf55', mid: '#c99a10', ink: ['#e8a90c', '#f5c518'],
       bg: { top: '#221808', mid: '#40300f', low: '#573b0f', warm: '#d08a14' }, day: { top: '#efd58d', mid: '#f8e8bb', low: '#fcf4dc', warm: '#ffcf70' }, glow: '#f9cf62', bark: '#2d1f1b' },
     Blanco: { name: 'Lapacho blanco', sci: 'Tabebuia roseoalba', accent: '#f4ebf6', mid: '#b9a8c0', ink: ['#e9cfdb', '#fbf1f5'],
-      bg: { top: '#101628', mid: '#222c4a', low: '#333c5a', warm: '#b0703f' }, day: { top: '#8fb2e2', mid: '#bcd2ee', low: '#e2ecf7', warm: '#ffdcb5' }, glow: '#e4dcf8', bark: '#2d1f1b' },
+      bg: { top: '#17171b', mid: '#2e2e35', low: '#403f46', warm: '#9c7a5c' }, day: { top: '#a7a6aa', mid: '#cfcdcf', low: '#ecebea', warm: '#f6dcc2' }, glow: '#f1ece4', bark: '#2d1f1b' },
     Verde: { name: 'Árbol en hoja nueva', sci: '', accent: '#98d878', mid: '#4e9a3b', ink: ['#4e9a3b', '#86c25a'],
       bg: { top: '#07201a', mid: '#0f3a2c', low: '#175038', warm: '#9a7a1c' }, day: { top: '#a9d8be', mid: '#d3ebdc', low: '#ecf6ef', warm: '#ffe9a6' }, glow: '#74cf8a', bark: '#2d1f1b' },
     Negro: { name: 'Silueta al atardecer', sci: '', accent: '#e3cfa2', mid: '#8c7b5c', ink: ['#a8997f', '#e3cfa2'],
