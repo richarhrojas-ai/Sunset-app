@@ -386,20 +386,51 @@
   (function () { const m = micButton($('editorText')); if (m) $('editorSaved').parentNode.insertBefore(m, $('editorSaved')); })();
   window.addEventListener('pagehide', function () { flushEditor(); flushNotes(); });
 
+  // ── Tema: Auto (de día entre las 7:00 y las 18:59), Día o Noche ──
+  const THEMES = ['auto', 'day', 'night'];
+  const THEME_LABEL = { auto: 'Auto', day: 'Día', night: 'Noche' };
+  const THEME_ICON = { auto: 'auto', day: 'sun', night: 'moon' };
+  let themePref = 'auto';
+  try { themePref = localStorage.getItem('sunset_tema') || 'auto'; } catch (e) { /* sin almacenamiento */ }
+  if (THEMES.indexOf(themePref) < 0) themePref = 'auto';
+  function themeNow() {
+    if (themePref !== 'auto') return themePref;
+    const h = (now || clock()).getHours();
+    return h >= 7 && h < 19 ? 'day' : 'night';
+  }
+  function applyMode() {
+    const mode = themeNow();
+    document.documentElement.dataset.theme = mode;
+    const b = $('themeBtn');
+    b.textContent = '';
+    b.appendChild(icon(THEME_ICON[themePref]));
+    b.appendChild(el('span', 'theme-label', THEME_LABEL[themePref]));
+    b.setAttribute('aria-label', 'Tema: ' + THEME_LABEL[themePref] + (themePref === 'auto' ? ' (ahora ' + THEME_LABEL[mode].toLowerCase() + ')' : '') + '. Toca para cambiar.');
+    b.title = themePref === 'auto' ? 'Automático: día de 7 a 19 h' : 'Modo ' + THEME_LABEL[themePref].toLowerCase();
+    if (Y) applyTheme();
+  }
+  $('themeBtn').addEventListener('click', function () {
+    themePref = THEMES[(THEMES.indexOf(themePref) + 1) % THEMES.length];
+    try { localStorage.setItem('sunset_tema', themePref); } catch (e) { /* sin almacenamiento */ }
+    applyMode();
+    toast(themePref === 'auto' ? 'Modo automático: día de 7 a 19 h' : 'Modo ' + THEME_LABEL[themePref].toLowerCase());
+  });
+
   const treeOf = (colorName) => window.SunsetTree.TREES[colorName] || window.SunsetTree.TREES.Lila;
   let shown = '';
   function applyTheme() {
     const col = weekAt(Y, viewing).col;
     const t = Y.themes[col];
     const root = document.documentElement.style;
-    root.setProperty('--wk', t.strong);
+    root.setProperty('--wk-accent', t.strong);
     root.setProperty('--wk-mid', t.mid);
     // Cada día de la semana toma su propio matiz dentro de la gama del color de la semana.
     const tr = treeOf(t.name);
     const dayTints = [tr.accent, tr.mid, tr.ink[0], tr.ink[1],
       'color-mix(in srgb,' + tr.accent + ' 55%,#ffffff)', 'color-mix(in srgb,' + tr.mid + ' 70%,#000000)'];
     dayTints.forEach((v, i) => root.setProperty('--d' + (i + 1), v));
-    const bg = treeOf(t.name).bg;
+    const day = themeNow() === 'day';
+    const bg = (day && treeOf(t.name).day) || treeOf(t.name).bg;
     root.setProperty('--bg-top', bg.top);
     root.setProperty('--bg-mid', bg.mid);
     root.setProperty('--bg-low', bg.low);
@@ -407,12 +438,12 @@
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', bg.top);
     // Paisaje de la semana: una imagen fija por color (ancha para pantallas grandes, alta para celulares).
-    if (shown !== t.name) {
-      shown = t.name;
-      const base = 'images/trees/' + t.name;
-      $('hero').style.backgroundColor = treeOf(t.name).bg.top;
-      $('heroWide').srcset = base + '-wide.webp';
-      $('heroImg').src = base + '-tall.webp';
+    if (shown !== t.name + day) {
+      shown = t.name + day;
+      const base = 'images/trees/' + t.name, suffix = day ? '-day' : '';
+      $('hero').style.backgroundColor = bg.top;
+      $('heroWide').srcset = base + '-wide' + suffix + '.webp';
+      $('heroImg').src = base + '-tall' + suffix + '.webp';
     }
   }
   window.addEventListener('resize', debounce(function () { if (Y) renderYear(); }, 200));
@@ -2103,7 +2134,7 @@
     render();
   }
   // Y si queda abierta y visible, se revisa cada minuto (cambio de día a medianoche).
-  setInterval(function () { if (document.visibilityState === 'visible') refreshToday(); }, 60000);
+  setInterval(function () { if (document.visibilityState === 'visible') { refreshToday(); if (themePref === 'auto' && document.documentElement.dataset.theme !== themeNow()) applyMode(); } }, 60000);
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState !== 'visible') { flushEditor(); flushNotes(); return; }
     refreshToday();
@@ -2132,6 +2163,7 @@
   function boot(data) {
     prepare(data);
     now = clock();
+    applyMode();
     TODAY = locateDate(now);
     Y = TODAY.Y;
     viewing = TODAY.week;

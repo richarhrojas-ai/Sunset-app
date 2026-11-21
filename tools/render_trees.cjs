@@ -1,6 +1,7 @@
 // Genera las imágenes fijas de la app a partir de tools/tree-render.js:
 //   public/images/trees/<Color>-wide.webp   paisaje para pantallas anchas
 //   public/images/trees/<Color>-tall.webp   paisaje para celulares
+//   public/images/trees/<Color>-*-day.webp  las mismas, con cielo de día (modo día)
 //   public/images/logo.png                  logo de la cabecera
 //   public/icons/*.png                      íconos de la app instalada
 //
@@ -27,16 +28,16 @@ const COL = { Negro: 0, Rojo: 1, Azul: 2, Lila: 3, Verde: 4, Amarillo: 5, Blanco
   const draw = (fn, args) => page.evaluate(fn, args);
 
   for (const color of COLORS) {
-    for (const [kind, [w, h]] of Object.entries(SIZES)) {
-      const png = await draw(({ color, w, h, seed }) => {
+    for (const mode of ['night', 'day']) for (const [kind, [w, h]] of Object.entries(SIZES)) {
+      const png = await draw(({ color, w, h, seed, mode }) => {
         const c = document.createElement('canvas');
         Object.defineProperty(c, 'clientWidth', { value: w });
         Object.defineProperty(c, 'clientHeight', { value: h });
         Object.defineProperty(window, 'devicePixelRatio', { value: 2, configurable: true });
-        window.SunsetTreeRender.render(c, color, seed);
+        window.SunsetTreeRender.render(c, color, seed, mode);
         return c.toDataURL('image/png');
-      }, { color, w, h, seed: 2027 * 10 + COL[color] });
-      fs.writeFileSync(path.join(TMP, `${color}-${kind}.png`), Buffer.from(png.split(',')[1], 'base64'));
+      }, { color, w, h, seed: 2027 * 10 + COL[color], mode });
+      fs.writeFileSync(path.join(TMP, `${color}-${kind}${mode === 'day' ? '-day' : ''}.png`), Buffer.from(png.split(',')[1], 'base64'));
     }
   }
   // Logo solo, o ícono: el logo centrado sobre fondo carbón con un margen (pad) alrededor.

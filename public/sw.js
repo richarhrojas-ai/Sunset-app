@@ -1,7 +1,7 @@
 // Service worker: guarda la app para abrirla sin conexión.
 // Red primero (así siempre ves la última versión publicada), caché si no hay red.
 // Nunca se guarda /api/: el contenido y los registros viajan con la clave y se guardan en la app.
-const CACHE = 'sunset-v47';
+const CACHE = 'sunset-v48';
 const SHELL = [
   './',
   'index.html',
@@ -14,18 +14,32 @@ const SHELL = [
   'images/logo.png',
   'images/trees/Lila-wide.webp',
   'images/trees/Lila-tall.webp',
+  'images/trees/Lila-wide-day.webp',
+  'images/trees/Lila-tall-day.webp',
   'images/trees/Verde-wide.webp',
   'images/trees/Verde-tall.webp',
+  'images/trees/Verde-wide-day.webp',
+  'images/trees/Verde-tall-day.webp',
   'images/trees/Amarillo-wide.webp',
   'images/trees/Amarillo-tall.webp',
+  'images/trees/Amarillo-wide-day.webp',
+  'images/trees/Amarillo-tall-day.webp',
   'images/trees/Blanco-wide.webp',
   'images/trees/Blanco-tall.webp',
+  'images/trees/Blanco-wide-day.webp',
+  'images/trees/Blanco-tall-day.webp',
   'images/trees/Negro-wide.webp',
   'images/trees/Negro-tall.webp',
+  'images/trees/Negro-wide-day.webp',
+  'images/trees/Negro-tall-day.webp',
   'images/trees/Rojo-wide.webp',
   'images/trees/Rojo-tall.webp',
+  'images/trees/Rojo-wide-day.webp',
+  'images/trees/Rojo-tall-day.webp',
   'images/trees/Azul-wide.webp',
   'images/trees/Azul-tall.webp',
+  'images/trees/Azul-wide-day.webp',
+  'images/trees/Azul-tall-day.webp',
 ];
 
 self.addEventListener('install', (e) => {

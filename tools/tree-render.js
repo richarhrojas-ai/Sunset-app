@@ -23,7 +23,12 @@
 
   // Cielo de cada color: sale de los mismos datos que usa la app (public/js/tree.js), así no se desfasan.
   const T = window.SunsetTree.TREES;
-  const skyOf = (name) => { const t = T[name] || T.Lila; return { top: t.bg.top, mid: t.bg.mid, glow: t.glow, warm: t.bg.warm, bark: t.bark }; };
+  // mode 'day': cielo de mañana del mismo color (claro, con el sol bajo y tibio); por defecto, el de la noche.
+  const skyOf = (name, mode) => {
+    const t = T[name] || T.Lila;
+    const b = mode === 'day' && t.day ? t.day : t.bg;
+    return { top: b.top, mid: b.mid, low: b.low, glow: mode === 'day' ? '#fff6dc' : t.glow, warm: b.warm, bark: t.bark, day: mode === 'day' };
+  };
   const rgbOf = (hex) => { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
   const rgba = (hex, a) => 'rgba(' + rgbOf(hex).join(',') + ',' + a + ')';
   const mixHex = (a, b, t) => { const A = rgbOf(a), B = rgbOf(b); return 'rgb(' + A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',') + ')'; };
@@ -78,8 +83,8 @@
   // Suelo oscuro con un reflejo de luz y una alfombra de pétalos caídos.
   function drawGround(ctx, rand, w, h, horizon, sky, flowers, cx, scale, dark) {
     const g = ctx.createLinearGradient(0, horizon, 0, h);
-    g.addColorStop(0, mixHex(sky.warm, '#000000', 0.78));
-    g.addColorStop(1, mixHex(sky.top, '#000000', 0.45));
+    g.addColorStop(0, sky.day ? mixHex(sky.low, '#a08a66', 0.62) : mixHex(sky.warm, '#000000', 0.78));
+    g.addColorStop(1, sky.day ? mixHex(sky.mid, '#7a6447', 0.72) : mixHex(sky.top, '#000000', 0.45));
     ctx.fillStyle = g;
     ctx.fillRect(0, horizon, w, h - horizon);
     ctx.save();
@@ -201,7 +206,7 @@
     return tips;
   }
 
-  function render(canvas, colorName, seed) {
+  function render(canvas, colorName, seed, mode) {
     const tree = TREES[colorName] || TREES.Lila;
     const form = FORMS[tree.form];
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -220,7 +225,7 @@
     const horizon = h * (wideFmt ? 0.85 : 0.87);       // el árbol se apoya abajo: arriba queda lugar para la franja de íconos
     const treeX = w * 0.5;
     const dark = tree.form === 'silhouette';
-    const sky = skyOf(colorName);
+    const sky = skyOf(colorName, mode);
 
     const rand = rng(seed);
     const scale = Math.min(h * (wideFmt ? 0.115 : 0.1), w * 0.125) * (form.flat && w < 640 ? 0.9 : 1);
