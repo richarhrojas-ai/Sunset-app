@@ -70,7 +70,6 @@ button{font-family:inherit;color:inherit;}
 .dims::-webkit-scrollbar{display:none;}
 .dim{position:relative;z-index:1;flex:1 1 0;min-width:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 4px 10px;border:none;border-radius:16px;background:none;cursor:pointer;}
 .dim-ico{width:46px;height:46px;color:rgba(255,255,255,.92);stroke:currentColor;fill:none;stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round;transition:filter .4s,opacity .3s;}
-.dim-ico .glow{fill:url(#goldGlow);stroke:none;}
 @media (max-width:520px){.dim-ico{width:36px;height:36px;}}
 /* Las tres principales de la semana: destello propio y una marca dorada debajo; las otras, más tenues */
 .dim:not(.is-eval) .dim-ico{opacity:.55;}

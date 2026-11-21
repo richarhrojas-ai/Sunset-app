@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Genera los 7 íconos de las dimensiones (línea blanca + destello dorado) como <symbol> SVG.
+"""Genera los 7 íconos de las dimensiones (solo línea, sin halo) como <symbol> SVG.
 
 Uso: python3 tools/make_icons.py   → imprime los <symbol id="d-0"…"d-6"> que van dentro del sprite SVG
-al final de public/index.html (junto al degradé #goldGlow que da el destello dorado).
-Cada ícono vive en una cuadrícula de 48×48; .glow es el destello dorado central.
+al final de public/index.html. Cada ícono vive en una cuadrícula de 48×48.
 """
 import math
 
@@ -24,19 +23,20 @@ def gear(cx, cy, r_out, r_in, teeth, hole=0.0, rot=0.0):
 def rays(cx, cy, r1, r2, n=8, start=0):
     return " ".join(f"M{cx + r1*math.cos(start + i*2*math.pi/n):.2f} {cy + r1*math.sin(start + i*2*math.pi/n):.2f} L{cx + r2*math.cos(start + i*2*math.pi/n):.2f} {cy + r2*math.sin(start + i*2*math.pi/n):.2f}" for i in range(n))
 
-G = lambda cx, cy, r: f'<circle class="glow" cx="{cx}" cy="{cy}" r="{r}"/>'
+# Sin halo circular detrás de los íconos (se veía como un anillo); queda solo la línea.
+G = lambda cx, cy, r: ''
 icons = {}
 
 # 0 · Regalo de Dios: dos manos juntas, palmas arriba, que ofrecen un sol (las manos de Dios dando)
 def hand_pair():
     # Dos manos juntas en cuenco: el borde de abajo es el canto de las manos, el de arriba las yemas y las palmas;
     # se unen en el centro (línea del medio) y las muñecas bajan. La mano derecha es el espejo de la izquierda.
-    left = ('M24 43 C13 43 5.5 37 4.6 27.6 C4.4 26.2 5.9 25.6 6.9 26.6 '
-            'C9.6 30 13.2 32.6 17.2 34 C19.6 34.8 22 35.2 24 35.2')
-    fingers = 'M8.3 28.8 L9.9 31.3 M11.5 30.9 L12.8 33.4 M14.8 32.6 L15.6 35.1'
-    wrist = 'M18.6 42.5 L17.3 46.5'
+    left = ('M24 42.5 C11.5 42.5 2.5 37.5 1.6 26 C1.5 24.6 3.1 24 4.1 25.1 '
+            'C7.8 29.6 12.4 32.6 17.2 34 C19.6 34.7 22 35 24 35')
+    fingers = 'M6.6 27.8 L8 30.4 M10.2 30.4 L11.4 33 M13.9 32.3 L14.7 34.9'
+    wrist = 'M18.4 42 L17 46.5'
     mirror = lambda d: __import__('re').sub(r'(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)', lambda m: f"{48 - float(m.group(1)):g} {m.group(2)}", d)
-    return (f'<path d="{left}"/><path d="{mirror(left)}"/><path d="M24 35.2 V43"/>'
+    return (f'<path d="{left}"/><path d="{mirror(left)}"/><path d="M24 35 V42.5"/>'
             f'<path d="{wrist} {mirror(wrist)}"/><path d="{fingers} {mirror(fingers)}" opacity=".8"/>')
 icons[0] = (G(24, 16, 11) + f'<circle cx="24" cy="16" r="4.8"/><path d="{rays(24, 16, 7.2, 10, 8)}"/>' + hand_pair())
 
