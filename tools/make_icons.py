@@ -27,11 +27,18 @@ def rays(cx, cy, r1, r2, n=8, start=0):
 G = lambda cx, cy, r: f'<circle class="glow" cx="{cx}" cy="{cy}" r="{r}"/>'
 icons = {}
 
-# 0 · Regalo de Dios: manos en copa sosteniendo una esfera solar
-icons[0] = (G(24, 16, 11) + f'<circle cx="24" cy="16" r="5"/><path d="{rays(24,16,7.5,10.5,8)}"/>'
-  '<path d="M5 28 C5 37 13 43 24 43 C35 43 43 37 43 28"/>'
-  '<path d="M5 28 C10 29 15 32 19 36 M43 28 C38 29 33 32 29 36"/>'
-  '<path d="M10 33.5 C13 36.5 17 38.5 21 39.5 M38 33.5 C35 36.5 31 38.5 27 39.5" opacity=".75"/>')
+# 0 · Regalo de Dios: dos manos juntas, palmas arriba, que ofrecen un sol (las manos de Dios dando)
+def hand_pair():
+    # Dos manos juntas en cuenco: el borde de abajo es el canto de las manos, el de arriba las yemas y las palmas;
+    # se unen en el centro (línea del medio) y las muñecas bajan. La mano derecha es el espejo de la izquierda.
+    left = ('M24 43 C13 43 5.5 37 4.6 27.6 C4.4 26.2 5.9 25.6 6.9 26.6 '
+            'C9.6 30 13.2 32.6 17.2 34 C19.6 34.8 22 35.2 24 35.2')
+    fingers = 'M8.3 28.8 L9.9 31.3 M11.5 30.9 L12.8 33.4 M14.8 32.6 L15.6 35.1'
+    wrist = 'M18.6 42.5 L17.3 46.5'
+    mirror = lambda d: __import__('re').sub(r'(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)', lambda m: f"{48 - float(m.group(1)):g} {m.group(2)}", d)
+    return (f'<path d="{left}"/><path d="{mirror(left)}"/><path d="M24 35.2 V43"/>'
+            f'<path d="{wrist} {mirror(wrist)}"/><path d="{fingers} {mirror(fingers)}" opacity=".8"/>')
+icons[0] = (G(24, 16, 11) + f'<circle cx="24" cy="16" r="4.8"/><path d="{rays(24, 16, 7.2, 10, 8)}"/>' + hand_pair())
 
 # 1 · Prioridades: faro con haz de luz horizontal
 icons[1] = (G(24, 14, 9) +
@@ -51,11 +58,15 @@ icons[3] = (G(35, 11, 8) +
   '<path d="M16 42 L25 36.5 L15.5 31 L24 25.5 L17.5 21.5 L20 16.5" />'
   f'<circle cx="35" cy="11" r="2.6"/><path d="{rays(35,11,4.6,6.6,8)}" opacity=".85"/>')
 
-# 4 · Valor: mano sosteniendo un diamante facetado con destello
-icons[4] = (G(24, 15, 12) +
-  '<path d="M16 7 H32 L38 14 L24 29 L10 14 Z"/><path d="M10 14 H38 M16 7 L19.5 14 L24 7 L28.5 14 L32 7 M19.5 14 L24 29 L28.5 14"/>'
-  '<path d="M41 4 V9 M38.5 6.5 H43.5" opacity=".9"/>'
-  '<path d="M4 38 C9 35.5 14 36.5 18 38.5 H29.5 C32.2 38.5 32.2 42 29.5 42 H20 M18 38.5 L11 42.5 L4 41 M20 42 L33 42 L42 38.5"/>')
+# 4 · Valores: mano abierta, palma arriba, con un diamante facetado apoyado en ella y un destello
+icons[4] = (G(26, 21, 12) +
+  '<path d="M17.5 12 H34.5 L39.5 18.5 L26 33.5 L12.5 18.5 Z"/>'
+  '<path d="M12.5 18.5 H39.5 M17.5 12 L21 18.5 L26 12 L31 18.5 L34.5 12 M21 18.5 L26 33.5 L31 18.5"/>'
+  '<path d="M42 4.5 V9.5 M39.5 7 H44.5" opacity=".9"/>'
+  # mano: muñeca a la izquierda, pulgar que sube, dedos extendidos hacia la derecha y la palma que recibe
+  '<path d="M3 36.5 H11 C13 36.5 14.2 34.4 16.2 34.2 C18.4 34 19.2 36 18.2 37.3 H35.5 C40 37.3 41.6 39.3 41.2 40.8 '
+  'C40.8 42.4 38.6 42.9 36 43 L24 43.6 C19 45.4 14 46.2 3 45.6"/>'
+  '<path d="M22 40.2 H38.2 M23 42 H33.5" opacity=".75"/>')
 
 # 6 · Sistema: caballo de ajedrez sobre un engranaje (sus palabras son de ajedrez)
 icons[6] = (G(24, 18, 12) +
