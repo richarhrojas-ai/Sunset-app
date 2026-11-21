@@ -10,6 +10,9 @@ export async function handleContent(req, secret, data = content, delayMs) {
   return json(200, data);
 }
 
-export default async (req) => handleContent(req, process.env.SUNSET_KEY);
+// Junto al contenido van los datos públicos de configuración que la app necesita (nunca secretos).
+export const publicConfig = (env) => ({ googleClientId: env.GOOGLE_CLIENT_ID || '', vapidPublicKey: env.VAPID_PUBLIC_KEY || '' });
+
+export default async (req) => handleContent(req, process.env.SUNSET_KEY, Object.assign({}, content, { config: publicConfig(process.env) }));
 
 export const config = { path: '/api/content' };

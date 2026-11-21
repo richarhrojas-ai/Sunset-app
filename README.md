@@ -82,6 +82,29 @@ python3 tools/hero_from_photo.py mi-lapacho.jpg Lila --x 0.6 --y 0.5
 Recorta la foto a los dos formatos y reemplaza las imágenes de ese color. Los consejos para elegir la foto
 están en el encabezado de `tools/hero_from_photo.py`. Después subir la versión de caché en `sw.js`.
 
+## Uso diario
+
+- **2 minutos** (botón en la barra de atajos): frase de hoy, registro corto (con dictado por voz si el navegador lo permite), gratitud, ánimo, la pregunta del día y la agenda.
+- **Racha amable**: cuántos de los últimos 7 días tienen algo registrado; nunca castiga.
+- **Pregunta del día**: una de las 15 preguntas de la semana por día; las respuestas cuentan en la autoevaluación.
+- **Resumen de la semana**: botón en el cierre. El domingo, la primera vez que se abre la app, aparece solo el de la semana que terminó.
+- **Dictado**: botón «Dictar» en el registro de hoy, en 2 minutos y en la pantalla grande. Usa el reconocimiento de voz del navegador (en Chrome el audio lo procesa Google).
+
+### Notificación diaria (opcional)
+
+1. `npm run push:claves` imprime `VAPID_PUBLIC_KEY` y `VAPID_PRIVATE_KEY`.
+2. Créalas como variables de entorno en Netlify (Site configuration → Environment variables). Opcional: `VAPID_SUBJECT=mailto:tu@correo`.
+3. Vuelve a publicar. En la app: Diario, agenda y recordatorio → «Activar notificación diaria». La función `push-diario` corre cada hora y avisa una vez por día, a la hora en punto elegida, en la zona horaria del dispositivo. En iPhone funciona con la app instalada en la pantalla de inicio (iOS 16.4 o posterior).
+
+### Eventos de Google Calendar dentro de la app (opcional)
+
+1. En Google Cloud Console: crea un proyecto, activa **Google Calendar API** y configura la pantalla de consentimiento (tipo Externo, en modo prueba, con tu correo como usuario de prueba).
+2. Credenciales → **ID de cliente de OAuth** → Aplicación web. En «Orígenes de JavaScript autorizados» pon la dirección del sitio (por ejemplo `https://tu-sitio.netlify.app`).
+3. Crea en Netlify la variable `GOOGLE_CLIENT_ID` con ese ID y vuelve a publicar.
+4. En la app aparece «Ver mis eventos de hoy». El permiso es solo de lectura y el acceso vive en la memoria de la app (no se guarda en el servidor).
+
+Sin estas variables la app funciona igual: muestra el enlace a la agenda y el recordatorio descargable.
+
 ## Datos del usuario
 
 Qué se registra: el registro de cada día (domingo a sábado), las 5 respuestas por palabra con su comentario,

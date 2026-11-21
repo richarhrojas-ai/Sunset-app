@@ -3,6 +3,7 @@
 
   let YEARS = [];
   let RECURSOS = {};
+  let CONFIG = {};
   let TEMAS = {};
   const STORE_KEY = 'sunset_v2';
   const SYNC_KEY = 'sunset_sync_key';       // la clave de acceso; también autoriza la sincronización
@@ -51,6 +52,7 @@
   function prepare(data) {
   YEARS = data.years;
   RECURSOS = data.recursos || {};
+  CONFIG = data.config || {};
   TEMAS = data.temas || {};
   YEARS.forEach(function (Y) {
     Y.start = new Date(Y.firstSunday + 'T00:00:00');
@@ -75,6 +77,8 @@
     });
   });
   }
+  // Hora actual. Solo la vista previa (con datos incluidos) puede fijar una fecha de demostración.
+  const clock = () => (window.SUNSET_DATA && window.SUNSET_NOW ? new Date(window.SUNSET_NOW) : new Date());
   const yearIndex = (year) => YEARS.findIndex((Y) => Y.year === year);
   // Introducción: los días de enero que quedan antes de la semana 1 (semana 0). Solo existe si el año trae «intro».
   const weekAt = (YY, w) => (w === 0 ? YY.intro : YY.weeks[w - 1]);
@@ -235,8 +239,8 @@
 
   // Ánimo del día (1 a 5, cinco puntos que se encienden) y gratitud corta. Claves AAAA/wN/m0..m6 y g0..g6.
   const MOOD_NAMES = ['Bajo', 'Algo bajo', 'Normal', 'Bien', 'Genial'];
-  function moodRow(day, onChange) {
-    const key = k(Y, viewing, 'm' + day);
+  function moodRow(day, onChange, YY, w) {
+    const key = k(YY || Y, w === undefined ? viewing : w, 'm' + day);
     const row = el('div', 'mood');
     row.setAttribute('role', 'group');
     row.setAttribute('aria-label', 'Ánimo del día');
@@ -281,12 +285,17 @@
       gr.classList.add('grat-note');
       box.appendChild(gr);
       box.appendChild(moodRow(day, refreshMood));
+      box.appendChild(questionBox(Y, viewing, day, refreshEval));
+      const tools = el('div', 'record-tools');
+      const mic = micButton(box.querySelector('textarea'));
+      if (mic) tools.appendChild(mic);
       const expand = el('button', 'expand-btn');
       expand.appendChild(icon('expand'));
       expand.appendChild(document.createTextNode('Ampliar'));
       expand.setAttribute('aria-label', 'Abrir el registro de hoy en pantalla grande');
       expand.addEventListener('click', () => openEditor(day));
-      box.appendChild(expand);
+      tools.appendChild(expand);
+      box.appendChild(tools);
       return box;
     }
     const words = countWords(getV(key, ''));
@@ -374,6 +383,7 @@
     if (editing && editing.gKey) setV(editing.gKey, $('editorGrat').value);
   }, 500));
   $('editorDone').addEventListener('click', closeEditor);
+  (function () { const m = micButton($('editorText')); if (m) $('editorSaved').parentNode.insertBefore(m, $('editorSaved')); })();
   window.addEventListener('pagehide', function () { flushEditor(); flushNotes(); });
 
   const treeOf = (colorName) => window.SunsetTree.TREES[colorName] || window.SunsetTree.TREES.Lila;
@@ -621,6 +631,11 @@
 
     wrap.appendChild(el('div', 'field-label', 'Ánimo de la semana'));
     wrap.appendChild(moodChart(Y, viewing));
+
+    const sb = el('button', 'btn sum-btn', 'Ver el resumen de la semana');
+    sb.type = 'button';
+    sb.addEventListener('click', () => openSummary(Y, viewing));
+    wrap.appendChild(sb);
 
     wrap.appendChild(el('div', 'field-label', '¿Qué funcionó? ¿Qué mejorar?'));
     wrap.appendChild(noteField(k(Y, viewing, 'funciono'), 'Mirando la semana completa…', 3));
@@ -1195,6 +1210,10 @@
     const link = $('agendaLink');
     link.href = gcal(day >= 0 ? 'day' : 'week', base);
     link.textContent = day >= 0 ? 'Ver mi agenda de hoy ↗' : 'Ver la agenda de esta semana ↗';
+    const evBox = $('agendaEvents');
+    evBox.textContent = '';
+    evBox.hidden = !(CONFIG.googleClientId && day >= 0);
+    if (!evBox.hidden) evBox.appendChild(agendaBox(now));
     void wk;
   }
 
@@ -1314,6 +1333,397 @@
     download('sunset-recordatorio.ics', ics, 'text/calendar;charset=utf-8');
     toast('Recordatorio descargado: ábrelo para agregarlo a tu agenda');
   });
+
+  // ════ Uso diario: modo 2 minutos, racha, pregunta del día, resumen de la semana y dictado ════
+
+  // Frase de un día concreto: el @ del día, o la frase de la semana el domingo.
+  function dayPhrase(YY, w, day) {
+    const wk = weekAt(YY, w);
+    if (w === 0) { const d = introDay(wk, day); return { label: d ? d.etiqueta : 'Introducción', text: introText(d) || wk.hook }; }
+    if (day === 0) return { label: 'La frase de la semana', text: wk.hook };
+    const c = DAY_CARDS.find((x) => x.day === day);
+    return { label: c.label, text: c.key === 'sabado' ? wk.sabado.join('  ') : wk[c.key] };
+  }
+  // ¿Hay algo registrado ese día? (registro, gratitud, ánimo o cumplimiento)
+  function dayHasEntry(YY, w, d) {
+    return !!String(getV(k(YY, w, 'd' + d), '')).trim() || !!String(getV(k(YY, w, 'g' + d), '')).trim()
+      || getV(k(YY, w, 'm' + d), null) != null || getV(k(YY, w, 'p' + d), null) != null;
+  }
+
+  // Racha amable: de los últimos 7 días (hoy incluido), cuántos tienen algo registrado. Nunca castiga.
+  function streak() {
+    const days = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now); d.setDate(d.getDate() - i);
+      const loc = locateDate(d);
+      days.push({ date: d, ok: loc.inRange && dayHasEntry(loc.Y, loc.week, d.getDay()) });
+    }
+    return { days: days, n: days.filter((x) => x.ok).length };
+  }
+  function streakBox() {
+    const s = streak();
+    const box = el('div', 'streak');
+    const dots = el('span', 'streak-dots');
+    dots.setAttribute('aria-hidden', 'true');
+    s.days.forEach(function (x) { const i = el('i', x.ok ? 'on' : ''); i.title = WEEKDAYS[x.date.getDay()] + ' ' + x.date.getDate(); dots.appendChild(i); });
+    box.appendChild(dots);
+    box.appendChild(el('span', 'streak-text', s.n === 0 ? 'Empieza hoy: un registro corto alcanza.'
+      : s.n === 7 ? 'Siete de siete días. Semana completa.' : 'Llevas ' + s.n + ' de los últimos 7 días. Cada día suma.'));
+    return box;
+  }
+
+  // Pregunta del día: una sola de las 15 preguntas de la semana, la primera sin responder a partir de un punto que cambia cada día.
+  function dailyQuestion(YY, w, day) {
+    if (w === 0) return null;
+    const all = [];
+    activeWords(YY, w).forEach((a) => (YY.questions[a.word] || []).forEach((q, qi) => all.push({ word: a.word, qi: qi, q: q })));
+    if (!all.length) return null;
+    const start = (day * 2) % all.length;
+    for (let i = 0; i < all.length; i++) {
+      const it = all[(start + i) % all.length];
+      if (getAnswers(YY, w, it.word)[it.qi] == null) return it;
+    }
+    return { done: true };
+  }
+  function questionBox(YY, w, day, onAnswer) {
+    const box = el('div', 'dq');
+    let justAnswered = false;
+    const paint = function () {
+      box.textContent = '';
+      const it = dailyQuestion(YY, w, day);
+      box.hidden = !it;
+      if (!it) return;
+      box.appendChild(el('div', 'dq-label', 'Pregunta del día'));
+      if (it.done) { box.appendChild(el('p', 'dq-note', 'Ya respondiste las 15 preguntas de la semana.')); return; }
+      if (justAnswered) {
+        box.appendChild(el('p', 'dq-note', 'Anotado. Con una por día la autoevaluación se completa sola.'));
+        const more = el('button', 'dq-more', 'Responder otra');
+        more.type = 'button';
+        more.addEventListener('click', function () { justAnswered = false; paint(); });
+        box.appendChild(more);
+        return;
+      }
+      box.appendChild(el('p', 'dq-word', it.word + ' · pregunta ' + (it.qi + 1) + ' de 5'));
+      box.appendChild(el('p', 'dq-q', it.q));
+      const scale = el('div', 'q-scale');
+      scale.setAttribute('role', 'group');
+      scale.setAttribute('aria-label', 'Respuesta del 1 (nunca) al 5 (siempre)');
+      for (let v = 1; v <= 5; v++) {
+        const b = el('button', null, String(v));
+        b.type = 'button';
+        b.setAttribute('aria-label', v + ' de 5');
+        b.addEventListener('click', function () {
+          setAnswer(YY, w, it.word, it.qi, v);
+          justAnswered = true;
+          if (onAnswer) onAnswer();
+          paint();
+        });
+        scale.appendChild(b);
+      }
+      box.appendChild(scale);
+      const ends = el('div', 'q-ends');
+      ends.appendChild(el('span', null, 'Nunca'));
+      ends.appendChild(el('span', null, 'Siempre'));
+      box.appendChild(ends);
+    };
+    paint();
+    return box;
+  }
+  const refreshEval = function () { renderEvaluation(); renderClosing(); renderYear(); renderBoard(); };
+
+  // Dictado por voz (si el navegador lo permite): agrega lo dictado al final del texto.
+  function micButton(ta) {
+    const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Speech) return null;
+    const b = el('button', 'mic-btn');
+    b.type = 'button';
+    b.appendChild(icon('mic'));
+    const lbl = el('span', null, 'Dictar');
+    b.appendChild(lbl);
+    let rec = null;
+    b.addEventListener('click', function () {
+      if (rec) { rec.stop(); return; }
+      rec = new Speech();
+      rec.lang = /^es/i.test(navigator.language || '') ? navigator.language : 'es-ES';
+      rec.continuous = true;
+      rec.interimResults = false;
+      rec.onresult = function (e) {
+        let t = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) if (e.results[i].isFinal) t += e.results[i][0].transcript;
+        t = t.trim();
+        if (!t) return;
+        ta.value = ta.value + (ta.value && !/\s$/.test(ta.value) ? ' ' : '') + t;
+        ta.dispatchEvent(new Event('input', { bubbles: true }));
+      };
+      rec.onerror = function (e) { if (e.error === 'not-allowed' || e.error === 'service-not-allowed') toast('Permite el micrófono para poder dictar'); };
+      rec.onend = function () { rec = null; b.classList.remove('on'); lbl.textContent = 'Dictar'; };
+      try { rec.start(); } catch (e) { rec = null; return; }
+      b.classList.add('on');
+      lbl.textContent = 'Escuchando… toca para terminar';
+    });
+    return b;
+  }
+
+  // ── Eventos de Google Calendar dentro de la app (solo lectura) ──
+  // Requiere GOOGLE_CLIENT_ID en Netlify. El permiso se pide con la ventana de Google; el token vive solo en memoria.
+  let gToken = null, gTokenExp = 0;
+  function loadGsi() {
+    return new Promise(function (resolve, reject) {
+      if (window.google && window.google.accounts && window.google.accounts.oauth2) return resolve();
+      const s = document.createElement('script');
+      s.src = 'https://accounts.google.com/gsi/client';
+      s.async = true;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('No se pudo cargar el acceso de Google'));
+      document.head.appendChild(s);
+    });
+  }
+  async function googleToken(interactive) {
+    if (gToken && Date.now() < gTokenExp) return gToken;
+    await loadGsi();
+    return new Promise(function (resolve, reject) {
+      const client = window.google.accounts.oauth2.initTokenClient({
+        client_id: CONFIG.googleClientId,
+        scope: 'https://www.googleapis.com/auth/calendar.events.readonly',
+        callback: function (r) {
+          if (r.error) { reject(new Error(r.error)); return; }
+          gToken = r.access_token;
+          gTokenExp = Date.now() + ((Number(r.expires_in) || 3600) - 60) * 1000;
+          try { localStorage.setItem('sunset_gcal', '1'); } catch (e) { /* sin almacenamiento */ }
+          resolve(gToken);
+        },
+        error_callback: function (err) { reject(new Error((err && err.type) || 'cancelado')); },
+      });
+      client.requestAccessToken({ prompt: interactive ? '' : 'none' });
+    });
+  }
+  async function dayEvents(date, token) {
+    const start = new Date(date); start.setHours(0, 0, 0, 0);
+    const end = new Date(start); end.setDate(end.getDate() + 1);
+    const url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events?singleEvents=true&orderBy=startTime&maxResults=20'
+      + '&timeMin=' + encodeURIComponent(start.toISOString()) + '&timeMax=' + encodeURIComponent(end.toISOString());
+    const r = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
+    if (r.status === 401) { gToken = null; throw new Error('El permiso de Google venció'); }
+    if (!r.ok) throw new Error('Google respondió ' + r.status);
+    return (await r.json()).items || [];
+  }
+  const hhmm = (iso) => { const d = new Date(iso); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
+  function agendaBox(date) {
+    const box = el('div', 'agenda-box');
+    if (!CONFIG.googleClientId) {
+      const a = el('a', 'agenda-link', 'Ver mi agenda de hoy ↗');
+      a.href = gcal('day', date); a.target = '_blank'; a.rel = 'noopener noreferrer';
+      box.appendChild(a);
+      return box;
+    }
+    const list = el('ul', 'agenda-list');
+    const btn = el('button', 'btn agenda-connect');
+    btn.type = 'button';
+    btn.appendChild(icon('cal'));
+    btn.appendChild(document.createTextNode('Ver mis eventos de hoy'));
+    const show = async function (interactive) {
+      btn.disabled = true;
+      try {
+        const items = await dayEvents(date, await googleToken(interactive));
+        list.textContent = '';
+        if (!items.length) list.appendChild(el('li', 'agenda-empty', 'No tienes eventos hoy.'));
+        items.forEach(function (ev) {
+          const li = el('li');
+          li.appendChild(el('span', 'agenda-time', ev.start && ev.start.dateTime ? hhmm(ev.start.dateTime) : 'Todo el día'));
+          li.appendChild(el('span', null, ev.summary || '(sin título)'));
+          list.appendChild(li);
+        });
+        btn.hidden = true;
+      } catch (e) {
+        btn.disabled = false;
+        if (interactive) toast('No se pudo leer la agenda: ' + e.message);
+      }
+    };
+    btn.addEventListener('click', () => show(true));
+    box.appendChild(btn);
+    box.appendChild(list);
+    let connected = false;
+    try { connected = localStorage.getItem('sunset_gcal') === '1'; } catch (e) { /* sin almacenamiento */ }
+    if (connected) show(false);
+    return box;
+  }
+
+  // ── Notificación diaria (Web Push) ──
+  // Requiere VAPID_PUBLIC_KEY y VAPID_PRIVATE_KEY en Netlify; el envío lo hace la función programada push-diario.
+  const pushSupported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+  function b64ToBytes(s) {
+    const b = atob((s + '='.repeat((4 - (s.length % 4)) % 4)).replace(/-/g, '+').replace(/_/g, '/'));
+    return Uint8Array.from(b, (c) => c.charCodeAt(0));
+  }
+  async function pushSubscription() {
+    const reg = await navigator.serviceWorker.ready;
+    return reg.pushManager.getSubscription();
+  }
+  async function renderPush() {
+    const row = $('pushRow');
+    row.hidden = !(CONFIG.vapidPublicKey && pushSupported() && !window.SUNSET_DATA);
+    if (row.hidden) return;
+    let sub = null;
+    try { sub = await pushSubscription(); } catch (e) { /* sin service worker */ }
+    $('pushOn').textContent = sub ? 'Actualizar la hora' : 'Activar notificación diaria';
+    $('pushOff').hidden = !sub;
+  }
+  $('pushOn').addEventListener('click', async function () {
+    try {
+      if ((await Notification.requestPermission()) !== 'granted') { toast('Sin permiso, no puedo avisarte'); return; }
+      const reg = await navigator.serviceWorker.ready;
+      let sub = await reg.pushManager.getSubscription();
+      if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ToBytes(CONFIG.vapidPublicKey) });
+      const hour = Number(($('remTime').value || '21:00').slice(0, 2));
+      const r = await fetch('/api/push', {
+        method: 'POST', headers: Object.assign({ 'content-type': 'application/json' }, authHeaders()),
+        body: JSON.stringify({ subscription: sub.toJSON(), hour: hour, tz: Intl.DateTimeFormat().resolvedOptions().timeZone }),
+      });
+      if (!r.ok) throw new Error('el servidor respondió ' + r.status);
+      try { localStorage.setItem('sunset_rem_time', $('remTime').value); } catch (e) { /* sin almacenamiento */ }
+      toast('Listo: te avisaré cada día a las ' + hour + ':00');
+    } catch (e) {
+      toast('No se pudo activar: ' + e.message);
+    }
+    renderPush();
+  });
+  $('pushOff').addEventListener('click', async function () {
+    try {
+      const sub = await pushSubscription();
+      if (sub) {
+        await fetch('/api/push', { method: 'DELETE', headers: Object.assign({ 'content-type': 'application/json' }, authHeaders()), body: JSON.stringify({ endpoint: sub.endpoint }) });
+        await sub.unsubscribe();
+      }
+      toast('Notificación diaria desactivada');
+    } catch (e) {
+      toast('No se pudo desactivar: ' + e.message);
+    }
+    renderPush();
+  });
+
+  // ── Modo 2 minutos: lo esencial de hoy en una sola pantalla ──
+  function openQuick() {
+    const body = $('quickBody');
+    body.textContent = '';
+    if (!TODAY.inRange) {
+      $('quickTitle').textContent = 'Registro rápido';
+      body.appendChild(el('p', 'field-hint', TODAY.before ? 'Se activa cuando empieza tu año Sunset.' : 'Falta cargar la planilla del año.'));
+    } else {
+      const TY = TODAY.Y, TW = TODAY.week, day = now.getDay();
+      $('quickTitle').textContent = WEEKDAYS[day] + ' ' + now.getDate() + ' de ' + MONTHS[now.getMonth()];
+      $('quickEyebrow').textContent = '2 minutos · ' + weekName(TW, TY);
+      body.appendChild(streakBox());
+      const ph = dayPhrase(TY, TW, day);
+      const phrase = el('div', 'quick-phrase');
+      phrase.appendChild(el('div', 'today-label', ph.label));
+      phrase.appendChild(el('p', null, ph.text));
+      body.appendChild(phrase);
+      body.appendChild(el('div', 'field-label', 'Registro de hoy'));
+      const rec = noteField(k(TY, TW, 'd' + day), 'Una o dos líneas sobre tu día…', 3);
+      body.appendChild(rec);
+      const mic = micButton(rec);
+      if (mic) body.appendChild(mic);
+      const gr = noteField(k(TY, TW, 'g' + day), 'Hoy agradezco…', 1);
+      gr.classList.add('grat-note');
+      body.appendChild(gr);
+      body.appendChild(moodRow(day, null, TY, TW));
+      body.appendChild(questionBox(TY, TW, day, null));
+      body.appendChild(agendaBox(now));
+    }
+    $('quick').hidden = false;
+    document.documentElement.classList.add('no-scroll');
+    const first = body.querySelector('textarea');
+    if (first) first.focus({ preventScroll: true });
+  }
+  function closeQuick() {
+    flushNotes();
+    $('quick').hidden = true;
+    document.documentElement.classList.remove('no-scroll');
+    renderWhenIdle();
+  }
+  $('quickBtn').addEventListener('click', openQuick);
+  $('quickDone').addEventListener('click', closeQuick);
+
+  // ── Resumen de la semana ──
+  function prevWeekOf(YY, w) {
+    if (w > minWeek(YY)) return { Y: YY, week: w - 1 };
+    const before = YEARS[yearIndex(YY.year) - 1];
+    return before ? { Y: before, week: before.weeks.length } : null;
+  }
+  function weekHasEntries(YY, w) {
+    for (let d = 0; d < 7; d++) if (dayHasEntry(YY, w, d)) return true;
+    return activeWords(YY, w).some((a) => wordAnswered(YY, w, a.word) > 0) || !!String(getV(k(YY, w, 'intencion'), '')).trim();
+  }
+  function openSummary(YY, w) {
+    const wk = weekAt(YY, w);
+    const body = $('summaryBody');
+    body.textContent = '';
+    $('summaryEyebrow').textContent = weekName(w, YY) + ' · ' + YY.themes[wk.col].name + ' · ' + wk.dates;
+    const block = function (title) { const s = el('section', 'sum-block'); s.appendChild(el('h3', null, title)); body.appendChild(s); return s; };
+    // Constancia
+    let days = 0;
+    for (let d = 0; d < 7; d++) if (dayHasEntry(YY, w, d)) days++;
+    const total = w === 0 ? (wk.dias || []).length : 7;
+    const pv = [0, 1, 2, 3, 4, 5, 6].map((d) => getV(k(YY, w, 'p' + d), null)).filter((v) => v != null);
+    const b1 = block('Tu semana');
+    b1.appendChild(el('p', 'sum-big', days + ' de ' + total + ' días con registro'));
+    if (pv.length) b1.appendChild(el('p', null, 'Cumplimiento promedio: ' + Math.round(pv.reduce((s, v) => s + v, 0) / pv.length) + ' %'));
+    // Ánimo
+    const m = weekMood(YY, w);
+    const b2 = block('Ánimo');
+    if (m.n) {
+      const known = m.vals.map((v, d) => ({ v: v, d: d })).filter((x) => x.v != null);
+      const hi = known.reduce((b, x) => (x.v > b.v ? x : b), known[0]);
+      const lo = known.reduce((b, x) => (x.v < b.v ? x : b), known[0]);
+      b2.appendChild(el('p', 'sum-big', fmt1(m.avg) + ' de 5 · ' + MOOD_NAMES[Math.round(m.avg) - 1]));
+      if (hi.v !== lo.v) b2.appendChild(el('p', null, 'Mejor día: ' + WEEKDAYS[hi.d] + ' · más bajo: ' + WEEKDAYS[lo.d]));
+    } else b2.appendChild(el('p', 'field-hint', 'Sin ánimo registrado.'));
+    // Palabras: cómo te fue y comparación con su evaluación anterior
+    if (w !== 0) {
+      const b3 = block('Palabras de la semana');
+      activeWords(YY, w).forEach(function (a) {
+        const n = wordAnswered(YY, w, a.word);
+        let line = a.word + ': ' + (n ? Math.round(wordScore(YY, w, a.word) * 100) + ' %' : 'sin responder');
+        const prev = (YY.evalWeeks[a.word] || []).filter((x) => x < w && wordAnswered(YY, x, a.word) > 0).pop();
+        if (n && prev) {
+          const diff = Math.round((wordScore(YY, w, a.word) - wordScore(YY, prev, a.word)) * 100);
+          line += diff > 0 ? ' · subió ' + diff + ' puntos desde la ' + weekName(prev, YY).toLowerCase() : diff < 0 ? ' · bajó ' + (-diff) + ' puntos desde la ' + weekName(prev, YY).toLowerCase() : ' · igual que la última vez';
+        } else if (n) line += ' · primera evaluación';
+        b3.appendChild(el('p', null, line));
+      });
+    }
+    // Gratitud
+    const grats = [0, 1, 2, 3, 4, 5, 6].map((d) => ({ d: d, t: String(getV(k(YY, w, 'g' + d), '')).trim() })).filter((x) => x.t);
+    if (grats.length) {
+      const b4 = block('Lo que agradeciste');
+      grats.forEach((x) => b4.appendChild(el('p', 'sum-grat', WEEKDAYS[x.d] + ': ' + x.t)));
+    }
+    // Cierre
+    const f = String(getV(k(YY, w, 'funciono'), '')).trim(), it = String(getV(k(YY, w, 'intencion'), '')).trim();
+    const b5 = block('Para la semana que viene');
+    if (f) b5.appendChild(el('p', null, f));
+    b5.appendChild(el('p', it ? 'sum-intent' : 'field-hint', it ? 'Quiero: ' + it : 'Todavía no escribiste tu intención. Puedes hacerlo en el cierre de esta semana.'));
+    $('summary').hidden = false;
+    document.documentElement.classList.add('no-scroll');
+    $('summaryDone').focus();
+  }
+  function closeSummary() {
+    $('summary').hidden = true;
+    document.documentElement.classList.remove('no-scroll');
+  }
+  $('summaryDone').addEventListener('click', closeSummary);
+  // El domingo, la primera vez que se abre la app, aparece el resumen de la semana que terminó.
+  function sundaySummary() {
+    if (!TODAY.inRange || now.getDay() !== 0) return;
+    let seen = '';
+    try { seen = localStorage.getItem('sunset_resumen') || ''; } catch (e) { /* sin almacenamiento */ }
+    if (seen === localDay()) return;
+    const pw = prevWeekOf(TODAY.Y, TODAY.week);
+    if (!pw || !weekHasEntries(pw.Y, pw.week)) return;
+    try { localStorage.setItem('sunset_resumen', localDay()); } catch (e) { /* sin almacenamiento */ }
+    if (!$('welcome').hidden) return;
+    openSummary(pw.Y, pw.week);
+  }
 
   function goTo(year, week) {
     Y = year;
@@ -1682,7 +2092,7 @@
   // Si la app queda abierta de un día para otro, "hoy" se actualiza al volver a ella.
   function refreshToday() {
     if (!Y) return;
-    const n = new Date();
+    const n = clock();
     if (n.toDateString() === now.toDateString()) return;
     if (editing || (document.activeElement && document.activeElement.tagName === 'TEXTAREA')) return;
     const followToday = isCurrent();
@@ -1700,6 +2110,8 @@
     sync();
   });
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !$('quick').hidden) { closeQuick(); return; }
+    if (e.key === 'Escape' && !$('summary').hidden) { closeSummary(); return; }
     if (e.key === 'Escape' && !$('diary').hidden) { closeDiary(); return; }
     if (e.key === 'Escape' && !$('search').hidden) { closeSearch(); return; }
     if (e.key === 'Escape' && editing) { closeEditor(); return; }
@@ -1719,7 +2131,7 @@
   // Arranque con el contenido ya disponible.
   function boot(data) {
     prepare(data);
-    now = new Date();
+    now = clock();
     TODAY = locateDate(now);
     Y = TODAY.Y;
     viewing = TODAY.week;
@@ -1728,7 +2140,11 @@
     renderSyncPanel();
     renderUndo();
     render();
+    renderPush();
     if (!state.welcomed) $('welcome').hidden = false;
+    // Abrir directo el registro rápido (por ejemplo, desde la notificación diaria).
+    if (/[?&]rapido=1/.test(location.search)) openQuick();
+    else sundaySummary();
     sync();
   }
 

@@ -449,3 +449,48 @@ a.btn{text-decoration:none;}
 .is-intro #evaluation,.is-intro #ago{display:none;}
 .is-intro .days{grid-template-columns:repeat(2,1fr);}
 @media (max-width:620px){.is-intro .days{grid-template-columns:1fr;}}
+
+/* Modo 2 minutos, racha, pregunta del día, resumen y dictado */
+.jump .jump-quick{display:inline-flex;align-items:center;gap:6px;border-color:var(--gold);color:var(--gold-hi);background:rgba(255,215,0,.08);}
+.jump .jump-quick .ico{width:14px;height:14px;}
+.quick-body{flex:1;overflow-y:auto;padding:14px 20px 24px;display:flex;flex-direction:column;gap:10px;}
+.quick-body .note{margin-top:0;}
+.quick-body .field-label{margin:6px 0 0;}
+.quick-phrase{padding:12px 14px;border-radius:14px;background:var(--glass2);border:1px solid var(--line);}
+.quick-phrase p{font-size:16px;font-weight:300;font-style:italic;line-height:1.55;}
+.streak{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--txt2);}
+.streak-dots{display:inline-flex;gap:5px;}
+.streak-dots i{width:9px;height:9px;border-radius:50%;border:1px solid var(--line2);}
+.streak-dots i.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 6px rgba(255,215,0,.45);}
+.dq{margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(0,0,0,.18);border:1px solid var(--line);}
+.dq[hidden]{display:none;}
+.dq-label{font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi);margin-bottom:4px;}
+.dq-word{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--txt2);}
+.dq-q{font-size:15px;line-height:1.55;margin:4px 0 10px;}
+.dq-note{font-size:14px;color:var(--txt2);}
+.dq-more{margin-top:6px;background:none;border:0;border-bottom:1px solid rgba(255,215,0,.5);padding:2px 0;font:inherit;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi);cursor:pointer;}
+.dq-more:focus-visible,.mic-btn:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
+.record-tools{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.record-tools .expand-btn{margin:0;}
+.mic-btn{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;padding:6px 12px;border-radius:16px;border:1px solid var(--line2);background:rgba(255,255,255,.06);font:inherit;font-size:12px;letter-spacing:.06em;color:var(--txt);cursor:pointer;}
+.mic-btn .ico{width:14px;height:14px;}
+.mic-btn.on{border-color:#ff8e7b;color:#ffd0c4;box-shadow:0 0 10px rgba(255,120,100,.35);}
+.sheet-foot .mic-btn{margin-left:auto;margin-right:12px;}
+.sum-btn{margin-top:14px;}
+.sum-block{padding:12px 0;border-top:1px solid var(--line);}
+.sum-block:first-child{border-top:0;}
+.sum-block h3{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--wk);margin-bottom:6px;}
+.sum-block p{font-size:15px;line-height:1.6;}
+.sum-big{font-size:20px!important;font-weight:200;letter-spacing:.02em;}
+.sum-grat{font-style:italic;color:var(--txt2);}
+.sum-intent{color:var(--gold-hi);}
+
+/* Agenda de Google dentro de la app */
+.agenda-events{margin:-4px 4px 0;}
+.agenda-box{display:flex;flex-direction:column;gap:8px;}
+.agenda-connect{align-self:flex-start;}
+.agenda-connect .ico{width:14px;height:14px;}
+.agenda-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.agenda-list li{display:flex;gap:10px;font-size:14px;line-height:1.5;color:var(--txt);}
+.agenda-time{flex:none;min-width:5.5em;font-variant-numeric:tabular-nums;color:var(--gold-hi);font-size:13px;}
+.agenda-empty{color:var(--txt2)!important;}
