@@ -197,6 +197,11 @@ def main():
     sources = sorted(SRC_DIR.glob("sunset-contenido-*.xlsx"))
     assert sources, f"No hay planillas en {SRC_DIR.relative_to(ROOT)}"
     years = [build_year(src) for src in sources]
+    # Introducción opcional por año (content/planillas/introduccion-AAAA.json): los días de enero que quedan antes de la semana 1.
+    for y in years:
+        intro_file = SRC_DIR / f"introduccion-{y['year']}.json"
+        if intro_file.exists():
+            y["intro"] = json.loads(intro_file.read_text(encoding="utf-8"))
     # Recursos por palabra (frases, datos, principios...): content/recursos/palabras.json, opcional.
     rec_file = ROOT / "content" / "recursos" / "palabras.json"
     recursos = json.loads(rec_file.read_text(encoding="utf-8")) if rec_file.exists() else {}

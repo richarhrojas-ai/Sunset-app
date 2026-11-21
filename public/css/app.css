@@ -468,3 +468,8 @@ a.btn{text-decoration:none;}
 .res-sub>summary::after{content:' +';}
 .res-sub[open]>summary::after{content:' −';}
 .res-sub>summary:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
+
+/* Introducción (semana 0): liviana, sin autoevaluación */
+.is-intro #evaluation,.is-intro #ago{display:none;}
+.is-intro .days{grid-template-columns:repeat(2,1fr);}
+@media (max-width:620px){.is-intro .days{grid-template-columns:1fr;}}

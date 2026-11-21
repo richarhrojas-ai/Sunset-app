@@ -58,6 +58,13 @@
       const t = window.SunsetTree.TREES[c.name];
       return { name: c.name, emoji: c.emoji, strong: t.accent, mid: t.mid };
     });
+    if (Y.intro) {
+      const ci = Y.colors.findIndex((c) => c.name === Y.intro.color);
+      const ref = Y.weeks.find((w) => w.col === ci);
+      Y.intro.week = 0;
+      Y.intro.col = ci < 0 ? 0 : ci;
+      Y.intro.phase = ref ? ref.phase : 0;
+    }
     // Semanas en que se evalúa cada palabra.
     Y.evalWeeks = {};
     Y.weeks.forEach(function (wk) {
@@ -66,17 +73,24 @@
   });
   }
   const yearIndex = (year) => YEARS.findIndex((Y) => Y.year === year);
+  // Introducción: los días de enero que quedan antes de la semana 1 (semana 0). Solo existe si el año trae «intro».
+  const weekAt = (YY, w) => (w === 0 ? YY.intro : YY.weeks[w - 1]);
+  const minWeek = (YY) => (YY.intro ? 0 : 1);
+  const allWeeks = (YY) => (YY.intro ? [YY.intro] : []).concat(YY.weeks);
+  const weekName = (w) => (w === 0 ? 'Introducción' : 'Semana ' + w);
   function dateOf(Y, week, day) { const d = new Date(Y.start); d.setDate(d.getDate() + (week - 1) * 7 + day); return d; }
 
   // Año y semana de una fecha. Antes del primer año → su semana 1; después del último → su última semana.
   function locateDate(d) {
     const t = utcDay(d);
     for (const Y of YEARS) {
-      const week = Math.floor((t - utcDay(Y.start)) / DAY_MS / 7) + 1;
+      const diff = Math.floor((t - utcDay(Y.start)) / DAY_MS);
+      const week = Math.floor(diff / 7) + 1;
+      if (week === 0 && Y.intro && diff >= -2) return { Y: Y, week: 0, inRange: true };
       if (week >= 1 && week <= Y.weeks.length) return { Y: Y, week: week, inRange: true };
     }
     const first = YEARS[0], last = YEARS[YEARS.length - 1];
-    return t < utcDay(first.start) ? { Y: first, week: 1, inRange: false, before: true }
+    return t < utcDay(first.start) ? { Y: first, week: first.intro ? 0 : 1, inRange: false, before: true }
       : { Y: last, week: last.weeks.length, inRange: false };
   }
 
@@ -84,7 +98,7 @@
   // Cada semana trae su fila de inicio (phase) y columna/color (col): palabra_k = board[(phase+k) % 7][col].
   // k = 0..2 son las 3 palabras activas; k = 3..6 completan las 7 en juego.
   function rotation(Y, week) {
-    const wk = Y.weeks[week - 1];
+    const wk = weekAt(Y, week);
     const words = [];
     for (let k = 0; k < 7; k++) {
       const dim = (wk.phase + k) % 7;
@@ -271,8 +285,9 @@
   // ── Editor grande del registro ──
   let editing = null;   // { key, day, timer }
   function dayReference(day) {
-    const wk = Y.weeks[viewing - 1];
+    const wk = weekAt(Y, viewing);
     if (day === 0) return wk.hook;
+    if (viewing === 0) return day === 5 ? wk.viernes : wk.sabado.join('  ');
     const d = DAY_CARDS.find((c) => c.day === day);
     return d.key === 'sabado' ? wk.sabado.join('  ') : wk[d.key];
   }
@@ -280,9 +295,9 @@
     if (document.activeElement && document.activeElement.classList.contains('note')) document.activeElement.blur();
     const key = k(Y, viewing, 'd' + day);
     const date = dateOf(Y, viewing, day);
-    const wk = Y.weeks[viewing - 1];
+    const wk = weekAt(Y, viewing);
     editing = { key: key, day: day, timer: null };
-    $('editorEyebrow').textContent = 'Semana ' + viewing + ' · ' + Y.themes[wk.col].name;
+    $('editorEyebrow').textContent = weekName(viewing) + ' · ' + Y.themes[wk.col].name;
     $('editorTitle').textContent = WEEKDAYS[day] + ' ' + date.getDate() + ' de ' + MONTHS[date.getMonth()];
     $('editorRefText').textContent = dayReference(day);
     $('editorRef').open = false;
@@ -346,7 +361,7 @@
   const treeOf = (colorName) => window.SunsetTree.TREES[colorName] || window.SunsetTree.TREES.Lila;
   let shown = '';
   function applyTheme() {
-    const col = Y.weeks[viewing - 1].col;
+    const col = weekAt(Y, viewing).col;
     const t = Y.themes[col];
     const root = document.documentElement.style;
     root.setProperty('--wk', t.strong);
@@ -380,23 +395,23 @@
     const long = el('span', 'd-long', WEEKDAYS[now.getDay()] + ', ' + now.getDate() + ' de ' + MONTHS[now.getMonth()] + ', ' + now.getFullYear());
     const short = el('span', 'd-short', WEEKDAYS[now.getDay()].slice(0, 3) + ' ' + now.getDate() + ' ' + MONTHS[now.getMonth()].slice(0, 3) + ' ' + now.getFullYear());
     h.appendChild(long); h.appendChild(short);
-    const sub = TODAY.inRange ? 'Semana ' + TODAY.week + ' de ' + TODAY.Y.weeks.length
+    const sub = TODAY.inRange ? (TODAY.week === 0 ? 'Introducción' : 'Semana ' + TODAY.week + ' de ' + TODAY.Y.weeks.length)
       : TODAY.before ? 'Sunset ' + TODAY.Y.year + ' empieza el ' + fmtDate(TODAY.Y.start)
         : 'Falta cargar la planilla del año siguiente';
     h.appendChild(el('small', null, sub));
   }
 
   function renderWeekBar() {
-    const wk = Y.weeks[viewing - 1];
+    const wk = weekAt(Y, viewing);
     const t = Y.themes[wk.col];
     const yi = yearIndex(Y.year);
     const tree = treeOf(t.name);
-    $('weekNum').textContent = 'Semana ' + viewing + (YEARS.length > 1 ? ' · ' + Y.year : '');
+    $('weekNum').textContent = weekName(viewing) + (YEARS.length > 1 ? ' · ' + Y.year : '');
     $('weekSub').textContent = t.name + ' · ' + wk.dates;
     const tn = $('treeName');
     tn.textContent = tree.name;
     if (tree.sci) tn.appendChild(el('i', null, tree.sci));
-    $('prevWeek').disabled = viewing <= 1 && yi === 0;
+    $('prevWeek').disabled = viewing <= minWeek(Y) && yi === 0;
     $('nextWeek').disabled = viewing >= Y.weeks.length && yi === YEARS.length - 1;
     $('todayBtn').hidden = !TODAY.inRange || isCurrent();
     $('yearTitle').textContent = 'Progreso ' + Y.year;
@@ -411,11 +426,16 @@
   }
 
   function renderSunday() {
-    const wk = Y.weeks[viewing - 1];
+    const wk = weekAt(Y, viewing);
     const card = $('sunday');
     card.innerHTML = '';
     card.classList.toggle('is-today', todayIndex() === 0);
-    card.appendChild(dayHead(0, 'Título', 'sun'));
+    if (viewing === 0) {
+      const head = el('div', 'card-day');
+      head.appendChild(icon('sun'));
+      head.appendChild(document.createTextNode('Introducción · ' + wk.dates));
+      card.appendChild(head);
+    } else card.appendChild(dayHead(0, 'Título', 'sun'));
     card.appendChild(el('h1', 'sunday-title', wk.title));
     card.appendChild(el('p', 'sunday-hook', wk.hook));
 
@@ -438,14 +458,16 @@
     });
     card.appendChild(btn);
     card.appendChild(story);
-    card.appendChild(dayRecord(0));
+    if (viewing !== 0) card.appendChild(dayRecord(0));
   }
 
   function renderDays() {
-    const wk = Y.weeks[viewing - 1];
+    const wk = weekAt(Y, viewing);
     const wrap = $('days');
     wrap.innerHTML = '';
-    DAY_CARDS.forEach(function (d) {
+    // En la introducción solo están los dos días de enero que quedan antes de la semana 1: viernes y sábado.
+    const cards = viewing === 0 ? [{ day: 5, key: 'viernes', label: 'Bienvenida', icon: 'sun' }, { day: 6, key: 'sabado', label: 'Preparación', icon: 'check' }] : DAY_CARDS;
+    cards.forEach(function (d) {
       const card = el('article', 'card day-' + d.day);
       card.classList.toggle('is-today', todayIndex() === d.day);
       card.appendChild(dayHead(d.day, d.label, d.icon));
@@ -563,7 +585,14 @@
   function renderClosing() {
     const wrap = $('closing');
     wrap.innerHTML = '';
-    const col = Y.weeks[viewing - 1].col;
+    $('closingLabel').textContent = viewing === 0 ? 'Para empezar' : 'Cierre de la semana';
+    if (viewing === 0) {
+      wrap.appendChild(el('div', 'field-label', 'Intención para la semana 1'));
+      wrap.appendChild(el('p', 'field-hint', 'Lo que escribas aquí aparecerá el domingo como «Esta semana quiero…».'));
+      wrap.appendChild(noteField(k(Y, 0, 'intencion'), 'La semana que viene quiero…', 2));
+      return;
+    }
+    const col = weekAt(Y, viewing).col;
     const cm = colorMastery(Y, col);
     const cname = treeOf(Y.themes[col].name).name;
     wrap.appendChild(el('div', 'field-label', 'Maestría de ' + Y.themes[col].name));
@@ -751,14 +780,14 @@
   let selDim = null;
 
   function renderDims() {
-    const wk = Y.weeks[viewing - 1];
+    const wk = weekAt(Y, viewing);
     const nav = $('dims');
     hideCap();
     Array.from(nav.querySelectorAll('.dim')).forEach((n) => n.remove());
     selDim = null;
     for (let d = 0; d < 7; d++) {
       const word = Y.board[d][wk.col];
-      const evaluated = ((d - wk.phase + 7) % 7) < 3;
+      const evaluated = viewing !== 0 && ((d - wk.phase + 7) % 7) < 3;
       const b = el('button', 'dim' + (evaluated ? ' is-eval' : '') + (d === selDim ? ' is-sel' : ''));
       b.type = 'button';
       b.dataset.d = d;
@@ -845,11 +874,14 @@
     return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null;
   }
   function renderToday() {
-    const wk = Y.weeks[viewing - 1];
+    const wk = weekAt(Y, viewing);
     const day = todayIndex();
     const label = $('todayLabel'), text = $('todayText'), more = $('todayMore'), meter = $('meter');
     let full = '';
-    if (day >= 0) {
+    if (day >= 0 && viewing === 0) {
+      label.textContent = (day === 5 ? 'Bienvenida' : 'Preparación') + ' · ' + WEEKDAYS[day];
+      full = day === 5 ? wk.viernes : wk.sabado.join('  ');
+    } else if (day >= 0) {
       const c = day === 0 ? null : DAY_CARDS.find((x) => x.day === day);
       label.textContent = (c ? c.label : 'La frase de la semana') + ' · ' + WEEKDAYS[day];
       full = day === 0 ? wk.hook : c.key === 'sabado' ? wk.sabado.join('  ') : wk[c.key];
@@ -862,7 +894,7 @@
     // Tocar la frase lleva a la tarjeta completa de ese día.
     const toCard = function () {
       if (day < 0) return;
-      const target = day >= 1 ? document.querySelectorAll('#days .card')[day - 1] : $('sunday');
+      const target = viewing === 0 ? document.querySelectorAll('#days .card')[day - 5] : day >= 1 ? document.querySelectorAll('#days .card')[day - 1] : $('sunday');
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
     more.onclick = toCard;
@@ -912,7 +944,7 @@
   // El versículo de la semana: el @Regalo del lunes, fijo y discreto durante toda la semana.
   function renderVerse() {
     const p = $('verse');
-    const raw = String(Y.weeks[viewing - 1].regalo || '').trim();
+    const raw = String(weekAt(Y, viewing).regalo || '').trim();
     const m = raw.match(/^(.*?)\s+—\s+(.+)$/s);
     p.textContent = '';
     p.hidden = !raw;
@@ -927,12 +959,13 @@
   function renderIntent() {
     const p = $('intent');
     const prev = viewing === 1 ? YEARS[yearIndex(Y.year) - 1] : null;
-    const starter = viewing === 1 && !prev;
+    const starter = viewing === 1 && !prev && !Y.intro;
     let text = '';
-    if (viewing > 1) text = String(getV(k(Y, viewing - 1, 'intencion'), '')).trim();
+    if (viewing === 1 && Y.intro) text = String(getV(k(Y, 0, 'intencion'), '')).trim();
+    else if (viewing > 1) text = String(getV(k(Y, viewing - 1, 'intencion'), '')).trim();
     else if (prev) text = String(getV(k(prev, prev.weeks.length, 'intencion'), '')).trim();
     p.textContent = '';
-    p.hidden = !text && !starter;
+    p.hidden = viewing === 0 || (!text && !starter);
     if (p.hidden) return;
     p.classList.toggle('is-edit', starter);
     p.appendChild(el('span', 'intent-label', 'Esta semana quiero…'));
@@ -941,6 +974,7 @@
   }
 
   function render() {
+    document.body.classList.toggle('is-intro', viewing === 0);
     applyTheme();
     renderVerse();
     renderAgenda();
@@ -978,7 +1012,7 @@
       if (!e || typeof e.v !== 'string' || !e.v.trim()) return;
       const m = key.match(/^(\d{4})\/w(\d+)\/(.+)$/);
       if (!m) return;
-      const label = Number(m[2]) === 0 ? (m[3] === 'intencion' ? 'Intención inicial' : null) : entryLabel(m[3]);
+      const label = entryLabel(m[3]);
       if (!label) return;
       const at = fold(e.v).indexOf(needle);
       if (at < 0) return;
@@ -998,7 +1032,7 @@
       const li = el('li');
       const b = el('button', 'result');
       b.type = 'button';
-      b.appendChild(el('span', 'result-where', 'Semana ' + Math.max(1, r.week) + ' · ' + r.year + ' · ' + r.label));
+      b.appendChild(el('span', 'result-where', weekName(r.week) + ' · ' + r.year + ' · ' + r.label));
       const from = Math.max(0, r.at - 50), to = Math.min(r.text.length, r.at + r.len + 90);
       const snip = el('span', 'result-text');
       snip.appendChild(document.createTextNode((from > 0 ? '…' : '') + r.text.slice(from, r.at)));
@@ -1008,7 +1042,7 @@
       b.addEventListener('click', function () {
         const yr = YEARS[yearIndex(r.year)];
         closeSearch();
-        if (yr) goTo(yr, Math.max(1, r.week));
+        if (yr) goTo(yr, r.week);
       });
       li.appendChild(b); list.appendChild(li);
     });
@@ -1089,7 +1123,8 @@
   }
   function renderRecursos() {
     const box = $('recursos');
-    const wk = Y.weeks[viewing - 1];
+    const wk = weekAt(Y, viewing);
+    if (viewing === 0) { box.hidden = true; box.textContent = ''; return; }
     const interest = Y.board[2][wk.col];
     // Cuántas veces ha aparecido este color hasta esta semana: decide qué tanda del tema toca.
     let occ = 0;
@@ -1127,12 +1162,12 @@
   }
 
   function renderAgenda() {
-    const wk = Y.weeks[viewing - 1];
+    const wk = weekAt(Y, viewing);
     const day = todayIndex();
-    const base = day >= 0 ? dateOf(Y, viewing, day) : dateOf(Y, viewing, 0);
+    const base = day >= 0 ? dateOf(Y, viewing, day) : dateOf(Y, viewing, viewing === 0 ? 5 : 0);
     $('agendaDay').href = gcal('day', base);
-    $('agendaDay').textContent = day >= 0 ? 'Agenda de hoy' : 'Agenda del domingo ' + base.getDate();
-    $('agendaWeek').href = gcal('week', dateOf(Y, viewing, 0));
+    $('agendaDay').textContent = day >= 0 ? 'Agenda de hoy' : (viewing === 0 ? 'Agenda del ' : 'Agenda del domingo ') + base.getDate();
+    $('agendaWeek').href = gcal('week', dateOf(Y, viewing, viewing === 0 ? 5 : 0));
     const link = $('agendaLink');
     link.href = gcal(day >= 0 ? 'day' : 'week', base);
     link.textContent = day >= 0 ? 'Ver mi agenda de hoy ↗' : 'Ver la agenda de esta semana ↗';
@@ -1142,9 +1177,9 @@
   // Estructura común del diario: [{ title, lines: [...] }] por semana con contenido.
   function diaryWeeks(YY, onlyWeek) {
     const out = [];
-    YY.weeks.forEach(function (wk) {
+    allWeeks(YY).forEach(function (wk) {
       const w = wk.week;
-      if (onlyWeek && w !== onlyWeek) return;
+      if (onlyWeek !== undefined && onlyWeek !== null && w !== onlyWeek) return;
       const lines = [];
       for (let d = 0; d < 7; d++) {
         const rec = String(getV(k(YY, w, 'd' + d), '')).trim();
@@ -1166,16 +1201,16 @@
       if (f) notes.push({ label: 'Qué funcionó y qué mejorar', text: f });
       if (i) notes.push({ label: 'Intención para la semana siguiente', text: i });
       if (!lines.length && !notes.length) return;
-      out.push({ title: 'Semana ' + w + ' · ' + YY.themes[wk.col].name + ' · ' + wk.dates + ' · ' + YY.year, subtitle: wk.title, days: lines, notes: notes });
+      out.push({ title: weekName(w) + ' · ' + YY.themes[wk.col].name + ' · ' + wk.dates + ' · ' + YY.year, subtitle: wk.title, days: lines, notes: notes });
     });
     return out;
   }
   let diaryCache = null;
   function openDiary(scope) {
-    const only = scope === 'week' ? viewing : 0;
+    const only = scope === 'week' ? viewing : null;
     const weeks = diaryWeeks(Y, only);
     diaryCache = { weeks: weeks, name: scope === 'week' ? 'semana-' + viewing + '-' + Y.year : 'diario-' + Y.year };
-    $('diaryEyebrow').textContent = scope === 'week' ? 'Semana ' + viewing + ' · ' + Y.year : 'Año ' + Y.year;
+    $('diaryEyebrow').textContent = scope === 'week' ? weekName(viewing) + ' · ' + Y.year : 'Año ' + Y.year;
     $('diaryTitle').textContent = 'Tu diario';
     const doc = $('diaryDoc');
     doc.textContent = '';
@@ -1258,7 +1293,7 @@
 
   function goTo(year, week) {
     Y = year;
-    viewing = Math.min(Y.weeks.length, Math.max(1, week));
+    viewing = Math.min(Y.weeks.length, Math.max(minWeek(Y), week));
     openWord = null;
     render();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1267,8 +1302,8 @@
   function step(delta) {
     const yi = yearIndex(Y.year);
     const target = viewing + delta;
-    if (target < 1 && yi > 0) goTo(YEARS[yi - 1], YEARS[yi - 1].weeks.length);
-    else if (target > Y.weeks.length && yi < YEARS.length - 1) goTo(YEARS[yi + 1], 1);
+    if (target < minWeek(Y) && yi > 0) goTo(YEARS[yi - 1], YEARS[yi - 1].weeks.length);
+    else if (target > Y.weeks.length && yi < YEARS.length - 1) goTo(YEARS[yi + 1], minWeek(YEARS[yi + 1]));
     else goTo(Y, target);
   }
 
@@ -1507,9 +1542,9 @@
     head.push('% semana', 'Cumplimiento (D L M X J V S)', 'Ánimo (D L M X J V S)', 'Gratitud', 'Maestría del color', 'Qué funcionó / mejorar', 'Intención');
     const rows = [head];
     YEARS.forEach(function (YY) {
-      YY.weeks.forEach(function (wk) {
+      allWeeks(YY).forEach(function (wk) {
         const w = wk.week;
-        const row = [YY.year, w, wk.dates, YY.themes[wk.col].name];
+        const row = [YY.year, w === 0 ? 'Introducción' : w, wk.dates, YY.themes[wk.col].name];
         for (let d = 0; d < 7; d++) row.push(getV(k(YY, w, 'd' + d), ''));
         activeWords(YY, w).forEach(function (a) {
           row.push(a.word, getAnswers(YY, w, a.word).map((v) => v || '-').join(' '),
