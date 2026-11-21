@@ -73,10 +73,11 @@ button{font-family:inherit;color:inherit;}
 @media (max-width:520px){.dim-ico{width:36px;height:36px;}}
 /* Las tres principales de la semana: destello propio y una marca dorada debajo; las otras, más tenues */
 .dim:not(.is-eval) .dim-ico{opacity:.55;}
-.dim.is-eval .dim-ico{filter:drop-shadow(0 0 7px rgba(255,215,0,.55));}
+.dim.is-eval .dim-ico{opacity:1;filter:drop-shadow(0 0 2px rgba(255,215,0,.95)) drop-shadow(0 0 8px rgba(240,168,48,.75));}
 .dim::after{content:'';width:20px;height:2px;border-radius:2px;background:transparent;}
-.dim.is-eval::after{background:var(--gold);box-shadow:0 0 8px rgba(255,215,0,.75);}
-.dim.is-sel .dim-ico{opacity:1;filter:drop-shadow(0 0 9px rgba(255,215,0,.7));}
+.dim.is-eval::after{width:24px;height:3px;background:var(--gold);box-shadow:0 0 10px rgba(255,215,0,.85);}
+.dim.is-sel .dim-ico{opacity:1;}
+.dim.is-sel:not(.is-eval) .dim-ico{filter:drop-shadow(0 0 6px rgba(255,215,0,.55));}
 .dim:hover .dim-ico{opacity:1;}
 .dim:focus-visible{outline:2px solid var(--gold-hi);outline-offset:-2px;}
 /* El marco dorado se desliza hacia el ícono elegido */
@@ -498,10 +499,11 @@ a.btn{text-decoration:none;}
 /* ══ Modo día: mismo sistema, cielo de mañana. Lo activa data-theme="day" en <html> (Auto, Día o Noche). ══ */
 :root[data-theme="day"]{
   color-scheme:light;
+  --card-shadow:0 6px 22px rgba(60,40,20,.11),0 1px 2px rgba(60,40,20,.08);
   --txt:rgba(29,20,40,.92);--txt2:rgba(29,20,40,.76);--txt3:rgba(29,20,40,.66);
   --ink:#1d1428;--gold-ink:#7f5200;
-  --glass:rgba(255,255,255,.6);--glass-hi:rgba(255,255,255,.7);--glass-solid:color-mix(in srgb,var(--bg-low) 30%,#fff);--glass2:rgba(40,25,60,.05);
-  --line:rgba(40,25,60,.14);--line2:rgba(40,25,60,.3);
+  --glass:rgba(255,255,255,.8);--glass-hi:rgba(255,255,255,.85);--glass-solid:color-mix(in srgb,var(--bg-low) 30%,#fff);--glass2:rgba(40,25,60,.05);
+  --line:rgba(40,25,60,.17);--line2:rgba(40,25,60,.32);
   --well:rgba(255,255,255,.78);--base:rgba(255,255,255,.82);--champ:rgba(40,25,60,.07);--champ2:rgba(40,25,60,.13);--card-mix:22%;
   --wk:color-mix(in srgb,var(--wk-mid) 68%,#1d1428);--on-wk:#fff;
 }
@@ -511,7 +513,9 @@ a.btn{text-decoration:none;}
 :root[data-theme="day"] .hero::after{background:linear-gradient(to bottom,color-mix(in srgb,var(--bg-top) 70%,transparent),transparent 30%),linear-gradient(to top,color-mix(in srgb,var(--bg-low) 92%,transparent),transparent 32%);}
 :root[data-theme="day"] .logo-slogan,:root[data-theme="day"] .header-date small,:root[data-theme="day"] .week-eyebrow,:root[data-theme="day"] .tree-name{color:var(--txt2);}
 :root[data-theme="day"] .dim-ico{color:var(--ink);}
-:root[data-theme="day"] .dim.is-eval .dim-ico{filter:drop-shadow(0 0 6px rgba(240,168,48,.55));}
+:root[data-theme="day"] .dim.is-eval .dim-ico{filter:drop-shadow(0 0 1.5px rgba(232,150,10,1)) drop-shadow(0 0 7px rgba(240,168,48,.85));}
+:root[data-theme="day"] .dim.is-eval::after{background:#d58a00;box-shadow:0 0 8px rgba(240,168,48,.8);}
+:root[data-theme="day"] .dim:not(.is-eval) .dim-ico{opacity:.62;}
 :root[data-theme="day"] .dim-glow{background:rgba(255,255,255,.45);}
 :root[data-theme="day"] .dim-cap{background:rgba(255,255,255,.7);}
 :root[data-theme="day"] .dim-cap-dim{color:var(--txt2);}
@@ -522,7 +526,21 @@ a.btn{text-decoration:none;}
 :root[data-theme="day"] .today{background:rgba(255,255,255,.72);box-shadow:0 6px 24px rgba(60,40,20,.12);}
 :root[data-theme="day"] .today.is-phrase .today-text::before{color:var(--gold-ink);}
 :root[data-theme="day"] .meter input[type=range]::-webkit-slider-thumb{box-shadow:0 0 8px rgba(240,168,48,.6);}
-:root[data-theme="day"] .card,:root[data-theme="day"] .fold{box-shadow:0 4px 18px rgba(60,40,20,.08);}
+:root[data-theme="day"] .card,:root[data-theme="day"] .fold,:root[data-theme="day"] .ago{box-shadow:var(--card-shadow);}
+/* Tonos muy claros (Blanco, Amarillo) no se pierden: bordes y botón de registro se oscurecen un poco hacia la tinta */
+:root[data-theme="day"] .days .card{border-color:color-mix(in srgb,var(--dc) 45%,rgba(40,25,60,.25));border-top-color:color-mix(in srgb,var(--dc) 65%,var(--ink) 35%);}
+:root[data-theme="day"] .sunday{border-left-color:var(--wk);}
+:root[data-theme="day"] .record-tab{background:rgba(255,255,255,.88);border-color:color-mix(in srgb,var(--rc) 50%,rgba(40,25,60,.4));}
+:root[data-theme="day"] .record-tab.has-text{background:color-mix(in srgb,var(--rc) 18%,#fff);}
+:root[data-theme="day"] .record-tab>.ico:first-child{background:color-mix(in srgb,var(--rc) 55%,var(--ink) 45%);color:#fff;filter:none;}
+/* Flores, árboles del ánimo y puntos de la leyenda: un contorno suave para que los tonos claros se vean */
+:root[data-theme="day"] .yw svg,:root[data-theme="day"] .sq .bloom svg,:root[data-theme="day"] .board-legend i{filter:drop-shadow(0 0 1px rgba(40,25,60,.55));}
+:root[data-theme="day"] .yw.is-viewing svg{filter:drop-shadow(0 0 1px rgba(40,25,60,.6)) drop-shadow(0 0 6px rgba(240,168,48,.9));}
+:root[data-theme="day"] .mt-trunk{stroke:rgba(45,31,27,.75);}
+:root[data-theme="day"] .mt-crown{fill:rgba(40,25,60,.05);stroke:rgba(40,25,60,.5);}
+:root[data-theme="day"] .mt-crown.is-empty{stroke:rgba(40,25,60,.32);}
+:root[data-theme="day"] .verse{font-weight:300;}
+:root[data-theme="day"] .mood-bar{background:rgba(40,25,60,.07);}
 :root[data-theme="day"] .days .card .card-day .ico{filter:none;color:var(--wk);}
 :root[data-theme="day"] .days .card .card-day{color:color-mix(in srgb,var(--dc) 40%,var(--ink));}
 :root[data-theme="day"] .record-tab{color:var(--ink);}

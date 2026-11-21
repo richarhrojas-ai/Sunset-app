@@ -693,9 +693,9 @@
     const cp = add('clipPath', { id: 'mt' + week }, defs);
     add('rect', { x: 0, y: 22 - 21 * frac, width: 32, height: 21 * frac + 1 }, cp);
     // tronco y ramas
-    add('path', { d: 'M16 31 L16 21 M16 26 L11.5 22 M16 25 L20.5 21.5', fill: 'none', stroke: 'rgba(255,255,255,.62)', 'stroke-width': 1.8, 'stroke-linecap': 'round' });
+    add('path', { class: 'mt-trunk', d: 'M16 31 L16 21 M16 26 L11.5 22 M16 25 L20.5 21.5', fill: 'none', stroke: 'rgba(255,255,255,.62)', 'stroke-width': 1.8, 'stroke-linecap': 'round' });
     // copa: contorno + relleno pintado
-    add('path', { d: CROWN, fill: 'rgba(255,255,255,.07)', stroke: 'rgba(255,255,255,' + (avg == null ? '.28' : '.55') + ')', 'stroke-width': 1, 'stroke-dasharray': avg == null ? '2 2' : 'none' });
+    add('path', { class: 'mt-crown' + (avg == null ? ' is-empty' : ''), d: CROWN, fill: 'rgba(255,255,255,.07)', stroke: 'rgba(255,255,255,' + (avg == null ? '.28' : '.55') + ')', 'stroke-width': 1, 'stroke-dasharray': avg == null ? '2 2' : 'none' });
     if (frac > 0) {
       const g = add('g', { 'clip-path': 'url(#mt' + week + ')' });
       add('path', { d: CROWN, fill: ink[0] }, g);
