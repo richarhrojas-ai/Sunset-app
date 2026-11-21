@@ -36,11 +36,13 @@
   const FORMS = {
     // spread: apertura entre ramas · decay: acortamiento por nivel · depth: niveles
     // lift: cuánto tienden a subir · trunk: largo del tronco relativo · bloom: densidad de flores
-    lapacho: { spread: 0.72, decay: 0.77, depth: 7, lift: 0.4, trunk: 0.30, bloom: 9, petal: 1.05, wide: 0.88 },
-    jacaranda: { spread: 0.82, decay: 0.78, depth: 7, lift: 0.28, trunk: 0.26, bloom: 8, petal: 1, wide: 0.92 },
+    // Todos comparten la arquitectura del flamboyán (copa ancha y horizontal, tronco corto): la forma más natural.
+    // Cambian el color, la densidad, el tamaño de flor y si son flores u hojas, con un leve matiz en la apertura.
+    lapacho: { spread: 0.95, decay: 0.79, depth: 6, lift: 0.18, trunk: 0.22, bloom: 10, petal: 1.12, flat: true },
+    jacaranda: { spread: 0.96, decay: 0.79, depth: 6, lift: 0.18, trunk: 0.22, bloom: 10, petal: 1.1, flat: true },
     flamboyan: { spread: 0.95, decay: 0.79, depth: 6, lift: 0.18, trunk: 0.22, bloom: 8, petal: 1.05, flat: true },
-    leafy: { spread: 0.74, decay: 0.77, depth: 7, lift: 0.4, trunk: 0.28, bloom: 10, petal: 1.25, leaf: true, wide: 0.86 },
-    silhouette: { spread: 0.76, decay: 0.77, depth: 7, lift: 0.38, trunk: 0.28, bloom: 10, petal: 1.3, leaf: true, wide: 0.9 },
+    leafy: { spread: 0.95, decay: 0.79, depth: 6, lift: 0.18, trunk: 0.22, bloom: 11, petal: 1.3, leaf: true, flat: true },
+    silhouette: { spread: 0.95, decay: 0.79, depth: 6, lift: 0.18, trunk: 0.22, bloom: 11, petal: 1.3, leaf: true, flat: true },
   };
 
   function rng(seed) {
