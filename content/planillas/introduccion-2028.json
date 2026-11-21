@@ -1,0 +1,15 @@
+{
+ "color": "Amarillo",
+ "numeracion": "cero",
+ "dates": "1 · enero",
+ "title": "Un día para empezar",
+ "story": "El sábado 1 de enero es el único día que le queda al año antes de su primer domingo. Se usa como introducción: un día liviano para respirar, mirar lo que viene y llegar bien al domingo. No se evalúa ni cuenta para la maestría. Esta introducción es la semana 0; la semana 1 empieza el domingo 2.",
+ "hook": "Antes de correr, un buen comienzo se respira.",
+ "dias": [
+  {
+   "dia": 6,
+   "etiqueta": "Bienvenida",
+   "texto": "Hoy empieza el año. Un solo día para respirar, agradecer lo que quedó atrás y escribir qué esperas de lo que viene."
+  }
+ ]
+}

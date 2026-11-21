@@ -62,6 +62,9 @@
       const ci = Y.colors.findIndex((c) => c.name === Y.intro.color);
       const ref = Y.weeks.find((w) => w.col === ci);
       Y.intro.week = 0;
+      Y.intro.dias = Y.intro.dias || [];
+      Y.intro.firstDay = Math.min.apply(null, Y.intro.dias.map((d) => d.dia).concat([6]));
+      Y.intro.cero = Y.intro.numeracion === 'cero';
       Y.intro.col = ci < 0 ? 0 : ci;
       Y.intro.phase = ref ? ref.phase : 0;
     }
@@ -78,8 +81,10 @@
   const minWeek = (YY) => (YY.intro ? 0 : 1);
   const allWeeks = (YY) => (YY.intro ? [YY.intro] : []).concat(YY.weeks);
   // Número que ve el usuario: con introducción, la introducción es la semana 1 y todo lo demás corre un número (Lila = 2).
-  const num = (YY, w) => w + (YY.intro ? 1 : 0);
-  const totalWeeks = (YY) => YY.weeks.length + (YY.intro ? 1 : 0);
+  const num = (YY, w) => w + (YY.intro && !YY.intro.cero ? 1 : 0);
+  const totalWeeks = (YY) => YY.weeks.length + (YY.intro && !YY.intro.cero ? 1 : 0);
+  const introDay = (wk, day) => (wk.dias || []).find((d) => d.dia === day);
+  const introText = (d) => (d ? (d.preguntas ? d.preguntas.join('  ') : d.texto) : '');
   const weekName = (w, YY) => 'Semana ' + num(YY || Y, w);
   function dateOf(Y, week, day) { const d = new Date(Y.start); d.setDate(d.getDate() + (week - 1) * 7 + day); return d; }
 
@@ -87,9 +92,14 @@
   function locateDate(d) {
     const t = utcDay(d);
     for (const Y of YEARS) {
+      if (Y.intro) {
+        const diff0 = Math.floor((t - utcDay(Y.start)) / DAY_MS);
+        if (diff0 < 0 && diff0 >= Y.intro.firstDay - 7) return { Y: Y, week: 0, inRange: true };
+      }
+    }
+    for (const Y of YEARS) {
       const diff = Math.floor((t - utcDay(Y.start)) / DAY_MS);
       const week = Math.floor(diff / 7) + 1;
-      if (week === 0 && Y.intro && diff >= -2) return { Y: Y, week: 0, inRange: true };
       if (week >= 1 && week <= Y.weeks.length) return { Y: Y, week: week, inRange: true };
     }
     const first = YEARS[0], last = YEARS[YEARS.length - 1];
@@ -290,7 +300,7 @@
   function dayReference(day) {
     const wk = weekAt(Y, viewing);
     if (day === 0) return wk.hook;
-    if (viewing === 0) return day === 5 ? wk.viernes : wk.sabado.join('  ');
+    if (viewing === 0) return introText(introDay(wk, day));
     const d = DAY_CARDS.find((c) => c.day === day);
     return d.key === 'sabado' ? wk.sabado.join('  ') : wk[d.key];
   }
@@ -398,7 +408,7 @@
     const long = el('span', 'd-long', WEEKDAYS[now.getDay()] + ', ' + now.getDate() + ' de ' + MONTHS[now.getMonth()] + ', ' + now.getFullYear());
     const short = el('span', 'd-short', WEEKDAYS[now.getDay()].slice(0, 3) + ' ' + now.getDate() + ' ' + MONTHS[now.getMonth()].slice(0, 3) + ' ' + now.getFullYear());
     h.appendChild(long); h.appendChild(short);
-    const sub = TODAY.inRange ? ('Semana ' + num(TODAY.Y, TODAY.week) + ' de ' + totalWeeks(TODAY.Y))
+    const sub = TODAY.inRange ? (TODAY.week === 0 && TODAY.Y.intro.cero ? 'Introducción' : 'Semana ' + num(TODAY.Y, TODAY.week) + ' de ' + totalWeeks(TODAY.Y))
       : TODAY.before ? 'Sunset ' + TODAY.Y.year + ' empieza el ' + fmtDate(TODAY.Y.start)
         : 'Falta cargar la planilla del año siguiente';
     h.appendChild(el('small', null, sub));
@@ -436,7 +446,7 @@
     if (viewing === 0) {
       const head = el('div', 'card-day');
       head.appendChild(icon('sun'));
-      head.appendChild(document.createTextNode('Semana ' + num(Y, 0) + ' · ' + wk.dates));
+      head.appendChild(document.createTextNode('Semana ' + num(Y, 0) + (wk.cero ? ' · Introducción' : '') + ' · ' + wk.dates));
       card.appendChild(head);
     } else card.appendChild(dayHead(0, 'Título', 'sun'));
     card.appendChild(el('h1', 'sunday-title', wk.title));
@@ -469,17 +479,17 @@
     const wrap = $('days');
     wrap.innerHTML = '';
     // En la introducción solo están los dos días de enero que quedan antes de la semana 1: viernes y sábado.
-    const cards = viewing === 0 ? [{ day: 5, key: 'viernes', label: 'Bienvenida', icon: 'sun' }, { day: 6, key: 'sabado', label: 'Preparación', icon: 'check' }] : DAY_CARDS;
+    const cards = viewing === 0 ? wk.dias.map((d) => ({ day: d.dia, key: d.preguntas ? 'sabado' : 'texto', label: d.etiqueta, icon: d.preguntas ? 'check' : 'sun', intro: d })) : DAY_CARDS;
     cards.forEach(function (d) {
       const card = el('article', 'card day-' + d.day);
       card.classList.toggle('is-today', todayIndex() === d.day);
       card.appendChild(dayHead(d.day, d.label, d.icon));
       if (d.key === 'sabado') {
         const ol = el('ol', 'sat-list');
-        wk.sabado.forEach((q) => ol.appendChild(el('li', null, q)));
+        (d.intro ? d.intro.preguntas : wk.sabado).forEach((q) => ol.appendChild(el('li', null, q)));
         card.appendChild(ol);
       } else {
-        card.appendChild(el('p', 'card-text', wk[d.key]));
+        card.appendChild(el('p', 'card-text', d.intro ? d.intro.texto : wk[d.key]));
       }
       card.appendChild(dayRecord(d.day));
       wrap.appendChild(card);
@@ -884,8 +894,9 @@
     const label = $('todayLabel'), text = $('todayText'), more = $('todayMore'), meter = $('meter');
     let full = '';
     if (day >= 0 && viewing === 0) {
-      label.textContent = (day === 5 ? 'Bienvenida' : 'Preparación') + ' · ' + WEEKDAYS[day];
-      full = day === 5 ? wk.viernes : wk.sabado.join('  ');
+      const idia = introDay(wk, day);
+      label.textContent = (idia ? idia.etiqueta : 'Introducción') + ' · ' + WEEKDAYS[day];
+      full = introText(idia) || wk.hook;
     } else if (day >= 0) {
       const c = day === 0 ? null : DAY_CARDS.find((x) => x.day === day);
       label.textContent = (c ? c.label : 'La frase de la semana') + ' · ' + WEEKDAYS[day];
@@ -899,7 +910,7 @@
     // Tocar la frase lleva a la tarjeta completa de ese día.
     const toCard = function () {
       if (day < 0) return;
-      const target = viewing === 0 ? document.querySelectorAll('#days .card')[day - 5] : day >= 1 ? document.querySelectorAll('#days .card')[day - 1] : $('sunday');
+      const target = viewing === 0 ? document.querySelectorAll('#days .card')[Math.max(0, wk.dias.findIndex((x) => x.dia === day))] : day >= 1 ? document.querySelectorAll('#days .card')[day - 1] : $('sunday');
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
     more.onclick = toCard;
@@ -966,7 +977,11 @@
     const prev = viewing === 1 ? YEARS[yearIndex(Y.year) - 1] : null;
     const starter = viewing === 1 && !prev && !Y.intro;
     let text = '';
-    if (viewing === 1 && Y.intro) text = String(getV(k(Y, 0, 'intencion'), '')).trim();
+    if (viewing === 1 && Y.intro) {
+      text = String(getV(k(Y, 0, 'intencion'), '')).trim();
+      const before = YEARS[yearIndex(Y.year) - 1];
+      if (!text && before) text = String(getV(k(before, before.weeks.length, 'intencion'), '')).trim();
+    }
     else if (viewing > 1) text = String(getV(k(Y, viewing - 1, 'intencion'), '')).trim();
     else if (prev) text = String(getV(k(prev, prev.weeks.length, 'intencion'), '')).trim();
     p.textContent = '';
@@ -1169,10 +1184,10 @@
   function renderAgenda() {
     const wk = weekAt(Y, viewing);
     const day = todayIndex();
-    const base = day >= 0 ? dateOf(Y, viewing, day) : dateOf(Y, viewing, viewing === 0 ? 5 : 0);
+    const base = day >= 0 ? dateOf(Y, viewing, day) : dateOf(Y, viewing, viewing === 0 ? weekAt(Y, 0).firstDay : 0);
     $('agendaDay').href = gcal('day', base);
     $('agendaDay').textContent = day >= 0 ? 'Agenda de hoy' : (viewing === 0 ? 'Agenda del ' : 'Agenda del domingo ') + base.getDate();
-    $('agendaWeek').href = gcal('week', dateOf(Y, viewing, viewing === 0 ? 5 : 0));
+    $('agendaWeek').href = gcal('week', dateOf(Y, viewing, viewing === 0 ? weekAt(Y, 0).firstDay : 0));
     const link = $('agendaLink');
     link.href = gcal(day >= 0 ? 'day' : 'week', base);
     link.textContent = day >= 0 ? 'Ver mi agenda de hoy ↗' : 'Ver la agenda de esta semana ↗';
