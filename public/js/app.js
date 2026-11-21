@@ -85,7 +85,7 @@
   const totalWeeks = (YY) => YY.weeks.length + (YY.intro && !YY.intro.cero ? 1 : 0);
   const introDay = (wk, day) => (wk.dias || []).find((d) => d.dia === day);
   const introText = (d) => (d ? (d.preguntas ? d.preguntas.join('  ') : d.texto) : '');
-  const weekName = (w, YY) => 'Semana ' + num(YY || Y, w);
+  const weekName = (w, YY) => (w === 0 && !(YY || Y).intro ? 'Antes de la semana 1' : 'Semana ' + num(YY || Y, w));
   function dateOf(Y, week, day) { const d = new Date(Y.start); d.setDate(d.getDate() + (week - 1) * 7 + day); return d; }
 
   // Año y semana de una fecha. Antes del primer año → su semana 1; después del último → su última semana.
@@ -214,14 +214,20 @@
   const todayIndex = () => (isCurrent() ? now.getDay() : -1);
 
   // Área de texto que guarda sola mientras se escribe.
+  // Guardados pendientes de los campos de texto (se vacían si la app se cierra o se oculta).
+  const pendingNotes = new Set();
+  const flushNotes = () => Array.from(pendingNotes).forEach((f) => f());
   function noteField(key, placeholder, rows) {
     const ta = el('textarea', 'note');
     ta.rows = rows || 2;
     ta.placeholder = placeholder;
     ta.value = getV(key, '');
-    const commit = debounce(function () { setV(key, ta.value); }, 500);
-    ta.addEventListener('input', commit);
-    ta.addEventListener('blur', function () { if (ta.value !== getV(key, '')) setV(key, ta.value); });
+    // Solo guarda lo que se escribió aquí: enfocar y salir de un campo no pisa un dato más nuevo de otro dispositivo.
+    let dirty = false;
+    const flush = function () { if (dirty) { dirty = false; pendingNotes.delete(flush); setV(key, ta.value); } };
+    const commit = debounce(flush, 500);
+    ta.addEventListener('input', function () { dirty = true; pendingNotes.add(flush); commit(); });
+    ta.addEventListener('blur', flush);
     return ta;
   }
 
@@ -290,7 +296,6 @@
     tab.appendChild(icon('pen'));
     tab.appendChild(el('span', null, words ? 'Registro' : 'Registro, ánimo y gratitud'));
     if (words) tab.appendChild(el('span', 'count', words + (words === 1 ? ' palabra' : ' palabras')));
-    tab.appendChild(icon('right', 'go'));
     tab.addEventListener('click', () => openEditor(day));
     return tab;
   }
@@ -369,7 +374,7 @@
     if (editing && editing.gKey) setV(editing.gKey, $('editorGrat').value);
   }, 500));
   $('editorDone').addEventListener('click', closeEditor);
-  window.addEventListener('pagehide', flushEditor);
+  window.addEventListener('pagehide', function () { flushEditor(); flushNotes(); });
 
   const treeOf = (colorName) => window.SunsetTree.TREES[colorName] || window.SunsetTree.TREES.Lila;
   let shown = '';
@@ -409,7 +414,7 @@
     const short = el('span', 'd-short', WEEKDAYS[now.getDay()].slice(0, 3) + ' ' + now.getDate() + ' ' + MONTHS[now.getMonth()].slice(0, 3) + ' ' + now.getFullYear());
     h.appendChild(long); h.appendChild(short);
     const sub = TODAY.inRange ? (TODAY.week === 0 && TODAY.Y.intro.cero ? 'Introducción' : 'Semana ' + num(TODAY.Y, TODAY.week) + ' de ' + totalWeeks(TODAY.Y))
-      : TODAY.before ? 'Sunset ' + TODAY.Y.year + ' empieza el ' + fmtDate(TODAY.Y.start)
+      : TODAY.before ? 'Sunset ' + TODAY.Y.year + ' empieza el ' + fmtDate(TODAY.Y.intro ? dateOf(TODAY.Y, 0, TODAY.Y.intro.firstDay) : TODAY.Y.start)
         : 'Falta cargar la planilla del año siguiente';
     h.appendChild(el('small', null, sub));
   }
@@ -713,7 +718,6 @@
       list.slice(start, start + per).forEach(function (wk) {
         const t = Y.themes[wk.col];
         const done = weekCompletion(Y, wk.week);
-        const m = '';
         const b = el('button', 'yw');
         b.setAttribute('aria-label', 'Semana ' + num(Y, wk.week) + ', ' + wk.dates + ', ' + Math.round(done * 100) + '% respondido' + '');
         b.title = 'Semana ' + num(Y, wk.week) + ' · ' + treeOf(t.name).name + ' · ' + Math.round(done * 100) + '%';
@@ -1046,7 +1050,7 @@
     const q = $('searchInput').value;
     list.textContent = '';
     const found = searchEntries(q);
-    if (q.trim().length < 2) { list.appendChild(el('li', 'results-empty', 'Escribí al menos dos letras.')); return; }
+    if (q.trim().length < 2) { list.appendChild(el('li', 'results-empty', 'Escribe al menos dos letras.')); return; }
     if (!found.length) { list.appendChild(el('li', 'results-empty', 'No encontré nada con “' + q.trim() + '”.')); return; }
     found.slice(0, 60).forEach(function (r) {
       const li = el('li');
@@ -1066,7 +1070,7 @@
       });
       li.appendChild(b); list.appendChild(li);
     });
-    if (found.length > 60) list.appendChild(el('li', 'results-empty', 'Hay ' + found.length + ' resultados; mostrando los 60 más recientes. Afiná la búsqueda.'));
+    if (found.length > 60) list.appendChild(el('li', 'results-empty', 'Hay ' + found.length + ' resultados; mostrando los 60 más recientes. Afina la búsqueda.'));
   }
   function openSearch() {
     $('search').hidden = false;
@@ -1229,7 +1233,7 @@
   function openDiary(scope) {
     const only = scope === 'week' ? viewing : null;
     const weeks = diaryWeeks(Y, only);
-    diaryCache = { weeks: weeks, name: scope === 'week' ? 'semana-' + viewing + '-' + Y.year : 'diario-' + Y.year };
+    diaryCache = { weeks: weeks, name: scope === 'week' ? 'semana-' + num(Y, viewing) + '-' + Y.year : 'diario-' + Y.year };
     $('diaryEyebrow').textContent = scope === 'week' ? weekName(viewing) + ' · ' + Y.year : 'Año ' + Y.year;
     $('diaryTitle').textContent = 'Tu diario';
     const doc = $('diaryDoc');
@@ -1358,7 +1362,8 @@
       const resp = await fetch('/api/sync', {
         method: 'POST',
         headers: Object.assign({ 'Content-Type': 'application/json' }, authHeaders()),
-        body: JSON.stringify({ entries: state.entries }),
+        // day: la fecha local, para que la copia diaria lleve el día del usuario y no el de UTC.
+        body: JSON.stringify({ entries: state.entries, day: localDay() }),
       });
       const body = await resp.json().catch(() => ({}));
       if (resp.status === 401) { logout('La clave cambió. Escríbela de nuevo.'); return; }
@@ -1368,7 +1373,7 @@
       state.entries = res.entries;
       save();
       // No redibujar mientras se escribe: se perdería el foco del campo.
-      if (res.changed && !editing && !(document.activeElement && document.activeElement.tagName === 'TEXTAREA')) render();
+      if (res.changed) renderWhenIdle();
       setSyncStatus('Sincronizado ' + new Date().toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' }), 'ok');
     } catch (e) {
       setSyncStatus(navigator.onLine === false ? 'Sin conexión: se guardó en este dispositivo' : 'No se pudo sincronizar: ' + e.message, 'error');
@@ -1397,7 +1402,7 @@
   async function fetchContent(key) {
     let resp;
     try { resp = await fetch('/api/content', { headers: { 'x-sunset-key': key } }); }
-    catch (e) { throw new Error(location.protocol === 'file:' ? 'Abrí la app desde su dirección en internet.' : 'No hay conexión con el servidor.'); }
+    catch (e) { throw new Error(location.protocol === 'file:' ? 'Abre la app desde su dirección en internet.' : 'No hay conexión con el servidor.'); }
     if (resp.status === 401) { const err = new Error('Clave incorrecta.'); err.code = 401; throw err; }
     if (!resp.ok) throw new Error('El servidor respondió ' + resp.status + '.');
     return resp.json();
@@ -1442,8 +1447,8 @@
       prepare(data);
       TODAY = locateDate(now);
       Y = YEARS[yearIndex(year)] || TODAY.Y;
-      if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') return;
-      render();
+      viewing = Math.min(Y.weeks.length, Math.max(minWeek(Y), viewing));
+      renderWhenIdle();
     } catch (e) {
       if (e.code === 401) logout('La clave cambió. Escríbela de nuevo.');
     }
@@ -1520,7 +1525,7 @@
   }
   async function restoreBackup(day) {
     const choice = await ask('¿Volver al ' + longDate(day) + '?',
-      'Todo vuelve a como estaba al empezar ese día. Lo que escribiste después se reemplaza, en todos tus dispositivos. Podés deshacerlo desde esta misma sección.',
+      'Todo vuelve a como estaba al empezar ese día. Lo que escribiste después se reemplaza, en todos tus dispositivos. Puedes deshacerlo desde esta misma sección.',
       [{ label: 'Restaurar esa copia', value: 'yes', primary: true }]);
     if (choice !== 'yes') return;
     try {
@@ -1545,7 +1550,8 @@
     a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
-  const stamp = () => new Date().toISOString().slice(0, 10);
+  const localDay = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+  const stamp = localDay;
 
   function exportJson() {
     const payload = { app: 'sunset', version: 2, exported: new Date().toISOString(), entries: state.entries };
@@ -1566,11 +1572,13 @@
         const w = wk.week;
         const row = [YY.year, num(YY, w), wk.dates, YY.themes[wk.col].name];
         for (let d = 0; d < 7; d++) row.push(getV(k(YY, w, 'd' + d), ''));
-        activeWords(YY, w).forEach(function (a) {
+        // La introducción no tiene autoevaluación: sus columnas de palabras quedan vacías.
+        if (w === 0) row.push('', '', '', '', '', '', '', '', '', '', '', '');
+        (w === 0 ? [] : activeWords(YY, w)).forEach(function (a) {
           row.push(a.word, getAnswers(YY, w, a.word).map((v) => v || '-').join(' '),
             Math.round(wordScore(YY, w, a.word) * 100), getV(k(YY, w, 'c/' + a.word), ''));
         });
-        row.push(Math.round(weekScore(YY, w) * 100), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'p' + d), null); return v == null ? '-' : v; }).join(' '), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'm' + d), null); return v == null ? '-' : v; }).join(' '), [0, 1, 2, 3, 4, 5, 6].map((d) => getV(k(YY, w, 'g' + d), '')).filter(Boolean).join(' | '), (function () { const cm = colorMastery(YY, YY.weeks[w - 1].col); return cm.complete ? cm.leader.word : ''; })(),
+        row.push(Math.round(weekScore(YY, w) * 100), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'p' + d), null); return v == null ? '-' : v; }).join(' '), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'm' + d), null); return v == null ? '-' : v; }).join(' '), [0, 1, 2, 3, 4, 5, 6].map((d) => getV(k(YY, w, 'g' + d), '')).filter(Boolean).join(' | '), (function () { const cm = colorMastery(YY, wk.col); return cm.complete ? cm.leader.word : ''; })(),
           getV(k(YY, w, 'funciono'), ''), getV(k(YY, w, 'intencion'), ''));
         rows.push(row);
       });
@@ -1592,7 +1600,7 @@
         return;
       }
       const choice = await ask('¿Cómo importar este respaldo?',
-        'Combinar suma el respaldo a lo que ya tenés y, si hay un mismo dato en los dos, queda el más reciente. Reemplazar deja todo exactamente como estaba en el respaldo.',
+        'Combinar suma el respaldo a lo que ya tienes y, si hay un mismo dato en los dos, queda el más reciente. Reemplazar deja todo exactamente como estaba en el respaldo.',
         [{ label: 'Combinar', value: 'merge', primary: true }, { label: 'Reemplazar todo', value: 'replace' }]);
       if (choice === 'merge') {
         state.entries = mergeEntries(state.entries, data.entries).entries;
@@ -1659,6 +1667,18 @@
   });
   window.addEventListener('online', sync);
 
+  // Si llegan cambios mientras se escribe, se redibuja al salir del campo (no antes: se perdería el foco).
+  let renderPending = false;
+  const typing = () => editing || (document.activeElement && /^(TEXTAREA|INPUT)$/.test(document.activeElement.tagName) && document.activeElement.type !== 'range');
+  function renderWhenIdle() {
+    if (typing()) { renderPending = true; return; }
+    renderPending = false;
+    render();
+  }
+  document.addEventListener('focusout', function () {
+    if (renderPending) setTimeout(function () { if (renderPending && !typing()) { renderPending = false; render(); } }, 0);
+  });
+
   // Si la app queda abierta de un día para otro, "hoy" se actualiza al volver a ella.
   function refreshToday() {
     if (!Y) return;
@@ -1672,8 +1692,10 @@
     renderHeader();
     render();
   }
+  // Y si queda abierta y visible, se revisa cada minuto (cambio de día a medianoche).
+  setInterval(function () { if (document.visibilityState === 'visible') refreshToday(); }, 60000);
   document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState !== 'visible') { flushEditor(); return; }
+    if (document.visibilityState !== 'visible') { flushEditor(); flushNotes(); return; }
     refreshToday();
     sync();
   });
@@ -1682,7 +1704,8 @@
     if (e.key === 'Escape' && !$('search').hidden) { closeSearch(); return; }
     if (e.key === 'Escape' && editing) { closeEditor(); return; }
     if (e.key === 'Escape' && !$('wordModal').hidden) { closeWord(); return; }
-    if (e.target.closest('input,textarea') || !$('welcome').hidden || editing) return;
+    if (e.key === 'Escape' && !$('ask').hidden) { const c = $('askActions').querySelector('button:last-child'); if (c) c.click(); return; }
+    if (e.target.closest('input,textarea') || document.querySelector('[role=dialog]:not([hidden])') || editing) return;
     if (e.key === 'ArrowLeft') step(-1);
     if (e.key === 'ArrowRight') step(1);
   });

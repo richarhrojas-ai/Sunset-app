@@ -16,6 +16,12 @@ import { authorize, json } from '../lib/auth.mjs';
 const DATA_KEY = 'progreso';
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 
+export function backupDay(clientDay, nowIso) {
+  if (typeof clientDay !== 'string' || !DAY.test(clientDay)) return nowIso.slice(0, 10);
+  const diff = Math.abs(Date.parse(clientDay + 'T00:00:00Z') - Date.parse(nowIso.slice(0, 10) + 'T00:00:00Z'));
+  return diff <= 86400000 ? clientDay : nowIso.slice(0, 10);
+}
+
 export function mergeEntries(base, incoming) {
   const out = Object.assign({}, base);
   for (const [k, e] of Object.entries(incoming || {})) {
@@ -58,7 +64,8 @@ export async function handle(req, store, secret, delayMs) {
       const updated = new Date().toISOString();
       if (Object.keys(base.entries).length) {
         // Copia del día: el estado anterior al primer cambio. onlyIfNew evita pisar una copia ya hecha.
-        await store.setJSON('backups/' + updated.slice(0, 10), base, { onlyIfNew: true });
+        // Se usa el día local del dispositivo si llega y está a no más de un día del UTC; si no, el UTC.
+        await store.setJSON('backups/' + backupDay(body.day, updated), base, { onlyIfNew: true });
       }
       const merged = { entries: mergeEntries(base.entries, body.entries), updated };
       const r = await store.setJSON(DATA_KEY, merged, cur ? { onlyIfMatch: cur.etag } : { onlyIfNew: true });

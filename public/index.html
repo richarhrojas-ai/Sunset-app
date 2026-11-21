@@ -114,7 +114,7 @@
     <details class="fold" id="yearFold">
       <summary><svg class="ico"><use href="#i-grid"/></svg><span id="yearTitle">Progreso del año</span><svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
-        <p class="fold-hint">Cada flor es una semana: se abre a medida que respondés la autoevaluación, y lleva centro dorado cuando es la maestría de su color. Tocá una para ir a esa semana.</p>
+        <p class="fold-hint">Cada flor es una semana: se abre a medida que respondes la autoevaluación, y lleva centro dorado cuando es la maestría de su color. Toca una para ir a esa semana.</p>
         <div class="branches" id="yearGrid"></div>
       </div>
     </details>
@@ -122,7 +122,7 @@
     <details class="fold" id="moodFold">
       <summary><svg class="ico"><use href="#i-sun"/></svg><span id="moodTitle">Ánimo del año</span><svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
-        <p class="fold-hint">Cada árbol es una semana y se pinta según tu ánimo promedio: <b>árbol completo, semana genial</b>; a medio pintar, ánimo medio; vacío con borde punteado, sin registrar. Tocá uno para ir a esa semana.</p>
+        <p class="fold-hint">Cada árbol es una semana y se pinta según tu ánimo promedio: <b>árbol completo, semana genial</b>; a medio pintar, ánimo medio; vacío con borde punteado, sin registrar. Toca uno para ir a esa semana.</p>
         <div class="branches" id="moodGrid"></div>
       </div>
     </details>
@@ -130,7 +130,7 @@
     <details class="fold" id="boardFold">
       <summary><svg class="ico"><use href="#i-board"/></svg>Tablero de maestría<svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
-        <p class="fold-hint">Las 49 palabras: cada fila es una dimensión y cada columna un color. Cuanto más abierta la flor, más dominada la palabra en lo que va del año. La última fila y la última columna muestran la campeona de cada línea, y la esquina la campeona general. Tocá una palabra para ir a su próxima semana de evaluación.</p>
+        <p class="fold-hint">Las 49 palabras: cada fila es una dimensión y cada columna un color. Cuanto más abierta la flor, más dominada la palabra en lo que va del año. La última fila y la última columna muestran la campeona de cada línea, y la esquina la campeona general. Toca una palabra para ir a su próxima semana de evaluación.</p>
         <div class="board-scroll"><div class="board" id="board"></div></div>
         <div class="board-legend" id="boardLegend"></div>
       </div>
@@ -174,7 +174,7 @@
         </div>
 
         <div class="field-label">Volver a una copia anterior</div>
-        <p class="fold-hint">Cada día, antes del primer cambio, se guarda una copia de cómo estaba todo. Si borraste algo por error, elegí la copia de ese día. La restauración se puede deshacer.</p>
+        <p class="fold-hint">Cada día, antes del primer cambio, se guarda una copia de cómo estaba todo. Si borraste algo por error, elige la copia de ese día. La restauración se puede deshacer.</p>
         <div class="backup">
           <button class="btn" id="backupsBtn"><svg class="ico"><use href="#i-sync"/></svg>Ver copias diarias</button>
           <button class="btn" id="undoBtn" hidden>Deshacer la última restauración</button>
@@ -199,15 +199,14 @@
 <div class="modal" id="welcome" hidden role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
   <div class="modal-box">
     <h2 id="welcomeTitle">Bienvenido a Sunset</h2>
-    <p>Cada semana tiene un color y 3 palabras activas.</p>
+    <p>Cada semana tiene un color, un árbol y 3 palabras principales. Así se usa:</p>
     <ul>
-      <li><b>Las siete palabras:</b> arriba, una por dimensión. Las tres principales de la semana brillan; tocá cualquiera para abrirla.</li>
-      <li><b>Frase de hoy:</b> la tarjeta de vidrio muestra el @ del día; debajo, el control de <i>cumplimiento</i> para registrar cuánto cumpliste hoy.</li>
-      <li><b>Domingo:</b> el título y la frase de la semana.</li>
-      <li><b>Lunes a sábado:</b> un @ por día. El registro de hoy se escribe en su tarjeta (con <i>Ampliar</i> para textos largos); el de los otros días se abre desde su pestaña y no se ve en la tarjeta.</li>
-      <li><b>Autoevaluación:</b> tocá cada palabra, respondé sus 5 preguntas del 1 (nunca) al 5 (siempre) y dejá un comentario.</li>
-      <li><b>Cierre de la semana:</b> anotá qué funcionó y qué te proponés.</li>
-      <li><b>Tablero de maestría:</b> muestra cómo vas con las 49 palabras. Cuando las 7 de un color ya pasaron por evaluación, la de mejor calificación queda como su maestría, sola.</li>
+      <li><b>Los siete íconos:</b> arriba, uno por dimensión. Los tres principales llevan una marca dorada; toca uno para ver su palabra.</li>
+      <li><b>La frase de hoy:</b> en la tarjeta de vidrio, con el control de <i>cumplimiento</i> del día.</li>
+      <li><b>Domingo a sábado:</b> un @ por día. En la tarjeta de hoy escribes tu registro, tu gratitud y tu ánimo; los demás días se abren desde su botón.</li>
+      <li><b>Autoevaluación y cierre:</b> 5 preguntas por palabra, qué funcionó y tu intención para la semana siguiente, que el domingo verás como «Esta semana quiero…».</li>
+      <li><b>Para profundizar:</b> ideas, datos y frases sobre el tema de interés de la semana.</li>
+      <li><b>Progreso, ánimo y tablero:</b> cómo vas en el año. La maestría de cada color se decide sola.</li>
     </ul>
     <button class="btn primary" id="welcomeOk">Empezar</button>
   </div>
@@ -232,7 +231,7 @@
       <input type="text" id="editorGrat" class="grat" maxlength="200" placeholder="Hoy agradezco…" autocomplete="off">
     </div>
     <label class="sr-only" for="editorText">Registro del día</label>
-    <textarea id="editorText" class="sheet-text" placeholder="Escribí con calma. Se guarda solo."></textarea>
+    <textarea id="editorText" class="sheet-text" placeholder="Escribe con calma. Se guarda solo."></textarea>
     <div class="sheet-foot"><span id="editorCount"></span><span id="editorSaved" aria-live="polite"></span></div>
   </div>
 </div>
@@ -241,7 +240,7 @@
   <form class="lock-box" id="lockForm" autocomplete="on">
     <img class="lock-logo" src="images/logo.png" width="96" height="96" alt="">
     <h1 id="lockTitle">Sunset</h1>
-    <p class="lock-hint" id="lockHint">Escribí tu clave para abrir la app.</p>
+    <p class="lock-hint" id="lockHint">Escribe tu clave para abrir la app.</p>
     <input type="text" name="username" value="sunset" autocomplete="username" hidden>
     <label class="sr-only" for="lockInput">Clave</label>
     <input type="password" id="lockInput" class="sync-input" placeholder="Clave" autocomplete="current-password" required>
@@ -334,7 +333,6 @@
   <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2.1 6.3-6.3 2.1 2.1-6.3z"/></symbol>
   <symbol id="i-quote" viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5H3v7h4c0 4-2 6-4 6zM14 21c3 0 7-1 7-8V5h-7v7h4c0 4-2 6-4 6z"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></symbol>
-  <symbol id="i-crown" viewBox="0 0 24 24"><path d="M2 18h20M3 7l4.5 4L12 4l4.5 7L21 7l-2 11H5z"/></symbol>
   <symbol id="i-sync" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-15.5 6.2L3 16M3 12a9 9 0 0115.5-6.2L21 8M21 3v5h-5M3 21v-5h5"/></symbol>
   <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></symbol>
   <symbol id="i-expand" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></symbol>

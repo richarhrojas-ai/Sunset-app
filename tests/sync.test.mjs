@@ -96,3 +96,11 @@ test('si la escritura nunca logra entrar, responde 409 en vez de perder datos en
   s.setJSON = async () => ({ modified: false });
   assert.equal((await call(req('POST', 'k', { entries: { b: { v: 2, t: 2 } } }), s)).status, 409);
 });
+
+test('la copia diaria usa el día local del dispositivo si es razonable', async () => {
+  const { backupDay } = await import('../netlify/functions/sync.mjs');
+  assert.equal(backupDay('2027-03-05', '2027-03-06T01:00:00.000Z'), '2027-03-05');
+  assert.equal(backupDay('2027-01-01', '2027-03-06T01:00:00.000Z'), '2027-03-06');
+  assert.equal(backupDay('basura', '2027-03-06T01:00:00.000Z'), '2027-03-06');
+  assert.equal(backupDay(undefined, '2027-03-06T01:00:00.000Z'), '2027-03-06');
+});
