@@ -77,7 +77,10 @@
   const weekAt = (YY, w) => (w === 0 ? YY.intro : YY.weeks[w - 1]);
   const minWeek = (YY) => (YY.intro ? 0 : 1);
   const allWeeks = (YY) => (YY.intro ? [YY.intro] : []).concat(YY.weeks);
-  const weekName = (w) => (w === 0 ? 'Introducción' : 'Semana ' + w);
+  // Número que ve el usuario: con introducción, la introducción es la semana 1 y todo lo demás corre un número (Lila = 2).
+  const num = (YY, w) => w + (YY.intro ? 1 : 0);
+  const totalWeeks = (YY) => YY.weeks.length + (YY.intro ? 1 : 0);
+  const weekName = (w, YY) => 'Semana ' + num(YY || Y, w);
   function dateOf(Y, week, day) { const d = new Date(Y.start); d.setDate(d.getDate() + (week - 1) * 7 + day); return d; }
 
   // Año y semana de una fecha. Antes del primer año → su semana 1; después del último → su última semana.
@@ -395,7 +398,7 @@
     const long = el('span', 'd-long', WEEKDAYS[now.getDay()] + ', ' + now.getDate() + ' de ' + MONTHS[now.getMonth()] + ', ' + now.getFullYear());
     const short = el('span', 'd-short', WEEKDAYS[now.getDay()].slice(0, 3) + ' ' + now.getDate() + ' ' + MONTHS[now.getMonth()].slice(0, 3) + ' ' + now.getFullYear());
     h.appendChild(long); h.appendChild(short);
-    const sub = TODAY.inRange ? (TODAY.week === 0 ? 'Introducción' : 'Semana ' + TODAY.week + ' de ' + TODAY.Y.weeks.length)
+    const sub = TODAY.inRange ? ('Semana ' + num(TODAY.Y, TODAY.week) + ' de ' + totalWeeks(TODAY.Y))
       : TODAY.before ? 'Sunset ' + TODAY.Y.year + ' empieza el ' + fmtDate(TODAY.Y.start)
         : 'Falta cargar la planilla del año siguiente';
     h.appendChild(el('small', null, sub));
@@ -433,7 +436,7 @@
     if (viewing === 0) {
       const head = el('div', 'card-day');
       head.appendChild(icon('sun'));
-      head.appendChild(document.createTextNode('Introducción · ' + wk.dates));
+      head.appendChild(document.createTextNode('Semana ' + num(Y, 0) + ' · ' + wk.dates));
       card.appendChild(head);
     } else card.appendChild(dayHead(0, 'Título', 'sun'));
     card.appendChild(el('h1', 'sunday-title', wk.title));
@@ -587,7 +590,7 @@
     wrap.innerHTML = '';
     $('closingLabel').textContent = viewing === 0 ? 'Para empezar' : 'Cierre de la semana';
     if (viewing === 0) {
-      wrap.appendChild(el('div', 'field-label', 'Intención para la semana 1'));
+      wrap.appendChild(el('div', 'field-label', 'Intención para la semana ' + num(Y, 1)));
       wrap.appendChild(el('p', 'field-hint', 'Lo que escribas aquí aparecerá el domingo como «Esta semana quiero…».'));
       wrap.appendChild(noteField(k(Y, 0, 'intencion'), 'La semana que viene quiero…', 2));
       return;
@@ -645,7 +648,8 @@
     const wrap = $('moodGrid');
     wrap.innerHTML = '';
     const per = wrap.clientWidth && wrap.clientWidth < 560 ? 7 : 13;
-    for (let start = 0; start < Y.weeks.length; start += per) {
+    const list = allWeeks(Y);
+    for (let start = 0; start < list.length; start += per) {
       const row = el('div', 'branch');
       row.style.setProperty('--per', per);
       const ns = 'http://www.w3.org/2000/svg';
@@ -658,15 +662,15 @@
       path.setAttribute('vector-effect', 'non-scaling-stroke');
       line.appendChild(path);
       row.appendChild(line);
-      Y.weeks.slice(start, start + per).forEach(function (wk) {
+      list.slice(start, start + per).forEach(function (wk) {
         const m = weekMood(Y, wk.week);
         const ink = treeOf(Y.themes[wk.col].name).ink;
         const b = el('button', 'yw mt');
         b.type = 'button';
-        b.setAttribute('aria-label', 'Semana ' + wk.week + ': ' + (m.n ? 'ánimo promedio ' + fmt1(m.avg) + ' de 5' : 'sin ánimo registrado'));
-        b.title = 'Semana ' + wk.week + (m.n ? ' · ánimo ' + fmt1(m.avg) + '/5' : ' · sin registrar');
+        b.setAttribute('aria-label', 'Semana ' + num(Y, wk.week) + ': ' + (m.n ? 'ánimo promedio ' + fmt1(m.avg) + ' de 5' : 'sin ánimo registrado'));
+        b.title = 'Semana ' + num(Y, wk.week) + (m.n ? ' · ánimo ' + fmt1(m.avg) + '/5' : ' · sin registrar');
         b.appendChild(moodTreeSVG(wk.week, ink, m.n ? m.avg : null));
-        b.appendChild(el('span', null, String(wk.week)));
+        b.appendChild(el('span', null, String(num(Y, wk.week))));
         if (wk.week === viewing) b.classList.add('is-viewing');
         if (TODAY.inRange && Y === TODAY.Y && wk.week === TODAY.week) b.classList.add('is-current');
         b.addEventListener('click', function () { goTo(Y, wk.week); });
@@ -682,7 +686,8 @@
     const wrap = $('yearGrid');
     wrap.innerHTML = '';
     const per = wrap.clientWidth && wrap.clientWidth < 560 ? 7 : 13;
-    for (let start = 0; start < Y.weeks.length; start += per) {
+    const list = allWeeks(Y);
+    for (let start = 0; start < list.length; start += per) {
       const row = el('div', 'branch');
       row.style.setProperty('--per', per);
       const ns = 'http://www.w3.org/2000/svg';
@@ -695,15 +700,15 @@
       path.setAttribute('vector-effect', 'non-scaling-stroke');
       line.appendChild(path);
       row.appendChild(line);
-      Y.weeks.slice(start, start + per).forEach(function (wk) {
+      list.slice(start, start + per).forEach(function (wk) {
         const t = Y.themes[wk.col];
         const done = weekCompletion(Y, wk.week);
         const m = '';
         const b = el('button', 'yw');
-        b.setAttribute('aria-label', 'Semana ' + wk.week + ', ' + wk.dates + ', ' + Math.round(done * 100) + '% respondido' + '');
-        b.title = 'Semana ' + wk.week + ' · ' + treeOf(t.name).name + ' · ' + Math.round(done * 100) + '%';
+        b.setAttribute('aria-label', 'Semana ' + num(Y, wk.week) + ', ' + wk.dates + ', ' + Math.round(done * 100) + '% respondido' + '');
+        b.title = 'Semana ' + num(Y, wk.week) + ' · ' + treeOf(t.name).name + ' · ' + Math.round(done * 100) + '%';
         b.appendChild(window.SunsetTree.flowerSVG(treeOf(t.name).ink, done, false));
-        b.appendChild(el('span', null, String(wk.week)));
+        b.appendChild(el('span', null, String(num(Y, wk.week))));
         if (wk.week === viewing) b.classList.add('is-viewing');
         if (TODAY.inRange && Y === TODAY.Y && wk.week === TODAY.week) b.classList.add('is-current');
         b.addEventListener('click', function () { goTo(Y, wk.week); });
@@ -750,7 +755,7 @@
           if (m > 0) lbl.appendChild(el('small', null, (m > 0 ? Math.round(m * 100) + '%' : '')));
           sq.appendChild(lbl);
           const next = nextEvalWeek(Y, word, viewing);
-          sq.title = word + ' · ' + Y.dimensions[r] + ' · ' + t.name + (n ? ' · maestría del color' : '') + ' · próxima evaluación: semana ' + next;
+          sq.title = word + ' · ' + Y.dimensions[r] + ' · ' + t.name + (n ? ' · maestría del color' : '') + ' · próxima evaluación: semana ' + num(Y, next);
           sq.addEventListener('click', function () { goTo(Y, next); });
           board.appendChild(sq);
         } else if (r < 7) {
@@ -836,12 +841,12 @@
     const nw = Y.weeks[next - 1];
     $('wordEyebrow').textContent = Y.dimensions[d];
     $('wordTitle').textContent = word;
-    $('wordWhen').textContent = 'Está en juego esta semana, pero se evalúa en la semana ' + next + ' (' + nw.dates + '). Estas son sus preguntas:';
+    $('wordWhen').textContent = 'Está en juego esta semana, pero se evalúa en la semana ' + num(Y, next) + ' (' + nw.dates + '). Estas son sus preguntas:';
     const list = $('wordQs');
     list.innerHTML = '';
     (Y.questions[word] || []).forEach((q) => list.appendChild(el('li', null, q)));
     const go = $('wordGo');
-    go.textContent = next === viewing ? 'Ver la autoevaluación' : 'Ir a la semana ' + next;
+    go.textContent = next === viewing ? 'Ver la autoevaluación' : 'Ir a la semana ' + num(Y, next);
     go.onclick = function () { closeWord(); goTo(Y, next); };
     $('wordModal').hidden = false;
     go.focus();
@@ -1032,7 +1037,7 @@
       const li = el('li');
       const b = el('button', 'result');
       b.type = 'button';
-      b.appendChild(el('span', 'result-where', weekName(r.week) + ' · ' + r.year + ' · ' + r.label));
+      b.appendChild(el('span', 'result-where', weekName(r.week, YEARS[yearIndex(r.year)] || Y) + ' · ' + r.year + ' · ' + r.label));
       const from = Math.max(0, r.at - 50), to = Math.min(r.text.length, r.at + r.len + 90);
       const snip = el('span', 'result-text');
       snip.appendChild(document.createTextNode((from > 0 ? '…' : '') + r.text.slice(from, r.at)));
@@ -1201,7 +1206,7 @@
       if (f) notes.push({ label: 'Qué funcionó y qué mejorar', text: f });
       if (i) notes.push({ label: 'Intención para la semana siguiente', text: i });
       if (!lines.length && !notes.length) return;
-      out.push({ title: weekName(w) + ' · ' + YY.themes[wk.col].name + ' · ' + wk.dates + ' · ' + YY.year, subtitle: wk.title, days: lines, notes: notes });
+      out.push({ title: weekName(w, YY) + ' · ' + YY.themes[wk.col].name + ' · ' + wk.dates + ' · ' + YY.year, subtitle: wk.title, days: lines, notes: notes });
     });
     return out;
   }
@@ -1544,7 +1549,7 @@
     YEARS.forEach(function (YY) {
       allWeeks(YY).forEach(function (wk) {
         const w = wk.week;
-        const row = [YY.year, w === 0 ? 'Introducción' : w, wk.dates, YY.themes[wk.col].name];
+        const row = [YY.year, num(YY, w), wk.dates, YY.themes[wk.col].name];
         for (let d = 0; d < 7; d++) row.push(getV(k(YY, w, 'd' + d), ''));
         activeWords(YY, w).forEach(function (a) {
           row.push(a.word, getAnswers(YY, w, a.word).map((v) => v || '-').join(' '),

@@ -43,7 +43,8 @@ La app elige el año según la fecha y pasa de la última semana de un año a la
 
 ### Cómo se leen las planillas
 
-- **Frases**: una fila por semana (domingo a sábado). La fecha de la semana 1 define el primer domingo.
+- **Frases**: una fila por semana (domingo a sábado). La fecha de la semana 1 de la planilla define el primer domingo.
+- **Introducción** (opcional): `content/planillas/introduccion-AAAA.json` agrega los días que quedan antes de ese primer domingo (2027: viernes 1 y sábado 2, semana azul). En la app es la **Semana 1** (liviana, sin autoevaluación) y la primera fila de la planilla pasa a ser la Semana 2; internamente se guarda como `w0`, así que las claves de las demás semanas no cambian.
 - **Preguntas**: las 49 palabras (7 dimensiones × 7 palabras) con sus 5 preguntas; el orden arma el tablero 7×7.
 - **Mapeo Puente** (opcional): referencia interna, se muestra en "Historia interna".
 
