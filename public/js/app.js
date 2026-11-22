@@ -1881,7 +1881,7 @@
     const box = el('section', 'hoy-eval');
     const paint = function () {
       box.textContent = '';
-      box.appendChild(el('div', 'dq-label', 'Tu evaluación de la semana'));
+      box.appendChild(el('h2', 'dq-label', 'Tu evaluación de la semana'));   // h2: las palabras van como h3 debajo
       let pending = 0;
       activeWords(YY, w).forEach(function (a) {
         const answers = getAnswers(YY, w, a.word);

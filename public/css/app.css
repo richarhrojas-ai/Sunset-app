@@ -458,6 +458,7 @@ a.btn{text-decoration:none;}
 .dq{margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--well);border:1px solid var(--line);}
 .dq[hidden]{display:none;}
 .dq-label{font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-ink);margin-bottom:4px;}
+h2.dq-label{margin-top:0;}
 .dq-word{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--txt2);}
 .dq-q{font-size:15px;line-height:1.55;margin:4px 0 10px;}
 .dq-note{font-size:14px;color:var(--txt2);}

@@ -15,7 +15,7 @@ netlify/content/data.mjs      Contenido generado desde las planillas (NO se publ
 netlify/functions/            /api/content (entrega el contenido con clave) y /api/sync (registros)
 netlify/lib/auth.mjs          Verificación de la clave
 tools/                        Generadores (datos, imágenes, clave)
-tests/                        Pruebas de las funciones: `npm test`
+tests/                        Pruebas de las funciones (`npm test`) y del navegador en tests/e2e (`npm run test:e2e`)
 ```
 
 ## Clave de acceso
@@ -135,3 +135,16 @@ servidor reintenta y combina). En Netlify Blobs (almacén `sunset`):
 
 - Se edita la semana actual y la anterior. Las semanas más antiguas quedan de solo lectura; se les puede agregar una **nota posterior** (por ejemplo, por qué no se registró), que aparece en el diario y el buscador pero no cuenta para racha, ánimo ni evaluación.
 - **Meta del año:** 70 % de los días con registro, visible en «Mi año».
+
+## Pruebas
+
+- `npm test`: sincronización, copias y notificaciones (rápidas, sin navegador).
+- `npm run test:e2e`: la app completa en un navegador (Playwright), con un servidor local que usa las mismas funciones de Netlify y guarda en memoria (clave de prueba `clave123`). Cubre:
+  - **flujos**: clave, registro, ánimo, autoevaluación, sincronización entre dos dispositivos, buscador, exportar CSV/JSON y navegación de semanas;
+  - **reglas**: meta del 70 %, sábado de evaluación, domingo con la historia, días anteriores, semanas cerradas con nota posterior y la ficha de cada dimensión;
+  - **portada**: mismas medidas en las 7 semanas, lo del día visible en la primera pantalla del celular, barra de atajos y firmas;
+  - **tema**: Auto / Día / Noche;
+  - **accesibilidad**: axe-core en Hoy, Semana y Mi año, de día y de noche, en varios colores y tamaños (0 violaciones).
+- `npm run test:todo`: las dos.
+
+La primera vez en una computadora nueva: `npm install` y `npx playwright install chromium`.
