@@ -1908,10 +1908,10 @@
     box.appendChild(goal);
     if (mode === 'domingo') box.appendChild(prepBox(Y, viewing));
     if (mode === 'sabado') { const pb = pendingBox(Y, viewing); pb.setGoal(goal); box.appendChild(pb); }
-    box.appendChild(el('div', 'field-label', 'Registro de hoy'));
+    box.appendChild(el('div', 'field-label', isToday ? 'Registro de hoy' : 'Registro del ' + WEEKDAYS[day].toLowerCase()));
     const rec = noteField(k(Y, viewing, 'd' + day), mode === 'sabado' ? 'Lo que te dejó la semana…' : 'Una o dos líneas sobre tu día…', 3);
     box.appendChild(rec);
-    const gr = noteField(k(Y, viewing, 'g' + day), 'Hoy agradezco…', 1);
+    const gr = noteField(k(Y, viewing, 'g' + day), isToday ? 'Hoy agradezco…' : 'Ese día agradecí…', 1);
     gr.classList.add('grat-note');
     box.appendChild(gr);
     box.appendChild(moodRow(day, refreshMood));
@@ -1922,7 +1922,7 @@
     expand.type = 'button';
     expand.appendChild(icon('expand'));
     expand.appendChild(document.createTextNode('Ampliar'));
-    expand.setAttribute('aria-label', 'Abrir el registro de hoy en pantalla grande');
+    expand.setAttribute('aria-label', isToday ? 'Abrir el registro de hoy en pantalla grande' : 'Abrir el registro del ' + WEEKDAYS[day].toLowerCase() + ' en pantalla grande');
     expand.addEventListener('click', () => openEditor(day));
     tools.appendChild(expand);
     box.appendChild(tools);
