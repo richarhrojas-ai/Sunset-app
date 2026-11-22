@@ -14,7 +14,7 @@
     Amarillo: { form: 'lapacho',
       flowers: ['#F5C518', '#FFD84D', '#E8A90C', '#FFE58A'], leaves: ['#B8840A', '#C9940C'] },
     Blanco: { form: 'lapacho',
-      flowers: ['#FFFFFF', '#FBF4F6', '#F3DCE6', '#FFF6E8'], leaves: ['#D9C3CC', '#E6D3DA'] },
+      flowers: ['#FFFFFF', '#FDFCF8', '#F6F3EC', '#FFFDF6'], leaves: ['#DCD8CF', '#E8E4DC'] },
     Verde: { form: 'leafy',
       flowers: ['#4E9A3B', '#79B84E', '#A9D46F', '#2F6E2C'], leaves: ['#2C5E24', '#3A7330'] },
     Negro: { form: 'silhouette',
