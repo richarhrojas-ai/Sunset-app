@@ -64,8 +64,8 @@ cursiva. Los colores de cada semana (`accent` / `mid`) están en `public/js/tree
 - **Las siete palabras** (cabecera): una por dimensión, con su ícono de línea. Las tres principales de la semana brillan y
   llevan la marca "Principal". Tocar una principal abre la autoevaluación con esa palabra; tocar una de las otras abre una
   ficha con sus preguntas y la semana en que se evalúa. El marco dorado se desliza hasta la palabra elegida.
-- **Frase de hoy** (vidrio, a la izquierda del árbol en pantallas anchas): el @ del día y el control deslizante de
-  cumplimiento (se guarda como `AAAA/wN/pD`, 0 a 100, y sale en la planilla CSV).
+- **Frase de hoy** (vidrio, a la izquierda del árbol en la vista Semana): el @ del día. El antiguo control de cumplimiento
+  se quitó; los valores ya guardados (`AAAA/wN/pD`) se conservan y siguen saliendo en la planilla CSV y el diario.
 - Los íconos se generan con `python3 tools/make_icons.py` (símbolos `d-0` a `d-6`).
 
 ## Imágenes de los árboles
@@ -84,11 +84,11 @@ están en el encabezado de `tools/hero_from_photo.py`. Después subir la versió
 
 ## Uso diario
 
-- **2 minutos** (botón en la barra de atajos): frase de hoy, registro corto (con dictado por voz si el navegador lo permite), gratitud, ánimo, la pregunta del día y la agenda.
+- **Hoy** (la app abre aquí): frase de hoy, registro corto (con dictado por voz si el navegador lo permite), gratitud, ánimo, la pregunta del día y la agenda. Barra de atajos: Hoy · Semana · Mi año · Buscar.
 - **Racha amable**: cuántos de los últimos 7 días tienen algo registrado; nunca castiga.
 - **Pregunta del día**: una de las 15 preguntas de la semana por día; las respuestas cuentan en la autoevaluación.
 - **Resumen de la semana**: botón en el cierre. El domingo, la primera vez que se abre la app, aparece solo el de la semana que terminó.
-- **Dictado**: botón «Dictar» en el registro de hoy, en 2 minutos y en la pantalla grande. Usa el reconocimiento de voz del navegador (en Chrome el audio lo procesa Google).
+- **Dictado**: botón «Dictar» en Hoy, en el registro de hoy y en la pantalla grande. Usa el reconocimiento de voz del navegador (en Chrome el audio lo procesa Google).
 
 ### Notificación diaria (opcional)
 

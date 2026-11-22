@@ -387,6 +387,7 @@
     document.documentElement.classList.remove('no-scroll');
     renderSunday();
     renderDays();
+    renderHoy();
     renderClosing();
     renderYear();
     const back = document.querySelector('.record-tab[data-day="' + day + '"]') || document.querySelector('.expand-btn');
@@ -524,7 +525,7 @@
     if (tree.sci) tn.appendChild(el('i', null, tree.sci));
     $('prevWeek').disabled = viewing <= minWeek(Y) && yi === 0;
     $('nextWeek').disabled = viewing >= Y.weeks.length && yi === YEARS.length - 1;
-    $('todayBtn').hidden = !TODAY.inRange || isCurrent();
+    $('todayBtn').hidden = !TODAY.inRange || (isCurrent() && view === 'hoy');
     $('yearTitle').textContent = 'Progreso ' + Y.year;
   }
 
@@ -1003,16 +1004,11 @@
   }
   window.addEventListener('resize', debounce(function () { if (Y) markSelected(true); }, 200));
 
-  // ── Frase del día y cumplimiento (el control deslizante) ──
-  const pKey = (day) => k(Y, viewing, 'p' + day);
-  function weekFulfilment() {
-    const vals = [0, 1, 2, 3, 4, 5, 6].map((d) => getV(pKey(d), null)).filter((v) => v != null);
-    return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null;
-  }
+  // ── Frase del día (tarjeta de vidrio de la portada) ──
   function renderToday() {
     const wk = weekAt(Y, viewing);
     const day = todayIndex();
-    const label = $('todayLabel'), text = $('todayText'), more = $('todayMore'), meter = $('meter');
+    const label = $('todayLabel'), text = $('todayText'), more = $('todayMore');
     let full = '';
     if (day >= 0 && viewing === 0) {
       const idia = introDay(wk, day);
@@ -1037,45 +1033,7 @@
     more.onclick = toCard;
     text.onclick = toCard;
     text.style.cursor = day < 0 ? 'default' : 'pointer';
-    meter.innerHTML = '';
-    meter.classList.remove('is-week');
     $('today').classList.toggle('is-phrase', day <= 0);
-    if (day >= 0) {
-      const v = getV(pKey(day), null);
-      const head = el('div', 'meter-head');
-      const lab = el('label', null, 'Cumplimiento de hoy');
-      lab.setAttribute('for', 'dayPct');
-      const out = el('output', null, v == null ? '—' : v + '%');
-      out.id = 'dayPctOut';
-      head.appendChild(lab); head.appendChild(out);
-      const input = el('input');
-      input.type = 'range'; input.id = 'dayPct'; input.min = 0; input.max = 100; input.step = 5;
-      input.value = v == null ? 0 : v;
-      input.classList.toggle('unset', v == null);
-      input.style.setProperty('--p', (v == null ? 0 : v) + '%');
-      input.setAttribute('aria-valuetext', v == null ? 'sin registrar' : v + ' por ciento');
-      const commit = debounce(function () { setV(pKey(day), Number(input.value)); }, 400);
-      input.addEventListener('input', function () {
-        input.classList.remove('unset');
-        input.style.setProperty('--p', input.value + '%');
-        out.textContent = input.value + '%';
-        input.setAttribute('aria-valuetext', input.value + ' por ciento');
-        commit();
-      });
-      input.addEventListener('change', function () { setV(pKey(day), Number(input.value)); });
-      meter.appendChild(head); meter.appendChild(input);
-    } else {
-      const avg = weekFulfilment();
-      meter.classList.add('is-week');
-      const row = el('div', 'meter-week');
-      row.appendChild(el('span', null, 'Cumplimiento de la semana'));
-      const bar = el('div', 'meter-bar');
-      const fill = el('i'); fill.style.width = (avg || 0) + '%';
-      bar.appendChild(fill);
-      row.appendChild(bar);
-      row.appendChild(el('output', null, avg == null ? '—' : avg + '%'));
-      meter.appendChild(row);
-    }
   }
 
   // El versículo de la semana: el @Regalo del lunes, fijo y discreto durante toda la semana.
@@ -1115,7 +1073,11 @@
   }
 
   function render() {
+    if (view === 'hoy' && !(TODAY.inRange && Y === TODAY.Y && viewing === TODAY.week)) view = 'semana';
+    document.body.classList.toggle('view-hoy', view === 'hoy');
     document.body.classList.toggle('is-intro', viewing === 0);
+    renderHoy();
+    markJump();
     applyTheme();
     renderVerse();
     renderAgenda();
@@ -1708,48 +1670,61 @@
     renderPush();
   });
 
-  // ── Modo 2 minutos: lo esencial de hoy en una sola pantalla ──
-  function openQuick() {
-    const body = $('quickBody');
-    body.textContent = '';
-    if (!TODAY.inRange) {
-      $('quickTitle').textContent = 'Registro rápido';
-      body.appendChild(el('p', 'field-hint', TODAY.before ? 'Se activa cuando empieza tu año Sunset.' : 'Falta cargar la planilla del año.'));
-    } else {
-      const TY = TODAY.Y, TW = TODAY.week, day = now.getDay();
-      $('quickTitle').textContent = WEEKDAYS[day] + ' ' + now.getDate() + ' de ' + MONTHS[now.getMonth()];
-      $('quickEyebrow').textContent = '2 minutos · ' + weekName(TW, TY);
-      body.appendChild(streakBox());
-      const ph = dayPhrase(TY, TW, day);
-      const phrase = el('div', 'quick-phrase');
-      phrase.appendChild(el('div', 'today-label', ph.label));
-      phrase.appendChild(phraseInto(el('p'), ph.text));
-      body.appendChild(phrase);
-      body.appendChild(el('div', 'field-label', 'Registro de hoy'));
-      const rec = noteField(k(TY, TW, 'd' + day), 'Una o dos líneas sobre tu día…', 3);
-      body.appendChild(rec);
-      const mic = micButton(rec);
-      if (mic) body.appendChild(mic);
-      const gr = noteField(k(TY, TW, 'g' + day), 'Hoy agradezco…', 1);
-      gr.classList.add('grat-note');
-      body.appendChild(gr);
-      body.appendChild(moodRow(day, null, TY, TW));
-      body.appendChild(questionBox(TY, TW, day, null));
-      body.appendChild(agendaBox(now));
+  // ── Vista Hoy: la puerta de entrada. Lo esencial del día en una pantalla; la semana completa, a un toque ──
+  let view = 'semana';
+  function renderHoy() {
+    const box = $('hoyView');
+    box.textContent = '';
+    if (view !== 'hoy') return;
+    const day = now.getDay();
+    const head = el('div', 'hoy-head');
+    head.appendChild(el('h1', 'hoy-title', WEEKDAYS[day] + ' ' + now.getDate() + ' de ' + MONTHS[now.getMonth()]));
+    head.appendChild(streakBox());
+    box.appendChild(head);
+    const ph = dayPhrase(Y, viewing, day);
+    const phrase = el('div', 'hoy-phrase');
+    phrase.appendChild(el('div', 'today-label', ph.label));
+    phrase.appendChild(phraseInto(el('p'), ph.text));
+    box.appendChild(phrase);
+    box.appendChild(el('div', 'field-label', 'Registro de hoy'));
+    const rec = noteField(k(Y, viewing, 'd' + day), 'Una o dos líneas sobre tu día…', 3);
+    box.appendChild(rec);
+    const gr = noteField(k(Y, viewing, 'g' + day), 'Hoy agradezco…', 1);
+    gr.classList.add('grat-note');
+    box.appendChild(gr);
+    box.appendChild(moodRow(day, refreshMood));
+    const tools = el('div', 'record-tools');
+    const mic = micButton(rec);
+    if (mic) tools.appendChild(mic);
+    const expand = el('button', 'expand-btn');
+    expand.type = 'button';
+    expand.appendChild(icon('expand'));
+    expand.appendChild(document.createTextNode('Ampliar'));
+    expand.setAttribute('aria-label', 'Abrir el registro de hoy en pantalla grande');
+    expand.addEventListener('click', () => openEditor(day));
+    tools.appendChild(expand);
+    box.appendChild(tools);
+    const q = questionBox(Y, viewing, day, refreshEval);
+    box.appendChild(q);
+    box.appendChild(agendaBox(now));
+    const more = el('button', 'hoy-more', 'Ver la semana completa');
+    more.type = 'button';
+    more.appendChild(icon('right'));
+    more.addEventListener('click', () => setView('semana', true));
+    box.appendChild(more);
+  }
+  // Cambia entre Hoy y Semana. Hoy siempre muestra el día de hoy.
+  function setView(v, scroll) {
+    if (v === 'hoy' && !TODAY.inRange) v = 'semana';
+    view = v;
+    if (v === 'hoy') { Y = TODAY.Y; viewing = TODAY.week; openWord = null; }
+    render();
+    if (scroll) {
+      const target = v === 'semana' ? $('weekStart') : $('hoyView');
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    $('quick').hidden = false;
-    document.documentElement.classList.add('no-scroll');
-    const first = body.querySelector('textarea');
-    if (first) first.focus({ preventScroll: true });
   }
-  function closeQuick() {
-    flushNotes();
-    $('quick').hidden = true;
-    document.documentElement.classList.remove('no-scroll');
-    renderWhenIdle();
-  }
-  $('quickBtn').addEventListener('click', openQuick);
-  $('quickDone').addEventListener('click', closeQuick);
+
 
   // ── Resumen de la semana ──
   function prevWeekOf(YY, w) {
@@ -2150,19 +2125,22 @@
   }
 
   // ── Eventos ──
-  // Atajos: llevan a cada sección (los plegables se abren al llegar).
+  // Atajos: Hoy · Semana · Mi año · Buscar.
+  function markJump() {
+    document.querySelectorAll('.jump [data-view]').forEach((b) => b.setAttribute('aria-current', String(b.dataset.view === view)));
+  }
   document.querySelector('.jump').addEventListener('click', function (e) {
-    const btn = e.target.closest('button[data-go]');
+    const btn = e.target.closest('button[data-view], button[data-go]');
     if (!btn) return;
-    const go = btn.dataset.go;
-    const target = go === 'today' ? (document.querySelector('#days .is-today, #sunday.is-today') || $('days'))
-      : go === 'closing' ? $('closingCard') : $(go);
+    if (btn.dataset.view) { setView(btn.dataset.view, true); return; }
+    if (view === 'hoy') setView('semana');
+    const target = $(btn.dataset.go);
     if (target.tagName === 'DETAILS') target.open = true;
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   $('prevWeek').addEventListener('click', () => step(-1));
   $('nextWeek').addEventListener('click', () => step(1));
-  $('todayBtn').addEventListener('click', () => goTo(TODAY.Y, TODAY.week));
+  $('todayBtn').addEventListener('click', () => setView('hoy', true));
   $('exportJsonBtn').addEventListener('click', exportJson);
   $('exportCsvBtn').addEventListener('click', exportCsv);
   $('importBtn').addEventListener('click', () => $('importFile').click());
@@ -2217,7 +2195,6 @@
     sync();
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !$('quick').hidden) { closeQuick(); return; }
     if (e.key === 'Escape' && !$('summary').hidden) { closeSummary(); return; }
     if (e.key === 'Escape' && !$('diary').hidden) { closeDiary(); return; }
     if (e.key === 'Escape' && !$('search').hidden) { closeSearch(); return; }
@@ -2244,6 +2221,7 @@
     Y = TODAY.Y;
     viewing = TODAY.week;
     openWord = null;
+    view = TODAY.inRange ? 'hoy' : 'semana';
     renderHeader();
     renderSyncPanel();
     renderUndo();
@@ -2251,8 +2229,7 @@
     renderPush();
     if (!state.welcomed) $('welcome').hidden = false;
     // Abrir directo el registro rápido (por ejemplo, desde la notificación diaria).
-    if (/[?&]rapido=1/.test(location.search)) openQuick();
-    else sundaySummary();
+    sundaySummary();
     sync();
   }
 

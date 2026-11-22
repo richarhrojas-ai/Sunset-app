@@ -64,20 +64,18 @@
     <div class="today-label" id="todayLabel"></div>
     <p class="today-text" id="todayText"></p>
     <button type="button" class="today-more" id="todayMore">Leer completo</button>
-    <div class="meter" id="meter"></div>
   </aside>
 
   <nav class="jump" aria-label="Ir a una sección">
-    <button type="button" class="jump-quick" id="quickBtn"><svg class="ico"><use href="#i-bolt"/></svg>2 min</button>
-    <button type="button" data-go="today">Hoy</button>
-    <button type="button" data-go="evaluation">Autoevaluación</button>
-    <button type="button" data-go="closing">Cierre</button>
-    <button type="button" data-go="yearFold">Progreso</button>
-    <button type="button" data-go="boardFold">Tablero</button>
+    <button type="button" data-view="hoy">Hoy</button>
+    <button type="button" data-view="semana">Semana</button>
+    <button type="button" data-go="yearFold">Mi año</button>
     <button type="button" id="searchBtn">Buscar</button>
   </nav>
 
   <main>
+    <section class="hoy" id="hoyView" aria-label="Hoy"></section>
+    <span id="weekStart" class="week-start" aria-hidden="true"></span>
     <p class="verse" id="verse" hidden></p>
     <p class="intent" id="intent" hidden></p>
     <p class="agenda-row"><a class="agenda-link" id="agendaLink" target="_blank" rel="noopener noreferrer"></a></p>
@@ -165,7 +163,7 @@
           <button class="btn" id="remBtn" type="button">Descargar recordatorio</button>
         </div>
         <div id="pushRow" hidden>
-          <p class="fold-hint">O recibe una notificación en este dispositivo cada día, a la hora elegida (en punto), que abre el registro de 2 minutos. En iPhone funciona con la app instalada en la pantalla de inicio.</p>
+          <p class="fold-hint">O recibe una notificación en este dispositivo cada día, a la hora elegida (en punto), que abre la app en Hoy. En iPhone funciona con la app instalada en la pantalla de inicio.</p>
           <div class="backup">
             <button class="btn primary" id="pushOn" type="button">Activar notificación diaria</button>
             <button class="btn" id="pushOff" type="button" hidden>Desactivar</button>
@@ -210,14 +208,11 @@
 <div class="modal" id="welcome" hidden role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
   <div class="modal-box">
     <h2 id="welcomeTitle">Bienvenido a Sunset</h2>
-    <p>Cada semana tiene un color, un árbol y 3 palabras principales. Así se usa:</p>
+    <p>Cada semana tiene un color, un árbol y 3 palabras principales.</p>
     <ul>
-      <li><b>Los siete íconos:</b> arriba, uno por dimensión. Los tres principales llevan una marca dorada; toca uno para ver su palabra.</li>
-      <li><b>La frase de hoy:</b> en la tarjeta de vidrio, con el control de <i>cumplimiento</i> del día.</li>
-      <li><b>Domingo a sábado:</b> un @ por día. En la tarjeta de hoy escribes tu registro, tu gratitud y tu ánimo; los demás días se abren desde su botón.</li>
-      <li><b>Autoevaluación y cierre:</b> 5 preguntas por palabra, qué funcionó y tu intención para la semana siguiente, que el domingo verás como «Esta semana quiero…».</li>
-      <li><b>Para profundizar:</b> ideas, datos y frases sobre el tema de interés de la semana.</li>
-      <li><b>Progreso, ánimo y tablero:</b> cómo vas en el año. La maestría de cada color se decide sola.</li>
+      <li><b>Hoy:</b> la app abre en tu día: la frase, tu registro, la gratitud, el ánimo y una pregunta. Dos minutos alcanzan.</li>
+      <li><b>Semana:</b> todo el contenido de la semana, la autoevaluación y el cierre, con tu intención para la siguiente.</li>
+      <li><b>Mi año:</b> tu progreso, tu ánimo y el tablero de las 49 palabras. La maestría de cada color se decide sola.</li>
     </ul>
     <button class="btn primary" id="welcomeOk">Empezar</button>
   </div>
@@ -309,19 +304,6 @@
   </div>
 </div>
 
-<div class="sheet" id="quick" hidden role="dialog" aria-modal="true" aria-labelledby="quickTitle">
-  <div class="sheet-box">
-    <div class="sheet-head">
-      <div>
-        <div class="sheet-eyebrow" id="quickEyebrow">2 minutos</div>
-        <h2 id="quickTitle">Registro rápido</h2>
-      </div>
-      <button class="btn primary" id="quickDone" type="button">Listo</button>
-    </div>
-    <div class="quick-body" id="quickBody"></div>
-  </div>
-</div>
-
 <div class="sheet" id="summary" hidden role="dialog" aria-modal="true" aria-labelledby="summaryTitle">
   <div class="sheet-box">
     <div class="sheet-head">
@@ -356,7 +338,6 @@
 
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></symbol>
   <symbol id="i-auto" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/><path d="M12 4a8 8 0 010 16z" fill="currentColor" stroke="none"/></symbol>
-  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
   <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v4M8 22h8"/></symbol>
   <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
   <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
