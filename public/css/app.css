@@ -20,7 +20,6 @@
 @property --bg-mid{syntax:'<color>';inherits:true;initial-value:#2d1946;}
 @property --bg-low{syntax:'<color>';inherits:true;initial-value:#3b1d4d;}
 @property --bg-warm{syntax:'<color>';inherits:true;initial-value:#b84a15;}
-:root{transition:--bg-top .7s,--bg-mid .7s,--bg-low .7s,--bg-warm .7s;}
 html{-webkit-text-size-adjust:100%;}
 body{font-family:var(--sans);font-weight:300;background:var(--bg-top);color:var(--txt);min-height:100vh;font-size:15px;}
 button{font-family:inherit;color:inherit;}
@@ -138,8 +137,7 @@ main{padding:18px;display:flex;flex-direction:column;gap:20px;flex:1;}
 .section-label::after{content:'';flex:1;height:1px;background:var(--line);}
 
 /* ── TARJETAS DE VIDRIO ── */
-.card{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;}
 .card::before{content:'';position:absolute;top:-22px;right:-22px;width:84px;height:84px;background:var(--wk-mid);opacity:.2;pointer-events:none;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -12 24 24'%3E%3Cg%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8'/%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8' transform='rotate(72)'/%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8' transform='rotate(144)'/%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8' transform='rotate(216)'/%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8' transform='rotate(288)'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -12 24 24'%3E%3Cg%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8'/%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8' transform='rotate(72)'/%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8' transform='rotate(144)'/%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8' transform='rotate(216)'/%3E%3Cellipse cy='-5.6' rx='4.2' ry='5.8' transform='rotate(288)'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;}
@@ -212,7 +210,7 @@ main{padding:18px;display:flex;flex-direction:column;gap:20px;flex:1;}
 .q-ends{display:flex;justify-content:space-between;font-size:11.5px;letter-spacing:.06em;color:var(--txt3);margin-top:5px;}
 
 /* ── PLEGABLES ── */
-.fold{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.fold{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);}
 .fold>summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;align-items:center;gap:12px;font-weight:300;font-size:15px;letter-spacing:.14em;text-transform:uppercase;}
 .fold>summary::-webkit-details-marker{display:none;}
 .fold>summary .ico.chev{margin-left:auto;transition:transform .2s;}
@@ -592,3 +590,6 @@ a.btn{text-decoration:none;}
 /* Firma de las frases: el guion en el color de la semana */
 .sig{white-space:nowrap;}
 .sig-dash{color:var(--wk);font-weight:600;}
+
+/* Rendimiento: el navegador no dibuja los plegables hasta que se acercan a la pantalla */
+

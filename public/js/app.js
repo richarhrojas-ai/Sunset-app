@@ -154,7 +154,9 @@
     save();
     scheduleSync();
   }
+  let dataVer = 0;   // sube con cada cambio guardado: las vistas pesadas saben si deben redibujarse
   function save() {
+    dataVer++;
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* sin persistencia */ }
   }
   function mergeEntries(base, incoming) {
@@ -437,6 +439,22 @@
     toast(themePref === 'auto' ? 'Modo automático: día de 7 a 19 h' : 'Modo ' + THEME_LABEL[themePref].toLowerCase());
   });
 
+  // Precarga el paisaje de la semana anterior y la siguiente: el cambio de semana no espera la descarga.
+  const preloaded = new Set();
+  function preloadNeighbors(day) {
+    const kind = matchMedia('(min-width: 521px)').matches ? '-wide' : '-tall';
+    [viewing - 1, viewing + 1].forEach(function (w) {
+      const wk = w >= minWeek(Y) && w <= Y.weeks.length ? weekAt(Y, w) : null;
+      if (!wk) return;
+      const src = 'images/trees/' + Y.themes[wk.col].name + kind + (day ? '-day' : '') + '.webp';
+      if (preloaded.has(src)) return;
+      preloaded.add(src);
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = src;
+    });
+  }
+
   const treeOf = (colorName) => window.SunsetTree.TREES[colorName] || window.SunsetTree.TREES.Lila;
   let shown = '';
   function applyTheme() {
@@ -468,6 +486,7 @@
       $('heroWide').srcset = base + '-wide' + suffix + '.webp';
       $('heroImg').src = base + '-tall' + suffix + '.webp';
     }
+    preloadNeighbors(day);
   }
   window.addEventListener('resize', debounce(function () { if (Y) renderYear(); }, 200));
 
@@ -739,6 +758,8 @@
     return svg;
   }
   function renderMoodYear() {
+    if (!$('moodFold').open) { stale.mood = true; return; }
+    stale.mood = false;
     const wrap = $('moodGrid');
     wrap.innerHTML = '';
     const per = wrap.clientWidth && wrap.clientWidth < 560 ? 7 : 13;
@@ -760,6 +781,7 @@
         const m = weekMood(Y, wk.week);
         const ink = treeOf(Y.themes[wk.col].name).ink;
         const b = el('button', 'yw mt');
+        b.dataset.w = wk.week;
         b.type = 'button';
         b.setAttribute('aria-label', 'Semana ' + num(Y, wk.week) + ': ' + (m.n ? 'ánimo promedio ' + fmt1(m.avg) + ' de 5' : 'sin ánimo registrado'));
         b.title = 'Semana ' + num(Y, wk.week) + (m.n ? ' · ánimo ' + fmt1(m.avg) + '/5' : ' · sin registrar');
@@ -773,10 +795,24 @@
       wrap.appendChild(row);
     }
   }
-  $('moodFold').addEventListener('toggle', function () { if (this.open) renderMoodYear(); });
+  $('boardFold').addEventListener('toggle', function () { if (this.open && stale.board) renderBoard(); });
+  $('moodFold').addEventListener('toggle', function () { if (this.open && stale.mood) renderMoodYear(); });
 
   // Progreso del año: ramas con una flor por semana. La flor se abre según lo respondido.
+  // Progreso, ánimo del año y tablero son las vistas más pesadas (más de 150 dibujos): solo se dibujan con su plegable
+  // abierto. Al cambiar de semana, si están abiertas, solo se mueve la marca de la semana vista.
+  const stale = { year: true, mood: true, board: true };
+  let shownYear = null;
+  function markViewing() {
+    ['yearGrid', 'moodGrid'].forEach(function (id) {
+      $(id).querySelectorAll('.yw').forEach((b) => b.classList.toggle('is-viewing', Number(b.dataset.w) === viewing));
+    });
+  }
   function renderYear() {
+    renderMoodYear();
+    if (!$('yearFold').open) { stale.year = true; return; }
+    stale.year = false;
+    shownYear = Y;
     const wrap = $('yearGrid');
     wrap.innerHTML = '';
     const per = wrap.clientWidth && wrap.clientWidth < 560 ? 7 : 13;
@@ -798,6 +834,7 @@
         const t = Y.themes[wk.col];
         const done = weekCompletion(Y, wk.week);
         const b = el('button', 'yw');
+        b.dataset.w = wk.week;
         b.setAttribute('aria-label', 'Semana ' + num(Y, wk.week) + ', ' + wk.dates + ', ' + Math.round(done * 100) + '% respondido' + '');
         b.title = 'Semana ' + num(Y, wk.week) + ' · ' + treeOf(t.name).name + ' · ' + Math.round(done * 100) + '%';
         b.appendChild(window.SunsetTree.flowerSVG(treeOf(t.name).ink, done, false));
@@ -809,9 +846,8 @@
       });
       wrap.appendChild(row);
     }
-    renderMoodYear();
   }
-  $('yearFold').addEventListener('toggle', function () { if (this.open) renderYear(); });
+  $('yearFold').addEventListener('toggle', function () { if (this.open && stale.year) renderYear(); });
 
   function champion(words) {
     let best = null;
@@ -823,6 +859,8 @@
   }
 
   function renderBoard() {
+    if (!$('boardFold').open) { stale.board = true; return; }
+    stale.board = false;
     const board = $('board');
     board.innerHTML = '';
     const champCell = function (best, crown) {
@@ -847,9 +885,9 @@
           const lbl = el('span', 'lbl', word);
           if (m > 0) lbl.appendChild(el('small', null, (m > 0 ? Math.round(m * 100) + '%' : '')));
           sq.appendChild(lbl);
-          const next = nextEvalWeek(Y, word, viewing);
+          const next = nextEvalWeek(Y, word, viewing);   // para el título; al tocar se recalcula con la semana vista
           sq.title = word + ' · ' + Y.dimensions[r] + ' · ' + t.name + (n ? ' · maestría del color' : '') + ' · próxima evaluación: semana ' + num(Y, next);
-          sq.addEventListener('click', function () { goTo(Y, next); });
+          sq.addEventListener('click', function () { goTo(Y, nextEvalWeek(Y, word, viewing)); });
           board.appendChild(sq);
         } else if (r < 7) {
           board.appendChild(champCell(champion(Y.board[r]), false));
@@ -1091,9 +1129,14 @@
     renderDays();
     renderEvaluation();
     renderClosing();
-    renderYear();
-    renderBoard();
+    // Lo pesado solo se redibuja si cambió algo; si no, basta con mover la marca de la semana vista.
+    if (stale.year || stale.mood || stale.board || Y !== shownYear || dataVer !== drawnVer) {
+      drawnVer = dataVer;
+      renderYear();
+      renderBoard();
+    } else markViewing();
   }
+  let drawnVer = -1;
 
   // ── Buscador: todo lo escrito (registros, gratitud, comentarios, cierre e intención) ──
   const fold = (s) => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
