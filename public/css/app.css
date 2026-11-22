@@ -627,3 +627,19 @@ a.btn{text-decoration:none;}
 .hoy-arrow .ico{width:16px;height:16px;}
 .hoy-back{padding:7px 14px;border-radius:18px;border:1px solid var(--gold);background:rgba(255,215,0,.08);font:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink);cursor:pointer;}
 :is(.hoy-arrow,.hoy-back):focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
+
+/* Vistas: Semana (solo la semana) y Mi año (progreso, ánimo, tablero, diario y respaldo) */
+.view-semana .ano-part{display:none!important;}
+.view-ano main>*:not(.ano-part),.view-ano .today{display:none!important;}
+.ano-title{font-size:24px;font-weight:200;letter-spacing:.08em;scroll-margin-top:60px;margin:2px 4px -6px;}
+/* Bienvenida en tres pasos */
+.welcome-box{text-align:center;}
+.welcome-ico{display:inline-flex;width:52px;height:52px;border-radius:50%;align-items:center;justify-content:center;border:1px solid var(--gold);margin-bottom:10px;color:var(--gold-ink);}
+.welcome-ico .ico{width:24px;height:24px;}
+.welcome-box h2{font-size:22px;}
+.welcome-step p{font-size:15.5px;}
+.welcome-foot{display:flex;align-items:center;justify-content:space-between;margin-top:20px;}
+.welcome-dots{display:inline-flex;gap:6px;}
+.welcome-dots i{width:8px;height:8px;border-radius:50%;background:var(--line2);}
+.welcome-dots i.on{background:var(--gold);}
+.hoy-verse{margin:4px 2px 0;}

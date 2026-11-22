@@ -69,14 +69,13 @@
   <nav class="jump" aria-label="Ir a una sección">
     <button type="button" data-view="hoy">Hoy</button>
     <button type="button" data-view="semana">Semana</button>
-    <button type="button" data-go="yearFold">Mi año</button>
+    <button type="button" data-view="ano">Mi año</button>
     <button type="button" id="searchBtn">Buscar</button>
   </nav>
 
   <main>
     <section class="hoy" id="hoyView" aria-label="Hoy"></section>
     <span id="weekStart" class="week-start" aria-hidden="true"></span>
-    <p class="verse" id="verse" hidden></p>
     <p class="intent" id="intent" hidden></p>
     <p class="agenda-row"><a class="agenda-link" id="agendaLink" target="_blank" rel="noopener noreferrer"></a></p>
     <div class="agenda-events" id="agendaEvents" hidden></div>
@@ -89,6 +88,8 @@
       <div class="section-label">Lunes a sábado</div>
       <div class="days" id="days"></div>
     </section>
+
+    <p class="verse" id="verse" hidden></p>
 
     <details class="ago" id="ago" hidden></details>
 
@@ -113,7 +114,9 @@
       <div id="closing"></div>
     </section>
 
-    <details class="fold" id="yearFold">
+    <h1 class="ano-title ano-part" id="anoTitle">Mi año</h1>
+
+    <details class="fold ano-part" id="yearFold">
       <summary><svg class="ico"><use href="#i-grid"/></svg><span id="yearTitle">Progreso del año</span><svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
         <p class="fold-hint">Cada flor es una semana: se abre a medida que respondes la autoevaluación, y lleva centro dorado cuando es la maestría de su color. Toca una para ir a esa semana.</p>
@@ -121,7 +124,7 @@
       </div>
     </details>
 
-    <details class="fold" id="moodFold">
+    <details class="fold ano-part" id="moodFold">
       <summary><svg class="ico"><use href="#i-sun"/></svg><span id="moodTitle">Ánimo del año</span><svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
         <p class="fold-hint">Cada árbol es una semana y se pinta según tu ánimo promedio: <b>árbol completo, semana genial</b>; a medio pintar, ánimo medio; vacío con borde punteado, sin registrar. Toca uno para ir a esa semana.</p>
@@ -129,7 +132,7 @@
       </div>
     </details>
 
-    <details class="fold" id="boardFold">
+    <details class="fold ano-part" id="boardFold">
       <summary><svg class="ico"><use href="#i-board"/></svg>Tablero de maestría<svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
         <p class="fold-hint">Las 49 palabras: cada fila es una dimensión y cada columna un color. Cuanto más abierta la flor, más dominada la palabra en lo que va del año. La última fila y la última columna muestran la campeona de cada línea, y la esquina la campeona general. Toca una palabra para ir a su próxima semana de evaluación.</p>
@@ -138,7 +141,7 @@
       </div>
     </details>
 
-    <details class="fold" id="diaryFold">
+    <details class="fold ano-part" id="diaryFold">
       <summary><svg class="ico"><use href="#i-pen"/></svg>Diario, agenda y recordatorio<svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
         <div class="field-label">Diario en documento</div>
@@ -172,7 +175,7 @@
       </div>
     </details>
 
-    <details class="fold">
+    <details class="fold ano-part" id="backupFold">
       <summary><svg class="ico"><use href="#i-save"/></svg>Respaldo y sincronización<span class="sync-status" id="syncStatus"></span><svg class="ico chev"><use href="#i-down"/></svg></summary>
       <div class="fold-body">
         <div class="field-label">Sincronización</div>
@@ -206,15 +209,26 @@
 </div>
 
 <div class="modal" id="welcome" hidden role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-  <div class="modal-box">
-    <h2 id="welcomeTitle">Bienvenido a Sunset</h2>
-    <p>Cada semana tiene un color, un árbol y 3 palabras principales.</p>
-    <ul>
-      <li><b>Hoy:</b> la app abre en tu día: cómo va tu semana, la frase, tu registro, la gratitud, el ánimo y una pregunta. El sábado evalúas la semana y el domingo preparas la siguiente.</li>
-      <li><b>Semana:</b> todo el contenido de la semana, la autoevaluación y el cierre, con tu intención para la siguiente.</li>
-      <li><b>Mi año:</b> tu progreso, tu ánimo y el tablero de las 49 palabras. La maestría de cada color se decide sola.</li>
-    </ul>
-    <button class="btn primary" id="welcomeOk">Empezar</button>
+  <div class="modal-box welcome-box">
+    <div class="welcome-step" data-step="0">
+      <div class="welcome-ico"><svg class="ico"><use href="#i-sun"/></svg></div>
+      <h2 id="welcomeTitle">Cada semana, un color</h2>
+      <p>Un árbol, una frase y tres palabras para vivir esos siete días.</p>
+    </div>
+    <div class="welcome-step" data-step="1" hidden>
+      <div class="welcome-ico"><svg class="ico"><use href="#i-pen"/></svg></div>
+      <h2>Cada día, dos minutos</h2>
+      <p>La app abre en <b>Hoy</b>: tu frase, un registro corto, la gratitud, el ánimo y una pregunta.</p>
+    </div>
+    <div class="welcome-step" data-step="2" hidden>
+      <div class="welcome-ico"><svg class="ico"><use href="#i-check"/></svg></div>
+      <h2>El sábado evalúas, el domingo preparas</h2>
+      <p>Mira cómo te fue y escribe qué quieres para la semana que empieza. Tu año se va pintando solo en <b>Mi año</b>.</p>
+    </div>
+    <div class="welcome-foot">
+      <span class="welcome-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></span>
+      <button class="btn primary" id="welcomeOk" type="button">Siguiente</button>
+    </div>
   </div>
 </div>
 

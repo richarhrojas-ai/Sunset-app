@@ -1078,6 +1078,9 @@
       if (!(hl && hl.inRange && hl.Y === Y && hl.week === viewing)) view = 'semana';
     }
     document.body.classList.toggle('view-hoy', view === 'hoy');
+    document.body.classList.toggle('view-ano', view === 'ano');
+    document.body.classList.toggle('view-semana', view === 'semana');
+    $('anoTitle').textContent = 'Mi año ' + Y.year;
     document.body.classList.toggle('is-intro', viewing === 0);
     renderHoy();
     markJump();
@@ -1838,9 +1841,6 @@
     head.appendChild(el('h1', 'hoy-title', WEEKDAYS[day] + ' ' + D.getDate() + ' de ' + MONTHS[D.getMonth()]));
     head.appendChild(el('span', 'hoy-mode', mode === 'domingo' ? 'Día de preparación' : mode === 'sabado' ? 'Día de evaluación' : ''));
     box.appendChild(head);
-    box.appendChild(streakBox());
-    let goal = weekGoalBox(Y, viewing);
-    box.appendChild(goal);
     const ph = dayPhrase(Y, viewing, day);
     const phrase = el('div', 'hoy-phrase');
     phrase.appendChild(el('div', 'today-label', ph.label));
@@ -1852,6 +1852,9 @@
       phrase.appendChild(ol);
     }
     box.appendChild(phrase);
+    box.appendChild(streakBox());
+    let goal = weekGoalBox(Y, viewing);
+    box.appendChild(goal);
     if (mode === 'domingo') box.appendChild(prepBox(Y, viewing));
     if (mode === 'sabado') { const pb = pendingBox(Y, viewing); pb.setGoal(goal); box.appendChild(pb); }
     box.appendChild(el('div', 'field-label', 'Registro de hoy'));
@@ -1876,6 +1879,14 @@
       box.appendChild(questionBox(Y, viewing, day, function () { refreshEval(); const g = weekGoalBox(Y, viewing); goal.replaceWith(g); goal = g; }));
     }
     box.appendChild(agendaBox(D));
+    const verseRaw = viewing !== 0 && day !== 1 ? String(weekAt(Y, viewing).regalo || '').trim() : '';
+    if (verseRaw) {
+      const v = el('p', 'verse hoy-verse');
+      const m = verseRaw.match(/^(.*?)\s+—\s+(.+)$/s);
+      v.appendChild(document.createTextNode(m ? m[1] : verseRaw));
+      if (m) v.appendChild(el('cite', null, m[2]));
+      box.appendChild(v);
+    }
     const more = el('button', 'hoy-more', 'Ver la semana completa');
     more.type = 'button';
     more.appendChild(icon('right'));
@@ -1910,9 +1921,11 @@
     if (v === 'hoy' && !TODAY.inRange) v = 'semana';
     view = v;
     if (v === 'hoy') { hoyDate = new Date(now); Y = TODAY.Y; viewing = TODAY.week; openWord = null; }
+    // Mi año abre su progreso, ánimo y tablero (el diario y el respaldo quedan plegados).
+    if (v === 'ano') ['yearFold', 'moodFold', 'boardFold'].forEach((id) => { $(id).open = true; });
     render();
     if (scroll) {
-      const target = v === 'semana' ? $('weekStart') : $('hoyView');
+      const target = v === 'semana' ? $('weekStart') : v === 'ano' ? $('anoTitle') : $('hoyView');
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
@@ -2000,6 +2013,7 @@
   }
 
   function goTo(year, week) {
+    if (view === 'ano') view = 'semana';   // tocar una semana en Mi año (o las flechas) lleva a esa semana
     Y = year;
     viewing = Math.min(Y.weeks.length, Math.max(minWeek(Y), week));
     openWord = null;
@@ -2400,7 +2414,18 @@
     if (e.key === 'ArrowRight') step(1);
   });
 
+  // Bienvenida en tres pantallas cortas.
+  let welcomeStep = 0;
   $('welcomeOk').addEventListener('click', function () {
+    const steps = document.querySelectorAll('.welcome-step');
+    if (welcomeStep < steps.length - 1) {
+      steps[welcomeStep].hidden = true;
+      welcomeStep++;
+      steps[welcomeStep].hidden = false;
+      document.querySelectorAll('.welcome-dots i').forEach((d, i) => d.classList.toggle('on', i === welcomeStep));
+      this.textContent = welcomeStep === steps.length - 1 ? 'Empezar' : 'Siguiente';
+      return;
+    }
     $('welcome').hidden = true;
     state.welcomed = true;
     save();
