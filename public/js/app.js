@@ -1968,19 +1968,23 @@
     const nextDate = stepDay(D, 1);
     next.disabled = !nextDate;
     next.addEventListener('click', () => hoyGo(nextDate));
-    nav.appendChild(prev);
+    // Una sola fila: flecha, día (con su modo y «Volver a hoy»), flecha. Deja más pantalla para la frase.
+    const head = el('div', 'hoy-head');
+    head.appendChild(el('h1', 'hoy-title', WEEKDAYS[day] + ' ' + D.getDate() + ' de ' + MONTHS[D.getMonth()]));
+    const sub = el('div', 'hoy-sub');
+    const modeText = mode === 'domingo' ? 'Día de preparación' : mode === 'sabado' ? 'Día de evaluación' : '';
+    if (modeText) sub.appendChild(el('span', 'hoy-mode', modeText));
     if (!isToday) {
       const back = el('button', 'hoy-back', 'Volver a hoy');
       back.type = 'button';
       back.addEventListener('click', () => hoyGo(new Date(now)));
-      nav.appendChild(back);
+      sub.appendChild(back);
     }
+    if (sub.childNodes.length) head.appendChild(sub);
+    nav.appendChild(prev);
+    nav.appendChild(head);
     nav.appendChild(next);
     box.appendChild(nav);
-    const head = el('div', 'hoy-head');
-    head.appendChild(el('h1', 'hoy-title', WEEKDAYS[day] + ' ' + D.getDate() + ' de ' + MONTHS[D.getMonth()]));
-    head.appendChild(el('span', 'hoy-mode', mode === 'domingo' ? 'Día de preparación' : mode === 'sabado' ? 'Día de evaluación' : ''));
-    box.appendChild(head);
     const ph = dayPhrase(Y, viewing, day);
     const phrase = el('div', 'hoy-phrase');
     phrase.appendChild(el('div', 'today-label', ph.label));
