@@ -42,7 +42,7 @@ Sincronización: `POST /api/sync` fusiona con lo guardado (escritura condicional
 restaurar copias con deshacer; exportar/importar JSON y planilla CSV.
 
 ## 6. Pantalla, de arriba abajo
-1. **Portada**: paisaje del color de la semana, logo, fecha, franja de 7 íconos (al tocar uno aparece la dimensión y la palabra), tarjeta de vidrio con la frase del día y el control de cumplimiento, semana y árbol, navegación entre semanas, firma.
+1. **Portada**: paisaje del color de la semana, logo, fecha, franja de 7 íconos (al tocar uno aparece la dimensión, la palabra, qué es la dimensión y su pregunta central), tarjeta de vidrio con la frase del día y el control de cumplimiento, semana y árbol, navegación entre semanas, firma.
 2. Barra de atajos fija (Hoy, Autoevaluación, Cierre, Progreso, Ánimo, Tablero, Buscar).
 3. Versículo de la semana (el @ del lunes, fijo) · «Esta semana quiero…» (intención de la semana anterior) · enlace a la agenda de Google.
 4. **Domingo**: título, frase de la semana destacada, historia interna.
@@ -57,6 +57,8 @@ restaurar copias con deshacer; exportar/importar JSON y planilla CSV.
 - Puntaje de una palabra = promedio de las preguntas respondidas (las sin responder no cuentan). Semana = promedio de las palabras con respuestas.
 - Maestría del color: cuando las 7 palabras de un color ya pasaron por evaluación, la de mejor puntaje acumulado queda como su maestría (automática, sin elegir).
 - Domingo es el primer día de la semana.
+- Cada dimensión tiene una frase que la define y una pregunta central (las mismas del libro): Regalo de Dios «Lo que no se gana: se recibe.», Prioridades «A quién le doy mi tiempo y mi presencia.», Temas de Interés «Donde me formo para servir mejor.», Desafío «La persona en la que me propongo convertirme.», Valores «Lo que no se negocia.», Estrategia «Las herramientas que multiplican lo que hago.», Sistema «La vida como una partida: comenzar, ordenar, cerrar, no perder el rey.».
+- En pantalla las palabras abreviadas de la planilla se muestran completas (Ahorro de Tiempo, Equipo de Auxilio, Vida Cristiana); las claves guardadas usan la palabra original.
 
 ## 8. Diseño
 - Estilo crepúsculo: violeta de medianoche → ámbar; cada color tiene su propio cielo (variables `--bg-top/mid/low/warm`) y su gama de tonos; tarjetas de vidrio; brillo dorado `#FFD700/#F0A830`.

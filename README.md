@@ -67,6 +67,7 @@ cursiva. Los colores de cada semana (`accent` / `mid`) están en `public/js/tree
 - **Frase de hoy** (vidrio, a la izquierda del árbol en la vista Semana): el @ del día. El antiguo control de cumplimiento
   se quitó; los valores ya guardados (`AAAA/wN/pD`) se conservan y siguen saliendo en la planilla CSV y el diario.
 - Los íconos se generan con `python3 tools/make_icons.py` (símbolos `d-0` a `d-6`).
+- Al tocar un ícono aparece la palabra con el concepto de su dimensión (qué es y su pregunta central), los mismos del libro (`DIM_CONCEPTS` en `public/js/app.js`).
 
 ## Imágenes de los árboles
 

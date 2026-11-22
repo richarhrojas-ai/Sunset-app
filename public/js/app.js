@@ -170,6 +170,19 @@
     return { entries: out, changed: changed };
   }
 
+  // Nombres completos para mostrar (la planilla los abrevia; las claves guardadas siguen usando la palabra original).
+  const FULL_NAMES = { 'Ahorro T.': 'Ahorro de Tiempo', 'Equipo Aux.': 'Equipo de Auxilio', 'V. Cristiana': 'Vida Cristiana' };
+  const wordName = (w) => FULL_NAMES[w] || w;
+  // Concepto de cada dimensión (el mismo que abre cada parte del libro): qué es y su pregunta central.
+  const DIM_CONCEPTS = [
+    ['Lo que no se gana: se recibe.', '¿Qué me fue dado que no estoy viendo?'],
+    ['A quién le doy mi tiempo y mi presencia.', '¿Quién ocupa el lugar que le corresponde?'],
+    ['Donde me formo para servir mejor.', '¿Qué estoy aprendiendo y para qué?'],
+    ['La persona en la que me propongo convertirme.', '¿Qué rasgo me toca forjar ahora?'],
+    ['Lo que no se negocia.', '¿Qué sostengo aunque cueste?'],
+    ['Las herramientas que multiplican lo que hago.', '¿Cómo me organizo, me presento y me apoyo?'],
+    ['La vida como una partida: comenzar, ordenar, cerrar, no perder el rey.', '¿Juego por reacción o con un plan?'],
+  ];
   function getAnswers(Y, week, word) { return getV(k(Y, week, 'a/' + word), [null, null, null, null, null]); }
   function setAnswer(Y, week, word, qi, value) {
     const a = getAnswers(Y, week, word).slice();
@@ -609,7 +622,7 @@
     inPlay.innerHTML = '';
     inPlay.appendChild(document.createTextNode('En juego esta semana: '));
     rot.forEach(function (r, i) {
-      inPlay.appendChild(i < 3 ? el('b', null, r.word) : document.createTextNode(r.word));
+      inPlay.appendChild(i < 3 ? el('b', null, wordName(r.word)) : document.createTextNode(wordName(r.word)));
       if (i < 6) inPlay.appendChild(document.createTextNode(' · '));
     });
 
@@ -621,7 +634,7 @@
       const label = el('span');
       label.appendChild(el('span', 'chip-dim', Y.dimensions[r.dim]));
       label.appendChild(document.createElement('br'));
-      label.appendChild(document.createTextNode(r.word));
+      label.appendChild(document.createTextNode(wordName(r.word)));
       c.appendChild(label);
       c.appendChild(el('span', 'chip-pct', pctText(Y, viewing, r.word)));
       c.addEventListener('click', function () {
@@ -660,7 +673,7 @@
       box.appendChild(ends);
       qs.appendChild(box);
     });
-    qs.appendChild(noteField(k(Y, viewing, 'c/' + word), 'Comentario sobre ' + word + '…', 3));
+    qs.appendChild(noteField(k(Y, viewing, 'c/' + word), 'Comentario sobre ' + wordName(word) + '…', 3));
   }
 
   // Siete barras (domingo a sábado) con el ánimo de cada día y el promedio de la semana.
@@ -883,7 +896,7 @@
           const bloom = el('span', 'bloom');
           bloom.appendChild(window.SunsetTree.flowerSVG(treeOf(t.name).ink, m, n > 0));
           sq.appendChild(bloom);
-          const lbl = el('span', 'lbl', word);
+          const lbl = el('span', 'lbl', wordName(word));
           if (m > 0) lbl.appendChild(el('small', null, (m > 0 ? Math.round(m * 100) + '%' : '')));
           sq.appendChild(lbl);
           const next = nextEvalWeek(Y, word, viewing);   // para el título; al tocar se recalcula con la semana vista
@@ -928,7 +941,7 @@
       const b = el('button', 'dim' + (evaluated ? ' is-eval' : '') + (d === selDim ? ' is-sel' : ''));
       b.type = 'button';
       b.dataset.d = d;
-      b.setAttribute('aria-label', 'Abrir ' + word + ' (' + Y.dimensions[d] + ')' + (evaluated ? '. Palabra principal: se evalúa esta semana' : '. Está en juego pero se evalúa otra semana'));
+      b.setAttribute('aria-label', 'Abrir ' + wordName(word) + ' (' + Y.dimensions[d] + ')' + (evaluated ? '. Palabra principal: se evalúa esta semana' : '. Está en juego pero se evalúa otra semana'));
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('class', 'dim-ico');
       svg.setAttribute('viewBox', '0 0 48 48');
@@ -950,11 +963,14 @@
   // Al tocar un ícono aparece su dimensión, la palabra y el acceso a sus preguntas.
   function showCap(d, word, evaluated) {
     $('capDim').textContent = Y.dimensions[d];
-    $('capWord').textContent = word;
+    $('capWord').textContent = wordName(word);
     $('capTag').textContent = evaluated ? 'Principal' : 'En juego';
     $('capTag').classList.toggle('is-main', evaluated);
     $('capGo').textContent = evaluated ? 'Abrir' : 'Ver preguntas';
     $('capGo').onclick = function () { accessWord(d, word, evaluated); };
+    const c = DIM_CONCEPTS[d] || ['', ''];
+    $('capDef').textContent = c[0];
+    $('capAsk').textContent = c[1];
     const cap = $('dimCap');
     cap.hidden = false;
     cap.classList.remove('in'); void cap.offsetWidth; cap.classList.add('in');
@@ -972,7 +988,7 @@
     const next = nextEvalWeek(Y, word, viewing);
     const nw = Y.weeks[next - 1];
     $('wordEyebrow').textContent = Y.dimensions[d];
-    $('wordTitle').textContent = word;
+    $('wordTitle').textContent = wordName(word);
     $('wordWhen').textContent = 'Está en juego esta semana, pero se evalúa en la semana ' + num(Y, next) + ' (' + nw.dates + '). Estas son sus preguntas:';
     const list = $('wordQs');
     list.innerHTML = '';
@@ -1266,7 +1282,7 @@
       sub.appendChild(el('summary', null, 'Sobre las palabras de la semana'));
       words.forEach(function (w) {
         const sec = el('section', 'res-word');
-        sec.appendChild(el('h3', null, w.word));
+        sec.appendChild(el('h3', null, wordName(w.word)));
         RES_KINDS.forEach((kd) => RECURSOS[w.word].filter((i) => i.k === kd[0] && !shown.has(i.t)).forEach((i) => sec.appendChild(resItem(i))));
         sub.appendChild(sec);
       });
@@ -1704,7 +1720,7 @@
         const n = wordAnswered(YY, w, a.word);
         answered += n;
         const li = el('li');
-        li.appendChild(el('span', 'hoy-word', a.word));
+        li.appendChild(el('span', 'hoy-word', wordName(a.word)));
         const bar = el('span', 'hoy-bar');
         bar.setAttribute('aria-hidden', 'true');
         for (let i = 0; i < 5; i++) bar.appendChild(el('i', i < n ? 'on' : ''));
@@ -1750,7 +1766,7 @@
         const open = qs.map((q, qi) => ({ q: q, qi: qi })).filter((x) => answers[x.qi] == null);
         pending += open.length;
         if (!open.length) return;
-        box.appendChild(el('h3', 'hoy-eval-word', a.word));
+        box.appendChild(el('h3', 'hoy-eval-word', wordName(a.word)));
         open.forEach(function (x) {
           const item = el('div', 'hoy-eval-q');
           item.appendChild(el('p', 'dq-q', x.q));
@@ -1787,7 +1803,7 @@
       for (let d = 0; d < 7; d++) if (dayHasEntry(pw.Y, pw.week, d)) days++;
       const m = weekMood(pw.Y, pw.week);
       const words = activeWords(pw.Y, pw.week).filter((a) => wordAnswered(pw.Y, pw.week, a.word) > 0)
-        .map((a) => a.word + ' ' + Math.round(wordScore(pw.Y, pw.week, a.word) * 100) + ' %');
+        .map((a) => wordName(a.word) + ' ' + Math.round(wordScore(pw.Y, pw.week, a.word) * 100) + ' %');
       const p = el('p', 'hoy-prep-sum', 'La semana pasada: ' + days + ' de 7 días con registro' + (m.n ? ' · ánimo ' + fmt1(m.avg) + '/5' : '') + (words.length ? ' · ' + words.join(', ') : '') + '.');
       box.appendChild(p);
       const sb = el('button', 'dq-more', 'Ver el resumen completo');
@@ -1970,7 +1986,7 @@
       const b3 = block('Palabras de la semana');
       activeWords(YY, w).forEach(function (a) {
         const n = wordAnswered(YY, w, a.word);
-        let line = a.word + ': ' + (n ? Math.round(wordScore(YY, w, a.word) * 100) + ' %' : 'sin responder');
+        let line = wordName(a.word) + ': ' + (n ? Math.round(wordScore(YY, w, a.word) * 100) + ' %' : 'sin responder');
         const prev = (YY.evalWeeks[a.word] || []).filter((x) => x < w && wordAnswered(YY, x, a.word) > 0).pop();
         if (n && prev) {
           const diff = Math.round((wordScore(YY, w, a.word) - wordScore(YY, prev, a.word)) * 100);

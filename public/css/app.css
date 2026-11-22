@@ -90,6 +90,8 @@ button{font-family:inherit;color:inherit;}
 .dim-cap[hidden]{display:none;}
 .dim-cap-dim{display:block;font-size:10.5px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.85);}
 .dim-cap-word{display:flex;align-items:baseline;gap:10px;margin-top:1px;font-size:19px;font-weight:300;letter-spacing:.04em;color:#fff;}
+.dim-cap-def{display:block;margin-top:4px;font-size:13px;font-weight:300;line-height:1.4;letter-spacing:.02em;color:rgba(255,255,255,.92);}
+.dim-cap-ask{display:block;margin-top:2px;font-size:12.5px;font-weight:300;font-style:italic;line-height:1.4;color:var(--gold-hi);}
 .dim-cap-tag{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi);}
 .cap-go{background:none;border:0;border-bottom:1px solid rgba(255,215,0,.5);padding:2px 0;margin-right:8px;font:inherit;font-size:11px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi);cursor:pointer;white-space:nowrap;}
 .cap-go:hover{border-bottom-color:var(--gold-hi);}
@@ -497,6 +499,8 @@ a.btn{text-decoration:none;}
 :root[data-theme="day"] .dim-cap{background:rgba(255,255,255,.7);}
 :root[data-theme="day"] .dim-cap-dim{color:var(--txt2);}
 :root[data-theme="day"] .dim-cap-word{color:var(--ink);}
+:root[data-theme="day"] .dim-cap-def{color:var(--txt);}
+:root[data-theme="day"] .dim-cap-ask{color:var(--gold-ink);}
 :root[data-theme="day"] .dim-cap-tag,:root[data-theme="day"] .cap-go{color:var(--gold-ink);border-bottom-color:rgba(127,82,0,.5);}
 :root[data-theme="day"] .nav-btn,:root[data-theme="day"] .today-btn{background:rgba(255,255,255,.55);color:var(--ink);}
 :root[data-theme="day"] .signature{color:rgba(29,20,40,.72);}
@@ -560,6 +564,8 @@ a.btn{text-decoration:none;}
 :root[data-theme="day"][data-sky="dark"] .dim-cap{background:rgba(20,16,24,.55);}
 :root[data-theme="day"][data-sky="dark"] .dim-cap-dim{color:rgba(255,255,255,.85);}
 :root[data-theme="day"][data-sky="dark"] .dim-cap-word{color:#fff;}
+:root[data-theme="day"][data-sky="dark"] .dim-cap-def{color:rgba(255,255,255,.92);}
+:root[data-theme="day"][data-sky="dark"] .dim-cap-ask{color:var(--gold-hi);}
 :root[data-theme="day"][data-sky="dark"] :is(.dim-cap-tag,.cap-go){color:var(--gold-hi);border-bottom-color:rgba(255,215,0,.5);}
 :root[data-theme="day"][data-sky="dark"] :is(.nav-btn,.today-btn,.theme-btn){background:rgba(20,16,24,.45);color:#fff;}
 :root[data-theme="day"][data-sky="dark"] .signature{color:rgba(255,255,255,.85);}
