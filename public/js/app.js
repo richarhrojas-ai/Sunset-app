@@ -525,7 +525,7 @@
     if (tree.sci) tn.appendChild(el('i', null, tree.sci));
     $('prevWeek').disabled = viewing <= minWeek(Y) && yi === 0;
     $('nextWeek').disabled = viewing >= Y.weeks.length && yi === YEARS.length - 1;
-    $('todayBtn').hidden = !TODAY.inRange || (isCurrent() && view === 'hoy');
+    $('todayBtn').hidden = !TODAY.inRange || (view === 'hoy' && hoyDate && sameDay(hoyDate, now));
     $('yearTitle').textContent = 'Progreso ' + Y.year;
   }
 
@@ -1073,7 +1073,10 @@
   }
 
   function render() {
-    if (view === 'hoy' && !(TODAY.inRange && Y === TODAY.Y && viewing === TODAY.week)) view = 'semana';
+    if (view === 'hoy') {
+      const hl = hoyDate && locateDate(hoyDate);
+      if (!(hl && hl.inRange && hl.Y === Y && hl.week === viewing)) view = 'semana';
+    }
     document.body.classList.toggle('view-hoy', view === 'hoy');
     document.body.classList.toggle('is-intro', viewing === 0);
     renderHoy();
@@ -1711,12 +1714,20 @@
       box.appendChild(el('p', 'hoy-week-note', answered + ' de 15 preguntas respondidas'));
     }
     const days = el('div', 'hoy-days');
-    days.setAttribute('aria-label', 'Días con registro esta semana');
-    const today = now.getDay();
+    days.setAttribute('role', 'group');
+    days.setAttribute('aria-label', 'Días de esta semana: toca uno para abrirlo');
+    const sel = hoyDate ? hoyDate.getDay() : -1;
     ['D', 'L', 'M', 'X', 'J', 'V', 'S'].forEach(function (lbl, d) {
       if (w === 0 && !introDay(wk, d)) return;
-      const c = el('span', 'hoy-day' + (dayHasEntry(YY, w, d) ? ' on' : '') + (d === today ? ' is-today' : ''), lbl);
-      c.title = WEEKDAYS[d] + (dayHasEntry(YY, w, d) ? ': con registro' : ': sin registro');
+      const date = dateOf(YY, w, d);
+      const future = utcDay(date) > utcDay(now);
+      const has = dayHasEntry(YY, w, d);
+      const c = el('button', 'hoy-day' + (has ? ' on' : '') + (sameDay(date, now) ? ' is-today' : '') + (d === sel ? ' is-sel' : ''), lbl);
+      c.type = 'button';
+      c.disabled = future;
+      c.setAttribute('aria-label', WEEKDAYS[d] + ' ' + date.getDate() + (has ? ', con registro' : ', sin registro') + (future ? ', todavía no llega' : ''));
+      if (d === sel) c.setAttribute('aria-current', 'date');
+      c.addEventListener('click', () => hoyGo(date));
       days.appendChild(c);
     });
     box.appendChild(days);
@@ -1794,10 +1805,37 @@
     const box = $('hoyView');
     box.textContent = '';
     if (view !== 'hoy') return;
-    const day = now.getDay();
+    const D = hoyDate || now;
+    const day = D.getDay();
+    const isToday = sameDay(D, now);
     const mode = viewing === 0 ? 'intro' : day === 0 ? 'domingo' : day === 6 ? 'sabado' : 'dia';
+    // Navegación entre días: anterior / siguiente (cruza semanas), hasta hoy.
+    const nav = el('div', 'hoy-nav');
+    const prev = el('button', 'hoy-arrow');
+    prev.type = 'button';
+    prev.appendChild(icon('left'));
+    prev.setAttribute('aria-label', 'Día anterior');
+    const prevDate = stepDay(D, -1);
+    prev.disabled = !prevDate;
+    prev.addEventListener('click', () => hoyGo(prevDate));
+    const next = el('button', 'hoy-arrow');
+    next.type = 'button';
+    next.appendChild(icon('right'));
+    next.setAttribute('aria-label', 'Día siguiente');
+    const nextDate = stepDay(D, 1);
+    next.disabled = !nextDate;
+    next.addEventListener('click', () => hoyGo(nextDate));
+    nav.appendChild(prev);
+    if (!isToday) {
+      const back = el('button', 'hoy-back', 'Volver a hoy');
+      back.type = 'button';
+      back.addEventListener('click', () => hoyGo(new Date(now)));
+      nav.appendChild(back);
+    }
+    nav.appendChild(next);
+    box.appendChild(nav);
     const head = el('div', 'hoy-head');
-    head.appendChild(el('h1', 'hoy-title', WEEKDAYS[day] + ' ' + now.getDate() + ' de ' + MONTHS[now.getMonth()]));
+    head.appendChild(el('h1', 'hoy-title', WEEKDAYS[day] + ' ' + D.getDate() + ' de ' + MONTHS[D.getMonth()]));
     head.appendChild(el('span', 'hoy-mode', mode === 'domingo' ? 'Día de preparación' : mode === 'sabado' ? 'Día de evaluación' : ''));
     box.appendChild(head);
     box.appendChild(streakBox());
@@ -1837,18 +1875,41 @@
     if (mode === 'dia') {
       box.appendChild(questionBox(Y, viewing, day, function () { refreshEval(); const g = weekGoalBox(Y, viewing); goal.replaceWith(g); goal = g; }));
     }
-    box.appendChild(agendaBox(now));
+    box.appendChild(agendaBox(D));
     const more = el('button', 'hoy-more', 'Ver la semana completa');
     more.type = 'button';
     more.appendChild(icon('right'));
     more.addEventListener('click', () => setView('semana', true));
     box.appendChild(more);
   }
-  // Cambia entre Hoy y Semana. Hoy siempre muestra el día de hoy.
+  // Día que muestra Hoy: por defecto hoy; se puede volver a días anteriores (un domingo o un sábado que no alcanzaste).
+  let hoyDate = null;
+  const sameDay = (a, b) => utcDay(a) === utcDay(b);
+  // ¿Se puede abrir esta fecha en Hoy? Dentro del año cargado, no en el futuro y, en la introducción, solo sus días.
+  function hoyOpenable(date) {
+    if (utcDay(date) > utcDay(now)) return null;
+    const loc = locateDate(date);
+    if (!loc.inRange) return null;
+    if (loc.week === 0 && !introDay(loc.Y.intro, date.getDay())) return null;
+    return loc;
+  }
+  function stepDay(date, delta) {
+    const d = new Date(date); d.setDate(d.getDate() + delta);
+    return hoyOpenable(d) ? d : null;
+  }
+  function hoyGo(date) {
+    const loc = hoyOpenable(date);
+    if (!loc) return;
+    flushNotes();
+    hoyDate = new Date(date);
+    Y = loc.Y; viewing = loc.week; openWord = null; view = 'hoy';
+    render();
+  }
+  // Cambia entre Hoy y Semana. Al tocar «Hoy» se vuelve al día de hoy.
   function setView(v, scroll) {
     if (v === 'hoy' && !TODAY.inRange) v = 'semana';
     view = v;
-    if (v === 'hoy') { Y = TODAY.Y; viewing = TODAY.week; openWord = null; }
+    if (v === 'hoy') { hoyDate = new Date(now); Y = TODAY.Y; viewing = TODAY.week; openWord = null; }
     render();
     if (scroll) {
       const target = v === 'semana' ? $('weekStart') : $('hoyView');
@@ -2312,9 +2373,11 @@
     if (n.toDateString() === now.toDateString()) return;
     if (editing || (document.activeElement && document.activeElement.tagName === 'TEXTAREA')) return;
     const followToday = isCurrent();
+    const now0 = now;
     now = n;
     TODAY = locateDate(now);
-    if (followToday) { Y = TODAY.Y; viewing = TODAY.week; }
+    if (view === 'hoy' && hoyDate && sameDay(hoyDate, now0)) { hoyDate = new Date(now); Y = TODAY.Y; viewing = TODAY.week; }
+    else if (followToday) { Y = TODAY.Y; viewing = TODAY.week; }
     renderHeader();
     render();
   }
@@ -2353,6 +2416,7 @@
     viewing = TODAY.week;
     openWord = null;
     view = TODAY.inRange ? 'hoy' : 'semana';
+    hoyDate = new Date(now);
     renderHeader();
     renderSyncPanel();
     renderUndo();

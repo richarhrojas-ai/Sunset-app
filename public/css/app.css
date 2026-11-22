@@ -606,7 +606,10 @@ a.btn{text-decoration:none;}
 .hoy-word-n{min-width:6.5em;text-align:right;font-size:12px;color:var(--txt2);font-variant-numeric:tabular-nums;}
 .hoy-week-note{font-size:12px;color:var(--txt2);}
 .hoy-days{display:flex;gap:6px;}
-.hoy-day{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;border:1px solid var(--line2);color:var(--txt2);}
+.hoy-day{width:30px;height:30px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font:inherit;font-size:11px;border:1px solid var(--line2);background:transparent;color:var(--txt2);cursor:pointer;}
+.hoy-day:disabled{opacity:.35;cursor:default;}
+.hoy-day.is-sel{outline:2px solid var(--ink);outline-offset:2px;}
+.hoy-day:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
 .hoy-day.on{background:var(--wk);border-color:var(--wk);color:var(--on-wk);font-weight:500;}
 .hoy-day.is-today{box-shadow:0 0 0 2px var(--gold);}
 .hoy-week-name{font-size:20px!important;font-weight:300;font-style:normal!important;margin-bottom:4px;}
@@ -617,3 +620,10 @@ a.btn{text-decoration:none;}
 .hoy-prep .field-label{margin:6px 0 0;}
 .hoy-prep-sum{font-size:14.5px;line-height:1.55;}
 .hoy-prep .dq-more{align-self:flex-start;}
+
+.hoy-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:-4px;}
+.hoy-arrow{width:36px;height:36px;border-radius:50%;border:1px solid var(--line2);background:var(--glass2);display:inline-flex;align-items:center;justify-content:center;color:var(--txt);cursor:pointer;}
+.hoy-arrow:disabled{opacity:.3;cursor:default;}
+.hoy-arrow .ico{width:16px;height:16px;}
+.hoy-back{padding:7px 14px;border-radius:18px;border:1px solid var(--gold);background:rgba(255,215,0,.08);font:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink);cursor:pointer;}
+:is(.hoy-arrow,.hoy-back):focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
