@@ -460,13 +460,23 @@
     h.appendChild(el('small', null, sub));
   }
 
+  const COLOR_ADJ = { Negro: 'negra', Rojo: 'roja', Azul: 'azul', Lila: 'lila', Verde: 'verde', Amarillo: 'amarilla', Blanco: 'blanca' };
+  const COLOR_DOT = { Negro: '#141018', Rojo: '#d4392a', Azul: '#5a5fd0', Lila: '#9b59b6', Verde: '#4e9a3b', Amarillo: '#e8a90c', Blanco: '#ffffff' };
   function renderWeekBar() {
     const wk = weekAt(Y, viewing);
     const t = Y.themes[wk.col];
     const yi = yearIndex(Y.year);
     const tree = treeOf(t.name);
     $('weekNum').textContent = weekName(viewing) + (YEARS.length > 1 ? ' · ' + Y.year : '');
-    $('weekSub').textContent = t.name + ' · ' + wk.dates;
+    // El color de la semana, dicho y mostrado: «● Semana negra · 17 al 23 · enero».
+    const sub = $('weekSub');
+    sub.textContent = '';
+    const dot = el('i', 'week-dot');
+    dot.style.background = COLOR_DOT[t.name] || tree.mid;
+    sub.appendChild(dot);
+    sub.appendChild(el('span', 'week-color', 'Semana ' + (COLOR_ADJ[t.name] || t.name.toLowerCase())));
+    sub.appendChild(document.createTextNode(' · '));
+    sub.appendChild(el('span', 'week-dates', wk.dates));
     const tn = $('treeName');
     tn.textContent = tree.name;
     if (tree.sci) tn.appendChild(el('i', null, tree.sci));

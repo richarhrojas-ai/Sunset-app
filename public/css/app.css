@@ -566,3 +566,9 @@ a.btn{text-decoration:none;}
 :root[data-theme="day"] :is(.card-text,.today-text,.sunday-hook,.verse,.intent,.res-text,.q-text,.dq-q,.sat-list li,.story,.field-hint,.fold-hint,.note,.grat,.sheet-text,.quick-phrase p,.sum-block p,.diary-text,.ago-day p,.result-text,.mood-note,.streak,.in-play,.eval-pct-label,.tree-name,.word-qs li,.agenda-list li,.modal-box p,.modal-box li){font-weight:400;}
 :root[data-theme="day"] :is(.sunday-title,.week-num,.eval-pct,.sum-big,.modal-box h2,.sheet-head h2,.dim-cap-word,.meter-head output,.diary-doc h1){font-weight:300;}
 :root[data-theme="day"] .signature{color:var(--ink);}
+
+/* Color de la semana en la portada: un punto del color y «Semana negra», sutil */
+.week-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:1px;border:1px solid rgba(255,255,255,.75);box-shadow:0 0 6px rgba(0,0,0,.35);}
+.week-color{font-weight:500;white-space:nowrap;}
+.week-dates{white-space:nowrap;}
+:root[data-theme="day"] .week-dot{border-color:rgba(13,9,18,.55);box-shadow:none;}
