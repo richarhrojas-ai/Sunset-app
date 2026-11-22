@@ -487,7 +487,6 @@
     const b = $('themeBtn');
     b.textContent = '';
     b.appendChild(icon(THEME_ICON[themePref]));
-    b.appendChild(el('span', 'theme-label', THEME_LABEL[themePref]));
     b.setAttribute('aria-label', 'Tema: ' + THEME_LABEL[themePref] + (themePref === 'auto' ? ' (ahora ' + THEME_LABEL[mode].toLowerCase() + ')' : '') + '. Toca para cambiar.');
     b.title = themePref === 'auto' ? 'Automático: día de 7 a 19 h' : 'Modo ' + THEME_LABEL[themePref].toLowerCase();
     if (Y) applyTheme();

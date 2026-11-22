@@ -545,12 +545,11 @@ a.btn{text-decoration:none;}
 :root[data-theme="day"] .sync-status.is-ok{color:#1e6b34;}
 :root[data-theme="day"] .sync-status.is-error{color:#a4321c;}
 /* Botón Auto / Día / Noche */
-.theme-btn{height:40px;}
-@media (max-width:520px){.theme-label{display:none;}.theme-btn{width:40px;justify-content:center;padding:0;border-radius:50%;}}
-.theme-btn{display:inline-flex;align-items:center;gap:6px;padding:0 12px;border-radius:20px;border:1px solid var(--line2);background:color-mix(in srgb,var(--bg-top) 45%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;font:inherit;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:inherit;cursor:pointer;vertical-align:middle;}
-.theme-btn .ico{width:14px;height:14px;}
+/* Modo noche/día/auto: ícono discreto al final de la barra de atajos */
+.jump .theme-btn{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border:none;border-radius:50%;background:none;color:var(--txt2);cursor:pointer;}
+.jump .theme-btn:hover{color:var(--ink);background:var(--glass2);}
+.theme-btn .ico{width:17px;height:17px;}
 .theme-btn:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
-:root[data-theme="day"] .theme-btn{background:rgba(255,255,255,.55);color:var(--ink);}
 
 /* Modo día: letra negra marcada y un punto más gruesa, para leer con luz */
 :root[data-theme="day"] body{font-weight:400;}
@@ -578,7 +577,7 @@ a.btn{text-decoration:none;}
 :root[data-theme="day"][data-sky="dark"] .dim-cap-def{color:rgba(255,255,255,.92);}
 :root[data-theme="day"][data-sky="dark"] .dim-cap-ask{color:var(--gold-hi);}
 :root[data-theme="day"][data-sky="dark"] :is(.dim-cap-tag,.cap-go){color:var(--gold-hi);border-bottom-color:rgba(255,215,0,.5);}
-:root[data-theme="day"][data-sky="dark"] :is(.nav-btn,.today-btn,.theme-btn){background:rgba(20,16,24,.45);color:#fff;}
+:root[data-theme="day"][data-sky="dark"] :is(.nav-btn,.today-btn){background:rgba(20,16,24,.45);color:#fff;}
 :root[data-theme="day"][data-sky="dark"] .signature{color:rgba(255,255,255,.85);}
 :root[data-theme="day"][data-sky="dark"] .week-dot{border-color:rgba(255,255,255,.75);}
 
@@ -691,6 +690,8 @@ a.btn{text-decoration:none;}
   .hero{height:auto;min-height:clamp(390px,104vw,460px);}
   .jump{margin-top:0;padding:7px 14px;}
   .view-semana .jump{margin-top:12px;}
+  .jump{gap:5px;}
+  .jump button:not(.theme-btn){padding:7px 11px;letter-spacing:.1em;}
   main{padding-top:10px;}
   .view-hoy .hoy{padding:14px;gap:10px;}
   .hoy-title{font-size:21px;}
@@ -698,3 +699,4 @@ a.btn{text-decoration:none;}
   .today-btn{display:none;}   /* en el celular, «Hoy» ya está en la barra de atajos */
 }
 @media (max-width:400px){.week-num{font-size:26px;white-space:nowrap;}}
+@media (max-width:380px){.jump{padding:7px 10px;}}

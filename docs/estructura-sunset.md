@@ -43,7 +43,7 @@ restaurar copias con deshacer; exportar/importar JSON y planilla CSV.
 
 ## 6. Pantalla, de arriba abajo
 1. **Portada**: paisaje del color de la semana, logo, fecha, franja de 7 íconos (al tocar uno aparece la dimensión, la palabra, qué es la dimensión y su pregunta central; «Abrir» muestra la ficha completa: explicación, sus 7 palabras por color y las preguntas de la palabra), tarjeta de vidrio con la frase del día y el control de cumplimiento, semana y árbol, navegación entre semanas, firma.
-2. Barra de atajos fija (Hoy, Autoevaluación, Cierre, Progreso, Ánimo, Tablero, Buscar).
+2. Barra de atajos fija (Hoy, Semana, Mi año, Buscar) con el ícono de modo Auto · Día · Noche al final.
 3. Versículo de la semana (el @ del lunes, fijo) · «Esta semana quiero…» (intención de la semana anterior) · enlace a la agenda de Google.
 4. **Domingo**: título, frase de la semana destacada, historia (en Hoy, el domingo, la historia se ve completa como vistazo general de la semana).
 5. **Lunes a sábado**: 6 tarjetas, cada una con su matiz; título en negrita arriba, frase centrada, botón «Registro, ánimo y gratitud» abajo. Hoy se escribe en la tarjeta; los otros días se abren en una pantalla grande.
