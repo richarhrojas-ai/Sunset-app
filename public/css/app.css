@@ -10,7 +10,7 @@
   --glass-solid:color-mix(in srgb,var(--bg-mid) 72%,var(--bg-top));--glass2:rgba(255,255,255,.07);
   --line:rgba(255,255,255,.16);--line2:rgba(255,255,255,.32);
   --gold:#f0a830;--gold-hi:#ffd700;--gold-ink:#ffd700;
-  --ink:#fff;--well:rgba(0,0,0,.22);--base:rgba(22,10,40,.62);--champ:rgba(0,0,0,.4);--champ2:rgba(0,0,0,.6);--card-mix:42%;
+  --ink:#fff;--well:rgba(0,0,0,.22);--base:color-mix(in srgb,var(--bg-top) 70%,transparent);--champ:rgba(0,0,0,.4);--champ2:rgba(0,0,0,.6);--card-mix:42%;
   /* Color de la semana — lo pisa app.js */
   --wk-accent:#c9a0f0;--wk:var(--wk-accent);--wk-mid:#9b59b6;--on-wk:#12091c;
   --radius:18px;

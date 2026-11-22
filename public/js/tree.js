@@ -15,7 +15,7 @@
     Azul: { name: 'Jacarandá', sci: 'Jacaranda mimosifolia', accent: '#a9b0fa', mid: '#6a6cc9', ink: ['#6a6cc9', '#9aa0ec'],
       bg: { top: '#0a1030', mid: '#152262', low: '#1c2b72', warm: '#b0572a' }, day: { top: '#9cc0ee', mid: '#c9dcf6', low: '#e5eef9', warm: '#ffdcaa' }, glow: '#8497ff', bark: '#2d1f1b' },
     Rojo: { name: 'Flamboyán', sci: 'Delonix regia', accent: '#ff8e7b', mid: '#d4392a', ink: ['#d42a18', '#ef5a44'],
-      bg: { top: '#240a16', mid: '#471228', low: '#5b192d', warm: '#c4401a' }, day: { top: '#e9b9ad', mid: '#f5d6cc', low: '#fbe9e2', warm: '#ffcf94' }, glow: '#ff7656', bark: '#2d1f1b' },
+      bg: { top: '#1b0c0a', mid: '#33140f', low: '#4a1c15', warm: '#b0461c' }, day: { top: '#e9b9ad', mid: '#f5d6cc', low: '#fbe9e2', warm: '#ffcf94' }, glow: '#ff8a5e', bark: '#2d1f1b' },
     Amarillo: { name: 'Lapacho amarillo', sci: 'Handroanthus albus', accent: '#f7cf55', mid: '#c99a10', ink: ['#e8a90c', '#f5c518'],
       bg: { top: '#221808', mid: '#40300f', low: '#573b0f', warm: '#d08a14' }, day: { top: '#efd58d', mid: '#f8e8bb', low: '#fcf4dc', warm: '#ffcf70' }, glow: '#f9cf62', bark: '#2d1f1b' },
     Blanco: { name: 'Lapacho blanco', sci: 'Tabebuia roseoalba', accent: '#f4ebf6', mid: '#b9a8c0', ink: ['#e9cfdb', '#fbf1f5'],
