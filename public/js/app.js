@@ -569,15 +569,14 @@
     const yi = yearIndex(Y.year);
     const tree = treeOf(t.name);
     $('weekNum').textContent = weekName(viewing) + (YEARS.length > 1 ? ' · ' + Y.year : '');
-    // El color de la semana, dicho y mostrado: «● Semana negra · 17 al 23 · enero».
+    // El color de la semana, dicho y mostrado: «● Semana negra» y debajo «17 al 23 · enero».
     const sub = $('weekSub');
     sub.textContent = '';
     const dot = el('i', 'week-dot');
     dot.style.background = COLOR_DOT[t.name] || tree.mid;
     sub.appendChild(dot);
     sub.appendChild(el('span', 'week-color', 'Semana ' + (COLOR_ADJ[t.name] || t.name.toLowerCase())));
-    sub.appendChild(document.createTextNode(' · '));
-    sub.appendChild(el('span', 'week-dates', wk.dates));
+    sub.appendChild(el('span', 'week-dates', wk.dates));   // siempre en su propia línea, igual en todas las semanas
     const tn = $('treeName');
     tn.textContent = tree.name;
     if (tree.sci) tn.appendChild(el('i', null, tree.sci));

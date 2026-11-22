@@ -561,6 +561,7 @@ a.btn{text-decoration:none;}
 /* Color de la semana en la portada: un punto del color y «Semana negra», sutil */
 .week-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:1px;border:1px solid rgba(255,255,255,.75);box-shadow:0 0 6px rgba(0,0,0,.35);}
 .week-color{font-weight:500;white-space:nowrap;}
+.week-dates{display:block;margin-top:3px;white-space:nowrap;}
 .week-dates{white-space:nowrap;}
 :root[data-theme="day"] .week-dot{border-color:rgba(13,9,18,.55);box-shadow:none;}
 
