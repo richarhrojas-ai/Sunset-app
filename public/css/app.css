@@ -54,7 +54,8 @@ button{font-family:inherit;color:inherit;}
 /* El número de semana es una referencia, no el centro: tamaño discreto. */
 .week-num{font-size:17px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;line-height:1.2;margin:6px 0 4px;white-space:nowrap;}
 .tree-name{font-size:15px;font-weight:300;letter-spacing:.08em;color:rgba(255,255,255,.88);}
-.tree-name i{font-size:13px;opacity:.78;margin-left:8px;}
+.tree-name{white-space:nowrap;}
+.tree-name i{display:block;margin-top:2px;font-size:13px;opacity:.78;}   /* nombre científico siempre debajo, igual en todos los árboles */
 .week-controls{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-bottom:28px;}
 .nav-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line2);background:color-mix(in srgb,var(--bg-top) 45%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;}
 .nav-btn:hover{border-color:var(--gold);box-shadow:0 0 14px rgba(240,168,48,.35);}
