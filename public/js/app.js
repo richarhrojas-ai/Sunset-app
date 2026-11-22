@@ -149,7 +149,30 @@
 
   const k = (Y, week, rest) => Y.year + '/w' + week + '/' + rest;
   function getV(key, fallback) { const e = state.entries[key]; return e && e.v != null ? e.v : fallback; }
+  // Regla del sistema: se puede modificar la semana actual y la anterior. Las más antiguas quedan de solo lectura;
+  // solo admiten una nota posterior (clave AAAA/wN/nota). Las semanas futuras no se bloquean.
+  function absWeek(YY, w) {
+    let n = 0;
+    for (const y of YEARS) {
+      if (y === YY) return n + (w - minWeek(y));
+      n += y.weeks.length - minWeek(y) + 1;
+    }
+    return n;
+  }
+  function weekLocked(YY, w) {
+    const t = locateDate(now);
+    if (!t.inRange && t.before) return false;
+    const cur = absWeek(t.Y, t.week) + (t.inRange ? 0 : 1);
+    return absWeek(YY, w) < cur - 1;
+  }
+  function keyLocked(key) {
+    const m = String(key).match(/^(\d{4})\/w(\d+)\/(.+)$/);
+    if (!m || m[3] === 'nota') return false;
+    const YY = YEARS.find((y) => String(y.year) === m[1]);
+    return !!YY && weekLocked(YY, Number(m[2]));
+  }
   function setV(key, value) {
+    if (keyLocked(key)) return;
     state.entries[key] = { v: value, t: Date.now() };
     save();
     scheduleSync();
@@ -257,6 +280,12 @@
     ta.rows = rows || 2;
     ta.placeholder = placeholder;
     ta.value = getV(key, '');
+    if (keyLocked(key)) {
+      ta.readOnly = true;
+      ta.classList.add('is-locked');
+      ta.placeholder = 'Sin registro';
+      return ta;
+    }
     // Solo guarda lo que se escribió aquí: enfocar y salir de un campo no pisa un dato más nuevo de otro dispositivo.
     let dirty = false;
     const flush = function () { if (dirty) { dirty = false; pendingNotes.delete(flush); setV(key, ta.value); } };
@@ -286,6 +315,7 @@
       const b = el('button', 'mood-dot');
       b.type = 'button';
       b.setAttribute('aria-label', MOOD_NAMES[i - 1] + ', ' + i + ' de 5');
+      b.disabled = keyLocked(key);
       b.addEventListener('click', function () { setV(key, getV(key, 0) === i ? null : i); paint(); if (onChange) onChange(); });
       dots.push(b); row.appendChild(b);
     }
@@ -376,6 +406,10 @@
     $('editorRef').open = false;
     const ta = $('editorText');
     ta.value = getV(key, '');
+    const locked = keyLocked(key);
+    ta.readOnly = locked;
+    $('editorGrat').readOnly = locked;
+    $('editor').classList.toggle('is-locked', locked);
     const mood = $('editorMood');
     mood.textContent = '';
     mood.appendChild(moodRow(day));
@@ -384,7 +418,7 @@
     editing.gKey = k(Y, viewing, 'g' + day);
     $('editor').hidden = false;
     document.documentElement.classList.add('no-scroll');
-    updateEditorStatus('');
+    updateEditorStatus(locked ? 'Semana cerrada: solo lectura' : '');
     ta.focus();
     ta.setSelectionRange(ta.value.length, ta.value.length);
   }
@@ -667,6 +701,7 @@
         const b = el('button', null, String(v));
         b.setAttribute('aria-pressed', String(answers[qi] === v));
         b.setAttribute('aria-label', v + ' de 5');
+        b.disabled = weekLocked(Y, viewing);
         b.addEventListener('click', function () {
           setAnswer(Y, viewing, word, qi, v);
           renderEvaluation();
@@ -831,6 +866,39 @@
     ['yearGrid', 'moodGrid'].forEach(function (id) {
       $(id).querySelectorAll('.yw').forEach((b) => b.classList.toggle('is-viewing', Number(b.dataset.w) === viewing));
     });
+  }
+  // Meta del año: registrar el 70 % de los días (no se busca perfección). Cuenta los días ya vividos del año.
+  const YEAR_GOAL = 0.7;
+  function renderYearGoal() {
+    const box = $('yearGoal');
+    box.innerHTML = '';
+    let lived = 0, reg = 0;
+    const today = utcDay(now);
+    allWeeks(Y).forEach(function (wk) {
+      for (let d = 0; d < 7; d++) {
+        if (wk.week === 0 && !introDay(wk, d)) continue;
+        if (utcDay(dateOf(Y, wk.week, d)) > today) continue;
+        lived++;
+        if (dayHasEntry(Y, wk.week, d)) reg++;
+      }
+    });
+    box.appendChild(el('div', 'field-label', 'Registro del año'));
+    if (!lived) { box.appendChild(el('p', 'year-goal-text', 'El año todavía no empezó. La meta: registrar el 70 % de los días.')); return; }
+    const pct = reg / lived;
+    box.appendChild(el('p', 'year-goal-num', Math.round(pct * 100) + ' %'));
+    const bar = el('div', 'year-goal-bar');
+    bar.setAttribute('aria-hidden', 'true');
+    const fill = el('span', 'year-goal-fill');
+    fill.style.width = Math.min(100, pct * 100) + '%';
+    bar.appendChild(fill);
+    const mark = el('span', 'year-goal-mark');
+    mark.style.left = YEAR_GOAL * 100 + '%';
+    bar.appendChild(mark);
+    box.appendChild(bar);
+    const missing = Math.ceil(YEAR_GOAL * lived - reg);
+    box.classList.toggle('is-done', pct >= YEAR_GOAL);
+    box.appendChild(el('p', 'year-goal-text', reg + ' de ' + lived + ' días con registro. '
+      + (pct >= YEAR_GOAL ? 'Logro alcanzado: estás sobre el 70 %.' : 'Meta: 70 % de los días, sin buscar perfección. Te faltan ' + missing + (missing === 1 ? ' día' : ' días') + ' para llegar.')));
   }
   function renderYear() {
     renderMoodYear();
@@ -1123,6 +1191,20 @@
     else p.appendChild(document.createTextNode(' ' + text));
   }
 
+  // Aviso de semana cerrada, con su nota posterior (lo único que se puede escribir en ella).
+  function lockNote(YY, w) {
+    const box = el('div', 'lock-box');
+    box.appendChild(el('p', 'lock-msg', 'Esta semana ya cerró: puedes leerla, pero no modificarla. Puedes dejar una nota explicando por qué no se registró; la nota queda en tu diario, pero ya no suma a tus estadísticas (racha, ánimo ni evaluación).'));
+    box.appendChild(el('div', 'field-label', 'Nota posterior'));
+    box.appendChild(noteField(k(YY, w, 'nota'), 'Por qué no pude registrar esta semana, o algo que quiera agregar…', 2));
+    return box;
+  }
+  function renderLock() {
+    const box = $('lockBox');
+    box.innerHTML = '';
+    box.hidden = !weekLocked(Y, viewing);
+    if (!box.hidden) box.appendChild(lockNote(Y, viewing));
+  }
   function render() {
     if (view === 'hoy') {
       const hl = hoyDate && locateDate(hoyDate);
@@ -1132,6 +1214,7 @@
     document.body.classList.toggle('view-ano', view === 'ano');
     document.body.classList.toggle('view-semana', view === 'semana');
     $('anoTitle').textContent = 'Mi año ' + Y.year;
+    if (view === 'ano') renderYearGoal();
     document.body.classList.toggle('is-intro', viewing === 0);
     renderHoy();
     markJump();
@@ -1141,6 +1224,7 @@
     renderAgo();
     renderRecursos();
     renderIntent();
+    renderLock();
     renderWeekBar();
     renderDims();
     renderToday();
@@ -1166,6 +1250,7 @@
     if ((m = rest.match(/^c\/(.+)$/))) return 'Comentario · ' + m[1];
     if (rest === 'funciono') return 'Cierre · Qué funcionó';
     if (rest === 'intencion') return 'Intención para la semana siguiente';
+    if (rest === 'nota') return 'Nota posterior';
     return null;
   }
   function searchEntries(q) {
@@ -1369,6 +1454,8 @@
       const i = String(getV(k(YY, w, 'intencion'), '')).trim();
       if (f) notes.push({ label: 'Qué funcionó y qué mejorar', text: f });
       if (i) notes.push({ label: 'Intención para la semana siguiente', text: i });
+      const nt = String(getV(k(YY, w, 'nota'), '')).trim();
+      if (nt) notes.push({ label: 'Nota posterior', text: nt });
       if (!lines.length && !notes.length) return;
       out.push({ title: weekName(w, YY) + ' · ' + YY.themes[wk.col].name + ' · ' + wk.dates + ' · ' + YY.year, subtitle: wk.title, days: lines, notes: notes });
     });
@@ -1538,6 +1625,7 @@
         const b = el('button', null, String(v));
         b.type = 'button';
         b.setAttribute('aria-label', v + ' de 5');
+        b.disabled = weekLocked(YY, w);
         b.addEventListener('click', function () {
           setAnswer(YY, w, it.word, it.qi, v);
           justAnswered = true;
@@ -1560,7 +1648,7 @@
   // Dictado por voz (si el navegador lo permite): agrega lo dictado al final del texto.
   function micButton(ta) {
     const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!Speech) return null;
+    if (!Speech || !ta || ta.readOnly) return null;
     const b = el('button', 'mic-btn');
     b.type = 'button';
     b.appendChild(icon('mic'));
@@ -1812,6 +1900,7 @@
             const b = el('button', null, String(v));
             b.type = 'button';
             b.setAttribute('aria-label', v + ' de 5');
+            b.disabled = weekLocked(YY, w);
             b.addEventListener('click', function () { setAnswer(YY, w, a.word, x.qi, v); refreshEval(); paint(); goal.replaceWith(goal = weekGoalBox(YY, w)); });
             scale.appendChild(b);
           }
@@ -1903,6 +1992,7 @@
       phrase.appendChild(ol);
     }
     box.appendChild(phrase);
+    if (weekLocked(Y, viewing)) box.appendChild(lockNote(Y, viewing));
     box.appendChild(streakBox());
     let goal = weekGoalBox(Y, viewing);
     box.appendChild(goal);

@@ -130,3 +130,8 @@ servidor reintenta y combina). En Netlify Blobs (almacén `sunset`):
 - **Volver a una copia**: *Respaldo y sincronización → Ver copias diarias → Restaurar* (se puede deshacer).
 - **Descargar planilla**: CSV con una fila por semana (Excel / Google Sheets).
 - **Descargar respaldo / Importar respaldo**: JSON completo; al importar se elige combinar o reemplazar.
+
+## Reglas de registro
+
+- Se edita la semana actual y la anterior. Las semanas más antiguas quedan de solo lectura; se les puede agregar una **nota posterior** (por ejemplo, por qué no se registró), que aparece en el diario y el buscador pero no cuenta para racha, ánimo ni evaluación.
+- **Meta del año:** 70 % de los días con registro, visible en «Mi año».

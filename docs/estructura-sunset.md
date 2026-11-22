@@ -57,6 +57,8 @@ restaurar copias con deshacer; exportar/importar JSON y planilla CSV.
 - Puntaje de una palabra = promedio de las preguntas respondidas (las sin responder no cuentan). Semana = promedio de las palabras con respuestas.
 - Maestría del color: cuando las 7 palabras de un color ya pasaron por evaluación, la de mejor puntaje acumulado queda como su maestría (automática, sin elegir).
 - Domingo es el primer día de la semana.
+- Se puede modificar la semana actual y la anterior; las más antiguas quedan de solo lectura y solo admiten una «nota posterior» (`AAAA/wN/nota`), que va al diario pero no suma a las estadísticas.
+- Meta del año: registrar el 70 % de los días vividos (se muestra en Mi año; no se busca perfección).
 - Cada dimensión tiene una frase que la define y una pregunta central (las mismas del libro): Regalo de Dios «Lo que no se gana: se recibe.», Prioridades «A quién le doy mi tiempo y mi presencia.», Temas de Interés «Donde me formo para servir mejor.», Desafío «La persona en la que me propongo convertirme.», Valores «Lo que no se negocia.», Estrategia «Las herramientas que multiplican lo que hago.», Sistema «La vida como una partida: comenzar, ordenar, cerrar, no perder el rey.».
 - En pantalla las palabras abreviadas de la planilla se muestran completas (Ahorro de Tiempo, Equipo de Auxilio, Vida Cristiana); las claves guardadas usan la palabra original.
 

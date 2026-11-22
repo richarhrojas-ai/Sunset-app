@@ -660,3 +660,22 @@ a.btn{text-decoration:none;}
 .welcome-dots i{width:8px;height:8px;border-radius:50%;background:var(--line2);}
 .welcome-dots i.on{background:var(--gold);}
 .hoy-verse{margin:4px 2px 0;}
+
+/* Semana cerrada: solo lectura y nota posterior */
+.lock-box{margin:14px 0;text-align:left;padding:12px 16px;border-radius:14px;border:1px dashed var(--line2);background:rgba(255,255,255,.04);}
+.lock-msg{margin:0 0 8px;font-size:13.5px;line-height:1.5;color:var(--txt2);}
+.note.is-locked{border-style:dashed;cursor:default;}
+.mood-dot:disabled,.q-scale button:disabled{cursor:default;}
+:root[data-theme="day"] .lock-box{background:rgba(255,255,255,.45);}
+
+/* Meta del año: 70 % de los días con registro */
+.year-goal{margin:4px 0 18px;padding:14px 18px;border-radius:16px;border:1px solid var(--line2);background:rgba(255,255,255,.05);}
+.year-goal-num{margin:2px 0 8px;font-size:30px;font-weight:200;letter-spacing:.04em;color:var(--ink);}
+.year-goal-bar{position:relative;height:6px;border-radius:3px;background:var(--line);}
+.year-goal-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--wk);}
+.year-goal-mark{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;border-radius:1px;background:var(--gold-hi);}
+.year-goal-text{margin:10px 0 0;font-size:13.5px;line-height:1.5;color:var(--txt2);}
+.year-goal.is-done{border-color:rgba(240,168,48,.7);box-shadow:0 0 18px rgba(255,215,0,.12);}
+.year-goal.is-done .year-goal-fill{background:var(--gold);}
+:root[data-theme="day"] .year-goal{background:rgba(255,255,255,.55);}
+:root[data-theme="day"] .year-goal-mark{background:var(--gold-ink);}
