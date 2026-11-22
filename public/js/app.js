@@ -374,7 +374,9 @@
   function phraseInto(node, text) {
     node.textContent = '';
     const m = String(text || '').match(/^([\s\S]*?)\s+—\s+([^—]+)$/);
-    if (!m) { node.textContent = text || ''; return node; }
+    // Solo es firma si lo que sigue al guion es corto y empieza con mayúscula (un nombre o una cita bíblica);
+    // un guion en medio de la frase («…a la sequía — porque sus raíces…») es parte del texto.
+    if (!m || m[2].length > 60 || !/^[A-ZÁÉÍÓÚÑ0-9]/.test(m[2].trim())) { node.textContent = text || ''; return node; }
     const box = el('span');   // un solo bloque: la tarjeta centra con flex y no debe separar la firma
     box.appendChild(document.createTextNode(m[1] + ' '));
     const sig = el('span', 'sig');

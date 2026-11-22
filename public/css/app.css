@@ -686,12 +686,15 @@ a.btn{text-decoration:none;}
 .hoy-story{margin:14px 0 4px;padding:16px 18px;border-radius:16px;background:var(--glass2);border-left:3px solid var(--wk);}
 .hoy-story p{margin:6px 0 0;font-size:15px;line-height:1.7;color:var(--txt);}
 
-/* Móvil, vista Hoy: portada más baja (se recorta el cielo vacío, no el árbol) para ver la frase o las preguntas del día en la primera pantalla */
+/* Móvil (todas las vistas): portada más baja (se recorta el cielo vacío, no el árbol) para ver la frase o las preguntas del día en la primera pantalla */
 @media (max-width:520px){
-  .view-hoy .hero{height:auto;min-height:clamp(390px,104vw,460px);}
-  .view-hoy .jump{margin-top:0;padding:7px 14px;}
-  .view-hoy main{padding-top:10px;}
+  .hero{height:auto;min-height:clamp(390px,104vw,460px);}
+  .jump{margin-top:0;padding:7px 14px;}
+  .view-semana .jump{margin-top:12px;}
+  main{padding-top:10px;}
   .view-hoy .hoy{padding:14px;gap:10px;}
   .hoy-title{font-size:21px;}
+  .week-num{font-size:28px;white-space:nowrap;}
+  .today-btn{display:none;}   /* en el celular, «Hoy» ya está en la barra de atajos */
 }
 @media (max-width:400px){.week-num{font-size:26px;white-space:nowrap;}}
