@@ -588,3 +588,7 @@ a.btn{text-decoration:none;}
 :root[data-theme="day"][data-sky="dark"] :is(.nav-btn,.today-btn,.theme-btn){background:rgba(20,16,24,.45);color:#fff;}
 :root[data-theme="day"][data-sky="dark"] .signature{color:rgba(255,255,255,.85);}
 :root[data-theme="day"][data-sky="dark"] .week-dot{border-color:rgba(255,255,255,.75);}
+
+/* Firma de las frases: el guion en el color de la semana */
+.sig{white-space:nowrap;}
+.sig-dash{color:var(--wk);font-weight:600;}

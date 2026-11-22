@@ -70,6 +70,12 @@
       Y.intro.col = ci < 0 ? 0 : ci;
       Y.intro.phase = ref ? ref.phase : 0;
     }
+    // Los @ del viernes traen un emoji de color al final (para los flyers); en la app el color lo da el guion de la firma.
+    Y.weeks.forEach(function (wk) {
+      ['regalo', 'pensamiento', 'desafio', 'consejo', 'frase', 'hook'].forEach(function (key) {
+        if (typeof wk[key] === 'string') wk[key] = wk[key].replace(/\s*[\u{1F7E0}-\u{1F7EB}\u{2B1B}\u{2B1C}\u{1F534}\u{1F535}\u{1F3A8}]\uFE0F?\s*$/u, '').trim();
+      });
+    });
     // Semanas en que se evalúa cada palabra.
     Y.evalWeeks = {};
     Y.weeks.forEach(function (wk) {
@@ -307,6 +313,21 @@
     if (words) tab.appendChild(el('span', 'count', words + (words === 1 ? ' palabra' : ' palabras')));
     tab.addEventListener('click', () => openEditor(day));
     return tab;
+  }
+
+  // Frase con firma: el guion «—» toma el color de la semana, sutil.
+  function phraseInto(node, text) {
+    node.textContent = '';
+    const m = String(text || '').match(/^([\s\S]*?)\s+—\s+([^—]+)$/);
+    if (!m) { node.textContent = text || ''; return node; }
+    const box = el('span');   // un solo bloque: la tarjeta centra con flex y no debe separar la firma
+    box.appendChild(document.createTextNode(m[1] + ' '));
+    const sig = el('span', 'sig');
+    sig.appendChild(el('span', 'sig-dash', '—'));
+    sig.appendChild(document.createTextNode(' ' + m[2]));
+    box.appendChild(sig);
+    node.appendChild(box);
+    return node;
   }
 
   // ── Editor grande del registro ──
@@ -547,7 +568,7 @@
         (d.intro ? d.intro.preguntas : wk.sabado).forEach((q) => ol.appendChild(el('li', null, q)));
         card.appendChild(ol);
       } else {
-        card.appendChild(el('p', 'card-text', d.intro ? d.intro.texto : wk[d.key]));
+        card.appendChild(phraseInto(el('p', 'card-text'), d.intro ? d.intro.texto : wk[d.key]));
       }
       card.appendChild(dayRecord(d.day));
       wrap.appendChild(card);
@@ -967,7 +988,7 @@
       label.textContent = 'La frase de la semana';
       full = wk.hook;
     }
-    text.textContent = full;
+    phraseInto(text, full);
     more.hidden = day < 0 || full.length < 140;
     // Tocar la frase lleva a la tarjeta completa de ese día.
     const toCard = function () {
@@ -1659,7 +1680,7 @@
       const ph = dayPhrase(TY, TW, day);
       const phrase = el('div', 'quick-phrase');
       phrase.appendChild(el('div', 'today-label', ph.label));
-      phrase.appendChild(el('p', null, ph.text));
+      phrase.appendChild(phraseInto(el('p'), ph.text));
       body.appendChild(phrase);
       body.appendChild(el('div', 'field-label', 'Registro de hoy'));
       const rec = noteField(k(TY, TW, 'd' + day), 'Una o dos líneas sobre tu día…', 3);
