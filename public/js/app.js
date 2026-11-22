@@ -183,6 +183,16 @@
     ['Las herramientas que multiplican lo que hago.', '¿Cómo me organizo, me presento y me apoyo?'],
     ['La vida como una partida: comenzar, ordenar, cerrar, no perder el rey.', '¿Juego por reacción o con un plan?'],
   ];
+  // Explicación completa de cada dimensión, para quien recién empieza (se muestra en la ficha al abrir un ícono).
+  const DIM_ABOUT = [
+    'Todo lo que tienes y no ganaste: el camino que se abre, la energía de cada día, la provisión, la protección, el entorno, el tiempo y la sabiduría. Esta dimensión te invita a reconocerlo y agradecerlo antes de pedir más. De aquí parte todo lo demás: primero se recibe, después se construye.',
+    'El orden de los lugares que ocupan las personas y las responsabilidades en tu vida: tú mismo, tu familia, tu empresa, tu trabajo, tu núcleo cercano, tus amigos y tus hermanos en la fe. No se trata solo de cuánto tiempo das, sino de que cada uno reciba el lugar que le corresponde y tu presencia real.',
+    'Las áreas en las que eliges aprender y crecer: liderazgo, vida espiritual, finanzas, crecimiento personal, relaciones, estrategias y vida cristiana. No es acumular información: es formarte para servir mejor a otros. Cada semana, «Para profundizar» trae ideas y datos sobre el tema.',
+    'Los rasgos de carácter que te propones forjar, uno a la vez: creativo, humilde, constante, valiente, alegre, atleta y social. Se lee en primera persona: mi desafío es ser humilde, luego valiente. No describe quién eres hoy, sino en quién te estás convirtiendo.',
+    'Los principios que sostienes aunque cueste: responsabilidad, amor, integridad, gratitud, respeto, disciplina y solidaridad. Son tu base firme; cuando todo cambia, ellos no se negocian. Cada semana revisas uno en tus decisiones concretas.',
+    'Las herramientas prácticas que multiplican tu esfuerzo: tomar la iniciativa, hacer las cosas bien y a tiempo, delegar, cuidar cómo te presentas, apalancarte en recursos y personas, ahorrar tiempo y contar con tu equipo de auxilio: las personas que te sostienen en tiempos difíciles.',
+    'La vida vista como una partida de ajedrez: una buena apertura, pensamiento estratégico, estructura, táctica para el momento, saber cerrar, prevenir antes de que pase y avanzar con decisión. Lo esencial es no perder el rey: puedes perder piezas, pero no lo que más importa.',
+  ];
   function getAnswers(Y, week, word) { return getV(k(Y, week, 'a/' + word), [null, null, null, null, null]); }
   function setAnswer(Y, week, word, qi, value) {
     const a = getAnswers(Y, week, word).slice();
@@ -966,7 +976,7 @@
     $('capWord').textContent = wordName(word);
     $('capTag').textContent = evaluated ? 'Principal' : 'En juego';
     $('capTag').classList.toggle('is-main', evaluated);
-    $('capGo').textContent = evaluated ? 'Abrir' : 'Ver preguntas';
+    $('capGo').textContent = 'Abrir';
     $('capGo').onclick = function () { accessWord(d, word, evaluated); };
     const c = DIM_CONCEPTS[d] || ['', ''];
     $('capDef').textContent = c[0];
@@ -978,26 +988,51 @@
   function hideCap() { $('dimCap').hidden = true; }
   // Cada ícono es la entrada a su palabra. Las tres principales llevan a la autoevaluación con la palabra
   // abierta; las otras cuatro (en juego, pero no evaluadas esta semana) abren una ficha con sus preguntas.
+  // Al abrir un ícono se muestra la ficha completa: qué es la dimensión, su pregunta, para qué sirve, sus 7 palabras
+  // (una por color) y la palabra de esta semana con sus preguntas. Desde ahí se va a la autoevaluación.
   function accessWord(d, word, evaluated) {
-    if (evaluated) {
-      openWord = word;
-      renderEvaluation();
-      $('evaluation').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return;
-    }
-    const next = nextEvalWeek(Y, word, viewing);
-    const nw = Y.weeks[next - 1];
+    const c = DIM_CONCEPTS[d] || ['', ''];
     $('wordEyebrow').textContent = Y.dimensions[d];
+    $('dimDef').textContent = c[0];
+    $('dimAsk').textContent = c[1];
+    $('dimAbout').textContent = DIM_ABOUT[d] || '';
+    const words = $('dimWords');
+    words.innerHTML = '';
+    (Y.board[d] || []).forEach(function (w, col) {
+      const li = el('li', w === word ? 'is-now' : null);
+      const dot = el('span', 'dim-word-dot');
+      dot.style.background = COLOR_DOT[Y.colors[col].name] || 'transparent';
+      li.appendChild(dot);
+      li.appendChild(el('span', null, wordName(w)));
+      li.title = 'Semana ' + COLOR_ADJ[Y.colors[col].name];
+      if (w === word) li.setAttribute('aria-current', 'true');
+      words.appendChild(li);
+    });
     $('wordTitle').textContent = wordName(word);
-    $('wordWhen').textContent = 'Está en juego esta semana, pero se evalúa en la semana ' + num(Y, next) + ' (' + nw.dates + '). Estas son sus preguntas:';
     const list = $('wordQs');
     list.innerHTML = '';
     (Y.questions[word] || []).forEach((q) => list.appendChild(el('li', null, q)));
     const go = $('wordGo');
-    go.textContent = next === viewing ? 'Ver la autoevaluación' : 'Ir a la semana ' + num(Y, next);
-    go.onclick = function () { closeWord(); goTo(Y, next); };
+    if (evaluated) {
+      $('wordWhen').textContent = 'Es una de las 3 palabras principales de esta semana. Te evalúas con estas 5 preguntas, de 1 (poco) a 5 (mucho):';
+      go.textContent = 'Responder la autoevaluación';
+      go.onclick = function () {
+        closeWord();
+        if (view !== 'semana') { view = 'semana'; render(); }
+        openWord = word;
+        renderEvaluation();
+        $('evaluation').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+    } else {
+      const next = nextEvalWeek(Y, word, viewing);
+      const nw = Y.weeks[next - 1];
+      $('wordWhen').textContent = 'Está en juego esta semana, pero se evalúa en la semana ' + num(Y, next) + ' (' + nw.dates + '). Estas son sus preguntas:';
+      go.textContent = next === viewing ? 'Ver la autoevaluación' : 'Ir a la semana ' + num(Y, next);
+      go.onclick = function () { closeWord(); if (view !== 'semana') view = 'semana'; goTo(Y, next); };
+    }
     $('wordModal').hidden = false;
-    go.focus();
+    $('wordModal').querySelector('.modal-box').scrollTop = 0;
+    go.focus({ preventScroll: true });
   }
   function closeWord() { $('wordModal').hidden = true; }
   $('wordClose').addEventListener('click', closeWord);

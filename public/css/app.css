@@ -326,6 +326,17 @@ main>section,main>details,#days .card{scroll-margin-top:60px;}
 @media (prefers-reduced-motion:reduce){.dim-glow,.dim-ico,.yw svg{transition:none;}.dim-cap{animation:none;}:root{transition:none;}}
 
 /* Ficha de una palabra en juego */
+.modal-box .dim-def{margin:10px 0 0;font-size:19px;font-weight:300;line-height:1.4;letter-spacing:.02em;color:var(--ink);}
+.modal-box .dim-ask{margin:6px 0 0;font-size:15px;font-style:italic;font-weight:300;line-height:1.45;color:var(--gold-hi);}
+.modal-box .dim-about{margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--txt);}
+.modal-box .dim-words-h{margin:18px 0 8px;font-size:11px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--txt2);}
+.modal-box .dim-words{list-style:none;margin:0;padding:0;display:flex;flex-direction:row;flex-wrap:wrap;gap:6px;}
+.modal-box .dim-words li{display:flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;border:1px solid var(--line2);font-size:13px;line-height:1.5;color:var(--txt);}
+.modal-box .dim-words li.is-now{border-color:var(--gold-hi);color:var(--ink);font-weight:500;box-shadow:0 0 10px rgba(255,215,0,.18);}
+.dim-word-dot{width:8px;height:8px;border-radius:50%;box-shadow:0 0 0 1px rgba(128,128,128,.6);flex:none;}
+.dim-word-title{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line2);}
+:root[data-theme="day"] .modal-box .dim-ask{color:var(--gold-ink);}
+:root[data-theme="day"] .modal-box .dim-words li.is-now{border-color:var(--gold-ink);}
 .word-qs{margin:14px 0 4px 20px;display:flex;flex-direction:column;gap:9px;}
 .word-qs li{font-size:14.5px;line-height:1.55;color:var(--txt);}
 
