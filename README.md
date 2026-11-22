@@ -84,7 +84,7 @@ están en el encabezado de `tools/hero_from_photo.py`. Después subir la versió
 
 ## Uso diario
 
-- **Hoy** (la app abre aquí): frase de hoy, registro corto (con dictado por voz si el navegador lo permite), gratitud, ánimo, la pregunta del día y la agenda. Barra de atajos: Hoy · Semana · Mi año · Buscar.
+- **Hoy** (la app abre aquí): «Tu semana» (título, intención, avance de las 3 palabras y días con registro), frase de hoy, registro corto (con dictado), gratitud, ánimo, la pregunta del día y la agenda. El **sábado** es día de evaluación: las preguntas pendientes se responden en Hoy. El **domingo** es día de preparación: repaso de la semana que terminó, «¿Qué funcionó?» y la intención para la nueva. Barra de atajos: Hoy · Semana · Mi año · Buscar.
 - **Racha amable**: cuántos de los últimos 7 días tienen algo registrado; nunca castiga.
 - **Pregunta del día**: una de las 15 preguntas de la semana por día; las respuestas cuentan en la autoevaluación.
 - **Resumen de la semana**: botón en el cierre. El domingo, la primera vez que se abre la app, aparece solo el de la semana que terminó.

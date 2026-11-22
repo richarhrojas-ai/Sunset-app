@@ -1671,23 +1671,153 @@
   });
 
   // ── Vista Hoy: la puerta de entrada. Lo esencial del día en una pantalla; la semana completa, a un toque ──
+  // Lunes a viernes: frase, registro y una pregunta. Sábado: evaluación (las preguntas pendientes, aquí mismo).
+  // Domingo: preparación (repaso de la semana que terminó e intención para la que empieza).
   let view = 'semana';
+
+  // Clave de la intención que rige una semana: la escrita en la semana anterior (o la inicial del año).
+  function intentionKey(YY, w) {
+    const pw = w > 0 ? prevWeekOf(YY, w) : null;
+    return pw ? k(pw.Y, pw.week, 'intencion') : k(YY, 0, 'intencion');
+  }
+
+  // «Tu semana»: objetivo y avance, para no tener que ir a la semana completa.
+  function weekGoalBox(YY, w) {
+    const wk = weekAt(YY, w);
+    const box = el('section', 'hoy-week');
+    const head = el('div', 'hoy-week-head');
+    head.appendChild(el('span', 'hoy-week-label', 'Tu semana'));
+    head.appendChild(el('span', 'hoy-week-title', wk.title || ''));
+    box.appendChild(head);
+    const intent = String(getV(intentionKey(YY, w), '')).trim();
+    if (intent && w !== 0) box.appendChild(el('p', 'hoy-intent', 'Quiero: ' + intent));
+    if (w !== 0) {
+      const list = el('ul', 'hoy-words');
+      let answered = 0;
+      activeWords(YY, w).forEach(function (a) {
+        const n = wordAnswered(YY, w, a.word);
+        answered += n;
+        const li = el('li');
+        li.appendChild(el('span', 'hoy-word', a.word));
+        const bar = el('span', 'hoy-bar');
+        bar.setAttribute('aria-hidden', 'true');
+        for (let i = 0; i < 5; i++) bar.appendChild(el('i', i < n ? 'on' : ''));
+        li.appendChild(bar);
+        li.appendChild(el('span', 'hoy-word-n', n ? n + '/5 · ' + Math.round(wordScore(YY, w, a.word) * 100) + ' %' : '0/5'));
+        li.setAttribute('aria-label', a.word + ': ' + n + ' de 5 preguntas respondidas');
+        list.appendChild(li);
+      });
+      box.appendChild(list);
+      box.appendChild(el('p', 'hoy-week-note', answered + ' de 15 preguntas respondidas'));
+    }
+    const days = el('div', 'hoy-days');
+    days.setAttribute('aria-label', 'Días con registro esta semana');
+    const today = now.getDay();
+    ['D', 'L', 'M', 'X', 'J', 'V', 'S'].forEach(function (lbl, d) {
+      if (w === 0 && !introDay(wk, d)) return;
+      const c = el('span', 'hoy-day' + (dayHasEntry(YY, w, d) ? ' on' : '') + (d === today ? ' is-today' : ''), lbl);
+      c.title = WEEKDAYS[d] + (dayHasEntry(YY, w, d) ? ': con registro' : ': sin registro');
+      days.appendChild(c);
+    });
+    box.appendChild(days);
+    return box;
+  }
+
+  // Sábado: todas las preguntas pendientes de la semana, para cerrar la autoevaluación sin salir de Hoy.
+  function pendingBox(YY, w) {
+    const box = el('section', 'hoy-eval');
+    const paint = function () {
+      box.textContent = '';
+      box.appendChild(el('div', 'dq-label', 'Tu evaluación de la semana'));
+      let pending = 0;
+      activeWords(YY, w).forEach(function (a) {
+        const answers = getAnswers(YY, w, a.word);
+        const qs = YY.questions[a.word] || [];
+        const open = qs.map((q, qi) => ({ q: q, qi: qi })).filter((x) => answers[x.qi] == null);
+        pending += open.length;
+        if (!open.length) return;
+        box.appendChild(el('h3', 'hoy-eval-word', a.word));
+        open.forEach(function (x) {
+          const item = el('div', 'hoy-eval-q');
+          item.appendChild(el('p', 'dq-q', x.q));
+          const scale = el('div', 'q-scale');
+          scale.setAttribute('role', 'group');
+          scale.setAttribute('aria-label', 'Respuesta del 1 (nunca) al 5 (siempre)');
+          for (let v = 1; v <= 5; v++) {
+            const b = el('button', null, String(v));
+            b.type = 'button';
+            b.setAttribute('aria-label', v + ' de 5');
+            b.addEventListener('click', function () { setAnswer(YY, w, a.word, x.qi, v); refreshEval(); paint(); goal.replaceWith(goal = weekGoalBox(YY, w)); });
+            scale.appendChild(b);
+          }
+          item.appendChild(scale);
+          box.appendChild(item);
+        });
+      });
+      if (!pending) box.appendChild(el('p', 'dq-note', 'Respondiste las 15 preguntas. Mañana, domingo, miras la semana y escribes tu intención.'));
+      else box.insertBefore(el('p', 'dq-note', 'Te faltan ' + pending + '. Del 1 (nunca) al 5 (siempre).'), box.children[1]);
+    };
+    let goal = null;
+    box.setGoal = (g) => { goal = g; };
+    paint();
+    return box;
+  }
+
+  // Domingo: repaso breve de la semana que terminó y la intención para la que empieza.
+  function prepBox(YY, w) {
+    const box = el('section', 'hoy-prep');
+    box.appendChild(el('div', 'dq-label', 'Preparación'));
+    const pw = prevWeekOf(YY, w);
+    if (pw && weekHasEntries(pw.Y, pw.week)) {
+      let days = 0;
+      for (let d = 0; d < 7; d++) if (dayHasEntry(pw.Y, pw.week, d)) days++;
+      const m = weekMood(pw.Y, pw.week);
+      const words = activeWords(pw.Y, pw.week).filter((a) => wordAnswered(pw.Y, pw.week, a.word) > 0)
+        .map((a) => a.word + ' ' + Math.round(wordScore(pw.Y, pw.week, a.word) * 100) + ' %');
+      const p = el('p', 'hoy-prep-sum', 'La semana pasada: ' + days + ' de 7 días con registro' + (m.n ? ' · ánimo ' + fmt1(m.avg) + '/5' : '') + (words.length ? ' · ' + words.join(', ') : '') + '.');
+      box.appendChild(p);
+      const sb = el('button', 'dq-more', 'Ver el resumen completo');
+      sb.type = 'button';
+      sb.addEventListener('click', () => openSummary(pw.Y, pw.week));
+      box.appendChild(sb);
+      box.appendChild(el('div', 'field-label', '¿Qué funcionó? ¿Qué mejorar?'));
+      box.appendChild(noteField(k(pw.Y, pw.week, 'funciono'), 'Mirando la semana que terminó…', 2));
+    }
+    box.appendChild(el('div', 'field-label', 'Esta semana quiero…'));
+    box.appendChild(noteField(intentionKey(YY, w), 'Una intención concreta para estos 7 días…', 2));
+    const words = activeWords(YY, w).map((a) => a.word + ' (' + YY.dimensions[a.dim] + ')').join(' · ');
+    if (w !== 0) box.appendChild(el('p', 'field-hint', 'Tus palabras de esta semana: ' + words + '.'));
+    return box;
+  }
+
   function renderHoy() {
     const box = $('hoyView');
     box.textContent = '';
     if (view !== 'hoy') return;
     const day = now.getDay();
+    const mode = viewing === 0 ? 'intro' : day === 0 ? 'domingo' : day === 6 ? 'sabado' : 'dia';
     const head = el('div', 'hoy-head');
     head.appendChild(el('h1', 'hoy-title', WEEKDAYS[day] + ' ' + now.getDate() + ' de ' + MONTHS[now.getMonth()]));
-    head.appendChild(streakBox());
+    head.appendChild(el('span', 'hoy-mode', mode === 'domingo' ? 'Día de preparación' : mode === 'sabado' ? 'Día de evaluación' : ''));
     box.appendChild(head);
+    box.appendChild(streakBox());
+    let goal = weekGoalBox(Y, viewing);
+    box.appendChild(goal);
     const ph = dayPhrase(Y, viewing, day);
     const phrase = el('div', 'hoy-phrase');
     phrase.appendChild(el('div', 'today-label', ph.label));
-    phrase.appendChild(phraseInto(el('p'), ph.text));
+    if (mode === 'domingo') phrase.appendChild(el('p', 'hoy-week-name', weekAt(Y, viewing).title || ''));
+    if (mode !== 'sabado') phrase.appendChild(phraseInto(el('p'), ph.text));
+    else {
+      const ol = el('ol', 'sat-list');
+      (weekAt(Y, viewing).sabado || []).forEach((q) => ol.appendChild(el('li', null, q)));
+      phrase.appendChild(ol);
+    }
     box.appendChild(phrase);
+    if (mode === 'domingo') box.appendChild(prepBox(Y, viewing));
+    if (mode === 'sabado') { const pb = pendingBox(Y, viewing); pb.setGoal(goal); box.appendChild(pb); }
     box.appendChild(el('div', 'field-label', 'Registro de hoy'));
-    const rec = noteField(k(Y, viewing, 'd' + day), 'Una o dos líneas sobre tu día…', 3);
+    const rec = noteField(k(Y, viewing, 'd' + day), mode === 'sabado' ? 'Lo que te dejó la semana…' : 'Una o dos líneas sobre tu día…', 3);
     box.appendChild(rec);
     const gr = noteField(k(Y, viewing, 'g' + day), 'Hoy agradezco…', 1);
     gr.classList.add('grat-note');
@@ -1704,8 +1834,9 @@
     expand.addEventListener('click', () => openEditor(day));
     tools.appendChild(expand);
     box.appendChild(tools);
-    const q = questionBox(Y, viewing, day, refreshEval);
-    box.appendChild(q);
+    if (mode === 'dia') {
+      box.appendChild(questionBox(Y, viewing, day, function () { refreshEval(); const g = weekGoalBox(Y, viewing); goal.replaceWith(g); goal = g; }));
+    }
     box.appendChild(agendaBox(now));
     const more = el('button', 'hoy-more', 'Ver la semana completa');
     more.type = 'button';

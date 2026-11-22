@@ -589,3 +589,31 @@ a.btn{text-decoration:none;}
 .week-start{display:block;height:0;scroll-margin-top:60px;}
 .jump button[aria-current="true"]{border-color:var(--gold);color:var(--gold-ink);background:rgba(255,215,0,.08);}
 :root[data-theme="day"] .hoy{box-shadow:var(--card-shadow);border-color:rgba(213,138,0,.45);}
+
+/* Hoy: tu semana (objetivo y avance), evaluación del sábado y preparación del domingo */
+.hoy-mode{font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-ink);}
+.hoy-week{padding:12px 14px;border-radius:14px;background:var(--well);border:1px solid var(--line);display:flex;flex-direction:column;gap:8px;}
+.hoy-week-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;}
+.hoy-week-label{font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--wk);}
+.hoy-week-title{font-size:15px;font-style:italic;color:var(--txt2);}
+.hoy-intent{font-size:15px;line-height:1.5;color:var(--gold-ink);}
+.hoy-words{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.hoy-words li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;font-size:14px;}
+.hoy-word{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.hoy-bar{display:inline-flex;gap:3px;}
+.hoy-bar i{width:14px;height:6px;border-radius:3px;background:var(--line2);}
+.hoy-bar i.on{background:var(--wk);}
+.hoy-word-n{min-width:6.5em;text-align:right;font-size:12px;color:var(--txt2);font-variant-numeric:tabular-nums;}
+.hoy-week-note{font-size:12px;color:var(--txt2);}
+.hoy-days{display:flex;gap:6px;}
+.hoy-day{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;border:1px solid var(--line2);color:var(--txt2);}
+.hoy-day.on{background:var(--wk);border-color:var(--wk);color:var(--on-wk);font-weight:500;}
+.hoy-day.is-today{box-shadow:0 0 0 2px var(--gold);}
+.hoy-week-name{font-size:20px!important;font-weight:300;font-style:normal!important;margin-bottom:4px;}
+.hoy-phrase .sat-list{margin-top:6px;}
+.hoy-eval,.hoy-prep{padding:12px 14px;border-radius:14px;background:var(--well);border:1px solid var(--line);display:flex;flex-direction:column;gap:8px;}
+.hoy-eval-word{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--wk);margin-top:6px;}
+.hoy-eval-q .dq-q{margin:0 0 6px;}
+.hoy-prep .field-label{margin:6px 0 0;}
+.hoy-prep-sum{font-size:14.5px;line-height:1.55;}
+.hoy-prep .dq-more{align-self:flex-start;}
