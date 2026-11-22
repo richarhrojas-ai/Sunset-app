@@ -158,7 +158,8 @@
     const lean = (rand() - 0.5) * 0.12;
     const top = [x + Math.sin(lean) * len, y - Math.cos(lean) * len];
     const ctrl = [x - len * 0.07 + (rand() - 0.5) * len * 0.08, y - len * 0.5];
-    const baseW = len * 0.44, topW = len * 0.25;
+    const thick = form.thick || 1;   // el logo usa un tronco algo más grueso
+    const baseW = len * 0.44 * thick, topW = len * 0.25 * thick;
     const at = function (t) {
       const u = 1 - t;
       return [u * u * x + 2 * u * t * ctrl[0] + t * t * top[0], u * u * y + 2 * u * t * ctrl[1] + t * t * top[1]];
@@ -349,7 +350,7 @@
 
     // Árbol de bronce con la misma arquitectura que los paisajes (tronco corto, copa ancha en cúpula
     // y costados redondeados), en tonos de bronce.
-    const form = FORMS.leafy;
+    const form = Object.assign({}, FORMS.leafy, { thick: 1.45 });
     const rand = rng(11);
     const base = cy + R * 0.93;
     const scale = R * 0.3;
