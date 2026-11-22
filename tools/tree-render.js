@@ -26,7 +26,7 @@
   // mode 'day': cielo de mañana del mismo color (claro, con el sol bajo y tibio); por defecto, el de la noche.
   const skyOf = (name, mode) => {
     const t = T[name] || T.Lila;
-    const b = mode === 'day' && t.day ? t.day : t.bg;
+    const b = mode === 'day' ? (t.daySky || t.day || t.bg) : t.bg;   // daySky: cielo de la imagen distinto del fondo de la página
     return { top: b.top, mid: b.mid, low: b.low, glow: mode === 'day' ? '#fff6dc' : t.glow, warm: b.warm, bark: t.bark, day: mode === 'day' };
   };
   const rgbOf = (hex) => { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };

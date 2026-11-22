@@ -19,11 +19,11 @@
     Amarillo: { name: 'Lapacho amarillo', sci: 'Handroanthus albus', accent: '#f7cf55', mid: '#c99a10', ink: ['#e8a90c', '#f5c518'],
       bg: { top: '#221808', mid: '#40300f', low: '#573b0f', warm: '#d08a14' }, day: { top: '#efd58d', mid: '#f8e8bb', low: '#fcf4dc', warm: '#ffcf70' }, glow: '#f9cf62', bark: '#2d1f1b' },
     Blanco: { name: 'Lapacho blanco', sci: 'Tabebuia roseoalba', accent: '#f4ebf6', mid: '#b9a8c0', ink: ['#e9cfdb', '#fbf1f5'],
-      bg: { top: '#17171b', mid: '#2e2e35', low: '#403f46', warm: '#9c7a5c' }, day: { top: '#a7a6aa', mid: '#cfcdcf', low: '#ecebea', warm: '#f6dcc2' }, glow: '#f1ece4', bark: '#2d1f1b' },
+      bg: { top: '#2c2c34', mid: '#4b4b55', low: '#63626b', warm: '#a8896a' }, day: { top: '#a7a6aa', mid: '#cfcdcf', low: '#ecebea', warm: '#f6dcc2' }, glow: '#f1ece4', bark: '#2d1f1b' },
     Verde: { name: 'Árbol en hoja nueva', sci: '', accent: '#98d878', mid: '#4e9a3b', ink: ['#4e9a3b', '#86c25a'],
       bg: { top: '#07201a', mid: '#0f3a2c', low: '#175038', warm: '#9a7a1c' }, day: { top: '#a9d8be', mid: '#d3ebdc', low: '#ecf6ef', warm: '#ffe9a6' }, glow: '#74cf8a', bark: '#2d1f1b' },
     Negro: { name: 'Silueta al atardecer', sci: '', accent: '#e3cfa2', mid: '#8c7b5c', ink: ['#a8997f', '#e3cfa2'],
-      bg: { top: '#09080d', mid: '#16131c', low: '#241d26', warm: '#7a4a1c' }, day: { top: '#7f7a80', mid: '#b2adb0', low: '#e2dedb', warm: '#e8c08e' }, glow: '#9a6a3c', bark: '#0a0608' },
+      bg: { top: '#09080d', mid: '#16131c', low: '#241d26', warm: '#7a4a1c' }, day: { top: '#8a868c', mid: '#b4b0b3', low: '#e2dedb', warm: '#e8c08e' }, daySky: { top: '#141216', mid: '#2c292f', low: '#5e5862', warm: '#e2a866' }, glow: '#9a6a3c', bark: '#0a0608' },
   };
 
   // Flor sola en SVG, para el progreso del año y el tablero.

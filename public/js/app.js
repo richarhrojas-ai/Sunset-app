@@ -430,6 +430,8 @@
       'color-mix(in srgb,' + tr.accent + ' 55%,#ffffff)', 'color-mix(in srgb,' + tr.mid + ' 70%,#000000)'];
     dayTints.forEach((v, i) => root.setProperty('--d' + (i + 1), v));
     const day = themeNow() === 'day';
+    // Semana negra de día: el cielo de la portada es oscuro, así que la portada usa letra clara.
+    document.documentElement.dataset.sky = day && treeOf(t.name).daySky ? 'dark' : '';
     const bg = (day && treeOf(t.name).day) || treeOf(t.name).bg;
     root.setProperty('--bg-top', bg.top);
     root.setProperty('--bg-mid', bg.mid);
