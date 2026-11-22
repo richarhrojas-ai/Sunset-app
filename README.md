@@ -46,7 +46,7 @@ La app elige el año según la fecha y pasa de la última semana de un año a la
 - **Frases**: una fila por semana (domingo a sábado). La fecha de la semana 1 de la planilla define el primer domingo.
 - **Introducción** (opcional): `content/planillas/introduccion-AAAA.json` agrega los días que quedan antes del primer domingo del año (con `dias`: cada día con su etiqueta y su texto o preguntas). `numeracion: "desplaza"` la cuenta como Semana 1 y corre las demás un número (2027: viernes 1 y sábado 2, semana azul); `numeracion: "cero"` la deja como Semana 0 y la semana de la planilla sigue siendo la 1 (2028: sábado 1 de enero). Internamente se guarda como `w0`, así que las claves de las demás semanas no cambian. El archivo de un año solo se usa cuando existe su planilla.
 - **Preguntas**: las 49 palabras (7 dimensiones × 7 palabras) con sus 5 preguntas; el orden arma el tablero 7×7.
-- **Mapeo Puente** (opcional): referencia interna, se muestra en "Historia interna".
+- **Mapeo Puente** (opcional): referencia interna, se muestra en "Historia".
 
 Para cada semana, el script ubica las 3 palabras principales en el tablero y se detiene si no forman una
 columna o si el color no avanza de a uno:

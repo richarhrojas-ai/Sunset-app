@@ -610,7 +610,7 @@
 
     const btn = el('button', 'story-btn');
     btn.setAttribute('aria-expanded', 'false');
-    btn.appendChild(document.createTextNode('Historia interna'));
+    btn.appendChild(document.createTextNode('Historia'));
     btn.appendChild(icon('down'));
     const story = el('div', 'story');
     story.hidden = true;
@@ -1992,6 +1992,13 @@
       phrase.appendChild(ol);
     }
     box.appendChild(phrase);
+    // El domingo se lee la historia de la semana, a la vista: es el vistazo general antes de empezar.
+    if (mode === 'domingo' && weekAt(Y, viewing).story) {
+      const st = el('div', 'hoy-story');
+      st.appendChild(el('div', 'today-label', 'Historia'));
+      st.appendChild(el('p', null, weekAt(Y, viewing).story));
+      box.appendChild(st);
+    }
     if (weekLocked(Y, viewing)) box.appendChild(lockNote(Y, viewing));
     box.appendChild(streakBox());
     let goal = weekGoalBox(Y, viewing);

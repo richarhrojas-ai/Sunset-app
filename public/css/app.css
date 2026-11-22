@@ -679,3 +679,7 @@ a.btn{text-decoration:none;}
 .year-goal.is-done .year-goal-fill{background:var(--gold);}
 :root[data-theme="day"] .year-goal{background:rgba(255,255,255,.55);}
 :root[data-theme="day"] .year-goal-mark{background:var(--gold-ink);}
+
+/* Domingo en Hoy: la historia de la semana, a la vista */
+.hoy-story{margin:14px 0 4px;padding:16px 18px;border-radius:16px;background:var(--glass2);border-left:3px solid var(--wk);}
+.hoy-story p{margin:6px 0 0;font-size:15px;line-height:1.7;color:var(--txt);}
