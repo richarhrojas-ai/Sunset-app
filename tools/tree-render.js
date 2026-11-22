@@ -320,7 +320,7 @@
     return tree;
   }
 
-  // Marca del logo: sol con franjas y árbol de bronce sin hojas, con raíces que salen del círculo.
+  // Marca del logo: sol con franjas y árbol de bronce (misma forma que los paisajes), con raíces que salen del círculo.
   // Sirve para la cabecera y para generar los íconos de la app.
   function logo(canvas, opts) {
     opts = opts || {};
@@ -347,32 +347,50 @@
     });
     ctx.restore();
 
-    // Árbol de bronce.
-    const form = { spread: 0.5, decay: 0.75, depth: S > 120 ? 8 : 7, lift: 0.75, bloom: 0, petal: 1, wide: 0.62 };
+    // Árbol de bronce con la misma arquitectura que los paisajes (tronco corto, copa ancha en cúpula
+    // y costados redondeados), en tonos de bronce.
+    const form = FORMS.leafy;
     const rand = rng(11);
     const base = cy + R * 0.93;
-    const len = R * 0.37;
-    const tips = growTree(ctx, rand, cx, base, len, form, '#55301A');
-    // Copa tupida: hojas en tonos de bronce, primero las oscuras (fondo) y luego las claras.
+    const scale = R * 0.3;
+    const len = scale;
+    const tips = growTree(ctx, rand, cx, base, scale, form, '#55301A');
+    const lf = S < 120 ? 1.6 : 1;
+    const leafR = function () { return scale * (0.05 + rand() * 0.058) * form.petal * lf; };
     const leaves = [];
-    const lf = S < 120 ? 1.9 : 1;   // a tamaño chico, hojas más grandes para que la copa se vea llena
     tips.forEach(function (t) {
-      const n = 8 + Math.floor(rand() * 6);
+      const n = Math.round(form.bloom * (0.6 + rand() * 0.8));
       for (let i = 0; i < n; i++) {
-        const spread = Math.max(R * 0.04, t[2] * 0.75);
-        // Más hojas hacia arriba: la copa crece en alto.
-        leaves.push([t[0] + (rand() - 0.5) * spread * 1.5, t[1] - rand() * spread * 2.4 + spread * 0.3,
-          R * (0.028 + rand() * 0.03) * lf, rand() * Math.PI, rand()]);
+        const spread = Math.max(scale * 0.12, t[2] * 0.9);
+        leaves.push([t[0] + (rand() - 0.5) * spread * 1.6, t[1] + (rand() - 0.5) * spread * 1.2 - spread * 0.2, leafR(), rand() * Math.PI, rand()]);
       }
     });
-    // Cúpula de hojas sobre la copa, para que gane altura.
-    let minX = Infinity, maxX = -Infinity, minY = Infinity;
-    tips.forEach(function (t) { minX = Math.min(minX, t[0]); maxX = Math.max(maxX, t[0]); minY = Math.min(minY, t[1]); });
-    const domeCx = (minX + maxX) / 2, domeRx = (maxX - minX) / 2 * 0.9, domeRy = R * 0.5, domeCy = minY + R * 0.18;
-    for (let i = 0; i < (S < 120 ? 90 : 380); i++) {
-      const a = Math.PI + rand() * Math.PI, d = Math.sqrt(rand());
-      leaves.push([domeCx + Math.cos(a) * domeRx * d, domeCy + Math.sin(a) * domeRy * d,
-        R * (0.028 + rand() * 0.03) * lf, rand() * Math.PI, rand()]);
+    // Cúpula: desde cada punta se rellena hacia arriba hasta una curva suave.
+    let minX = Infinity, maxX = -Infinity;
+    tips.forEach(function (t) { minX = Math.min(minX, t[0]); maxX = Math.max(maxX, t[0]); });
+    const domeCx = (minX + maxX) / 2, domeRx = (maxX - minX) / 2;
+    const domeH = scale * 0.6;
+    const lift = function (x) { const u = (x - domeCx) / domeRx; return domeH * Math.sqrt(Math.max(0, 1 - u * u)); };
+    tips.forEach(function (t) {
+      const room = lift(t[0]) * (0.7 + rand() * 0.3);
+      if (room < scale * 0.04) return;
+      const k = Math.min(24, Math.round(form.bloom * 0.45 * room / (scale * 0.3)));
+      for (let i = 0; i < k; i++) {
+        leaves.push([t[0] + (rand() - 0.5) * Math.max(scale * 0.17, t[2] * 1.3), t[1] - Math.pow(rand(), 0.85) * room, leafR(), rand() * Math.PI, rand()]);
+      }
+    });
+    // Costados redondeados.
+    const sideTips = tips.filter(function (t) { return Math.abs((t[0] - domeCx) / domeRx) > 0.65; });
+    if (sideTips.length) {
+      const baseY = sideTips.reduce(function (a, t) { return a + t[1]; }, 0) / sideTips.length;
+      const shoulderCy = baseY - domeH * 0.3, shoulderRy = domeH * 0.55 + scale * 0.25;
+      const n = Math.round(tips.length * form.bloom * 0.3);
+      for (let i = 0; i < n; i++) {
+        const left = rand() < 0.5;
+        const th = (rand() - 0.5) * 2.2;
+        const d = 0.78 + 0.22 * Math.sqrt(rand());
+        leaves.push([domeCx + (left ? -1 : 1) * Math.cos(th) * domeRx * 1.02 * d, shoulderCy + Math.sin(th) * shoulderRy * d, leafR(), rand() * Math.PI, rand()]);
+      }
     }
     const shades = ['#2E180B', '#3D2210', '#4D2C15', '#5E381B', '#704422'];
     leaves.sort(function (a, b) { return a[4] - b[4]; }).forEach(function (l) {
@@ -381,7 +399,7 @@
     // Raíces largas que se extienden fuera del círculo.
     ctx.strokeStyle = '#55301A';
     [[-1, 0.85, 0.06], [1, 0.82, 0.06], [-1, 0.55, 0.04], [1, 0.6, 0.04]].forEach(function (r) {
-      ctx.lineWidth = Math.max(0.6, len * r[2]);
+      ctx.lineWidth = Math.max(0.6, R * 0.37 * r[2]);
       ctx.beginPath(); ctx.moveTo(cx, base - len * 0.04);
       ctx.quadraticCurveTo(cx + r[0] * R * r[1] * 0.45, base + R * 0.02, cx + r[0] * R * r[1], base + R * 0.07);
       ctx.stroke();
