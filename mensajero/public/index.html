@@ -430,6 +430,34 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 .firma{text-align:center;margin-top:48px;font-family:'Dancing Script',cursive;font-size:calc(24px*var(--fz,1));color:var(--gold-t)}
 .firma small{display:block;font-family:'Jost';font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-top:4px}
 
+/* Celular: portada más baja (se recorta el cielo vacío, no el paisaje) y espacios parejos, para que el contenido respire sin amontonarse */
+@media(max-width:560px){
+  .scene{height:clamp(300px,82vw,350px)}
+  .temas{top:74px}
+  .hero-body{margin-top:-64px;padding-bottom:6px}
+  .hero-glass{padding:18px 18px 16px;border-radius:20px}
+  .enfoque{margin:6px 0 10px}
+  .subs{margin-top:12px}
+  .nav{margin-top:12px}
+  .nav button{min-height:40px}.nav .flecha{width:40px}
+  h2.sec{margin:26px 0 10px}
+  h2#s-ficha{margin-top:18px}
+  .ficha{grid-template-columns:1fr 1fr;gap:10px}
+  .ficha .card{padding:14px}
+  .ficha .card h3{font-size:calc(11px*var(--fz,1));letter-spacing:.08em}
+  .ficha .big{font-size:calc(18px*var(--fz,1));line-height:1.2}
+  .ficha .muted{font-size:calc(13px*var(--fz,1))}
+  .mi-prog{margin-top:14px}
+  .grupo-t{margin:26px 4px 8px}
+  .ficha .card:has(details.valor[open]){grid-column:1/-1}
+  details.valor summary{padding:0 10px;font-size:calc(11.5px*var(--fz,1));white-space:nowrap}
+  .barra-dia{margin-top:6px;gap:8px}
+  .barra-dia>.acc{flex-basis:100%;gap:8px}
+  .barra-dia>.acc .chk.mini-chk{flex:1}
+  .barra-dia>.acc .modo{flex:1.4}.barra-dia>.acc .modo button{flex:1}
+  .barra-dia details.mas{margin-left:0}
+  .barra-dia+.kick,.barra-dia~.kick{margin-top:16px}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (prefers-reduced-motion:no-preference){.scene .sol{animation:glow 6s ease-in-out infinite alternate}@keyframes glow{to{opacity:.75}}}
 
