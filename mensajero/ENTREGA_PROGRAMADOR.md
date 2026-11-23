@@ -235,8 +235,14 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
 5. **Revisión teológica:** resuelta el 20 nov 2026.
    - **Ajustadas:** tres frases. El punto «Todo lo que hace prospera» (semana 5) pasa a «Da fruto a su tiempo». El trabajo en Génesis 2:15 y 3:17-19 queda aclarado (semana 45). Éxodo 23:25 queda como promesa a Israel, no como garantía de no enfermar (semana 53).
    - **Aceptadas:** las demás quedan en `content/revision_teologica_aceptadas.txt`, para que el informe solo avise frases nuevas.
-6. **Números útiles:** reconfirmar los seis antes de la salida y cada tanto.
-7. ~~Tres frases célebres con fuente parcial~~ **Resuelto el 20/10/2026:** Cervantes confirmada (II parte, cap. XVII); Spurgeon pasa a «Proverbio recogido por Charles H. Spurgeon»; Temple se mantiene con su definición completa (autor confirmado; el libro exacto, no).
+6. **Biblioteca de preparación:** revisada por Richarh el 23 nov 2026. Quedaron 31 tareas.
+   - **Quitadas:** «Grabación activada» y «Publicación en redes» (hay un encargado).
+   - **Nuevas:** «Mensajes registrados en la app» y el grupo «Audiencia y auspiciantes»: saludar por nombre a los oyentes y agradecer a un auspiciante con algo concreto.
+   - **Siempre en la sugerencia:** «Marcar al aire» y «Mensajes» (constante `FIJAS`).
+   - **Programas semanales:** usan el versículo de su propio día.
+   - **Documento de la revisión:** `content/Biblioteca_preparacion_2027.docx`.
+7. **Números útiles:** reconfirmar los seis antes de la salida y cada tanto.
+8. ~~Tres frases célebres con fuente parcial~~ **Resuelto el 20/10/2026:** Cervantes confirmada (II parte, cap. XVII); Spurgeon pasa a «Proverbio recogido por Charles H. Spurgeon»; Temple se mantiene con su definición completa (autor confirmado; el libro exacto, no).
 
 ## 12. Archivos
 

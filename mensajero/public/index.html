@@ -520,7 +520,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
     <div class="fold-body">
       <div><h4>Mi programa</h4><div class="programa" id="programa"></div></div>
       <div class="plazo" id="plazo-prep"></div><div class="barra"><i id="prep-bar"></i></div><div class="prep" id="prep"></div>
-      <div class="acciones"><button class="btn" id="abrir-biblio">Elegir de la biblioteca (30)</button></div>
+      <div class="acciones"><button class="btn" id="abrir-biblio">Elegir de la biblioteca (31)</button></div>
       <div><h4>Notas de producción</h4><textarea id="notas" placeholder="Ideas, invitados, cambios para esta semana…"></textarea></div></div></details>
   <details class="fold" id="s-reg"><summary><span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></svg></span>Registro al aire</summary><div class="fold-body">
     <div class="reg-top"><label for="mes" class="kicker">Mes</label><select id="mes"></select></div>
@@ -588,49 +588,54 @@ const ICONO = {  // línea blanca, 24×24
   'Salud': '<path d="M12 20s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7.4 4.2 4.2 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/><path d="M3 12.5h4l1.5-2.5 2.5 5 2-3.5 1 1h7"/>',
 };
 const icono = t => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONO[t] || ''}</svg>`;
-/* biblioteca de preparación: 30 tareas; cada locutor elige hasta 10 según su programa.
+/* biblioteca de preparación (revisada por Richarh el 23 nov 2026): 31 tareas; cada locutor elige hasta 10 según su programa.
    aplica: diario · semanal · entrevista · 2h (programas de 2 h o más) · 3h */
 const BIBLIO = [
   {g:'Contenido', items:[
-    ['guion','Guion o escaleta del programa listo'],
+    ['guion','Guion del programa'],
     ['tema','Leer el tema y los tres subtemas de la semana'],
     ['reflexion','Reflexión del día preparada (hasta 5 min)'],
     ['versiculo','Versículo del día revisado','diario'],
-    ['versSem','Versículo de la semana elegido','semanal'],
+    ['versSem','Versículo del día de tu programa revisado','semanal'],
     ['devocional','Devocional diario preparado','diario'],
     ['dato','Dato curioso con su fuente verificada'],
     ['frase','Frase célebre verificada'],
     ['historia','Historia ilustrativa o bíblica preparada'],
     ['oracion','Oración de cierre preparada'],
-    ['paraguay','Dato o noticia de Paraguay que conecte con el tema'],
+    ['paraguay','Dato o noticia de Paraguay o de la zona que conecte con el tema'],
     ['preguntas','Pregunta para la audiencia (mensajes y llamadas)']]},
+  {g:'Audiencia y auspiciantes', items:[
+    ['oyentes','Saludar por nombre a quienes escribieron o llamaron, y preguntar cómo siguen'],
+    ['auspiciantes','Agradecer a un auspiciante con algo concreto y verdadero de su trabajo']]},
   {g:'Producción', items:[
     ['invitado','Invitado confirmado (día y hora)','entrevista'],
     ['preguntasInv','Preguntas para la entrevista','entrevista'],
-    ['llamada','Prueba de llamada o enlace con el invitado','entrevista'],
+    ['llamada','Prueba de llamada o enlace con el invitado, y soporte listo','entrevista'],
     ['noticias','Bloque de noticias armado','diario'],
-    ['agenda','Agenda de eventos y anuncios de la comunidad'],
+    ['agenda','Agenda de eventos y anuncios revisada en el grupo laboral'],
     ['tandas','Tandas y auspiciantes revisados','2h'],
     ['musica','Lista de música armada'],
     ['cortinas','Cortinas, separadores y jingles listos'],
     ['clima','Clima y servicios (hora, rutas, avisos)','diario'],
     ['secciones','Secciones fijas del programa definidas','3h'],
-    ['promo','Promo del programa grabada','semanal']]},
+    ['promo','Promo del programa publicada en redes','semanal']]},
   {g:'Técnica', items:[
-    ['audios','Audios cargados en la carpeta de la semana'],
+    ['audios','Audios cargados en la carpeta de la semana','diario'],
     ['equipo','Micrófono, consola y auriculares probados'],
-    ['respaldo','Material de respaldo por si algo falla','2h'],
-    ['grabacion','Grabación del programa activada']]},
+    ['respaldo','Material de respaldo por si algo falla'],
+  ]},
   {g:'Después del aire', items:[
-    ['redes','Publicación en redes (flyer del versículo)'],
     ['registro','Marcar en la app lo que salió al aire'],
-    ['podcast','Programa subido como podcast o archivo','semanal']]},
+    ['mensajes','Mensajes de la audiencia registrados en la app'],
+    ['podcast','Programa subido como podcast o archivo']]},
 ];
 const ITEMS = BIBLIO.flatMap(g => g.items.map(([id, t, tag]) => ({id, t, tag, g: g.g})));
 const MAX_PREP = 10;
-const PRIORIDAD = ['guion','tema','reflexion','versiculo','versSem','devocional','invitado','preguntasInv','noticias','musica',
-  'audios','dato','secciones','tandas','equipo','oracion','preguntas','registro','redes','podcast','frase','historia',
-  'paraguay','agenda','cortinas','clima','llamada','respaldo','promo','grabacion'];
+const PRIORIDAD = ['guion','tema','oyentes','reflexion','versiculo','versSem','devocional','invitado','preguntasInv','noticias','musica',
+  'audios','dato','secciones','tandas','equipo','oracion','preguntas','auspiciantes','registro','podcast','frase','historia',
+  'paraguay','agenda','cortinas','clima','llamada','respaldo','promo','mensajes'];
+// van siempre en la sugerencia: el registro mensual y la estadística de mensajes dependen de estas marcas
+const FIJAS = ['registro', 'mensajes'];
 const TAG_TXT = {diario: 'solo diarios', semanal: 'solo semanales', entrevista: 'con entrevistas (sumalas si las usás)', '2h': 'de 2 h o más', '3h': 'de 3 h'};
 const cfgPrograma = () => {
   const c = {nombre: '', horas: 1, modo: 'vivo', franja: '', ...(get(ck('programa')) || {})};
@@ -665,7 +670,7 @@ const DIAS_BLOQUE = ['Lun y mar', 'Mié y jue', 'Viernes'];
 const aplica = (it, c) => !it.tag || (it.tag === 'diario' ? c.frec === 'diario' : it.tag === 'semanal' ? c.frec === 'semanal'
   : it.tag === 'entrevista' ? true : it.tag === '2h' ? c.horas >= 2 : c.horas >= 3);
 // las tareas de entrevista no se sugieren solas: cada locutor las suma desde la biblioteca si las necesita
-const sugerir = c => PRIORIDAD.filter(id => { const it = ITEMS.find(i => i.id === id); return it.tag !== 'entrevista' && aplica(it, c); }).slice(0, MAX_PREP);
+const sugerir = c => [...FIJAS, ...PRIORIDAD.filter(id => { const it = ITEMS.find(i => i.id === id); return !FIJAS.includes(id) && it.tag !== 'entrevista' && aplica(it, c); })].slice(0, MAX_PREP);
 const misItems = () => (get(ck('prep')) || sugerir(cfgPrograma())).map(id => ITEMS.find(i => i.id === id)).filter(Boolean);
 
 /* ── Escenas por tema (paisaje, sin íconos): cada una cuenta su tema con su propia luz ── */
@@ -1245,6 +1250,9 @@ function paraLocutor(w, b) {
 }
 // ideas para que cada locutor adapte el guion a su estilo: se mantiene lo básico y se cambia la forma
 const IDEAS = [
+  'La audiencia es parte de la familia: saludá por nombre a quien escribió y preguntale cómo sigue lo que contó la otra vez.',
+  'Si alguien pidió oración, oren al aire por esa persona (con su permiso) y al día siguiente preguntá cómo está.',
+  'Al nombrar a un auspiciante, agradecé algo concreto y verdadero de su trabajo: también es parte de esta familia, no solo una tanda.',
   'Antes del dato, contá en dos frases algo que te pasó a vos con este tema. Lo personal engancha más que cualquier cifra.',
   'Empezá con una pregunta a la audiencia y dejá un segundo de silencio antes de seguir.',
   'Elegí uno solo de los tres puntos y desarrollalo con un ejemplo de tu barrio o de tu ciudad.',

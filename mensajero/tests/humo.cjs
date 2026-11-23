@@ -77,6 +77,15 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(new Set(fr).size === 5, 'lunes a viernes: cinco frases para el aire distintas');
   await p.click('#dias [data-d="6"]'); await p.waitForTimeout(80);
   ok(await p.$$eval('#dias ol.ideas li', x => x.length) === 3, 'sábado: resumen con las tres ideas');
+  const semN = +(await p.$eval('#h-meta b', e => e.textContent));
+  const dias = async quitar => { if (await p.$('[data-dias-editar]')) await p.click('[data-dias-editar]'); await p.waitForTimeout(80);
+    for (const d of quitar) { await p.click(`#s-prog [data-dia="${d}"]`); await p.waitForTimeout(60); }
+    if (await p.$('[data-dias-listo]')) await p.click('[data-dias-listo]'); await p.waitForTimeout(120); };
+  await dias([1, 2, 3, 4, 5]);
+  if ((await p.textContent('[data-vertodo]')).includes('solo')) { await p.click('[data-vertodo]'); await p.waitForTimeout(100); }
+  ok(await p.textContent('#dias .vers-base .ref') === await p.evaluate(n => DATA.semanas.find(w => w.n === n)?.dias[6].ref, semN), 'programa semanal de los sábados: usa el versículo de su día');
+  await p.click('[data-preset="1,2,3,4,5,6"]').catch(async () => { await dias([1, 2, 3, 4, 5]); }); await p.waitForTimeout(150);
+  await p.click('[data-vertodo]').catch(() => {}); await p.click('#dias [data-d="6"]'); await p.waitForTimeout(80);
 
   // flyer
   await p.click('#dias [data-flyer]'); await p.waitForTimeout(1500);
@@ -90,6 +99,12 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   const pct0 = await p.textContent('#prep-pct');
   await p.click('#prep [data-p]'); await p.waitForTimeout(80);
   ok(await p.textContent('#prep-pct') !== pct0, 'preparación: marcar una tarea cambia el porcentaje');
+  await p.click('#abrir-biblio'); await p.waitForTimeout(100);
+  const nBib = await p.$$eval('#biblio input[data-b]', x => x.length);
+  await p.click('#bib-sug'); await p.waitForTimeout(80);
+  const sug = await p.$$eval('#biblio input[data-b]:checked', x => x.map(i => i.dataset.b));
+  ok(nBib === 31 && sug.includes('oyentes') && sug.includes('registro') && sug.includes('mensajes') && !sug.includes('grabacion'), 'biblioteca revisada: 31 tareas, saludo a la audiencia, «marcar al aire» y «mensajes» siempre sugeridas');
+  await p.click('#bib-x'); await p.waitForTimeout(80);
 
   // buscar y números útiles
   await p.evaluate(() => document.getElementById('s-buscar').open = true); await p.fill('#q', 'lapacho'); await p.waitForTimeout(150);
