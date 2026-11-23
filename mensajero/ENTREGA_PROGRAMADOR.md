@@ -248,7 +248,7 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 61 
    - **Historia de la semana:** se elige según el tema de la semana (`HIST_TEMA`).
    - **Aniversario:** el 25 de marzo hay aviso en la tarjeta del día, y esa semana se destaca la historia del origen de la radio.
    - **Documento completo:** `content/Historias_de_Mensajero.docx`.
-8. **Números útiles:** las seis emergencias nacionales (911, 141, 132, 155, 137, 147) y, desde el 23 nov 2026, «Salud en la zona», con 9 contactos que pasó Richarh: banco de sangre, Fundación Visión, clínicas, hospital y sanatorios (constante `ZONA`). Reconfirmar todos antes de la salida y cada tanto.
+8. **Números útiles:** las seis emergencias nacionales (911, 141, 132, 155, 137, 147) y, desde el 23 nov 2026, «Salud en la zona», con 8 contactos que pasó Richarh: banco de sangre, campaña de cirugías, clínicas, hospital y sanatorios (constante `ZONA`). Reconfirmar todos antes de la salida y cada tanto.
 9. ~~Tres frases célebres con fuente parcial~~ **Resuelto el 20/10/2026:** Cervantes confirmada (II parte, cap. XVII); Spurgeon pasa a «Proverbio recogido por Charles H. Spurgeon»; Temple se mantiene con su definición completa (autor confirmado; el libro exacto, no).
 
 ## 12. Archivos
