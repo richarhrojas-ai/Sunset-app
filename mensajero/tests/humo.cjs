@@ -99,6 +99,8 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   await p.evaluate(() => document.getElementById('flyer').close());
 
   // registro, informe, preparación
+  ok(await p.$$eval('#dias [data-copiar="prompt"]', x => x.length) === 0 && await p.$$eval('#s-marco #copiar-ia', x => x.length) === 1, '«Copiar para IA» está en «La serie 2027», no en la tarjeta del día');
+  ok(await p.$$eval('#notas, #s-inf, #mes-p', x => x.length) === 0 && await p.$$eval('#s-reg #inf, #s-reg #copiar-prep', x => x.length) === 2, 'una sola nota (la del día) y un solo lugar para los informes del mes');
   await p.evaluate(() => document.getElementById('s-reg').open = true); await p.selectOption('#mes', '2'); await p.waitForTimeout(80);
   ok((await p.textContent('#reg-v')).includes('3 mar'), 'registro de marzo: aparece el miércoles 3 al aire');
   ok((await p.textContent('#reg-msgs')).includes('2'), 'registro: mensajes del mes por canal');
@@ -109,6 +111,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   const nBib = await p.$$eval('#biblio input[data-b]', x => x.length);
   await p.click('#bib-sug'); await p.waitForTimeout(80);
   const sug = await p.$$eval('#biblio input[data-b]:checked', x => x.map(i => i.dataset.b));
+  ok(sug.length === 6, 'la sugerencia trae 6 tareas básicas (cada uno puede sumar hasta 10)');
   ok(nBib === 18 && sug.includes('oyentes') && sug.includes('registro') && sug.includes('guion'), 'biblioteca revisada: 18 tareas agrupadas, saludo a la audiencia, «marcar al aire» y «mensajes» siempre sugeridas');
   await p.click('#bib-x'); await p.waitForTimeout(80);
 

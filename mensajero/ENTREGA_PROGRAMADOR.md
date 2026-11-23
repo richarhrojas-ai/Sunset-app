@@ -109,13 +109,13 @@ Pestañas por día. Cada tarjeta, en este orden:
 4. **Tres puntos plegables** (número y título a la vista; adentro desarrollo, problemática y «En la práctica»). Según la **franja horaria** del programa se abre el punto que le toca: mañana → 1, mediodía y tarde → 2, noche → 3, marcado «Tu punto de hoy». Sin franja se abre el 1. Así la audiencia que escucha varios programas no oye lo mismo dos veces.
 5. **Frase para el aire** (frase célebre con su autor, distinta cada día: lunes y miércoles la primera del subtema, martes y jueves la segunda —columnas «Frase Celebre 1b» y «2b»—, viernes la del subtema 3; domingo y sábado no llevan, salvo el programa de un solo día) y **frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
 6. **«Hacelo a tu estilo»:** idea central del día, dos técnicas que rotan sobre 15 y cómo hacerlo con poco tiempo.
-7. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, las notas del día y de producción) y **Copiar para IA** (todo lo de la semana para generar un guion con IA).
+7. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, y la nota del día). **Copiar para IA** (todo lo de la semana para generar un guion con IA) ya no está en la tarjeta del día: está en «Historia bíblica y marcos», porque se usa una vez por semana.
 8. **Mensajes de oyentes** (solo días en vivo): un cuadro con los logos de SMS, WhatsApp, YouTube, Instagram y Facebook. Cada toque suma 1 y, si el día no estaba marcado, lo marca «Al aire» solo (si hubo mensajes, salió al aire); «Restar» y luego el logo resta 1 y se apaga solo; el número se puede escribir; arriba, el total.
 
 Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilustrativa y frase deportiva. Sábado: repaso (dato, idea de cada subtema, acción de la semana), versículo, frase deportiva.
 
 ### Grupos del final
-- **Mi trabajo:** *Mi preparación* (programa: nombre, duración, modalidad y franja; lista de hasta 10 tareas elegidas de una biblioteca de 18 tareas agrupadas; notas de producción; porcentaje), *Registro al aire* (por mes: días al aire, en vivo y grabados, entrevistas, mensajes por canal; copiar informe del mes), *Informe de preparación* (por mes, con niveles Excelente/Buena/Regular/Baja; copiar informe).
+- **Mi trabajo:** *Mi preparación* (programa: nombre, duración, modalidad y franja; lista de tareas elegidas de una biblioteca de 18 tareas agrupadas: se sugieren 6 básicas y cada uno puede sumar hasta 10; porcentaje) y *Mis informes del mes* (un solo mes elegido: días al aire, en vivo y grabados, entrevistas, mensajes por canal y la preparación con niveles Excelente/Buena/Regular/Baja; botones «Copiar informe del mes» y «Copiar informe de preparación»).
 - **La serie 2027:** *Historia bíblica y marcos*, *Edificando una Cultura · 2027* (las 53 semanas por color con barra de días al aire), *Buscar* (sin distinguir tildes ni mayúsculas; lleva a la semana).
 - **Para la audiencia:** *Números útiles* (6 nacionales: 911, 141 SEME —021 141 desde celular—, 132 Bomberos, 155 salud mental, 137 SOS Mujer y WhatsApp 0961 137 137, 147 Fono Ayuda niñez; más 8 de «Salud en la zona»; tocar llama; copiar para leer al aire), *Sobre Mensajero* (hoja «Mensajero»; las filas vacías no se muestran) e *Historias de Mensajero* (las aprobadas del libro).
 
@@ -136,6 +136,7 @@ Tipografía Jost (peso 400 para el texto; letra mínima de 10,5 px y la mayoría
 - **Semanas** de domingo a sábado; la 1 empieza el **3 de enero de 2027**. «Esta semana» contiene la fecha de hoy; antes del 3 de enero se abre la semana 1.
 - **Color y tema** salen de la planilla; no se calculan.
 - **Plazo de marcación:** la semana N se marca durante esa semana y la siguiente; al empezar la N+2 queda **cerrada**. Coordinación la abre con su clave y cada apertura queda registrada con fecha (`AAAA/wN/correccion`). Con la semana cerrada, ninguna marca, nota ni mensaje se puede cambiar.
+  - **Decisión del programador:** la radio deja en manos del programador si el cierre de semana con clave se mantiene, se ajusta o se quita, según cómo resuelva usuarios y sincronización (§11).
 - **Modalidad:** cada programa tiene una por defecto (En vivo / Siempre grabado) y cada día puede cambiarla. Al marcar «Al aire» o un mensaje, la modalidad de ese día queda fija aunque después cambie la del programa.
 - **Registro mensual:** un día al aire cuenta en el mes de su fecha. Muestra días al aire sobre días del mes, en vivo y grabados, entrevistas y mensajes por canal (solo si hubo). Los informes copiados terminan con «MENSAJES DE OYENTES».
 - **Preparación:** la lista que regía al marcar una semana se guarda con la semana (`prepLista`), así cambiar la lista no altera semanas pasadas. Las tareas de «Contenido» y los reemplazos son del locutor (sin prefijo de programa).
@@ -156,7 +157,6 @@ Prefijos: semana `2027/wN/`; programa 2 y 3 agregan `p2/` o `p3/` (el programa 1
 | `2027/wN/[pX/]mod0…6` | `vivo` \| `grabado` | Modalidad fijada del día |
 | `2027/wN/[pX/]msg0…6` | `{sms, wa, yt, ig, fb}` | Mensajes de oyentes |
 | `2027/wN/[pX/]vn0…6` | texto | Nota del día |
-| `2027/wN/[pX/]notas` | texto | Notas de producción |
 | `2027/wN/[pX/]prep/<id>` · `2027/wN/prep/<id>` | bool | Tarea de preparación (Contenido sin prefijo) |
 | `2027/wN/[pX/]prepLista` | ids | Lista vigente al marcar |
 | `2027/wN/correccion` | fechas | Aperturas por coordinación |
