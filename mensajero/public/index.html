@@ -57,7 +57,7 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .serie{font-size:calc(12.5px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
 .fecha{text-align:right;font-size:calc(12px*var(--fz,1));letter-spacing:.09em;white-space:nowrap;line-height:1.7;text-transform:uppercase;color:var(--ink2);text-shadow:0 1px 6px rgba(0,0,0,.65)}
 .hero-body{position:relative;z-index:2;margin-top:-150px;padding:0 16px 26px;max-width:860px;margin-left:auto;margin-right:auto;width:100%}
-.hero-glass{background:rgba(10,6,20,.4);border:1px solid var(--line);border-radius:22px;padding:22px 20px;backdrop-filter:blur(3px) saturate(1.1);-webkit-backdrop-filter:blur(3px) saturate(1.1);text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.hero-glass{background:rgba(10,6,20,.34);border:1px solid var(--line);border-radius:22px;padding:22px 20px;backdrop-filter:blur(3px) saturate(1.1);-webkit-backdrop-filter:blur(3px) saturate(1.1);text-shadow:0 1px 8px rgba(0,0,0,.35)}
 .tema{font-size:calc(13px*var(--fz,1));letter-spacing:.24em;text-transform:uppercase;color:var(--gold-t);font-weight:500}
 .enfoque{font-size:clamp(28px,7vw,46px);font-weight:200;letter-spacing:.04em;line-height:1.1;margin:8px 0 12px}
 .meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:calc(13px*var(--fz,1));letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
@@ -481,7 +481,10 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"] .temas small{background:rgba(255,255,255,.78)}
 :root[data-tema="claro"] .temas button[aria-current="true"] .ic{border-color:#c99400;background:rgba(255,215,0,.35);box-shadow:0 0 0 3px rgba(255,215,0,.2)}
 :root[data-tema="claro"] .temas button[aria-current="true"]{color:var(--gold-t)}
-:root[data-tema="claro"] .hero-glass{text-shadow:0 0 10px rgba(255,255,255,.7);background:rgba(255,255,255,.55);border-color:rgba(31,26,43,.1);box-shadow:0 8px 28px rgba(31,26,43,.1)}
+:root[data-tema="claro"] .hero-glass{text-shadow:0 0 10px rgba(255,255,255,.85),0 0 2px rgba(255,255,255,.6);background:rgba(255,255,255,.34);border-color:rgba(31,26,43,.1);box-shadow:0 8px 28px rgba(31,26,43,.1)}
+:root[data-tema="claro"] .hero-glass .enfoque{font-weight:350;color:#160f22}
+:root[data-tema="claro"] .hero-glass .tema{font-weight:600}
+:root[data-tema="claro"] .hero-glass :is(.meta,.subs li){color:#1f1a2b}
 :root[data-tema="claro"] .dot{box-shadow:0 0 0 1px rgba(31,26,43,.25)}
 :root[data-tema="claro"] .nav button{background:rgba(255,255,255,.8);border-color:rgba(31,26,43,.14);color:var(--ink)}
 :root[data-tema="claro"] .firma img{background:var(--h3);border-radius:28px;padding:14px 20px}
