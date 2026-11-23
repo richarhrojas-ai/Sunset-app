@@ -14,6 +14,10 @@ DATOS = {  # (Sección, Título): texto
         'transmisión desde Tres Palmas, y el 6 de marzo de 1999 fue dedicada a Dios. Desde entonces creció a 10 kW y se escucha también por internet.'),
     ('Historia', 'Fecha de fundación'): ('Primera transmisión: 26 de febrero de 1999. Dedicación: sábado 6 de marzo de 1999. '
         'El aniversario se celebra el 25 de marzo.'),
+    # Contacto: sitio oficial www.mensajerofm.org (revisado el 23 nov 2026)
+    ('Contacto para la audiencia', 'Sitio web'): 'www.mensajerofm.org',
+    ('Contacto para la audiencia', 'Escuchar en línea'): ('En www.mensajerofm.org: la señal principal de la 100.9 FM, una señal en guaraní '
+        'y otra en alemán, y video en vivo. También está la programación de toda la semana.'),
     ('Propósito', 'Misión'): 'Edificar una cultura con principios bíblicos.',
     ('Propósito', 'Visión'): 'Que cada oyente reconozca que Jesús es el camino a seguir.',
 }
