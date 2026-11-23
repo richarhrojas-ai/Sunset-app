@@ -85,20 +85,41 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .bar a.on{color:var(--ink);border-bottom-color:var(--gold-t)}
 
 /* ── TEMAS: íconos en el cielo ── */
-.temas{position:absolute;z-index:2;left:0;right:0;top:88px;max-width:860px;margin:0 auto;padding:0 12px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
-.temas button{display:flex;flex-direction:column;align-items:center;gap:7px;padding:4px 0;color:var(--ink2)}
-.temas .ic{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(var(--fg),.22);background:rgba(10,6,20,.25);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:transform .2s,background .2s,border-color .2s}
-.temas svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-.temas small{font-size:calc(11.5px*var(--fz,1));letter-spacing:.02em;line-height:1.25;text-align:center;white-space:nowrap;padding:2px 5px;border-radius:6px;background:rgba(10,6,20,.82)}
-@media(max-width:480px){.temas small{font-size:calc(10.5px*var(--fz,1));letter-spacing:0;padding:1px 3px;white-space:normal;max-width:100%;hyphens:manual}}
-.temas button:hover .ic{background:rgba(var(--fg),.14);transform:translateY(-2px)}
-.temas button[aria-current="true"] .ic{border-color:var(--gold-t);background:rgba(255,215,0,.16);box-shadow:0 0 0 3px rgba(255,215,0,.15),0 0 18px rgba(255,215,0,.35)}
-.temas button[aria-current="true"]{color:var(--gold-t)}
-@media(max-width:560px){.temas{top:80px;padding:0 4px;gap:2px}.temas small{font-size:calc(11px*var(--fz,1));letter-spacing:0;text-transform:none;padding:2px 3px}.temas .ic{width:40px;height:40px}.temas svg{width:20px;height:20px}.temas small{font-size:calc(10.5px*var(--fz,1));letter-spacing:.08em}}
+.temas{position:absolute;z-index:2;left:16px;right:16px;top:86px;max-width:828px;margin:0 auto;padding:9px 6px 8px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;
+  border-radius:20px;background:rgba(10,6,20,.3);border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.temas button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:2px 0;min-width:0;color:rgba(255,255,255,.85)}
+.temas .ic{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);transition:transform .2s,background .2s,border-color .2s}
+.temas svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.temas small{font-size:calc(11.5px*var(--fz,1));line-height:1.15;letter-spacing:.01em;text-align:center;max-width:100%;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.temas button:hover .ic{background:rgba(255,255,255,.14);transform:translateY(-2px)}
+.temas button[aria-current="true"] .ic{border-color:var(--gold-t);background:rgba(255,215,0,.2);box-shadow:0 0 0 3px rgba(255,215,0,.16),0 0 16px rgba(255,215,0,.35)}
+.temas button[aria-current="true"] small{color:var(--gold-t);font-weight:600}
+@media(max-width:560px){.temas{left:8px;right:8px;top:76px;padding:8px 2px 7px;gap:0;border-radius:18px}.temas .ic{width:38px;height:38px}.temas svg{width:19px;height:19px}.temas small{font-size:calc(9.4px*var(--fz,1));letter-spacing:-.01em}.temas button{gap:5px}}
+@media(max-width:380px){.temas small{font-size:calc(8.8px*var(--fz,1))}}
 
 dialog.hoja{margin:auto;width:min(560px,calc(100% - 32px));max-height:min(82vh,760px);border:1px solid var(--line);border-radius:22px;padding:0;color:var(--ink);
   background:linear-gradient(170deg,var(--mid),var(--h3) 70%);box-shadow:0 30px 80px rgba(0,0,0,.6)}
 dialog.hoja::backdrop{background:rgba(5,3,10,.6);backdrop-filter:blur(4px)}
+/* hoja del tema: cabecera con la escena del tema y lista de sus semanas */
+dialog#hoja{background:linear-gradient(175deg,var(--hm,var(--mid)),var(--ht,var(--h3)) 55%)}
+dialog#hoja[open]{display:flex;flex-direction:column;overflow:hidden}
+.hoja-banner{position:relative;flex:none;height:150px;overflow:hidden}
+.hoja-esc{position:absolute;inset:0}.hoja-esc svg{width:100%;height:100%;display:block}
+.hoja-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 25%,var(--hm,var(--mid)) 100%)}
+.hoja-tit{position:absolute;z-index:1;left:18px;right:60px;bottom:14px;display:flex;align-items:center;gap:12px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.hoja-tit .ic{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;flex:none;border:1px solid var(--gold);background:rgba(10,6,20,.4)}
+.hoja-tit svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.hoja-tit h2{font-size:calc(26px*var(--fz,1));font-weight:300;letter-spacing:.03em;line-height:1.1}
+.hoja-tit p{font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-top:4px}
+#hoja-x{position:absolute;z-index:2;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(10,6,20,.45);color:#fff;font-size:calc(20px*var(--fz,1))}
+#hoja ol{flex:1;min-height:0;gap:10px;padding:12px 14px 18px}
+#hoja li button{grid-template-columns:42px minmax(0,1fr);column-gap:12px;align-items:start;padding:14px 14px 14px 12px}
+#hoja .num{grid-row:span 3;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:calc(15px*var(--fz,1));font-weight:500;color:var(--ink);
+  background:color-mix(in srgb,var(--c) 32%,transparent);border:1px solid color-mix(in srgb,var(--c) 75%,transparent)}
+#hoja .sts{display:grid;gap:2px;font-size:calc(13.5px*var(--fz,1));color:var(--ink2)}
+#hoja .sts span::before{content:"· ";color:var(--gold-t)}
+#hoja li.pasada button{opacity:.6}
+#hoja li.pasada .num{background:transparent}
 .hoja-head{display:flex;align-items:center;gap:14px;padding:20px 20px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:inherit;z-index:1}
 .hoja-head .ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--gold);flex:none}
 .hoja-head svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
@@ -475,18 +496,28 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"] .logo b{color:var(--ink)}
 :root[data-tema="claro"] .fecha{text-shadow:none}
 :root[data-tema="claro"] .apariencia{border-color:rgba(31,26,43,.18);background:rgba(255,255,255,.6);color:var(--ink)}
-:root[data-tema="claro"] .temas button{color:var(--ink2)}
-:root[data-tema="claro"] .temas .ic{border-color:rgba(31,26,43,.16);background:rgba(255,255,255,.55)}
-:root[data-tema="claro"] .temas svg{stroke:var(--ink)}
-:root[data-tema="claro"] .temas small{background:rgba(255,255,255,.78)}
-:root[data-tema="claro"] .temas button[aria-current="true"] .ic{border-color:#c99400;background:rgba(255,215,0,.35);box-shadow:0 0 0 3px rgba(255,215,0,.2)}
-:root[data-tema="claro"] .temas button[aria-current="true"]{color:var(--gold-t)}
+:root[data-tema="claro"] .temas{background:rgba(255,255,255,.5);border-color:rgba(31,26,43,.1);box-shadow:0 4px 18px rgba(31,26,43,.08)}
+:root[data-tema="claro"] .temas button{color:#2a2236}
+:root[data-tema="claro"] .temas small{text-shadow:none}
+:root[data-tema="claro"] .temas .ic{border-color:rgba(31,26,43,.14);background:rgba(255,255,255,.7)}
+:root[data-tema="claro"] .temas svg{stroke:#1f1a2b}
+:root[data-tema="claro"] .temas button[aria-current="true"] .ic{border-color:#c99400;background:#ffe27a;box-shadow:0 0 0 3px rgba(255,200,0,.22)}
+:root[data-tema="claro"] .temas button[aria-current="true"] small{color:#6b4c00;font-weight:700}
 :root[data-tema="claro"] .hero-glass{text-shadow:0 0 10px rgba(255,255,255,.85),0 0 2px rgba(255,255,255,.6);background:rgba(255,255,255,.34);border-color:rgba(31,26,43,.1);box-shadow:0 8px 28px rgba(31,26,43,.1)}
 :root[data-tema="claro"] .hero-glass .enfoque{font-weight:350;color:#160f22}
 :root[data-tema="claro"] .hero-glass .tema{display:inline-block;font-weight:700;font-size:calc(12.5px*var(--fz,1));letter-spacing:.18em;color:#5a3f00;background:rgba(255,255,255,.72);padding:4px 10px;border-radius:999px;text-shadow:none}
 :root[data-tema="claro"] .hero-glass :is(.meta,.subs li){color:#1f1a2b}
 :root[data-tema="claro"] .dot{box-shadow:0 0 0 1px rgba(31,26,43,.25)}
 :root[data-tema="claro"] .nav button{background:rgba(255,255,255,.8);border-color:rgba(31,26,43,.14);color:var(--ink)}
+:root[data-tema="claro"] dialog#hoja{--ink:#1f1a2b;--ink2:rgba(31,26,43,.82);--ink3:rgba(31,26,43,.62);--line:rgba(31,26,43,.12);--fg:31,26,43;--gold-t:#7a5600;
+  background:#fbfaf8;color:var(--ink)}
+:root[data-tema="claro"] .hoja-banner::after{background:linear-gradient(180deg,rgba(255,255,255,0) 25%,#fbfaf8 100%)}
+:root[data-tema="claro"] .hoja-tit{text-shadow:0 0 10px rgba(255,255,255,.9)}
+:root[data-tema="claro"] .hoja-tit .ic{background:rgba(255,255,255,.8);border-color:#c99400}
+:root[data-tema="claro"] .hoja-tit svg{stroke:#7a5600}
+:root[data-tema="claro"] #hoja li button{background:#fff;box-shadow:0 1px 3px rgba(31,26,43,.06)}
+:root[data-tema="claro"] #hoja li.activa button{background:#fff8dc;border-color:#c99400}
+:root[data-tema="claro"] #hoja-x{background:rgba(255,255,255,.85);color:#1f1a2b;border-color:rgba(31,26,43,.15)}
 :root[data-tema="claro"] .firma img{background:var(--h3);border-radius:28px;padding:14px 20px}
 :root[data-tema="claro"] .bar{background:color-mix(in srgb,var(--papel) 92%,transparent)}
 :root[data-tema="claro"] .card{box-shadow:0 1px 3px rgba(31,26,43,.06)}
@@ -627,7 +658,7 @@ const TEMAS = ['Vida Cristiana','Liderazgo','Familia','Finanzas','Crecimiento Pe
 const DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const TEMA_TXT = {'Produccion y Desarrollo':'Producción y Desarrollo'};
 // guiones suaves (\u00AD): en el celular las palabras largas cortan con guion en lugar de pisarse; en pantallas anchas no se ven
-const TEMA_CORTO = {'Vida Cristiana':'Vida Cristiana','Liderazgo':'Lide\u00ADrazgo','Crecimiento Personal':'Creci\u00ADmiento','Produccion y Desarrollo':'Produc\u00ADción','Finanzas':'Finan\u00ADzas'};
+const TEMA_CORTO = {'Vida Cristiana':'Vida cristiana','Crecimiento Personal':'Crecimiento','Produccion y Desarrollo':'Producción'};
 const ICONO = {  // línea blanca, 24×24
   'Vida Cristiana': '<path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5c-3.5-.5-6.5 0-8.5 1.5z"/><path d="M12 6.5v13"/><path d="M7.2 9v4.5M5.7 10.5h3"/>',
   'Liderazgo': '<path d="M3 20l6.5-11 3.5 6 2-3 6 8z"/><path d="M9.5 9V3.5l4 1.5-4 1.5"/>',
@@ -1603,19 +1634,23 @@ $('next').onclick = () => ir(cur+1);
 $('hoy').onclick = () => ir(semanaHoy());
 /* hoja de un tema: todas sus semanas, la activa resaltada y las próximas a la vista */
 function abrirTema(t) {
-  const hoy = semanaHoy(), lista = sem.filter(s => s.tema === t);
-  const prox = lista.find(s => s.n-1 > hoy && s.n-1 !== cur);
-  $('hoja').innerHTML = `<div class="hoja-head"><span class="ic">${icono(t)}</span>
-      <div><h2 id="hoja-t">${esc(TEMA_TXT[t] || t)}</h2><p>${lista.length} semanas en ${DATA.anio}</p></div>
-      <button id="hoja-x" aria-label="Cerrar">×</button></div>
+  const hoy = semanaHoy(), lista = sem.filter(s => s.tema === t), color = lista[0].color, pal = PAL[color] || PAL.Lila;
+  const prox = lista.find(s => s.n-1 > hoy && s.n-1 !== cur), pasadas = lista.filter(s => s.n-1 < hoy).length;
+  // la escena del tema con su propia paleta (ids propios para no chocar con la de la portada)
+  const esc2 = escena(t, esClaro() ? diurna(pal) : pal).replace(/id="(g|s|luna)"/g, 'id="hj-$1"').replace(/url\(#(g|s|luna)\)/g, 'url(#hj-$1)');
+  const d = $('hoja'); d.style.cssText = `--hm:${pal.mid};--ht:${pal.h3}`;
+  d.innerHTML = `<div class="hoja-banner"><div class="hoja-esc" aria-hidden="true">${esc2}</div>
+      <button id="hoja-x" aria-label="Cerrar">×</button>
+      <div class="hoja-tit"><span class="ic">${icono(t)}</span><div><h2 id="hoja-t">${esc(TEMA_TXT[t] || t)}</h2>
+        <p>${lista.length} semanas · ${esc(color.toLowerCase())}${pasadas ? ` · ${pasadas} ya ${pasadas === 1 ? 'pasó' : 'pasaron'}` : ''}</p></div></div></div>
     <ol>${lista.map(s => { const i = s.n-1, ini = dateOf(s.inicio), fin = new Date(ini); fin.setDate(fin.getDate()+6);
       const cls = i === cur ? 'activa' : s === prox ? 'prox' : i < hoy ? 'pasada' : '';
       const tag = i === cur ? (i === hoy ? 'Esta semana' : 'Viendo') : i === hoy ? 'Esta semana' : s === prox ? 'Próxima' : i < hoy ? 'Pasada' : '';
-      return `<li class="${cls}"><button data-i="${i}">
-        <span class="fila"><span>Semana ${s.n} · ${ini.getDate()}/${ini.getMonth()+1} – ${fin.getDate()}/${fin.getMonth()+1}</span>${tag ? `<span class="tag">${tag}</span>` : ''}</span>
+      return `<li class="${cls}"><button data-i="${i}"><span class="num" style="--c:${PAL[s.color].sw}" aria-label="Semana ${s.n}">${s.n}</span>
+        <span class="fila"><span>${fcorta(ini)} – ${fcorta(fin)}</span>${tag ? `<span class="tag">${tag}</span>` : ''}</span>
         <span class="enf">${esc(s.enfoque)}</span>
-        <span class="sts">${s.subtemas.map(x => esc(x.titulo)).join(' · ')}</span></button></li>`; }).join('')}</ol>`;
-  const d = $('hoja'); d.showModal();
+        <span class="sts">${s.subtemas.map(x => `<span>${esc(x.titulo)}</span>`).join('')}</span></button></li>`; }).join('')}</ol>`;
+  d.showModal();
   (d.querySelector('li.activa') || d.querySelector('li.prox'))?.scrollIntoView({block: 'center'});
 }
 $('temas').onclick = e => { const b = e.target.closest('button'); if (b) abrirTema(b.dataset.t); };
