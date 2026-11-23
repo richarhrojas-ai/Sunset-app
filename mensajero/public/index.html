@@ -210,6 +210,12 @@ details.fold>summary::-webkit-details-marker{display:none}
 .utiles b{grid-row:span 2;font-size:calc(24px*var(--fz,1));font-weight:500;color:var(--gold-t);letter-spacing:.04em;text-align:center}
 .utiles span{font-size:calc(15px*var(--fz,1));color:var(--ink);font-weight:400}
 .utiles small{font-size:calc(14px*var(--fz,1));color:var(--ink3);line-height:1.4}
+.zona{list-style:none;display:grid;gap:8px}
+.zona li{display:grid;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:14px}
+.zona span{font-size:calc(15px*var(--fz,1));color:var(--ink)}
+.zona small{font-size:calc(14px*var(--fz,1));color:var(--ink3);line-height:1.4}
+.zona div{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.zona a{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--gold-t);color:var(--gold-t);text-decoration:none;font-size:calc(16px*var(--fz,1));font-weight:500;letter-spacing:.02em;font-variant-numeric:tabular-nums}
 .fold-body{padding:0 20px 20px;font-size:calc(15px*var(--fz,1));color:var(--ink2);display:grid;gap:14px}
 .fold-body h4{font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:4px}
 .fold-body h5{font-size:calc(18px*var(--fz,1));font-weight:400;color:var(--ink);margin-bottom:6px}
@@ -1420,10 +1426,27 @@ const UTILES = [
   {n: '137', t: 'SOS Mujer', d: 'Violencia contra la mujer, las 24 horas. También por WhatsApp: 0961 137 137.'},
   {n: '147', t: 'Fono Ayuda · niñez y adolescencia', d: 'Ministerio de la Niñez. Gratuito, las 24 horas; se puede pedir reserva de los datos.'},
 ];
-const textoUtiles = () => ['NÚMEROS ÚTILES (Paraguay)', ...UTILES.map(u => `- ${u.n}: ${u.t}. ${u.d}`)].join('\n');
+// salud en la zona: lista que pasó Richarh (nov 2026); números con prefijo de celular, se llaman con +595
+const ZONA = [
+  {t: 'Banco de Sangre', d: 'Eulogio Estigarribia · Lic. Agustín Escobar', n: ['0971 942 711']},
+  {t: 'Fundación Visión', d: 'Ciudad del Este', n: ['0982 305 008', '0981 994 186']},
+  {t: 'Campaña de cirugías del programa Visión', d: 'Lic. Luis Vera', n: ['0985 920 223']},
+  {t: 'Clínica Belén', d: 'Compañía Espinillo, Coronel Oviedo', n: ['0984 109 221']},
+  {t: 'Hospital Berthal', d: '', n: ['0971 413 293']},
+  {t: 'Clínica Lucero', d: '', n: ['0973 126 640']},
+  {t: 'Sanatorio Luz y Vida', d: 'El segundo número es para agendar turnos', n: ['0973 248 800', '0971 421 111']},
+  {t: 'Centro Vital', d: '', n: ['0971 441 785']},
+  {t: 'Vida Sana', d: '', n: ['0974 222 980']},
+];
+const telDe = n => '+595' + n.replace(/\D/g, '').replace(/^0/, '');
+const textoUtiles = () => ['NÚMEROS ÚTILES (Paraguay)', ...UTILES.map(u => `- ${u.n}: ${u.t}. ${u.d}`),
+  '', 'SALUD EN LA ZONA', ...ZONA.map(z => `- ${z.t}${z.d ? ` (${z.d})` : ''}: ${z.n.join(' / ')}`)].join('\n');
 function renderUtiles() {
   $('utiles').innerHTML = `<p class="muted" style="font-size:calc(14px*var(--fz,1))">Para tener a mano y compartir al aire. Tocá un número para llamar.</p>
     <ul class="utiles">${UTILES.map(u => `<li><a href="tel:${u.n}"><b>${u.n}</b><span>${esc(u.t)}</span><small>${esc(u.d)}</small></a></li>`).join('')}</ul>
+    <h4 style="margin-top:6px">Salud en la zona</h4>
+    <ul class="zona">${ZONA.map(z => `<li><span>${esc(z.t)}</span>${z.d ? `<small>${esc(z.d)}</small>` : ''}
+      <div>${z.n.map(n => `<a href="tel:${telDe(n)}">${n}</a>`).join('')}</div></li>`).join('')}</ul>
     <p class="muted" style="font-size:calc(13px*var(--fz,1))">Revisados en octubre de 2026 (Ministerio de Salud, Bomberos Voluntarios, Ministerio de la Mujer, Ministerio de la Niñez). Antes de decirlos al aire, conviene confirmarlos cada tanto.</p>
     <div class="acciones copiar"><button class="btn mini" id="copiar-utiles">Copiar para leer al aire</button></div>`;
   $('copiar-utiles').onclick = () => copiar(textoUtiles());

@@ -110,7 +110,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   await p.evaluate(() => document.getElementById('s-buscar').open = true); await p.fill('#q', 'lapacho'); await p.waitForTimeout(150);
   await p.fill('#q', 'perdón'); await p.waitForTimeout(150);
   ok(await p.$$eval('#res li button', x => x.length) > 0, 'buscador encuentra «perdón»');
-  ok(await p.$$eval('#utiles a[href^="tel:"]', x => x.length) === 6, 'números útiles: seis números para llamar');
+  ok(await p.$$eval('#utiles ul.utiles a[href^="tel:"]', x => x.length) === 6 && await p.$$eval('#utiles ul.zona li', x => x.length) === 9 && await p.$eval('#utiles ul.zona a', e => e.getAttribute('href')) === 'tel:+595971942711', 'números útiles: seis emergencias y nueve contactos de salud de la zona');
 
   // tamaño de letra
   const tam = () => p.evaluate(() => parseFloat(getComputedStyle(document.querySelector('#dias .punto p') || document.querySelector('#dias .vtxt')).fontSize));
