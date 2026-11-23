@@ -18,6 +18,7 @@ DATOS = {  # (Sección, Título): texto
     ('Contacto para la audiencia', 'Sitio web'): 'www.mensajerofm.org',
     ('Contacto para la audiencia', 'Escuchar en línea'): ('En www.mensajerofm.org: la señal principal de la 100.9 FM, una señal en guaraní '
         'y otra en alemán, y video en vivo. También está la programación de toda la semana.'),
+    ('Contacto para la audiencia', 'Facebook'): 'facebook.com/share/1NrE8HT3Z7',   # enlace para compartir; si la página tiene dirección propia, conviene ponerla
     ('Contacto para la audiencia', 'Instagram'): 'instagram.com/mensajero100.9fm',
     ('Propósito', 'Misión'): 'Edificar una cultura con principios bíblicos.',
     ('Propósito', 'Visión'): 'Que cada oyente reconozca que Jesús es el camino a seguir.',
