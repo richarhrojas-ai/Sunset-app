@@ -433,6 +433,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 /* Celular: portada más baja (se recorta el cielo vacío, no el paisaje) y espacios parejos, para que el contenido respire sin amontonarse */
 @media(max-width:560px){
   .scene{height:clamp(300px,82vw,350px)}
+  .scene .sube{transform:translateY(-24px)}
   .temas{top:74px}
   .hero-body{margin-top:-64px;padding-bottom:6px}
   .hero-glass{padding:18px 18px 16px;border-radius:20px}
@@ -753,12 +754,13 @@ function escena(tema, p) {
         <path d="M0 300 V274 Q200 258 400 276 V300Z" fill="${p.h3}"/>`;
       break;
     case 'Finanzas': // día sereno: lo sembrado crece de a poco y lo cosechado se guarda en el granero
-      body = nube(130,84,1) + nube(290,104,.7,.07) + `<path d="M0 226 Q140 204 260 220 T400 212 V300 H0Z" fill="${p.h1}"/>
+      // en el celular la tarjeta del tema tapa la franja de abajo: ahí la escena sube (clase «sube», ver CSS) para que se vean las plantas y el granero
+      body = nube(130,84,1) + nube(290,104,.7,.07) + `<g class="sube"><path d="M0 226 Q140 204 260 220 T400 212 V300 H0Z" fill="${p.h1}"/>
         <g transform="translate(-40 0)"><rect x="290" y="176" width="30" height="74" fill="${p.h3}"/><ellipse cx="305" cy="176" rx="15" ry="9" fill="${p.h3}"/>
         <path d="M320 212 L343 194 L366 212 V250 H320Z" fill="${p.h2}"/></g>
         <path d="M0 300 V250 Q200 236 400 252 V300Z" fill="${p.h2}"/>
         ${[0,1,2,3,4].map(i => planta(64+i*38, 270, 12+i*9, 1+Math.floor(i/2))).join('')}
-        <path d="M0 300 V268 Q200 260 400 270 V300Z" fill="${p.h3}"/>`;
+        <path d="M0 300 V268 Q200 260 400 270 V330 H0Z" fill="${p.h3}"/></g>`;
       break;
     case 'Crecimiento Personal': // primera luz: el sol apenas asoma al final del camino, y el lapacho florece
       body = `<circle class="sol" cx="200" cy="206" r="60" fill="url(#s)" opacity=".45"/><circle cx="200" cy="206" r="18" fill="${p.warm}" opacity=".9"/>
