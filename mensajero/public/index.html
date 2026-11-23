@@ -47,7 +47,7 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .hero{position:relative}
 .scene{position:relative;height:clamp(360px,64vh,600px);overflow:hidden}
 .scene svg{width:100%;height:100%;display:block}
-.scene::after{content:"";position:absolute;inset:auto 0 0 0;height:30%;background:linear-gradient(180deg,transparent,var(--h3));pointer-events:none}
+.scene::after{content:"";position:absolute;inset:auto 0 0 0;height:16%;background:linear-gradient(180deg,transparent,var(--h3));pointer-events:none}
 .hero::before{content:"";position:absolute;z-index:1;top:0;left:0;right:0;height:170px;background:linear-gradient(180deg,rgba(6,4,12,.55),rgba(6,4,12,0));pointer-events:none}
 .hero-top{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;padding:18px 16px 0;max-width:860px;margin:0 auto;width:100%}
 .logo{display:flex;align-items:center;gap:10px}
@@ -56,8 +56,8 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .logo small{display:block;white-space:nowrap;font-size:calc(11.5px*var(--fz,1));letter-spacing:.08em;text-transform:uppercase;color:rgba(var(--fg),.6);margin-top:5px}
 .serie{font-size:calc(12.5px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
 .fecha{text-align:right;font-size:calc(12px*var(--fz,1));letter-spacing:.09em;white-space:nowrap;line-height:1.7;text-transform:uppercase;color:var(--ink2);text-shadow:0 1px 6px rgba(0,0,0,.65)}
-.hero-body{position:relative;z-index:2;margin-top:-90px;padding:0 16px 26px;max-width:860px;margin-left:auto;margin-right:auto;width:100%}
-.hero-glass{background:rgba(10,6,20,.32);border:1px solid var(--line);border-radius:22px;padding:22px 20px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hero-body{position:relative;z-index:2;margin-top:-150px;padding:0 16px 26px;max-width:860px;margin-left:auto;margin-right:auto;width:100%}
+.hero-glass{background:rgba(10,6,20,.4);border:1px solid var(--line);border-radius:22px;padding:22px 20px;backdrop-filter:blur(3px) saturate(1.1);-webkit-backdrop-filter:blur(3px) saturate(1.1);text-shadow:0 1px 8px rgba(0,0,0,.35)}
 .tema{font-size:calc(13px*var(--fz,1));letter-spacing:.24em;text-transform:uppercase;color:var(--gold-t);font-weight:500}
 .enfoque{font-size:clamp(28px,7vw,46px);font-weight:200;letter-spacing:.04em;line-height:1.1;margin:8px 0 12px}
 .meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:calc(13px*var(--fz,1));letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
@@ -432,10 +432,10 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 
 /* Celular: portada más baja (se recorta el cielo vacío, no el paisaje) y espacios parejos, para que el contenido respire sin amontonarse */
 @media(max-width:560px){
-  .scene{height:clamp(300px,82vw,350px)}
-  .scene .sube{transform:translateY(-24px)}
+  .scene{height:clamp(360px,98vw,410px)}
+  .scene .sube{transform:translateY(-30px)}
   .temas{top:74px}
-  .hero-body{margin-top:-64px;padding-bottom:6px}
+  .hero-body{margin-top:-112px;padding-bottom:6px}
   .hero-glass{padding:18px 18px 16px;border-radius:20px}
   .enfoque{margin:6px 0 10px}
   .subs{margin-top:12px}
@@ -471,7 +471,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 /* portada de día: cielo de mañana, letra oscura y vidrio claro; abajo se funde con el papel de la página */
 :root[data-tema="claro"] .hero{color:var(--ink)}
 :root[data-tema="claro"] .hero::before{background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0))}
-:root[data-tema="claro"] .scene::after{display:block;height:34%;background:linear-gradient(180deg,transparent,var(--papel))}
+:root[data-tema="claro"] .scene::after{display:block;height:16%;background:linear-gradient(180deg,transparent,var(--papel))}
 :root[data-tema="claro"] .logo b{color:var(--ink)}
 :root[data-tema="claro"] .fecha{text-shadow:none}
 :root[data-tema="claro"] .apariencia{border-color:rgba(31,26,43,.18);background:rgba(255,255,255,.6);color:var(--ink)}
@@ -481,7 +481,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"] .temas small{background:rgba(255,255,255,.78)}
 :root[data-tema="claro"] .temas button[aria-current="true"] .ic{border-color:#c99400;background:rgba(255,215,0,.35);box-shadow:0 0 0 3px rgba(255,215,0,.2)}
 :root[data-tema="claro"] .temas button[aria-current="true"]{color:var(--gold-t)}
-:root[data-tema="claro"] .hero-glass{background:rgba(255,255,255,.74);border-color:rgba(31,26,43,.1);box-shadow:0 8px 28px rgba(31,26,43,.1)}
+:root[data-tema="claro"] .hero-glass{text-shadow:0 0 10px rgba(255,255,255,.7);background:rgba(255,255,255,.55);border-color:rgba(31,26,43,.1);box-shadow:0 8px 28px rgba(31,26,43,.1)}
 :root[data-tema="claro"] .dot{box-shadow:0 0 0 1px rgba(31,26,43,.25)}
 :root[data-tema="claro"] .nav button{background:rgba(255,255,255,.8);border-color:rgba(31,26,43,.14);color:var(--ink)}
 :root[data-tema="claro"] .firma img{background:var(--h3);border-radius:28px;padding:14px 20px}
@@ -756,7 +756,7 @@ function escena(tema, p) {
       break;
     case 'Familia': // noche de luna: la casa con la luz encendida, el árbol y el humo de la cocina
       body = `<circle cx="132" cy="100" r="16" fill="#f4efe6" opacity=".9" mask="url(#luna)"/>
-        <path d="M0 232 Q110 206 210 222 T400 214 V300 H0Z" fill="${p.h1}"/>
+        <g class="sube"><path d="M0 232 Q110 206 210 222 T400 214 V300 H0Z" fill="${p.h1}"/>
         <path d="M0 300 V250 Q150 228 400 246 V300Z" fill="${p.h2}"/>
         <g transform="translate(-58 0)">
         <path d="M244 216 L276 190 L308 216Z" fill="${p.h3}"/><rect x="250" y="214" width="52" height="34" fill="${p.h3}"/>
@@ -764,7 +764,7 @@ function escena(tema, p) {
         <path d="M296 190 c-6 -10 8 -14 2 -24 c-5 -8 6 -12 3 -20" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2"/>
         <rect x="262" y="222" width="12" height="11" fill="${p.warm}"/><rect x="282" y="230" width="9" height="18" fill="${p.warm}" opacity=".55"/>
         ${arbol(330, 252, .85)}</g>
-        <path d="M0 300 V274 Q200 258 400 276 V300Z" fill="${p.h3}"/>`;
+        <path d="M0 330 V274 Q200 258 400 276 V330Z" fill="${p.h3}"/></g>`;
       break;
     case 'Finanzas': // día sereno: lo sembrado crece de a poco y lo cosechado se guarda en el granero
       // en el celular la tarjeta del tema tapa la franja de abajo: ahí la escena sube (clase «sube», ver CSS) para que se vean las plantas y el granero
