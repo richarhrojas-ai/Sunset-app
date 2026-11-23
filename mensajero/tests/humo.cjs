@@ -169,7 +169,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
   ok((await p.textContent('#dias')).includes('Aniversario de Mensajero · 28 años'), '25 de marzo: aviso de aniversario en la tarjeta del día');
   await p.evaluate(() => document.getElementById('s-historias').open = true);
-  ok(await p.$$eval('#historias details.loc', x => x.length) === 22 && (await p.textContent('#historias')).includes('Historia de esta semana') && (await p.textContent('#historias')).includes('28 años'), 'historias de Mensajero: 22 aprobadas, la de la semana y el aniversario');
+  ok(await p.$$eval('#historias details.loc', x => x.length) === 24 && (await p.textContent('#historias')).includes('Historia de esta semana') && (await p.textContent('#historias')).includes('28 años'), 'historias de Mensajero: 24 aprobadas, la de la semana y el aniversario');
   ok(p.errores.length === 0, 'historias sin errores de JavaScript' + (p.errores.length ? ' → ' + p.errores.join(' | ') : ''));
   await p.close();
 
