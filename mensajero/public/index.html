@@ -793,14 +793,19 @@ function escena(tema, p) {
         <g stroke="${p.h3}" stroke-width="2.5">${Array.from({length: 9}, (_, i) => `<line x1="${8+i*48}" y1="276" x2="${8+i*48}" y2="258"/>`).join('')}</g>
         <line x1="0" y1="264" x2="400" y2="264" stroke="${p.h3}" stroke-width="1.2"/>`;
       break;
-    default: // Salud: mañana con bruma sobre la laguna, aves y palmeras
-      body = aves(110,120) + `<path d="M0 214 Q110 198 230 208 T400 204 V230 H0Z" fill="${p.h1}"/>
-        <rect y="228" width="400" height="72" fill="${p.h2}"/>
-        <g fill="#fff">${[[0,206,.10],[60,216,.08],[0,226,.07]].map(([x, y, o]) => `<rect x="${x}" y="${y}" width="400" height="5" rx="2.5" opacity="${o}"/>`).join('')}</g>
-        <g stroke="#fff" stroke-linecap="round" opacity=".18">${[0,1,2,3,4].map(i => `<line x1="${120+i*9}" y1="${240+i*9}" x2="${190-i*7}" y2="${240+i*9}" stroke-width="${2.2-i*.3}"/>`).join('')}</g>
-        ${[[244,0],[272,-6],[300,4]].map(([x, d]) => { const top = 180+d; return `<path d="M${x} 262 Q${x-6} ${top+50} ${x+6} ${top}" fill="none" stroke="${p.h3}" stroke-width="4"/>
-          <g fill="${p.h3}" transform="translate(${x+6} ${top})">${[-150,-110,-70,-30,10,50].map(a => `<path d="M0 0 Q14 -6 30 4 Q14 0 0 3Z" transform="rotate(${a})"/>`).join('')}</g>`; }).join('')}
-        <path d="M210 300 V262 Q290 250 400 258 V300Z" fill="${p.h3}"/>`;
+    default: // Salud: amanecer de caminata por la costa de la laguna: el cuerpo en movimiento, el agua limpia, la fruta del naranjo y la sombra para descansar
+      body = sol(292,176,22) + aves(70,112) + `<g class="sube"><path d="M0 208 Q110 192 230 202 T400 198 V300 H0Z" fill="${p.h1}"/>
+        <path d="M0 300 V224 Q200 212 400 226 V300Z" fill="${p.h2}"/>
+        <path d="M0 228 Q70 222 140 230 Q100 242 0 246Z" fill="#fff" opacity=".2"/>
+        <g stroke="#fff" stroke-linecap="round" opacity=".28">${[0,1,2].map(i => `<line x1="${22+i*24}" y1="${232+i*4}" x2="${64+i*18}" y2="${232+i*4}" stroke-width="${1.6-i*.3}"/>`).join('')}</g>
+        <path d="M62 236 Q57 210 68 188" fill="none" stroke="${p.h3}" stroke-width="3.5"/>
+        <g fill="${p.h3}" transform="translate(68 188)">${[-150,-110,-70,-30,10,50].map(a => `<path d="M0 0 Q12 -5 26 3 Q12 0 0 3Z" transform="rotate(${a})"/>`).join('')}</g>
+        <path d="M130 300 C165 268 200 246 204 214 L209 214 C216 246 250 270 300 300Z" fill="${p.warm}" opacity=".42"/>
+        ${arbol(330, 246, .88, '#ff9a3c')}
+        <g transform="translate(194 254) scale(1.2)" stroke="${p.h3}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <circle cx="3" cy="-30" r="4" fill="${p.h3}" stroke="none"/><path d="M2 -24 L-1 -12"/><path d="M-1 -12 L6 -5 L4 1"/><path d="M-1 -12 L-7 -5 L-12 -7"/>
+          <path d="M1 -21 L8 -16 L11 -20"/><path d="M1 -21 L-6 -16 L-8 -11"/></g>
+        <path d="M0 300 V266 Q70 258 140 270 L120 300Z" fill="${p.h3}"/><path d="M400 300 V264 Q330 256 280 272 L300 300Z" fill="${p.h3}"/></g>`;
   }
   return `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" role="presentation">${sky}${stars}${body}</svg>`;
 }
