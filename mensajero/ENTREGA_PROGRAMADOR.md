@@ -243,8 +243,13 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
    - **Siempre en la sugerencia:** «Marcar al aire y mensajes» (constante `FIJAS`).
    - **Programas semanales:** usan el versículo de su propio día.
    - **Documento de la revisión:** `content/Biblioteca_preparacion_2027.docx`.
-7. **Números útiles:** reconfirmar los seis antes de la salida y cada tanto.
-8. ~~Tres frases célebres con fuente parcial~~ **Resuelto el 20/10/2026:** Cervantes confirmada (II parte, cap. XVII); Spurgeon pasa a «Proverbio recogido por Charles H. Spurgeon»; Temple se mantiene con su definición completa (autor confirmado; el libro exacto, no).
+7. **Historias de Mensajero:** sección nueva en «Para la audiencia», con historias del libro de Samuel Sosa (2011).
+   - **Datos:** `content/historias_mensajero_2027.json`. Hay 28 historias; la app muestra las 22 aprobadas. Las 6 sensibles aparecen solo si se les pone `aprobada: true`.
+   - **Historia de la semana:** se elige según el tema de la semana (`HIST_TEMA`).
+   - **Aniversario:** el 25 de marzo hay aviso en la tarjeta del día, y esa semana se destaca la historia del origen de la radio.
+   - **Documento completo:** `content/Historias_de_Mensajero.docx`.
+8. **Números útiles:** reconfirmar los seis antes de la salida y cada tanto.
+9. ~~Tres frases célebres con fuente parcial~~ **Resuelto el 20/10/2026:** Cervantes confirmada (II parte, cap. XVII); Spurgeon pasa a «Proverbio recogido por Charles H. Spurgeon»; Temple se mantiene con su definición completa (autor confirmado; el libro exacto, no).
 
 ## 12. Archivos
 

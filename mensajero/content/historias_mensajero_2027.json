@@ -1,0 +1,328 @@
+{
+ "_nota": "Historias del libro «Tejiendo vida en los corazones: La historia de Radio Mensajero 100.9 FM» (Samuel Sosa, 2011). Las marcadas sensible no se muestran en la app hasta que «aprobada» sea true.",
+ "historias": [
+  {
+   "n": 1,
+   "titulo": "¿Por qué no empezar con nuestra propia radioemisora?",
+   "texto": "En agosto de 1965 Frank Kroeker y Dietrich Lepp conversaron en la Casa Central Menonita de Asunción. Lepp contó que los indígenas, a quienes los misioneros habían enseñado castellano, pasaban las noches \"escuchando la Radio Habana con su propaganda comunista\". Kroeker respondió \"impulsivamente\": \"¿Bueno, porqué no empezar con nuestra propia radioemisora?\". A la mañana siguiente le dijo a Lepp: \"No he pensado en ninguna otra cosa\".",
+   "pagina": "pp. 17-19",
+   "temas": [
+    "fe",
+    "liderazgo"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 2,
+   "titulo": "El cazador atrapado por la lluvia",
+   "texto": "Por 1968, Armando Ramos, un cazador amigo de Jacob Braun, quedó aislado por una tormenta y la crecida del río. Kroeker le prestó su radio para avisar a su esposa, a través de la Misión Nuevas Tribus. Ramos resultó ser radioaficionado con licencia y prometió ayudarlo. Gracias a él, Frank obtuvo su licencia en julio de 1968, en tiempos en que conseguirla \"era casi imposible\".",
+   "pagina": "pp. 29-30",
+   "temas": [
+    "servicio",
+    "provision"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 3,
+   "titulo": "Volay apcatic\", la cabeza del paraguayo",
+   "texto": "Frank le preguntó a Lepp cómo se decía \"radio\" en enlhit. La respuesta fue \"Volay Apcatic\": \"Volay = paraguayo, apcatic = cabeza\". Hoy los nativos dicen simplemente \"radio\".",
+   "pagina": "p. 45",
+   "temas": [
+    "curiosidad"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 4,
+   "titulo": "La \"radio evangelista\" a manivela",
+   "texto": "Como no hablaban guaraní, Frank Kroeker y Jacob Braun recorrieron unos 15 km de selva en moto (una Honda 50 y una NSU 50) con un tocadiscos manual y discos con predicación en guaraní, regalados por Dwayne Stous de la Misión Nuevas Tribus. \"Los niños se encargaban de darle vuelta al disco\". Repitieron las visitas varios sábados y domingos al atardecer.",
+   "pagina": "pp. 45-46",
+   "temas": [
+    "servicio",
+    "perseverancia"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 5,
+   "titulo": "La noche en que la camioneta fue a la iglesia",
+   "texto": "Frank cuenta que a los 18 años perdió a su padre y vivió años de rebeldía. Un 6 de julio, cuando iba a buscar a Margie para ir a la feria de Morris, la mamá de ella le dijo: \"¡Estamos orando por ti!\". Margie subió con una lágrima en la mejilla. Lloraron juntos y fueron a la iglesia, no a la feria. Esa misma noche ambos se entregaron a Cristo, otros nueve jóvenes los siguieron y luego \"37 de nuestro grupo fuimos bautizados\".",
+   "pagina": "pp. 42-45",
+   "temas": [
+    "fe",
+    "familia"
+   ],
+   "sensible": true,
+   "aprobada": false
+  },
+  {
+   "n": 6,
+   "titulo": "Una torre petrolera para la primera antena",
+   "texto": "Francisco Cano Martínez, de la Pure Oil Company, ofreció la torre que tenía cerca de Filadelfia. \"La torre sirvió luego para la primera antena de radio ZP-30\". Además, su amistad con el presidente de ANTELCO sirvió \"como puente\" para orientar a los líderes.",
+   "pagina": "p. 34",
+   "temas": [
+    "provision"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 7,
+   "titulo": "Una noche de lucha y una casa donada",
+   "texto": "En 1981 llegó a Tres Palmas Gustav Quiring, menonita repatriado de Alemania. Cuando Frank le contó la visión, Quiring se quedó callado y pareció no darle importancia. Un domingo volvió y contó que \"el Señor puso la carga de una emisora en su corazón y que durante toda la noche luchó con la idea\" de comprar una casa en el centro de Tres Palmas (1.000.000 Gs) para donarla. El contrato se firmó el 12 de agosto de 1981. La casa esperó 18 años para ser la radio.",
+   "pagina": "pp. 51-53",
+   "temas": [
+    "provision",
+    "finanzas"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 8,
+   "titulo": "El estudio que primero fue escuela",
+   "texto": "Con la inundación del lago Yguazú en 1983, Lucero y Tres Palmas, que estaban a unos 4 km, quedaron separadas, y el camino nuevo tenía unos 27 km. Bartolo Friesen recuerda que la casa donada para la radio se usó como sala de clases para decenas de alumnos, desde mayo hasta el fin del año escolar. El libro comenta que así se cumplió parte de lo previsto: \"la capacitación de la sociedad\".",
+   "pagina": "p. 66",
+   "temas": [
+    "comunidad"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 9,
+   "titulo": "Las muchas aguas no podrán apagar el amor",
+   "texto": "La inundación de 1983 destruyó caminos, casas y cosechas. Muchas familias se fueron al Chaco. Frank recuerda que \"casi desistió\", pero escribió a Canadá que \"ante cualquier problema que existe, el poder de Dios es más grande\". Una foto muestra a Chris en 1983 mirando \"con dudas el futuro, ¡pero Dios sabía!\".",
+   "pagina": "pp. 65-67",
+   "temas": [
+    "perseverancia"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 10,
+   "titulo": "Monika, Trudy y Juan 3:16",
+   "texto": "Monika, de unos 15 años, escuchaba \"De goode Norecht\" por Radio Difusora Caaguazú. Escribió una carta, fue a un campamento juvenil en Lucero, se entregó a Cristo y se bautizó. Su madre Trudy vio el cambio y empezó a buscar lo mismo. Benny Goertzen le pidió que leyera Juan 3:16 con su nombre: \"Porque de tal manera amó Dios a Trudy...\". Años después, sus hijos cuentan que nadie que pisaba su patio se libraba de oír hablar de Radio Mensajero: \"¡Ella fue la mejor 'mensajera'!\".",
+   "pagina": "pp. 107-108",
+   "temas": [
+    "familia",
+    "fe"
+   ],
+   "sensible": true,
+   "aprobada": false
+  },
+  {
+   "n": 11,
+   "titulo": "La señora que sostenía la radio en alto",
+   "texto": "Frank recuerda la carta de una señora joven. La señal de Difusoras Caaguazú era débil, y ella descubrió que se oía mejor girando la radio y levantándola. Se subió a una silla en medio de la pieza y la sostuvo hacia el techo mientras la familia se sentaba \"reverentemente alrededor\". Al terminar tenía el brazo agotado, \"pero ella y su familia fueron tan bendecidos\". El libro no da su nombre.",
+   "pagina": "p. 108",
+   "temas": [
+    "fe",
+    "perseverancia"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 12,
+   "titulo": "El pequeño Cory y su \"estación de radio\" en el mango",
+   "texto": "Revita Kroeker cuenta que su hijo Cory, a los 2 años, \"producía programas\" con cables por toda la pieza y clavaba en el mango del patio los repuestos que su abuelo Frank le traía de ZP-30. En 1993 ella y Esther Goertzen crearon \"Im Familienkreis\", con \"Die Kinderarche\" para los niños. Los niños escribían: \"Casi no aguantamos esperar hasta el jueves\". Cory trabajó luego en la parte técnica de la radio.",
+   "pagina": "pp. 108-110",
+   "temas": [
+    "familia"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 13,
+   "titulo": "¿Quería yo apoyarle? ¡Claro que sí!",
+   "texto": "Revita cuenta que le costó adaptarse a Tres Palmas, donde Chris trabajaba muchas veces más allá de la medianoche para poner la radio en marcha. \"Me parecía que Chris estaba más 'casado' con su trabajo que conmigo\". Dice que Dios le mostró una elección: amargarse o apoyarlo. Eligió apoyarlo y recibió \"nuevo ánimo\".",
+   "pagina": "pp. 109-110",
+   "temas": [
+    "familia",
+    "servicio"
+   ],
+   "sensible": true,
+   "aprobada": false
+  },
+  {
+   "n": 14,
+   "titulo": "Aprender a orar en la mesa",
+   "texto": "Marciana Rojas, de Caaguazú, escuchaba \"Para ti Mujer\" de María Miranda en Radio Centenario y puso en práctica sus consejos: \"aprendí de ella orar como familia en la mesa\" y a dialogar con sus hijos. Ana Gladys Gamarra recuerda los mismos programas: \"Nos servía para la vida\".",
+   "pagina": "p. 110",
+   "temas": [
+    "familia"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 15,
+   "titulo": "Cinco minutos tarde",
+   "texto": "El 26 de agosto de 1997, el MBN presentó su carpeta para la licitación de Raúl Arsenio Oviedo y fue el único interesado dentro del plazo. \"Cinco minutos luego del cierre de la recepción de sobre-ofertas, apareció una persona que [...] quiso presentarse para la misma frecuencia y localidad. Pero ya fue tarde para él.\"",
+   "pagina": "p. 127",
+   "temas": [
+    "provision"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 16,
+   "titulo": "Llegaron justo antes de que fuera tarde\": la radio \"resucitada",
+   "texto": "Casi 10 meses sin respuesta. En junio de 1998, Chris Kroeker y Benny Goertzen fueron a CONATEL y un ingeniero les dijo que no alcanzaban el puntaje: era \"un caso perdido\". Horas después se descubrió un error de cálculo. Al volver más tarde, supieron que la nota de rechazo ya tenía todas las firmas menos la del presidente, por documentos supuestamente faltantes. Presentaron los comprobantes y CONATEL reconoció que la falla había sido suya: \"llegaron justo antes de que fuera tarde\". Benny lo resume: \"Así como Lázaro [...] había muerto el proyecto Radio Mensajero, pero Dios lo 'resucitó'\".",
+   "pagina": "pp. 139-141",
+   "temas": [
+    "perseverancia",
+    "fe"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 17,
+   "titulo": "Antes de devolver la casa",
+   "texto": "El contrato de 1996 con Quiring decía que si para fines de 2000 no había radio, la casa volvía a su dueño. La radio nació \"un poco antes de que se debiera entregar de vuelta el edificio\". CONATEL dio 8 meses para instalar los equipos, que venían de EE. UU. y Canadá. Oraron para que llegaran sanos y a tiempo, y \"los equipos llegaron en perfectas condiciones y en el tiempo requerido\". Los técnicos de Canadá tuvieron que quedarse 2 semanas más.",
+   "pagina": "pp. 113, 142-143",
+   "temas": [
+    "provision",
+    "perseverancia"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 18,
+   "titulo": "Osvaldo y Narcisa: una puerta que no se animaba a cruzar",
+   "texto": "En 1996, Osvaldo López, docente en Repatriación, buscaba \"un norte\" después de dejar un seminario tras tres años. Pasaba frente a la Librería Ñe'ê Porã sin animarse a entrar. Finalmente entró con su esposa, Narcisa Coronel, y allí Erna Plett, Osmar Ávalos, Doris Friesen y los Goertzen le presentaron el mensaje de salvación, que ambos aceptaron. Hoy la librería es su \"punto obligado de llegada\".",
+   "pagina": "pp. 148-149",
+   "temas": [
+    "fe"
+   ],
+   "sensible": true,
+   "aprobada": false
+  },
+  {
+   "n": 19,
+   "titulo": "A caballo, en bicicleta y a pie, con cartas",
+   "texto": "En los primeros años, los oyentes llegaban \"a caballo, bicicleta, moto y aun caminando kilómetros de distancia\" para traer cartas. Al paso del equipo de \"Estamos Contigo\", \"las personas venían corriendo a la calle para entregar sus cartas\". El primer año llegaban unas 200 cartas por mes y en 2000 unas 309.",
+   "pagina": "pp. 162-164",
+   "temas": [
+    "comunidad"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 20,
+   "titulo": "La familia que pedaleó una mañana entera",
+   "texto": "Francisco Rojas había conocido a Jesús un año antes de que la radio saliera al aire. Encontró la 100.9 buscando un programa cristiano. Al mes, viajó en bicicleta con sus dos hijas hasta Tres Palmas, \"desde el amanecer hasta el mediodía\", para conocer la radio. Antes iba hasta Campo 9 (15 km) para estudiar la Biblia; después pudo hacerlo con su familia en casa a través de la radio. Dice que aprendieron a ser \"mejor matrimonio y una mejor familia\".",
+   "pagina": "pp. 200-201",
+   "temas": [
+    "familia"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 21,
+   "titulo": "Los huevos de la abuelita y la caja de pilas",
+   "texto": "Según un informe de 2003, una ancianita juntó 15.000 Gs vendiendo huevos caseros y los donó a la radio. Otra viuda \"juntó su diezmo fielmente en una caja de pilas\" y lo envió cuando pudo. No se dan nombres.",
+   "pagina": "p. 201",
+   "temas": [
+    "finanzas",
+    "provision"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 22,
+   "titulo": "Cerrá todas tus puertas y ventanas",
+   "texto": "Edith Delvalle, fisioterapeuta de 36 años, se sentía \"como una oveja negra de la familia\". Un día buscaba una música con ritmo y encontró la 100.9, donde Luis Palau invitaba: \"Si querés cambiar tu vida, cerrá todas tus puertas y ventanas y repetí conmigo esta oración\". Se arrodilló y oró por primera vez. Luego estudió la Biblia con Doris Friesen en la Librería Ñe'ê Porã. Con el tiempo, su hija invitó al papá a la iglesia, y la familia se bautizó en la Iglesia Evangélica Menonita del barrio Bernardino Caballero.",
+   "pagina": "pp. 202-203",
+   "temas": [
+    "fe",
+    "familia"
+   ],
+   "sensible": true,
+   "aprobada": false
+  },
+  {
+   "n": 23,
+   "titulo": "Aunque sientas que nadie te comprende",
+   "texto": "Una oyente que firma \"Damy\" cuenta que lloraba sola, sin consuelo. Encendió la radio a la hora de \"Brisas\" y escuchó a José decir que \"aunque sientas que nadie te comprende y valora, Dios sí lo hace\". \"Me asusté porque eso mismo era lo que me estaba pasando\". En la misma página, M. Martínez, de Caaguazú, cuenta que la radio la acompañó cuando se sentía \"muy sola\".",
+   "pagina": "p. 202",
+   "temas": [
+    "salud",
+    "fe"
+   ],
+   "sensible": true,
+   "aprobada": false
+  },
+  {
+   "n": 24,
+   "titulo": "Rayos, y un Alfa Romeo enterrado",
+   "texto": "El primer rayo cayó el 15 de abril de 1999, apenas 3 semanas después de salir al aire en forma continua, cuando los ingenieros instaladores \"¡ya se habían ido a casa!\". Hubo más descargas en octubre de 2000 (dos en menos de dos semanas) y en noviembre de 2001. Para mejorar la toma de tierra, el técnico Ray Eidse enterró \"la carrocería vieja de un automóvil Alfa Romeo\" conectada a la malla de tierra. La última descarga fue en octubre de 2006.",
+   "pagina": "p. 191",
+   "temas": [
+    "perseverancia"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 25,
+   "titulo": "La tormenta que tumbó la antena de Campo 9",
+   "texto": "En noviembre de 2007, una fuerte tormenta derribó la antena de 30 m de Mensajero Campo 9 sobre una farmacia cercana, \"causando severos daños materiales, pero sin víctimas humanas\". Hermanos de las iglesias ayudaron a resolverlo pronto.",
+   "pagina": "p. 191",
+   "temas": [
+    "comunidad"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 26,
+   "titulo": "Camioneros que se sintieron valorados",
+   "texto": "Entre 2003 y 2005 hubo tres encuentros con camioneros, y la participación subió de unas 60 a 120 personas. El propósito era \"expresar aprecio, valor y aceptación\". Fue muy bien recibido porque, según dijeron, \"muchas veces se sintieron despreciados por la sociedad\".",
+   "pagina": "p. 181",
+   "temas": [
+    "comunidad",
+    "servicio"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 27,
+   "titulo": "Apoyo por el día\" (PAD)",
+   "texto": "Desde 2001, oyentes, familias o iglesias pueden cubrir el costo de un día de transmisión para agradecer a Dios por un cumpleaños, un aniversario u otra fecha. Ese día se les dedica al aire (o de forma anónima), y ellos oran por la radio y la radio por ellos. En 2001 se cubrieron 250 días. La idea se inspiró en una radio cristiana de Fargo (ND, EE. UU.).",
+   "pagina": "pp. 198-199",
+   "temas": [
+    "finanzas"
+   ],
+   "sensible": false,
+   "aprobada": true
+  },
+  {
+   "n": 28,
+   "titulo": "Pastor que \"receta\" la radio",
+   "texto": "El pastor Fermín Román, de Juan León Mallorquín (Alto Paraná), recomienda a su iglesia de más de 100 miembros escuchar Radio Mensajero para crecer espiritualmente, porque él no tiene tiempo de visitarlos a todos.",
+   "pagina": "p. 203",
+   "temas": [
+    "liderazgo",
+    "comunidad"
+   ],
+   "sensible": false,
+   "aprobada": true
+  }
+ ]
+}

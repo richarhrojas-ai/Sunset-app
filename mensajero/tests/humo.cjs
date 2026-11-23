@@ -164,6 +164,15 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(await p.evaluate(() => { const e = JSON.parse(localStorage.getItem('mensajero:entries')); return e['2027/w10/aire3'] && !e['2027/w9/aire3']; }), 'lo guardado con el número de semana viejo pasa a la semana siguiente');
   await p.close();
 
+  // ── historias de Mensajero y aniversario ──
+  p = await abrir(b, {fecha: '2027-03-25T10:00:00'});
+  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
+  ok((await p.textContent('#dias')).includes('Aniversario de Mensajero · 28 años'), '25 de marzo: aviso de aniversario en la tarjeta del día');
+  await p.evaluate(() => document.getElementById('s-historias').open = true);
+  ok(await p.$$eval('#historias details.loc', x => x.length) === 22 && (await p.textContent('#historias')).includes('Historia de esta semana') && (await p.textContent('#historias')).includes('28 años'), 'historias de Mensajero: 22 aprobadas, la de la semana y el aniversario');
+  ok(p.errores.length === 0, 'historias sin errores de JavaScript' + (p.errores.length ? ' → ' + p.errores.join(' | ') : ''));
+  await p.close();
+
   // ── antes del año ──
   p = await abrir(b, {fecha: '2026-12-20T10:00:00'});
   ok((await p.textContent('#h-tema')).length > 0 && p.errores.length === 0, 'antes del 3 de enero de 2027 abre la semana 1 sin errores');

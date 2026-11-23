@@ -216,7 +216,11 @@ def main(path):
         semanas.insert(0, w1)
     else:
         revisar(anio, semanas)
-    data = {'anio': anio, 'semanas': semanas, 'valores': valores, 'mensajero': mensajero}
+    # historias de la radio (libro de Samuel Sosa, 2011): solo las aprobadas para el aire
+    hf = ROOT / 'content' / f'historias_mensajero_{anio}.json'
+    historias = [{k: h[k] for k in ('titulo', 'texto', 'pagina', 'temas')} for h in json.loads(hf.read_text(encoding='utf-8'))['historias']
+                 if h.get('aprobada')] if hf.exists() else []
+    data = {'anio': anio, 'semanas': semanas, 'valores': valores, 'mensajero': mensajero, 'historias': historias}
     html = ROOT / 'public' / 'index.html'
     src = html.read_text(encoding='utf-8')
     blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
