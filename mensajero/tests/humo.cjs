@@ -103,7 +103,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   const nBib = await p.$$eval('#biblio input[data-b]', x => x.length);
   await p.click('#bib-sug'); await p.waitForTimeout(80);
   const sug = await p.$$eval('#biblio input[data-b]:checked', x => x.map(i => i.dataset.b));
-  ok(nBib === 31 && sug.includes('oyentes') && sug.includes('registro') && sug.includes('mensajes') && !sug.includes('grabacion'), 'biblioteca revisada: 31 tareas, saludo a la audiencia, «marcar al aire» y «mensajes» siempre sugeridas');
+  ok(nBib === 18 && sug.includes('oyentes') && sug.includes('registro') && sug.includes('guion'), 'biblioteca revisada: 18 tareas agrupadas, saludo a la audiencia, «marcar al aire» y «mensajes» siempre sugeridas');
   await p.click('#bib-x'); await p.waitForTimeout(80);
 
   // buscar y números útiles

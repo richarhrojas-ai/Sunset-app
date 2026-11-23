@@ -235,10 +235,12 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
 5. **Revisión teológica:** resuelta el 20 nov 2026.
    - **Ajustadas:** tres frases. El punto «Todo lo que hace prospera» (semana 5) pasa a «Da fruto a su tiempo». El trabajo en Génesis 2:15 y 3:17-19 queda aclarado (semana 45). Éxodo 23:25 queda como promesa a Israel, no como garantía de no enfermar (semana 53).
    - **Aceptadas:** las demás quedan en `content/revision_teologica_aceptadas.txt`, para que el informe solo avise frases nuevas.
-6. **Biblioteca de preparación:** revisada por Richarh el 23 nov 2026. Quedaron 31 tareas.
+6. **Biblioteca de preparación:** revisada por Richarh el 23 nov 2026. Quedaron 18 tareas: las que se hacen juntas se unieron en una sola, así una marca cubre lo básico.
+   - **Tarea de contenido:** una sola cubre tema, guion, versículo, dato, frase e historia.
+   - **Otras unidas:** reflexión y devocional; las tres de entrevista; noticias y clima; música y cortinas; equipo y respaldo; marcar al aire y mensajes.
    - **Quitadas:** «Grabación activada» y «Publicación en redes» (hay un encargado).
-   - **Nuevas:** «Mensajes registrados en la app» y el grupo «Audiencia y auspiciantes»: saludar por nombre a los oyentes y agradecer a un auspiciante con algo concreto.
-   - **Siempre en la sugerencia:** «Marcar al aire» y «Mensajes» (constante `FIJAS`).
+   - **Nuevas:** el grupo «Audiencia y auspiciantes»: saludar por nombre a los oyentes y agradecer a un auspiciante con algo concreto.
+   - **Siempre en la sugerencia:** «Marcar al aire y mensajes» (constante `FIJAS`).
    - **Programas semanales:** usan el versículo de su propio día.
    - **Documento de la revisión:** `content/Biblioteca_preparacion_2027.docx`.
 7. **Números útiles:** reconfirmar los seis antes de la salida y cada tanto.
