@@ -164,6 +164,12 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(await p.evaluate(() => { const e = JSON.parse(localStorage.getItem('mensajero:entries')); return e['2027/w10/aire3'] && !e['2027/w9/aire3']; }), 'lo guardado con el número de semana viejo pasa a la semana siguiente');
   await p.close();
 
+  // ── sobre Mensajero: sin filas «por completar» ──
+  p = await abrir(b);
+  await p.evaluate(() => document.getElementById('s-mensajero').open = true);
+  ok(!(await p.textContent('#mensajero')).includes('Por completar') && (await p.textContent('#mensajero')).includes('mensajero100.9fm') && (await p.textContent('#mensajero')).includes('Programas y locutores'), 'sobre Mensajero: sin filas vacías, con redes y programas');
+  await p.close();
+
   // ── historias de Mensajero y aniversario ──
   p = await abrir(b, {fecha: '2027-03-25T10:00:00'});
   await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);

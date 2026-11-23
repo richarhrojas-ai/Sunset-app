@@ -907,8 +907,10 @@ function renderMensajero() {
     ${x && aire ? `<button class="btn mini" data-txt="${esc(x)}">Copiar</button>` : ''}</div>`;
   const bloque = (titulo, cuerpo) => `<div><h4>${esc(titulo)}</h4><div class="inst">${cuerpo}</div></div>`;
   const programas = [...new Map(DATA.semanas.map(w => [w.programa, w.locutor])).entries()];
+  // las filas sin completar no se muestran: aparecen solas cuando se cargan en la planilla
   const html = secciones.map(sec => {
-    let b = bloque(sec, M.filter(x => x.seccion === sec).map(x => item(x.titulo, x.texto, x.aire)).join(''));
+    const filas = M.filter(x => x.seccion === sec && x.texto);
+    let b = filas.length ? bloque(sec, filas.map(x => item(x.titulo, x.texto, x.aire)).join('')) : '';
     if (sec === 'Propósito') b += bloque('Valores', Object.entries(DATA.valores).map(([v, g]) => item(v, g.definicion, true)).join(''));
     if (sec === 'Organigrama') b += bloque('Programas y locutores', programas.map(([p, l]) => item(p, l, false)).join(''));
     return b;
