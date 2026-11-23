@@ -208,7 +208,7 @@ mensajero/
 
 ## 10. Lista de aceptación (lo que tiene que salir del horno)
 
-La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 controles** apuntando a la nueva app, y además:
+La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 61 controles** apuntando a la nueva app, y además:
 
 - Mismo aspecto que el prototipo en celular (oscuro) y computadora (clara), en las 7 escenas.
 - Un locutor marca en el celular y lo ve en la computadora (sincronización), y viceversa, sin perder marcas cuando las dos editan (gana la más reciente por clave).
@@ -231,7 +231,7 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 41 
    - **Fechas especiales:** Año Nuevo (1 ene), Viernes Santo (26 mar), Domingo de Pascua (28 mar) y Navidad (25 dic) tienen versículo propio. La app los marca con un aviso «Especial» en la tarjeta del día y en el guion copiado (constante `ESPECIALES` en `index.html`, por fecha). Para 2028 hay que actualizar esas fechas.
 2. ~~Viernes Santo, Pascua y Navidad~~ **Resuelto el 23/10/2026:** llevan versículo propio como fechas especiales (ver punto 1). Reemplaza la decisión del 20/10 de seguir la serie.
 3. **Usuarios:** una clave para todo el equipo o una por locutor (necesaria si el registro debe decir quién hizo cada marca).
-4. **Hoja «Mensajero»:** faltan 17 datos (historia, fundación, misión, visión, sitio web, redes, contactos por área, organigrama).
+4. **Hoja «Mensajero»:** ya están cargados la historia breve, la fecha de fundación, la misión y la visión (, 23 nov 2026). Faltan 15 datos: sitio web, Facebook, Instagram, enlace para escuchar en línea, los 7 contactos por área y los 4 puestos del organigrama.
 5. **Revisión teológica:** resuelta el 20 nov 2026.
    - **Ajustadas:** tres frases. El punto «Todo lo que hace prospera» (semana 5) pasa a «Da fruto a su tiempo». El trabajo en Génesis 2:15 y 3:17-19 queda aclarado (semana 45). Éxodo 23:25 queda como promesa a Israel, no como garantía de no enfermar (semana 53).
    - **Aceptadas:** las demás quedan en `content/revision_teologica_aceptadas.txt`, para que el informe solo avise frases nuevas.
