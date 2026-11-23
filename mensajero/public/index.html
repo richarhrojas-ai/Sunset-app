@@ -769,14 +769,6 @@ const LS = 'mensajero:entries';
 let entries = {};
 try { entries = JSON.parse(localStorage.getItem(LS)) || {}; } catch {}
 const get = k => entries[k]?.v;
-// nov 2026: se agregó la semana 1 del calendario (viernes 1 y sábado 2 de enero) y las demás pasaron a ser 2-53.
-// Lo guardado antes con el número viejo se mueve una semana, una sola vez.
-if (!entries['meta/semana1']) {
-  const viejo = Object.keys(entries).filter(k => /^2027\/w\d+\//.test(k)), movido = {};
-  for (const k of viejo) { movido[k.replace(/^2027\/w(\d+)\//, (_, n) => `2027/w${+n + 1}/`)] = entries[k]; delete entries[k]; }
-  Object.assign(entries, movido, {'meta/semana1': {v: 1, t: Date.now()}});
-  try { localStorage.setItem(LS, JSON.stringify(entries)); } catch {}
-}
 const set = (k, v) => { entries[k] = {v, t: Date.now()}; try { localStorage.setItem(LS, JSON.stringify(entries)); } catch {} };
 /* hasta 3 programas por locutor: p1 usa las claves de siempre; p2 y p3 llevan su prefijo.
    Las tareas de «Contenido» y los reemplazos son del locutor, no de un programa: se guardan sin prefijo. */
@@ -1043,11 +1035,10 @@ function renderRegistro(m) {
 
 function informeMes(m) {
   const enMes = f => f.getMonth() === m && f.getFullYear() === DATA.anio, varios = progs().length > 1;
-  const porFecha = new Map(); let notas = 0;
+  const porFecha = new Map();
   const cs = cuentasMes(m);
   for (const id of progs()) conProg(id, () => { for (const w of sem) for (let i = 0; i < 7; i++) { const f = fechaDia(w, i); if (!enMes(f)) continue;
-    if (get(key(w, 'aire'+i))) { const k = +f; if (!porFecha.has(k)) porFecha.set(k, {f, w, i, progs: []}); porFecha.get(k).progs.push(nombreProg(id)); }
-    if ((get(key(w, 'vn'+i)) || '').trim()) notas++; } });
+    if (get(key(w, 'aire'+i))) { const k = +f; if (!porFecha.has(k)) porFecha.set(k, {f, w, i, progs: []}); porFecha.get(k).progs.push(nombreProg(id)); } } });
   const dias = [...porFecha.values()].sort((a, b) => a.f - b.f).map(x => `- ${fcorta(x.f)} · ${DIAS[x.i]} · ${x.w.dias[x.i].ref} · ${TEMA_TXT[x.w.tema] || x.w.tema}: ${x.w.enfoque}${varios ? ` (${x.progs.join(', ')})` : ''}`);
   const ents = []; for (const id of progs()) conProg(id, () => { for (const w of sem) for (let i = 0; i < 7; i++) { const f = fechaDia(w, i); if (enMes(f) && get(key(w, 'ent'+i))) ents.push(fcorta(f) + (varios ? ' · ' + nombreProg(id) : '')); } });
   const rs = reemplazos(enMesDe(m)).sort((a, b) => a.f - b.f).map(x => fcorta(x.f) + (x.prog ? ' · ' + x.prog : ''));
@@ -1060,7 +1051,6 @@ function informeMes(m) {
       : [`Días al aire: ${c1.aire} de ${c1.total} (${c1.pct}%)`, `Entrevistas: ${ents.length}${ents.length ? ' (' + ents.join(', ') + ')' : ''}`]),
     ...cs.map(c => `${varios ? c.nombre + ': ' : ''}En vivo: ${c.aire - c.grab} · Grabados: ${c.grab}`),
     rs.length ? `Reemplazos: ${rs.length} (${rs.join('; ')})` : null,
-    `Días con notas: ${notas}`,
     (c => c.length ? `Correcciones de coordinación: ${c.join('; ')}` : null)(sem.flatMap(w => (get(keyBase(w, 'correccion')) || []).filter(t => enMes(new Date(t))).map(t => `semana ${w.n} (${fcorta(new Date(t))})`))),
     prepTxt.length ? `Preparación promedio: ${prepTxt.join(' · ')}` : null, '',
     'VERSÍCULOS Y TEMAS COMPARTIDOS', ...(dias.length ? dias : ['- Ninguno marcado.']), ...lineasMsgs(cs, varios)].filter((x, k) => x !== null && (x !== '' || k > 1)).join('\n');
@@ -1593,6 +1583,11 @@ function marcar() {
 addEventListener('scroll', () => { cancelAnimationFrame(espia); espia = requestAnimationFrame(marcar); }, {passive: true});
 
 const hoyDe = w => { const ini = dateOf(w.inicio), f = fechaDia(w, 6); return hoyD >= ini && hoyD <= f ? hoyD.getDay() : -1; };
+// si contó mensajes, el programa salió al aire: se marca solo (un toque menos por día)
+function aireAuto(w, i) { if (get(key(w, 'aire'+i))) return; set(key(w, 'aire'+i), true);
+  const b = $('dias').querySelector(`[data-k="aire${i}"]`); if (b) { b.setAttribute('aria-pressed', 'true'); b.textContent = 'Al aire ✓'; }
+  const t = $('dias').querySelector(`[data-d="${i}"] small`); if (t && !t.textContent.includes('✓')) t.textContent += ' ✓';
+  pintarCuentas(); const cel = $('anio').children[cur]?.querySelector('.p i'); if (cel) cel.style.width = airePct(w) + '%'; }
 const marcarChk = e => { const b = e.target.closest('.chk'); if (!b || bloqueada()) return;
   const w = sem[cur], k = b.dataset.k;
   if (b.dataset.reem) { const kr = keyBase(w, 'reem'+b.dataset.reem); set(kr, typeof get(kr) === 'string' ? null : ''); }
@@ -1618,7 +1613,7 @@ $('dias').onclick = e => {
   const mas = e.target.closest('[data-msg-mas]');
   if (mas) { if (bloqueada()) return; const id = mas.dataset.msgMas, o = {...msgsDe(w, diaSel)};
     const v = Math.max(0, (+o[id] || 0) + (restando ? -1 : 1)); if (v) o[id] = v; else delete o[id];
-    set(key(w, 'msg'+diaSel), Object.keys(o).length ? o : null); fijarModo(w, diaSel);
+    set(key(w, 'msg'+diaSel), Object.keys(o).length ? o : null); fijarModo(w, diaSel); if (v) aireAuto(w, diaSel);
     $('dias').querySelector(`input[data-msg="${id}"]`).value = v || '';
     $('dias').querySelector('[data-msg-total]').textContent = totalMsgs(o); renderRegistro(+$('mes').value);
     if (restando) { restando = false; pintarRestar(); } }
@@ -1627,7 +1622,7 @@ $('dias').addEventListener('input', e => { const inp = e.target.closest('input[d
   const w = sem[cur], o = {...msgsDe(w, diaSel)};
   if (bloqueada()) { inp.value = +o[inp.dataset.msg] || ''; return; }
   const v = Math.max(0, Math.floor(+inp.value || 0)); if (v) o[inp.dataset.msg] = v; else delete o[inp.dataset.msg];
-  set(key(w, 'msg'+diaSel), Object.keys(o).length ? o : null); fijarModo(w, diaSel);
+  set(key(w, 'msg'+diaSel), Object.keys(o).length ? o : null); fijarModo(w, diaSel); if (v) aireAuto(w, diaSel);
   $('dias').querySelector('[data-msg-total]').textContent = totalMsgs(o); renderRegistro(+$('mes').value); });
 $('h-subs').onclick = e => { const b = e.target.closest('[data-ir]'); if (!b) return;
   if (!cfgPrograma().listo) return $('s-prog').scrollIntoView({behavior: 'smooth'});

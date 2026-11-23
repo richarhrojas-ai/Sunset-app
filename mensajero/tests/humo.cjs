@@ -56,6 +56,12 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   await p.click('#dias [data-modo="grabado"]'); await p.waitForTimeout(80);
   ok(await p.$$eval('#dias .msgs-dia', x => x.length) === 0 && await p.$$eval('#dias .msgs-grab', x => x.length) === 1, 'día grabado: sin cuadro de mensajes y con aviso para volver a «En vivo»');
   await p.click('#dias [data-modo="vivo"]'); await p.waitForTimeout(80);
+  await p.click('#dias [data-d="4"]'); await p.waitForTimeout(80);
+  ok(await p.getAttribute('#dias [data-k="aire4"]', 'aria-pressed') === 'false', 'jueves sin marcar');
+  await p.click('#dias [data-msg-mas="fb"]'); await p.waitForTimeout(80);
+  ok(await p.getAttribute('#dias [data-k="aire4"]', 'aria-pressed') === 'true' && (await p.textContent('#dias [data-d="4"] small')).includes('✓'), 'contar un mensaje marca «Al aire» solo');
+  await p.click('#dias [data-msg-restar]'); await p.click('#dias [data-msg-mas="fb"]'); await p.click('#dias [data-k="aire4"]');
+  await p.click('#dias [data-d="3"]'); await p.waitForTimeout(80);
 
   // franja horaria → un punto por programa
   await p.evaluate(() => document.getElementById('s-prep').open = true);
@@ -157,11 +163,6 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   await p.click('#next'); await p.waitForTimeout(80);
   ok((await p.textContent('#h-meta')).includes('Semana 2') && (await p.textContent('#h-meta')).includes('Lila'), 'la semana del 3 de enero es la 2, lila');
   ok(p.errores.length === 0, 'semana 1 sin errores de JavaScript' + (p.errores.length ? ' → ' + p.errores.join(' | ') : ''));
-  await p.close();
-  p = await b.newPage({viewport: {width: 390, height: 844}});
-  await p.addInitScript(() => { if (!sessionStorage.x) { sessionStorage.x = 1; localStorage.setItem('mensajero:entries', JSON.stringify({'2027/w9/aire3': {v: true, t: 1}})); } });
-  await p.goto(URL); await p.waitForTimeout(200);
-  ok(await p.evaluate(() => { const e = JSON.parse(localStorage.getItem('mensajero:entries')); return e['2027/w10/aire3'] && !e['2027/w9/aire3']; }), 'lo guardado con el número de semana viejo pasa a la semana siguiente');
   await p.close();
 
   // ── sobre Mensajero: sin filas «por completar» ──

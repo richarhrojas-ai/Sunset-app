@@ -6,7 +6,7 @@
 
 - **Prototipo funcionando:** https://claude.ai/artifact/QqQ5Epdkk8f2r4Y3TPn9ps (es la referencia visual y de comportamiento)
 - **Repositorio:** `richarhrojas-ai/sunset-app`, rama `claude/mensajero-tema-macro`, carpeta `mensajero/`
-- **Prueba automática:** `node mensajero/tests/humo.cjs` (41 controles; hoy pasan todos)
+- **Prueba automática:** `node mensajero/tests/humo.cjs` (63 controles; hoy pasan todos)
 
 ---
 
@@ -110,14 +110,14 @@ Pestañas por día. Cada tarjeta, en este orden:
 5. **Frase para el aire** (frase célebre con su autor, distinta cada día: lunes y miércoles la primera del subtema, martes y jueves la segunda —columnas «Frase Celebre 1b» y «2b»—, viernes la del subtema 3; domingo y sábado no llevan, salvo el programa de un solo día) y **frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
 6. **«Hacelo a tu estilo»:** idea central del día, dos técnicas que rotan sobre 15 y cómo hacerlo con poco tiempo.
 7. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, las notas del día y de producción) y **Copiar para IA** (todo lo de la semana para generar un guion con IA).
-8. **Mensajes de oyentes** (solo días en vivo): un cuadro con los logos de SMS, WhatsApp, YouTube, Instagram y Facebook. Cada toque suma 1; «Restar» y luego el logo resta 1 y se apaga solo; el número se puede escribir; arriba, el total.
+8. **Mensajes de oyentes** (solo días en vivo): un cuadro con los logos de SMS, WhatsApp, YouTube, Instagram y Facebook. Cada toque suma 1 y, si el día no estaba marcado, lo marca «Al aire» solo (si hubo mensajes, salió al aire); «Restar» y luego el logo resta 1 y se apaga solo; el número se puede escribir; arriba, el total.
 
 Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilustrativa y frase deportiva. Sábado: repaso (dato, idea de cada subtema, acción de la semana), versículo, frase deportiva.
 
 ### Grupos del final
-- **Mi trabajo:** *Mi preparación* (programa: nombre, duración, modalidad y franja; lista de hasta 10 tareas elegidas de una biblioteca de 30 en cuatro grupos —Contenido 12, Producción 11, Técnica 4, Después del aire 3—; notas de producción; porcentaje), *Registro al aire* (por mes: días al aire, en vivo y grabados, entrevistas, mensajes por canal; copiar informe del mes), *Informe de preparación* (por mes, con niveles Excelente/Buena/Regular/Baja; copiar informe).
-- **La serie 2027:** *Historia bíblica y marcos*, *Edificando una Cultura · 2027* (las 52 semanas por color con barra de días al aire), *Buscar* (sin distinguir tildes ni mayúsculas; lleva a la semana).
-- **Para la audiencia:** *Números útiles* (911, 141 SEME —021 141 desde celular—, 132 Bomberos, 155 salud mental, 137 SOS Mujer y WhatsApp 0961 137 137, 147 Fono Ayuda niñez; tocar llama; copiar para leer al aire) y *Sobre Mensajero* (hoja «Mensajero»).
+- **Mi trabajo:** *Mi preparación* (programa: nombre, duración, modalidad y franja; lista de hasta 10 tareas elegidas de una biblioteca de 18 tareas agrupadas; notas de producción; porcentaje), *Registro al aire* (por mes: días al aire, en vivo y grabados, entrevistas, mensajes por canal; copiar informe del mes), *Informe de preparación* (por mes, con niveles Excelente/Buena/Regular/Baja; copiar informe).
+- **La serie 2027:** *Historia bíblica y marcos*, *Edificando una Cultura · 2027* (las 53 semanas por color con barra de días al aire), *Buscar* (sin distinguir tildes ni mayúsculas; lleva a la semana).
+- **Para la audiencia:** *Números útiles* (6 nacionales: 911, 141 SEME —021 141 desde celular—, 132 Bomberos, 155 salud mental, 137 SOS Mujer y WhatsApp 0961 137 137, 147 Fono Ayuda niñez; más 8 de «Salud en la zona»; tocar llama; copiar para leer al aire), *Sobre Mensajero* (hoja «Mensajero»; las filas vacías no se muestran) e *Historias de Mensajero* (las aprobadas del libro).
 
 ### Tamaño de letra
 Botón «A» junto a la fecha: Normal, Grande (115 %) y Muy grande (130 %) para el contenido (cada tamaño se multiplica por la variable `--fz`; no se usa `zoom`, que algunas tabletas ignoran) (no para la ilustración), guardado en cada dispositivo (`localStorage["mensajero:letra"]`). Los títulos con contenido (subtemas, ideas del repaso) van en minúscula normal y negrita, no en mayúsculas espaciadas.
@@ -208,7 +208,7 @@ mensajero/
 
 ## 10. Lista de aceptación (lo que tiene que salir del horno)
 
-La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 61 controles** apuntando a la nueva app, y además:
+La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 63 controles** apuntando a la nueva app, y además:
 
 - Mismo aspecto que el prototipo en celular (oscuro) y computadora (clara), en las 7 escenas.
 - Un locutor marca en el celular y lo ve en la computadora (sincronización), y viceversa, sin perder marcas cuando las dos editan (gana la más reciente por clave).
@@ -222,7 +222,6 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 61 
 - **Dónde está:** el contenido de la semana 1 está en `content/semana_01_2027.json`. La planilla sigue numerada 1-52 desde el 3 de enero. `build_data.py` agrega la semana 1 al principio y le suma 1 al número de las demás.
 - **En los datos:** la semana 1 lleva `desde: 5`, el primer día con contenido. Los días anteriores están vacíos.
 - **En la app:** `activos(w)` y `misDe(w)` filtran esos días vacíos en las pestañas, en las cuentas «al aire», en el prompt y en el buscador. El encabezado muestra «1–2 ene».
-- **Lo guardado antes:** se migra una sola vez. Las claves `2027/wN/…` pasan a `2027/w(N+1)/…`, y la marca `meta/semana1` evita que se repita.
 - **Para 2028:** si el año vuelve a empezar a mitad de semana, se repite el mismo esquema con `semana_01_2028.json`.
 
 ## 11. Decisiones pendientes (no son del programador, pero lo afectan)
