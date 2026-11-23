@@ -462,16 +462,29 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (prefers-reduced-motion:no-preference){.scene .sol{animation:glow 6s ease-in-out infinite alternate}@keyframes glow{to{opacity:.75}}}
 
-/* ── MODO CLARO: la ilustración de arriba y los paneles de tema quedan oscuros; el resto pasa a papel claro ── */
+/* ── MODO CLARO: portada con luz de mañana (diurna) y papel claro; las hojas de tema quedan oscuras ── */
 :root[data-tema="claro"]{--ink:#1f1a2b;--ink2:rgba(31,26,43,.88);--ink3:rgba(31,26,43,.7);--glass:#fff;--glass2:rgba(31,26,43,.06);--line:rgba(31,26,43,.13);
   --fg:31,26,43;--bg:255,255,255;--gold-t:#8a6500;--acc-t:color-mix(in srgb,var(--acc) 38%,#2a1f3a);--papel:color-mix(in srgb,var(--low) 7%,#f7f5f2)}
 :root[data-tema="claro"] body,:root[data-tema="claro"][data-prog] body{background:var(--papel);background-image:none}
-:root[data-tema="claro"] :is(.hero,dialog.hoja){--ink:#fff;--ink2:rgba(255,255,255,.88);--ink3:rgba(255,255,255,.7);--glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.13);
+:root[data-tema="claro"] dialog.hoja{--ink:#fff;--ink2:rgba(255,255,255,.88);--ink3:rgba(255,255,255,.7);--glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.13);
   --line:rgba(255,255,255,.16);--fg:255,255,255;--bg:0,0,0;--gold-t:var(--gold);--acc-t:var(--acc);color:var(--ink)}
-:root[data-tema="claro"] .scene::after{display:none}
+/* portada de día: cielo de mañana, letra oscura y vidrio claro; abajo se funde con el papel de la página */
+:root[data-tema="claro"] .hero{color:var(--ink)}
+:root[data-tema="claro"] .hero::before{background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0))}
+:root[data-tema="claro"] .scene::after{display:block;height:34%;background:linear-gradient(180deg,transparent,var(--papel))}
+:root[data-tema="claro"] .logo b{color:var(--ink)}
+:root[data-tema="claro"] .fecha{text-shadow:none}
+:root[data-tema="claro"] .apariencia{border-color:rgba(31,26,43,.18);background:rgba(255,255,255,.6);color:var(--ink)}
+:root[data-tema="claro"] .temas button{color:var(--ink2)}
+:root[data-tema="claro"] .temas .ic{border-color:rgba(31,26,43,.16);background:rgba(255,255,255,.55)}
+:root[data-tema="claro"] .temas svg{stroke:var(--ink)}
+:root[data-tema="claro"] .temas small{background:rgba(255,255,255,.78)}
+:root[data-tema="claro"] .temas button[aria-current="true"] .ic{border-color:#c99400;background:rgba(255,215,0,.35);box-shadow:0 0 0 3px rgba(255,215,0,.2)}
+:root[data-tema="claro"] .temas button[aria-current="true"]{color:var(--gold-t)}
+:root[data-tema="claro"] .hero-glass{background:rgba(255,255,255,.74);border-color:rgba(31,26,43,.1);box-shadow:0 8px 28px rgba(31,26,43,.1)}
+:root[data-tema="claro"] .dot{box-shadow:0 0 0 1px rgba(31,26,43,.25)}
+:root[data-tema="claro"] .nav button{background:rgba(255,255,255,.8);border-color:rgba(31,26,43,.14);color:var(--ink)}
 :root[data-tema="claro"] .firma img{background:var(--h3);border-radius:28px;padding:14px 20px}
-:root[data-tema="claro"] .hero-glass{background:color-mix(in srgb,var(--h3) 86%,transparent)}
-:root[data-tema="claro"] .nav button{background:color-mix(in srgb,var(--h3) 88%,transparent)}
 :root[data-tema="claro"] .bar{background:color-mix(in srgb,var(--papel) 92%,transparent)}
 :root[data-tema="claro"] .card{box-shadow:0 1px 3px rgba(31,26,43,.06)}
 :root[data-tema="claro"] :is(.vers-base){background:color-mix(in srgb,var(--low) 13%,#fff)}
@@ -829,6 +842,14 @@ function semanaHoy() {
 let cur = semanaHoy();
 const fmt = d => d.toLocaleDateString('es-PY', {day:'numeric', month:'long'});
 
+// modo claro: la misma escena con luz de mañana. Cielo y lomas se aclaran hacia el blanco, con el tono de cada color;
+// las siluetas quedan en un tono medio para que se lean sin manchar (como el modo día de Sunset)
+const mezcla = (a, b, t) => { const h = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)), x = h(a), y = h(b);
+  return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+const diurna = p => ({...p, top: mezcla(p.low, '#ffffff', .25), mid: mezcla(p.low, '#ffffff', .55), low: mezcla(p.warm, '#ffffff', .6), warm: mezcla(p.warm, '#ffffff', .15),
+  h1: mezcla(p.low, '#ffffff', .35), h2: mezcla(p.mid, p.low, .55), h3: mezcla(mezcla(p.mid, p.h2, .35), '#ffffff', .12)});
+const esClaro = () => document.documentElement.dataset.tema === 'claro';
+function pintarEscena() { const w = sem[cur], p = PAL[w.color] || PAL.Lila; $('scene').innerHTML = escena(w.tema, esClaro() ? diurna(p) : p); }
 function aplicarPaleta(p) {
   const r = document.documentElement.style;
   for (const k of ['top','mid','low','warm','h1','h2','h3','acc']) r.setProperty('--'+k, p[k]);
@@ -870,7 +891,7 @@ function corregirSemana() {
 function render() {
   const w = sem[cur], p = PAL[w.color] || PAL.Lila;
   aplicarPaleta(p);
-  $('scene').innerHTML = escena(w.tema, p);
+  pintarEscena();
   const ini = fechaDia(w, w.desde || 0), fin = fechaDia(w, 6);
   const mes = d => d.toLocaleDateString('es-PY', {month: 'short'}).replace('.', '');
   const rango = (ini.getMonth() === fin.getMonth() ? `${ini.getDate()}–${fin.getDate()} ${mes(fin)}` : `${ini.getDate()} ${mes(ini)} – ${fin.getDate()} ${mes(fin)}`) + (fin.getFullYear() !== DATA.anio ? ' ' + fin.getFullYear() : '');
@@ -1474,6 +1495,7 @@ function pintarApariencia() {
   document.documentElement.dataset.tema = temaDe(APARIENCIA);
   const [n, ico] = APAR[APARIENCIA] || APAR.auto, b = $('apariencia');
   b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${ico}</svg>`; b.title = b.ariaLabel = `Apariencia: ${n}`;
+  pintarEscena();
 }
 $('apariencia').onclick = () => { const orden = ['auto', 'oscuro', 'claro']; APARIENCIA = orden[(orden.indexOf(APARIENCIA) + 1) % 3];
   try { localStorage.setItem('mensajero:apariencia', APARIENCIA); } catch {}
