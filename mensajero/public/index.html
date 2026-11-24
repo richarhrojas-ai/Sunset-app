@@ -986,18 +986,20 @@ function render() {
 }
 
 /* sobre Mensajero: hoja «Mensajero» de la planilla, más valores y programas que ya están en los datos */
+const GRILLA = 'https://mensajerofm.org/grilla/index.php';
 function renderMensajero() {
   const M = DATA.mensajero || [], secciones = [...new Set(M.map(x => x.seccion))];
   const item = (t, x, aire) => `<div class="inst-item"><b>${esc(t)}</b>${x ? `<p>${esc(x)}</p>` : '<p class="falta">Por completar en la planilla (hoja «Mensajero»)</p>'}
     ${x && aire ? `<button class="btn mini" data-txt="${esc(x)}">Copiar</button>` : ''}</div>`;
   const bloque = (titulo, cuerpo) => `<div><h4>${esc(titulo)}</h4><div class="inst">${cuerpo}</div></div>`;
-  const programas = [...new Map(DATA.semanas.map(w => [w.programa, w.locutor])).entries()];
   // las filas sin completar no se muestran: aparecen solas cuando se cargan en la planilla
   const html = secciones.map(sec => {
     const filas = M.filter(x => x.seccion === sec && x.texto);
     let b = filas.length ? bloque(sec, filas.map(x => item(x.titulo, x.texto, x.aire)).join('')) : '';
     if (sec === 'Propósito') b += bloque('Valores', Object.entries(DATA.valores).map(([v, g]) => item(v, g.definicion, true)).join(''));
-    if (sec === 'Organigrama') b += bloque('Programas y locutores', programas.map(([p, l]) => item(p, l, false)).join(''));
+    // la programación cambia cada año: la app no la copia, lleva a la grilla de la radio
+    if (sec === 'Organigrama') b += bloque('Programación', `<div class="inst-item"><b>Grilla de programación</b><p>Todos los programas, con sus días, horarios y locutores, en la página de la radio.</p>
+      <a class="btn mini" href="${GRILLA}" target="_blank" rel="noopener">Abrir la grilla</a></div>`);
     return b;
   }).join('');
   $('mensajero').innerHTML = html || '<p class="muted">Agregá la hoja «Mensajero» en la planilla para ver acá la información de la radio.</p>';
