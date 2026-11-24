@@ -366,7 +366,7 @@
     off.width = off.height = Math.round(S * dpr);
     const o = off.getContext('2d');
     o.scale(dpr, dpr);
-    const form = Object.assign({}, FORMS.leafy, { thick: 1.5, trunkK: 2.25, depth: 7, lift: 0.55, spread: 0.9 });
+    const form = Object.assign({}, FORMS.leafy, { thick: 1.5, trunkK: 2.25, depth: 7, lift: 1.1, spread: 0.82 });
     const rand = rng(11);
     const base = cy + R * 0.93;
     const scale = R * 0.3;
@@ -379,18 +379,11 @@
       const up = (yBot - t[1]) / Math.max(1, yBot - yTop);          // 0 abajo, 1 arriba
       return { x: t[0], y: t[1] - scale * 0.06, r: scale * (0.17 + rand() * 0.07 + up * 0.03), up: up };
     });
-    // Cúpula: sobre el centro de la copa, racimos más arriba (máximo en el centro, nada en los bordes).
+    // Hacia los bordes los racimos se achican: la silueta termina suave, sin discos sueltos a los costados.
     let cx0 = Infinity, cx1 = -Infinity;
     clusters.forEach(function (c) { cx0 = Math.min(cx0, c.x); cx1 = Math.max(cx1, c.x); });
-    const dmx = (cx0 + cx1) / 2, drx = (cx1 - cx0) / 2, domeH = scale * 0.8;
-    clusters.slice().forEach(function (c) {
-      const u = (c.x - dmx) / drx;
-      if (Math.abs(u) > 0.8 || c.up < 0.35) return;
-      const room = domeH * Math.sqrt(1 - u * u);
-      if (rand() < 0.3) return;
-      const n = 1 + (rand() < 0.35 ? 1 : 0);
-      for (let i = 1; i <= n; i++) clusters.push({ x: c.x + (rand() - 0.5) * c.r, y: c.y - room * (i / n) * (0.7 + rand() * 0.3), r: c.r * (0.9 + rand() * 0.15), up: 1 });
-    });
+    const dmx = (cx0 + cx1) / 2, drx = Math.max(1, (cx1 - cx0) / 2);
+    clusters.forEach(function (c) { const u = Math.abs(c.x - dmx) / drx; c.r *= 1 - 0.4 * Math.max(0, u - 0.55) / 0.45; c.edge = u; });
     clusters.sort(function (a, b) { return b.y - a.y; });               // de abajo hacia arriba
     // Capas de follaje achatadas (como la copa de un flamboyán): sombra abajo, cuerpo y luz arriba,
     // con un borde de hojitas en la parte superior para que la silueta no sea lisa.
@@ -398,8 +391,9 @@
       o.fillStyle = color;
       o.beginPath(); o.ellipse(c.x, c.y + dy, c.r * kx, c.r * ky, 0, 0, Math.PI * 2); o.fill();
     };
-    clusters.forEach(function (c) { pad(c, c.r * 0.12, 1.28, 0.6, '#3A200F'); });
-    clusters.forEach(function (c) { pad(c, 0, 1.25, 0.56, '#54301A'); });
+    const kx = function (c) { return 1.25 - 0.3 * Math.max(0, (c.edge || 0) - 0.6); };
+    clusters.forEach(function (c) { pad(c, c.r * 0.12, kx(c) + 0.03, 0.6, '#3A200F'); });
+    clusters.forEach(function (c) { pad(c, 0, kx(c), 0.56, '#54301A'); });
     clusters.forEach(function (c) {
       for (let i = 0; i < 12; i++) {
         const a = -Math.PI * (0.04 + 0.92 * rand());
