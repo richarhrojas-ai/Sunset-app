@@ -1080,10 +1080,11 @@ function render() {
   $('h-tema').textContent = TEMA_TXT[w.tema] || w.tema;
   $('h-enfoque').textContent = w.enfoque;
   // dorado = semana en curso (en el cuadro y en su ícono); otra semana del mismo color se ve distinta para no confundirse
-  const enAnio = hoyD >= dateOf(sem[0].inicio) && hoyD <= fechaDia(sem[sem.length - 1], 6), hoyI = semanaHoy(), enCurso = enAnio && cur === hoyI;
-  $('h-glass').classList.toggle('actual', enCurso); $('h-glass').classList.toggle('otra', enAnio && !enCurso);
-  $('hoy').classList.toggle('llamar', enAnio && !enCurso);
-  $('h-meta').innerHTML = `${enCurso ? '<span class="estado-sem actual">● En curso</span>' : enAnio ? `<span class="estado-sem otra">${cur < hoyI ? 'Ya pasó' : cur === hoyI + 1 ? 'Semana próxima' : 'Más adelante'}</span>` : ''}<span>Semana <b>${w.n}</b></span><span>${rango}</span><span><span class="dot"></span><b>${esc(w.color)}</b></span>`;
+  // semana activa: la de hoy; antes de que empiece el año, la primera (después de terminar, la última)
+  const enAnio = hoyD >= dateOf(sem[0].inicio) && hoyD <= fechaDia(sem[sem.length - 1], 6), hoyI = semanaHoy(), enCurso = cur === hoyI;
+  $('h-glass').classList.toggle('actual', enCurso); $('h-glass').classList.toggle('otra', !enCurso);
+  $('hoy').classList.toggle('llamar', !enCurso);
+  $('h-meta').innerHTML = `${enCurso ? `<span class="estado-sem actual">● ${enAnio ? 'En curso' : hoyD < dateOf(sem[0].inicio) ? 'Primera semana' : 'Última semana'}</span>` : `<span class="estado-sem otra">${cur < hoyI ? 'Ya pasó' : cur === hoyI + 1 ? 'Semana próxima' : 'Más adelante'}</span>`}<span>Semana <b>${w.n}</b></span><span>${rango}</span><span><span class="dot"></span><b>${esc(w.color)}</b></span>`;
   $('h-subs').innerHTML = w.desde ? `<li><span>1</span><button data-ir="5">${esc(w.subtemas[2].titulo)}</button></li><li><span>2</span><button data-ir="6">${esc(resumenDe(w).titulo)}</button></li>`
     : w.subtemas.map((s, i) => `<li><span>${i+1}</span><button data-ir="${[1,3,5][i]}">${esc(s.titulo)}</button></li>`).join('');
   const antes = hoyD < dateOf(sem[0].inicio);
@@ -1093,7 +1094,7 @@ function render() {
   document.title = `${w.enfoque} · Edificando una Cultura`;
 
   // íconos de los 7 temas en el cielo: el de la semana resaltado
-  const temaHoy = enAnio ? sem[hoyI].tema : null;
+  const temaHoy = sem[hoyI].tema;
   $('temas').innerHTML = TEMAS.map(t => `<button data-t="${esc(t)}" aria-current="${t === w.tema}" class="${t === temaHoy ? 'es-actual' : ''}" aria-haspopup="dialog">
     <span class="ic">${icono(t)}</span><small>${esc(TEMA_CORTO[t] || t)}</small><span class="prox-f">${proximaDe(t)}</span></button>`).join('');
 
