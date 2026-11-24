@@ -133,6 +133,8 @@ function parseCSV(t) {
   const [cab, ...rs] = out; return rs.filter(r => r.length === cab.length).map(r => Object.fromEntries(cab.map((k, i) => [k, r[i]])));
 }
 const num = v => +v || 0;
+// «de 07:20 a 08:30» → «07:20 – 08:30» (en la planilla viene con palabras; en el panel, solo las horas)
+const horaCorta = t => { const m = /(\d{1,2}:\d{2})\D+(\d{1,2}:\d{2})/.exec(t || ''); return m ? `${m[1]} – ${m[2]}` : (t || ''); };
 function normalizar(r) { const o = {...r}; for (const k of ['al_aire','entrevista','sms','whatsapp','youtube','instagram','facebook','mensajes','preparacion_semana','semana']) o[k] = num(r[k]); o.mes = +r.fecha.slice(5, 7) - 1; return o; }
 
 async function cargar(files) {
@@ -223,7 +225,7 @@ function pintar() {
   const cols = [['locutor','Locutor'],['programa','Programa'],['horario','Horario'],['pct','Al aire'],['vivo','En vivo'],['grab','Grabados'],['ent','Entrevistas'],['msgs','Mensajes'],['msgsDia','Mens./día'],['prepProm','Preparación']];
   R.sort((a, b) => { const x = a[orden.col], y = b[orden.col]; return (typeof x === 'string' ? x.localeCompare(y, 'es') : x - y) * (orden.asc ? 1 : -1); });
   $('tabla').innerHTML = `<thead><tr>${cols.map(([k, n]) => `<th data-col="${k}"${orden.col === k ? ` aria-sort="${orden.asc ? 'ascending' : 'descending'}"` : ''}>${n}</th>`).join('')}</tr></thead><tbody>${R.map(o => `<tr>
-    <td>${esc(o.locutor)}</td><td>${esc(o.programa)}</td><td>${esc(o.horario)}</td>
+    <td>${esc(o.locutor)}</td><td>${esc(o.programa)}</td><td>${esc(horaCorta(o.horario))}</td>
     <td title="${o.aire} de ${o.previstos} días previstos"><span class="pct ${o.pct < 75 ? 'bajo' : ''}"><i style="--p:${o.pct}%"></i>${o.pct} %</span></td>
     <td>${o.vivo}</td><td>${o.grab}</td><td>${o.ent}</td><td>${o.msgs.toLocaleString('es-PY')}</td><td>${o.msgsDia}</td><td class="${o.prepProm < 60 ? 'bajo' : ''}">${o.prepProm} %</td></tr>`).join('')}</tbody>`;
   // reemplazos: quién cubrió qué programa, cuántas veces y cuándo
