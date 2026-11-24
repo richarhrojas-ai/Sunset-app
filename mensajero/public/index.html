@@ -1527,7 +1527,7 @@ async function hacerFlyer(w, i, modo = 'noche') {
   ctx.letterSpacing = '0px';
   try { const logo = await cargarImg(document.querySelector('.logo img').src); ctx.drawImage(logo, 60, 60, 84, 84); } catch {}
   ctx.textAlign = 'left'; ctx.fillStyle = tinta; ctx.font = '800 34px Nunito, sans-serif'; ctx.fillText('MENSAJERO', 160, 100);
-  ctx.fillStyle = suave; ctx.font = '400 22px Jost, sans-serif'; ctx.fillText('100.9 FM · Suena bien, hace bien', 160, 134);
+  ctx.fillStyle = suave; ctx.font = '400 22px Jost, sans-serif'; ctx.fillText('Suena bien, hace bien', 160, 134);   // sin «100.9 FM»: la audiencia también está en las redes
   return cv;
 }
 let flyerModo = null;   // noche o día: arranca como la apariencia de la app y se puede cambiar en la hoja del flyer
@@ -1540,7 +1540,7 @@ async function abrirFlyer(w, i, modo) {
   $('flyer-img').src = url; $('flyer-bajar').href = url; $('flyer-bajar').download = nombre;
   const share = $('flyer-compartir'); share.hidden = !(navigator.canShare);
   share.onclick = async () => { try { const b = await (await fetch(url)).blob(); const file = new File([b], nombre, {type: 'image/png'});
-    if (navigator.canShare({files: [file]})) await navigator.share({files: [file], text: `¡Gracias por acompañarnos! ${w.dias[i].ref} · Mensajero 100.9 FM`}); } catch {} };
+    if (navigator.canShare({files: [file]})) await navigator.share({files: [file], text: `¡Gracias por acompañarnos! ${w.dias[i].ref} · Mensajero`}); } catch {} };
   $('flyer-bajar').onclick = async (e) => {
     // dentro del visor de claude.ai la descarga pasa por su capacidad «downloads»
     if (!window.claude?.use) return;
