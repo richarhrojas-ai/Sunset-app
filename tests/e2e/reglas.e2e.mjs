@@ -42,23 +42,61 @@ test('Hoy: sábado de evaluación, días anteriores y domingo con la historia', 
   assert.deepEqual(p.errors, []);
 });
 
-test('sábado: evaluación de a una pregunta, con avance, teclas y «Anterior»', async () => {
+test('preguntas repartidas de lunes a viernes; las pendientes pasan al día siguiente', async () => {
+  const p = await openApp(env, { date: '2027-01-11T10:00:00' });   // lunes: 2 de las 9
+  assert.equal(await p.locator('#hoyView .dq .dq-item').count(), 2);
+  assert.equal(await p.innerText('#hoyView .dq .dq-label'), 'PREGUNTAS DE HOY');
+  const q = await openApp(env, { date: '2027-01-13T10:00:00' });   // miércoles: 2 de hoy + 4 pendientes
+  const words = await q.locator('#hoyView .dq .dq-word').allInnerTexts();
+  assert.equal(words.filter((x) => /DE LUNES|DE MARTES/.test(x)).length, 4, words.join(' | '));
+  await q.locator('#hoyView .dq .q-scale').first().locator('button').nth(4).click();
+  await q.waitForTimeout(500);
+  assert.equal(await q.locator('#hoyView .dq .dq-item').count(), 5, 'la respondida se va');
+  assert.deepEqual(p.errors.concat(q.errors), []);
+});
+
+test('sábado: lo pendiente de a una (con avance, teclas y «Anterior») y el cierre de cada palabra', async () => {
   const p = await openApp(env, { date: SAB, width: 1180 });
   const ev = '#hoyView .hoy-eval';
+  const total = await p.textContent(ev + ' .ev-count');
+  assert.match(total, / de 9 respondidas/);
   const q1 = await p.textContent(ev + ' .ev-q');
-  const before = Number((await p.textContent(ev + ' .ev-count')).split(' ')[0]);
-  await p.locator(ev + ' .q-scale button').nth(3).click();
-  assert.equal(await p.textContent(ev + ' .ans-label'), 'Casi siempre', 'cada número con su palabra');
+  const before = Number(total.split(' ')[0]);
+  await p.locator(ev + ' .ev-card .q-scale button').nth(3).click();
+  assert.equal(await p.textContent(ev + ' .ev-card .ans-label'), 'Casi siempre', 'cada número con su palabra');
   await p.waitForFunction((a) => document.querySelector('#hoyView .ev-q').textContent !== a, q1);
-  assert.equal(await p.textContent(ev + ' .ev-count'), (before + 1) + ' de 15', 'pasa sola a la siguiente');
-  await p.locator(ev + ' .q-scale button').first().focus();
+  assert.equal(await p.textContent(ev + ' .ev-count'), (before + 1) + ' de 9 respondidas', 'pasa sola a la siguiente');
+  await p.locator(ev + ' .ev-card .q-scale button').first().focus();
   await p.keyboard.press('5');
   await p.waitForFunction((n) => document.querySelector('#hoyView .ev-count').textContent.startsWith(String(n)), before + 2);
   await p.click(ev + ' .ev-link:first-child');
   await p.click(ev + ' .ev-link:first-child');
   assert.equal(await p.textContent(ev + ' .ev-q'), q1, '«Anterior» vuelve a la primera');
-  assert.equal(await p.locator(ev + ' .q-scale button[aria-pressed="true"]').textContent(), '4', 'con su respuesta marcada');
+  assert.equal(await p.locator(ev + ' .ev-card .q-scale button[aria-pressed="true"]').textContent(), '4', 'con su respuesta marcada');
+  assert.equal(await p.locator(ev + ' .ev-close-row').count(), 3, 'cierre de las 3 palabras');
+  await p.locator(ev + ' .ev-close-row textarea').first().fill('Ordenar antes de quejarme');
+  await p.locator(ev + ' .ev-close-row textarea').first().blur();
+  await p.waitForTimeout(300);
+  const c = await p.evaluate(() => JSON.parse(localStorage.getItem('sunset_v2')).entries['2027/w2/c/Entorno']);
+  assert.equal(c && c.v, 'Ordenar antes de quejarme', 'la frase de cierre se guarda');
   assert.deepEqual(p.errors, []);
+});
+
+test('tendencia: cómo se movió la palabra desde la última vez que se evaluó', async () => {
+  // Entorno se evalúa en las semanas internas 2 y 37 (visibles 3 y 38). Sábado de la 38.
+  const ctx = await env.browser.newContext({ viewport: { width: 1180, height: 900 } });
+  const p = await ctx.newPage();
+  await p.addInitScript(() => {
+    const t = Date.now();
+    localStorage.setItem('sunset_v2', JSON.stringify({ entries: { '2027/w2/a/Entorno': { v: [3, 3, 3], t }, '2027/w37/a/Entorno': { v: [4, 4, 4], t } }, welcomed: true }));
+  });
+  await p.clock.install({ time: new Date('2027-09-18T10:00:00') });
+  await p.goto(env.url);
+  await p.fill('#lockInput', 'clave123'); await p.click('#lockBtn');
+  await p.waitForSelector('#lock', { state: 'hidden' });
+  await p.waitForSelector('#hoyView .ev-trend');
+  const trends = await p.locator('#hoyView .ev-trend').allInnerTexts();
+  assert.ok(trends.some((x) => /^↑ 20 desde la semana 3$/.test(x)), trends.join(' | '));
 });
 
 test('semanas cerradas: se edita la actual y la anterior; las más viejas solo con nota posterior', async () => {

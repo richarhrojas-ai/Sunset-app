@@ -736,3 +736,14 @@ h2.dq-label{margin-top:0;}
 .ev-end-list .dim-mini{width:24px;height:24px;color:var(--wk);}
 .ev-end-list b{margin-left:auto;font-weight:500;color:var(--ink);}
 :root[data-theme="day"] .ev-q{font-weight:400;}
+.ev-close{display:flex;flex-direction:column;gap:10px;margin-top:6px;}
+.ev-close-row{padding:10px 12px;border-radius:12px;background:var(--glass2);display:flex;flex-direction:column;gap:6px;}
+.ev-close-top{display:flex;align-items:center;gap:10px;}
+.ev-close-top .dim-mini{width:26px;height:26px;color:var(--wk);flex:none;}
+.ev-close-pct{margin-left:auto;font-weight:500;color:var(--ink);}
+.ev-trend{margin:0;font-size:12.5px;color:var(--txt2);}
+.ev-trend.up{color:var(--txt);}
+.ev-close .note{margin-top:2px;}
+.q-trend{margin:4px 2px 0;font-size:13px;color:var(--txt2);}
+.dq-item+.dq-item{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);}
+.hoy-eval .dq-more{align-self:flex-start;}

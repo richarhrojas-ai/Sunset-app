@@ -3,7 +3,7 @@
 
 Uso:  python3 tools/build_data.py
 
-Procesa cada content/planillas/sunset-contenido-AAAA.xlsx. De cada una lee las hojas "Frases" (52 semanas), "Preguntas" (49 palabras × 5 preguntas)
+Procesa cada content/planillas/sunset-contenido-AAAA.xlsx. De cada una lee las hojas "Frases" (52 semanas), "Preguntas" (49 palabras × 5 preguntas; preguntas-esenciales.json elige 3)
 y, si existe, "Mapeo Puente" (referencia interna de El Puente Relacional),
 ubica las 3 palabras principales de cada semana en el tablero 7×7 (fila de
 inicio y columna/color) y escribe un módulo que solo lee el servidor (función /api/content): el contenido
@@ -134,6 +134,15 @@ def build_year(src):
         board[DIMENSIONS.index(dim)].append(word)
         questions[word] = [clean(q) for q in row[3:8]]
     assert all(len(r) == 7 for r in board), "Cada dimensión debe tener 7 palabras"
+    # Preguntas esenciales (opcional): content/recursos/preguntas-esenciales.json elige 3 de las 5 por palabra.
+    sel_file = ROOT / "content" / "recursos" / "preguntas-esenciales.json"
+    if sel_file.exists():
+        sel = {k: v for k, v in json.loads(sel_file.read_text(encoding="utf-8")).items() if not k.startswith("_")}
+        for word in list(questions):
+            idx = sel.get(word)
+            assert idx, f"preguntas-esenciales.json: falta la palabra {word}"
+            assert all(1 <= i <= len(questions[word]) for i in idx), f"preguntas-esenciales.json: índice fuera de rango en {word}"
+            questions[word] = [questions[word][i - 1] for i in idx]
     canon = {norm(w): w for r in board for w in r}
 
     # ── Semanas ──

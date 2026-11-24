@@ -48,7 +48,7 @@ restaurar copias con deshacer; exportar/importar JSON y planilla CSV.
 4. **Domingo**: título, frase de la semana destacada, historia (en Hoy, el domingo, la historia se ve completa como vistazo general de la semana).
 5. **Lunes a sábado**: 6 tarjetas, cada una con su matiz; título en negrita arriba, frase centrada, botón «Registro, ánimo y gratitud» abajo. Hoy se escribe en la tarjeta; los otros días se abren en una pantalla grande.
 6. «Hace un año» (si hay datos de esa semana el año anterior).
-7. **Autoevaluación**: 3 palabras principales, 5 preguntas de 1 a 5, porcentaje discreto.
+7. **Autoevaluación**: 3 palabras principales, 3 preguntas esenciales cada una (9 por semana, repartidas de lunes a viernes), escala de 1 a 5 con palabras (Nunca a Siempre), cierre del sábado con resultado, tendencia y «Lo que me llevo de…».
 8. **Cierre**: maestría del color (automática), ánimo de la semana (7 barras), qué funcionó, intención.
 9. Plegables: Progreso del año (flores), Ánimo del año (árboles que se pintan), Tablero de maestría (49 palabras), Diario/agenda/recordatorio, Respaldo y sincronización.
 
