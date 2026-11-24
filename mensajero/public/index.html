@@ -157,14 +157,11 @@ dialog#cal[open]{display:block;overflow:auto}
 .temas button.es-actual .ic{border-color:var(--gold-t);background:rgba(255,215,0,.2);box-shadow:0 0 0 3px rgba(255,215,0,.16),0 0 16px rgba(255,215,0,.35)}
 .temas button.es-actual small{color:var(--gold-t);font-weight:600}
 /* tema de la semana que se está viendo, si no es la actual: aro blanco punteado */
-.temas button[aria-current="true"]:not(.es-actual) .ic{border:2px dashed rgba(255,255,255,.85)}
+.temas button[aria-current="true"]:not(.es-actual) .ic{border:1.5px solid rgba(255,255,255,.9)}
 .temas button[aria-current="true"]:not(.es-actual) small{font-weight:600;color:#fff}
 .hero-glass.actual{border:2px solid var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.12)}
-.hero-glass.otra{border:2px dashed rgba(255,255,255,.5)}
-.estado-sem{display:inline-flex;align-items:center;padding:2px 9px;border-radius:999px;font-weight:600;letter-spacing:.08em}
-.estado-sem.actual{background:var(--gold);color:#2a1a08}
-.estado-sem.otra{border:1px dashed currentColor;color:var(--ink)}
-.nav #hoy.llamar{background:var(--gold);color:#2a1a08;border-color:var(--gold);font-weight:600}
+.meta .fechas-act{background:var(--gold);color:#2a1a08;border-radius:999px;padding:1px 10px;font-weight:600}
+.nav #hoy.llamar{border-color:rgba(var(--fg),.8);font-weight:600}
 @media(max-width:560px){.temas{left:8px;right:8px;top:76px;padding:8px 2px 7px;gap:0;border-radius:18px}.temas .ic{width:38px;height:38px}.temas svg{width:19px;height:19px}.temas small{font-size:calc(9.4px*var(--fz,1));letter-spacing:-.01em}.temas button{gap:5px}}
 @media(max-width:380px){.temas small{font-size:calc(8.8px*var(--fz,1))}}
 
@@ -603,10 +600,10 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"] .temas svg{stroke:#1f1a2b}
 :root[data-tema="claro"] .temas button.es-actual .ic{border-color:#c99400;background:#ffe27a;box-shadow:0 0 0 3px rgba(255,200,0,.22)}
 :root[data-tema="claro"] .temas button.es-actual small{color:#6b4c00;font-weight:700}
-:root[data-tema="claro"] .temas button[aria-current="true"]:not(.es-actual) .ic{border:2px dashed #1f1a2b}
+:root[data-tema="claro"] .temas button[aria-current="true"]:not(.es-actual) .ic{border:1.5px solid #1f1a2b}
 :root[data-tema="claro"] .temas button[aria-current="true"]:not(.es-actual) small{color:#1f1a2b}
 :root[data-tema="claro"] .hero-glass.actual{border-color:#c99400}
-:root[data-tema="claro"] .hero-glass.otra{border-color:rgba(31,26,43,.45)}
+:root[data-tema="claro"] .meta .fechas-act{background:#ffe27a;color:#3d2c00}
 :root[data-tema="claro"] .hero-glass{text-shadow:0 0 10px rgba(255,255,255,.85),0 0 2px rgba(255,255,255,.6);background:rgba(255,255,255,.34);border-color:rgba(31,26,43,.1);box-shadow:0 8px 28px rgba(31,26,43,.1)}
 :root[data-tema="claro"] .hero-glass .enfoque{font-weight:350;color:#160f22}
 :root[data-tema="claro"] .hero-glass .tema{display:inline-block;font-weight:700;font-size:calc(12px*var(--fz,1));letter-spacing:.12em;color:#5a3f00;background:rgba(255,255,255,.72);padding:4px 10px;border-radius:999px;text-shadow:none}
@@ -1084,7 +1081,8 @@ function render() {
   const enAnio = hoyD >= dateOf(sem[0].inicio) && hoyD <= fechaDia(sem[sem.length - 1], 6), hoyI = semanaHoy(), enCurso = cur === hoyI;
   $('h-glass').classList.toggle('actual', enCurso); $('h-glass').classList.toggle('otra', !enCurso);
   $('hoy').classList.toggle('llamar', !enCurso);
-  $('h-meta').innerHTML = `${enCurso ? `<span class="estado-sem actual">● ${enAnio ? 'En curso' : hoyD < dateOf(sem[0].inicio) ? 'Primera semana' : 'Última semana'}</span>` : `<span class="estado-sem otra">${cur < hoyI ? 'Ya pasó' : cur === hoyI + 1 ? 'Semana próxima' : 'Más adelante'}</span>`}<span>Semana <b>${w.n}</b></span><span>${rango}</span><span><span class="dot"></span><b>${esc(w.color)}</b></span>`;
+  // en la semana activa las fechas van resaltadas; en las demás, simples
+  $('h-meta').innerHTML = `<span>Semana <b>${w.n}</b></span><span class="${enCurso ? 'fechas-act' : ''}">${rango}</span><span><span class="dot"></span><b>${esc(w.color)}</b></span>`;
   $('h-subs').innerHTML = w.desde ? `<li><span>1</span><button data-ir="5">${esc(w.subtemas[2].titulo)}</button></li><li><span>2</span><button data-ir="6">${esc(resumenDe(w).titulo)}</button></li>`
     : w.subtemas.map((s, i) => `<li><span>${i+1}</span><button data-ir="${[1,3,5][i]}">${esc(s.titulo)}</button></li>`).join('');
   const antes = hoyD < dateOf(sem[0].inicio);
