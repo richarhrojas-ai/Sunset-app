@@ -370,7 +370,7 @@
     // cerca del borde inferior.
     const form = Object.assign({}, FORMS.leafy, { thick: 1.45, trunkK: 1.55 });
     const rand = rng(11);
-    const base = cy + R * 0.9;
+    const base = cy + R * 0.84;
     const scale = R * 0.3;
     const tips = growTree(o, rand, cx, base, scale, form, BARK);
     // Copa con el mismo método que los árboles de los paisajes (hojas que nacen de cada punta, cúpula suave
@@ -427,7 +427,7 @@
       }
     }
     bx0 /= dpr; bx1 /= dpr; by0 /= dpr;
-    const fit = Math.min(1.6, (R * 1.74) / (bx1 - bx0), (base - (cy - R * 0.74)) / (base - by0));
+    const fit = Math.min(1.7, (R * 1.82) / (bx1 - bx0), (base - (cy - R * 0.8)) / (base - by0));
     const mid = (bx0 + bx1) / 2;
     ctx.save();
     ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();   // por seguridad; con el encaje no corta nada
