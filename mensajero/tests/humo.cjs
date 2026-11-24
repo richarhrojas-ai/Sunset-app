@@ -41,6 +41,9 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   await p.click('#cal .cal-lista li:nth-child(2) button'); await p.waitForTimeout(150);
   ok(!(await p.evaluate(() => document.getElementById('cal').open)) && (await p.textContent('#h-meta')).includes('Semana 15'), 'calendario: tocar una semana lleva a ella');
   await p.click('#hoy'); await p.waitForTimeout(100);
+  await p.click('#cal-btn'); await p.waitForTimeout(100);
+  ok(await p.$$eval('#cal #anio button', x => x.length) === 53, 'el año completo está dentro del calendario');
+  await p.evaluate(() => document.getElementById('cal').close());
   const sem0 = await p.textContent('#h-tema');
   await p.click('#next'); await p.click('#hoy'); await p.waitForTimeout(80);
   ok(await p.textContent('#h-tema') === sem0, 'flechas y «Esta semana» vuelven a la semana actual');
@@ -55,6 +58,12 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return a.indexOf('deporte') > a.findIndex(c => c.includes('punto')); }), 'frase deportiva después de los puntos');
   await p.click('#dias [data-k="aire3"]'); await p.waitForTimeout(80);
   ok(await p.getAttribute('#dias [data-k="aire3"]', 'aria-pressed') === 'true', 'marcar «Al aire»');
+
+  ok(await p.$$eval('#dias .accesos button', x => x.length) === 6, 'tarjeta del día: accesos rápidos (historia bíblica, preparación, informes, calendario, útiles, buscar)');
+  await p.click('#dias .accesos [data-ira="s-reg"]'); await p.waitForTimeout(150);
+  ok(await p.evaluate(() => document.getElementById('s-reg').open), 'acceso rápido abre «Mis informes del mes»');
+  await p.evaluate(() => { document.getElementById('s-reg').open = false; document.getElementById('s-dias').scrollIntoView(); });
+  ok(await p.$$eval('.bar a', x => x.length) === 5, 'barra de atajos con 5 destinos');
 
   // mensajes de oyentes
   for (let k = 0; k < 3; k++) await p.click('#dias [data-msg-mas="wa"]');
@@ -209,7 +218,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   p = await abrir(b, {fecha: '2027-03-25T10:00:00'});
   await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
   ok((await p.textContent('#dias')).includes('Aniversario de Mensajero · 28 años'), '25 de marzo: aviso de aniversario en la tarjeta del día');
-  await p.evaluate(() => document.getElementById('s-historias').open = true);
+  await p.evaluate(() => document.getElementById('s-mensajero').open = true);
   ok(await p.$$eval('#historias details.loc', x => x.length) === 24 && (await p.textContent('#historias')).includes('Historia de esta semana') && (await p.textContent('#historias')).includes('28 años'), 'historias de Mensajero: 24 aprobadas, la de la semana y el aniversario');
   ok(p.errores.length === 0, 'historias sin errores de JavaScript' + (p.errores.length ? ' → ' + p.errores.join(' | ') : ''));
   await p.close();

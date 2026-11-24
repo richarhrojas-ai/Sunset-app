@@ -95,7 +95,7 @@ Los scripts son idempotentes: se pueden correr de nuevo sin duplicar cambios. Re
 - Tarjeta con tema, enfoque, color, número de semana y los tres subtemas; flechas y «Esta semana».
 
 ### Barra de atajos (fija)
-Ficha · Mi semana · Preparación · Registro · Buscar · Útiles (el resto se alcanza en los grupos del final).
+Mi semana · Preparación · Informes · Historia bíblica · Útiles. Al tocar uno, la sección se abre sola. Además, al pie de la tarjeta del día hay **accesos rápidos**: Historia bíblica, Preparación, Informes, Calendario, Números útiles y Buscar.
 
 ### Ficha de la semana
 «Apoyamos al programa» (programa y locutor) y «Valor de Mensajero» con su guía interna plegable.
@@ -120,8 +120,8 @@ Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilust
 
 ### Grupos del final
 - **Mi trabajo:** *Mi preparación* (programa: nombre libre —con sugerencias de los programas de la serie—, hora de inicio y de fin, y modalidad; la duración y la franja se calculan del horario: antes de las 11 mañana, 11-14 mediodía, 14-19 tarde, desde las 19 o de madrugada noche; lista de tareas elegidas de una biblioteca de 18 tareas agrupadas: se sugieren 6 básicas y cada uno puede sumar hasta 10; porcentaje) y *Mis informes del mes* (un solo mes elegido: días al aire, en vivo y grabados, entrevistas, mensajes por canal y la preparación con niveles Excelente/Buena/Regular/Baja; botones «Copiar informe del mes» y «Copiar informe de preparación»).
-- **La serie 2027:** *Historia bíblica y marcos*, *Edificando una Cultura · 2027* (las 53 semanas por color con barra de días al aire), *Buscar* (sin distinguir tildes ni mayúsculas; lleva a la semana).
-- **Para la audiencia:** *Números útiles* (6 nacionales: 911, 141 SEME —021 141 desde celular—, 132 Bomberos, 155 salud mental, 137 SOS Mujer y WhatsApp 0961 137 137, 147 Fono Ayuda niñez; más 8 de «Salud en la zona»; tocar llama; copiar para leer al aire), *Sobre Mensajero* (hoja «Mensajero»; las filas vacías no se muestran; la programación no se copia en la app: un botón abre la grilla de la radio, https://mensajerofm.org/grilla/publica.php (pública, sin clave)) e *Historias de Mensajero* (las aprobadas del libro).
+- **La serie 2027:** *Historia bíblica y marcos* y *Buscar*; las 53 semanas por color con barra de días al aire están al pie del **Calendario** («El año completo») (sin distinguir tildes ni mayúsculas; lleva a la semana).
+- **Para la audiencia:** *Números útiles* (6 nacionales: 911, 141 SEME —021 141 desde celular—, 132 Bomberos, 155 salud mental, 137 SOS Mujer y WhatsApp 0961 137 137, 147 Fono Ayuda niñez; más 8 de «Salud en la zona»; tocar llama; copiar para leer al aire), *Sobre Mensajero e historias* (hoja «Mensajero» y, debajo, las Historias de Mensajero; las filas vacías no se muestran; la programación no se copia en la app: un botón abre la grilla de la radio, https://mensajerofm.org/grilla/publica.php (pública, sin clave)).
 
 ### Tamaño de letra
 Botón «A» junto a la fecha: Normal, Grande (115 %) y Muy grande (130 %) para el contenido (cada tamaño se multiplica por la variable `--fz`; no se usa `zoom`, que algunas tabletas ignoran) (no para la ilustración), guardado en cada dispositivo (`localStorage["mensajero:letra"]`). Los títulos con contenido (subtemas, ideas del repaso) van en minúscula normal y negrita, no en mayúsculas espaciadas.
