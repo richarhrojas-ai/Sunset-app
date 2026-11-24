@@ -1064,6 +1064,7 @@
       use.setAttribute('href', '#d-' + d);
       svg.appendChild(use);
       b.appendChild(svg);
+      b.appendChild(el('span', 'dim-name', Y.dimensions[d]));   // nombre de la dimensión, chico
       b.addEventListener('click', function () {
         if (selDim === d && !$('dimCap').hidden) { hideCap(); return; }
         selDim = d;
