@@ -61,7 +61,7 @@ restaurar copias con deshacer; exportar/importar JSON y planilla CSV.
 - En pantalla las palabras abreviadas de la planilla se muestran completas (Ahorro de Tiempo, Equipo de Auxilio, Vida Cristiana); las claves guardadas usan la palabra original.
 
 ## 8. Diseño
-- Estilo crepúsculo: violeta de medianoche → ámbar (de noche el final de la página vuelve al tono de arriba); cada color tiene su propio cielo (variables `--bg-top/mid/low/warm`) y su gama de tonos; tarjetas de vidrio; brillo dorado `#FFD700/#F0A830`.
+- Estilo crepúsculo: cada color tiene su cielo; el final de la página vuelve al tono de arriba, de día y de noche; cada color tiene su propio cielo (variables `--bg-top/mid/low/warm`) y su gama de tonos; tarjetas de vidrio; brillo dorado `#FFD700/#F0A830`.
 - Tipografía Jost fina con mucho espacio entre letras; título del logo en Nunito; firma en Dancing Script.
 - Íconos de línea blanca (7 dimensiones), un árbol fijo por color con nombre común y científico (lapachos, jacarandá, flamboyán, timbó, algarrobo negro), modo día y noche. Logo: sol con franjas y árbol de bronce con la misma copa que los paisajes (`tools/tree-render.js`).
 - Cada día de la semana toma un matiz distinto dentro de la gama del color de la semana.
