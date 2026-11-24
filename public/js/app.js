@@ -391,7 +391,7 @@
       const btn = el('button', 'sat-open');
       btn.type = 'button';
       let f = null;
-      const label = () => { btn.textContent = f ? 'Ocultar' : has() ? 'Ver respuesta' : 'Responder'; btn.setAttribute('aria-expanded', String(!!f)); };
+      const label = () => { btn.textContent = f ? 'ocultar' : has() ? 'ver respuesta' : 'responder'; btn.setAttribute('aria-expanded', String(!!f)); };
       btn.setAttribute('aria-label', q);
       btn.addEventListener('click', function () {
         if (f) { f.blur(); f.remove(); f = null; label(); return; }
@@ -1932,14 +1932,18 @@
         const n = wordAnswered(YY, w, a.word);
         answered += n;
         const li = el('li');
-        li.appendChild(el('span', 'hoy-word', wordName(a.word)));
+        // Una línea: la palabra y, al lado, cuántas lleva («2/3») o su resultado cuando está completa («87 %»).
+        // Debajo, las rayas: una por pregunta respondida.
+        const nq = qCount(YY, a.word);
+        const top = el('span', 'hoy-word-top');
+        top.appendChild(el('span', 'hoy-word', wordName(a.word)));
+        top.appendChild(el('span', 'hoy-word-n', n >= nq ? Math.round(wordScore(YY, w, a.word) * 100) + ' %' : n + '/' + nq));
+        li.appendChild(top);
         const bar = el('span', 'hoy-bar');
         bar.setAttribute('aria-hidden', 'true');
-        const nq = qCount(YY, a.word);
         for (let i = 0; i < nq; i++) bar.appendChild(el('i', i < n ? 'on' : ''));
         li.appendChild(bar);
-        li.appendChild(el('span', 'hoy-word-n', n ? Math.round(wordScore(YY, w, a.word) * 100) + ' %' : '—'));
-        li.setAttribute('aria-label', wordName(a.word) + ': ' + n + ' de ' + nq + ' preguntas respondidas');
+        li.setAttribute('aria-label', wordName(a.word) + ': ' + (n >= nq ? 'completa, ' + Math.round(wordScore(YY, w, a.word) * 100) + ' %' : n + ' de ' + nq + ' preguntas respondidas'));
         list.appendChild(li);
       });
       box.appendChild(list);

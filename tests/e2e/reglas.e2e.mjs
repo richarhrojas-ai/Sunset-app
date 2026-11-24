@@ -91,7 +91,7 @@ test('sábado: las tres preguntas de reflexión se responden en Hoy y en la sema
   await p.waitForTimeout(300);
   await p.locator('#hoyView .sat-list li .sat-open').first().click();
   assert.equal(await p.locator('#hoyView .sat-list li textarea').count(), 0, '«Ocultar» esconde la respuesta');
-  assert.equal(await p.locator('#hoyView .sat-list li .sat-open').first().textContent(), 'Ver respuesta');
+  assert.equal(await p.locator('#hoyView .sat-list li .sat-open').first().textContent(), 'ver respuesta');
   await goView(p, 'semana');
   assert.equal(await p.locator('#days .card.day-6 .sat-list textarea').count(), 0, 'en la semana también empieza oculta');
   await p.locator('#days .card.day-6 .sat-list .sat-open').first().click();
