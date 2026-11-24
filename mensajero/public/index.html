@@ -72,6 +72,42 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .nav button:disabled{opacity:.3;cursor:default}
 .nav .flecha{width:44px;padding:0}
 .nav .flecha svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav #cal-btn{display:inline-flex;align-items:center;gap:7px;padding:0 16px;font-size:calc(12.5px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;font-weight:400}
+.nav #cal-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.nav #hoy,.nav #cal-btn{white-space:nowrap}
+@media(max-width:430px){.nav{gap:7px}.nav #hoy,.nav #cal-btn{padding:0 12px!important;letter-spacing:.05em;font-size:calc(11.5px*var(--fz,1))}}
+.temas .prox-f{display:block;font-size:calc(8.6px*var(--fz,1));line-height:1.1;letter-spacing:.02em;text-transform:uppercase;color:rgba(255,255,255,.72);white-space:nowrap;margin-top:-3px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.temas button[aria-current="true"] .prox-f{color:var(--gold-t)}
+@media(max-width:560px){.temas .prox-f{font-size:calc(7.6px*var(--fz,1));letter-spacing:0}}
+/* calendario por mes */
+dialog#cal{background:linear-gradient(175deg,var(--mid),var(--h3) 55%)}
+dialog#cal[open]{display:flex;flex-direction:column;overflow:hidden}
+.cal-head{display:flex;align-items:center;gap:8px;padding:16px 14px 10px}
+.cal-head h2{flex:1;text-align:center;font-size:calc(21px*var(--fz,1));font-weight:300;letter-spacing:.04em}
+.cal-head button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);font-size:calc(20px*var(--fz,1));flex:none;color:var(--ink)}
+.cal-head button:disabled{opacity:.3}
+#cal-x{margin-left:4px}
+.cal-sem-dias,.cal-dias{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center}
+.cal-sem-dias{padding:0 26px 6px;font-size:calc(11px*var(--fz,1));letter-spacing:.1em;color:var(--ink3)}
+.cal-lista{list-style:none;flex:1;min-height:0;overflow:auto;padding:4px 14px 8px;display:grid;gap:8px;align-content:start}
+#cal .cal-lista button{width:100%;text-align:left;display:grid;gap:8px;padding:10px 12px 10px;border-radius:14px;border:1px solid color-mix(in srgb,var(--c) 55%,transparent);border-left:5px solid var(--c);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--c) 62%,#0d0a14),color-mix(in srgb,var(--c) 30%,#0d0a14));color:#fff}
+.cal-lista button .cal-txt span,.cal-lista button .cal-n{color:rgba(255,255,255,.82)}.cal-lista button .cal-n small{color:rgba(255,255,255,.7)}.cal-lista button .cal-info svg{stroke:#fff}
+#cal .cal-lista button.viendo{box-shadow:0 0 0 2px var(--gold)}
+.cal-info{display:flex;align-items:center;gap:10px;min-width:0}
+.cal-info .ic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)}
+.cal-info svg{width:17px;height:17px;stroke:var(--ink);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.cal-txt{flex:1;min-width:0;display:grid}
+.cal-txt b{font-size:calc(14.5px*var(--fz,1));font-weight:500}
+.cal-txt span{font-size:calc(13px*var(--fz,1));color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-n{flex:none;display:grid;justify-items:end;font-size:calc(11.5px*var(--fz,1));letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.cal-n small{font-size:calc(10.5px*var(--fz,1));color:var(--ink3)}
+.cal-n em{font-style:normal;font-size:calc(10px*var(--fz,1));background:var(--gold);color:#2a1a08;border-radius:999px;padding:1px 7px;margin-top:2px;font-weight:600}
+.cal-dias span{position:relative;font-size:calc(13.5px*var(--fz,1));font-variant-numeric:tabular-nums;padding:3px 0;border-radius:8px}
+.cal-dias .fuera{opacity:.35}
+.cal-dias .hoy{background:var(--gold);color:#2a1a08;font-weight:600}
+.cal-dias .esp::after{content:"";position:absolute;left:50%;bottom:-2px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--gold)}
+.cal-pie{padding:6px 16px 16px;font-size:calc(12.5px*var(--fz,1));color:var(--ink3);text-align:center}
 .nav #hoy{padding:0 22px;font-size:calc(12.5px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;font-weight:400}
 .aviso{font-size:calc(13px*var(--fz,1));color:var(--gold-t);letter-spacing:.08em;margin-top:10px}
 
@@ -546,6 +582,12 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"] .nav button{background:rgba(255,255,255,.8);border-color:rgba(31,26,43,.14);color:var(--ink)}
 :root[data-tema="claro"] dialog#hoja{--ink:#1f1a2b;--ink2:rgba(31,26,43,.82);--ink3:rgba(31,26,43,.62);--line:rgba(31,26,43,.12);--fg:31,26,43;--gold-t:#7a5600;
   background:#fbfaf8;color:var(--ink)}
+:root[data-tema="claro"] dialog#cal{--ink:#1f1a2b;--ink2:rgba(31,26,43,.82);--ink3:rgba(31,26,43,.62);--line:rgba(31,26,43,.12);--fg:31,26,43;--gold-t:#7a5600;background:#fbfaf8;color:var(--ink)}
+:root[data-tema="claro"] .cal-lista button{background:linear-gradient(90deg,color-mix(in srgb,var(--c) 30%,#fff),color-mix(in srgb,var(--c) 8%,#fff));color:var(--ink)}
+:root[data-tema="claro"] .cal-lista button :is(.cal-txt span,.cal-n){color:rgba(31,26,43,.78)}:root[data-tema="claro"] .cal-lista button .cal-n small{color:rgba(31,26,43,.6)}:root[data-tema="claro"] .cal-lista button .cal-info svg{stroke:#1f1a2b}
+:root[data-tema="claro"] .cal-info .ic{background:#fff;border-color:rgba(31,26,43,.14)}
+:root[data-tema="claro"] .temas .prox-f{color:rgba(31,26,43,.66);text-shadow:none}
+:root[data-tema="claro"] .temas button[aria-current="true"] .prox-f{color:#6b4c00}
 :root[data-tema="claro"] .hoja-banner::after{background:linear-gradient(180deg,rgba(255,255,255,0) 25%,#fbfaf8 100%)}
 :root[data-tema="claro"] .hoja-tit{text-shadow:0 0 10px rgba(255,255,255,.9)}
 :root[data-tema="claro"] .hoja-tit .ic{background:rgba(255,255,255,.8);border-color:#c99400}
@@ -594,6 +636,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
     <div class="nav">
       <button class="flecha" id="prev" aria-label="Semana anterior"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <button id="hoy">Esta semana</button>
+      <button id="cal-btn" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Calendario</span></button>
       <button class="flecha" id="next" aria-label="Semana siguiente"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
   </div>
@@ -605,6 +648,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 
 <dialog class="hoja" id="hoja" aria-labelledby="hoja-t"></dialog>
 <dialog class="hoja" id="biblio" aria-labelledby="biblio-t"></dialog>
+<dialog class="hoja" id="cal" aria-labelledby="cal-t"></dialog>
 <dialog class="copia" id="flyer" aria-labelledby="flyer-t"><div class="flyer-cab"><h2 id="flyer-t" class="kicker">Flyer del versículo</h2><div class="modo flyer-modo" role="group" aria-label="Estilo del flyer"><button type="button" data-fmodo="noche" aria-pressed="true">Noche</button><button type="button" data-fmodo="dia" aria-pressed="false">Día</button></div></div>
   <label class="pg-campo flyer-firma"><span>Tu firma (tu nombre, abajo a la derecha del flyer)</span><input id="flyer-firma" maxlength="40" placeholder="Por ejemplo: Manuel Báez" autocomplete="name"></label>
   <img id="flyer-img" alt="Flyer del versículo del día" style="width:100%;border-radius:12px;margin:10px 0;display:block">
@@ -971,6 +1015,33 @@ function corregirSemana() {
   abiertas.add(w.n); set(keyBase(w, 'correccion'), [...(get(keyBase(w, 'correccion')) || []), Date.now()]); render(); avisar(`Semana ${w.n} abierta para corregir`);
 }
 
+// fechas de la próxima semana de cada tema (la que está en curso o la siguiente); al terminar el año, la última
+const mesCorto = d => d.toLocaleDateString('es-PY', {month: 'short'}).replace('.', '');
+const rangoCorto = w => { const a = fechaDia(w, w.desde || 0), b = fechaDia(w, 6);
+  return a.getMonth() === b.getMonth() ? `${a.getDate()}–${b.getDate()} ${mesCorto(b)}` : `${a.getDate()} ${mesCorto(a)}–${b.getDate()} ${mesCorto(b)}`; };
+const proximaDe = t => { const l = sem.filter(w => w.tema === t); const w = l.find(w => fechaDia(w, 6) >= hoyD) || l[l.length - 1]; return w ? rangoCorto(w) : ''; };
+
+/* calendario por mes: cada semana con su color, ícono y tema; tocar una semana lleva a ella */
+let calMes = null;
+function abrirCal(m) {
+  calMes = Math.max(0, Math.min(11, m ?? mesDe(sem[cur])));
+  const d = $('cal'), ini = new Date(DATA.anio, calMes, 1), fin = new Date(DATA.anio, calMes + 1, 0), hoyI = semanaHoy();
+  const semanas = sem.filter(w => dateOf(w.inicio) <= fin && fechaDia(w, 6) >= ini);
+  const fila = w => { const i = w.n - 1, p = PAL[w.color] || PAL.Lila;
+    const dias = [0,1,2,3,4,5,6].map(k => { const f = fechaDia(w, k), fuera = f.getMonth() !== calMes || k < (w.desde || 0), esp = especialDe(w, k);
+      return `<span class="${[fuera && 'fuera', +f === +hoyD && 'hoy', esp && 'esp'].filter(Boolean).join(' ')}"${esp ? ` title="${esc(esp)}"` : ''}>${f.getDate()}</span>`; }).join('');
+    return `<li><button data-i="${i}" class="${i === cur ? 'viendo' : ''}" style="--c:${p.sw}"><span class="cal-info"><span class="ic">${icono(w.tema)}</span>
+      <span class="cal-txt"><b>${esc(TEMA_TXT[w.tema] || w.tema)}</b><span>${esc(w.enfoque)}</span></span>
+      <span class="cal-n">Sem ${w.n}<small>${esc(w.color)}</small>${i === hoyI ? '<em>Esta semana</em>' : ''}</span></span>
+      <span class="cal-dias">${dias}</span></button></li>`; };
+  d.innerHTML = `<div class="cal-head"><button data-cm="-1" aria-label="Mes anterior"${calMes === 0 ? ' disabled' : ''}>‹</button>
+      <h2 id="cal-t">${MESES[calMes][0].toUpperCase() + MESES[calMes].slice(1)} ${DATA.anio}</h2>
+      <button data-cm="1" aria-label="Mes siguiente"${calMes === 11 ? ' disabled' : ''}>›</button><button id="cal-x" aria-label="Cerrar">×</button></div>
+    <div class="cal-sem-dias" aria-hidden="true">${DIAS.map(x => `<span>${x[0]}</span>`).join('')}</div>
+    <ol class="cal-lista">${semanas.map(fila).join('')}</ol>
+    <p class="cal-pie">Tocá una semana para ir a ella. Las fechas especiales llevan un punto.</p>`;
+  if (!d.open) d.showModal();
+}
 function render() {
   const w = sem[cur], p = PAL[w.color] || PAL.Lila;
   aplicarPaleta(p);
@@ -991,7 +1062,7 @@ function render() {
 
   // íconos de los 7 temas en el cielo: el de la semana resaltado
   $('temas').innerHTML = TEMAS.map(t => `<button data-t="${esc(t)}" aria-current="${t === w.tema}" aria-haspopup="dialog">
-    <span class="ic">${icono(t)}</span><small>${esc(TEMA_CORTO[t] || t)}</small></button>`).join('');
+    <span class="ic">${icono(t)}</span><small>${esc(TEMA_CORTO[t] || t)}</small><span class="prox-f">${proximaDe(t)}</span></button>`).join('');
 
   // ficha
   $('f-prog').textContent = w.programa; $('f-loc').textContent = w.locutor;
@@ -1744,6 +1815,11 @@ const ir = i => { cur = Math.max(0, Math.min(sem.length-1, i)); diaSel = null; a
 $('prev').onclick = () => ir(cur-1);
 $('next').onclick = () => ir(cur+1);
 $('hoy').onclick = () => ir(semanaHoy());
+$('cal-btn').onclick = () => abrirCal();
+$('cal').onclick = e => { const d = $('cal');
+  if (e.target === d || e.target.closest('#cal-x')) return d.close();
+  const m = e.target.closest('[data-cm]'); if (m) return abrirCal(calMes + +m.dataset.cm);
+  const b = e.target.closest('button[data-i]'); if (b) { d.close(); ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } };
 /* hoja de un tema: todas sus semanas, la activa resaltada y las próximas a la vista */
 function abrirTema(t) {
   const hoy = semanaHoy(), lista = sem.filter(s => s.tema === t), color = lista[0].color, pal = PAL[color] || PAL.Lila;

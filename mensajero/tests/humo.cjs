@@ -33,6 +33,14 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
     ok(n >= 7, `hoja del tema ${t}: ${n} semanas`);
     await p.evaluate(() => document.getElementById('hoja').close());
   }
+  ok(await p.$$eval('#temas .prox-f', x => x.length === 7 && x.every(e => /\d/.test(e.textContent))) && (await p.textContent('#temas [data-t="Vida Cristiana"] .prox-f')) === '14–20 mar', 'bajo cada ícono, las fechas de la próxima semana del tema');
+  await p.click('#cal-btn'); await p.waitForTimeout(150);
+  ok((await p.textContent('#cal-t')).includes('Marzo') && await p.$$eval('#cal .cal-lista li', x => x.length) === 5 && await p.$$eval('#cal .cal-dias .hoy', x => x.length) === 1, 'calendario de marzo: 5 semanas con color y tema, hoy marcado');
+  await p.click('#cal [data-cm="1"]'); await p.waitForTimeout(100);
+  ok((await p.textContent('#cal-t')).includes('Abril'), 'calendario: pasar al mes siguiente');
+  await p.click('#cal .cal-lista li:nth-child(2) button'); await p.waitForTimeout(150);
+  ok(!(await p.evaluate(() => document.getElementById('cal').open)) && (await p.textContent('#h-meta')).includes('Semana 15'), 'calendario: tocar una semana lleva a ella');
+  await p.click('#hoy'); await p.waitForTimeout(100);
   const sem0 = await p.textContent('#h-tema');
   await p.click('#next'); await p.click('#hoy'); await p.waitForTimeout(80);
   ok(await p.textContent('#h-tema') === sem0, 'flechas y «Esta semana» vuelven a la semana actual');
