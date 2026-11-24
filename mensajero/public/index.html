@@ -559,6 +559,9 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"]{--ink:#1f1a2b;--ink2:rgba(31,26,43,.88);--ink3:rgba(31,26,43,.7);--glass:#fff;--glass2:rgba(31,26,43,.06);--line:rgba(31,26,43,.13);
   --fg:31,26,43;--bg:255,255,255;--gold-t:#8a6500;--acc-t:color-mix(in srgb,var(--acc) 38%,#2a1f3a);--papel:color-mix(in srgb,var(--low) 7%,#f7f5f2);--resalte:color-mix(in srgb,var(--sw) 58%,#1f1a2b)}
 :root[data-tema="claro"] body,:root[data-tema="claro"][data-prog] body{background:var(--papel);background-image:none}
+/* modo claro: la página termina con el mismo tono del cielo de arriba, para que el final no quede todo blanco */
+:root[data-tema="claro"] body{background:linear-gradient(180deg,var(--papel) 0,var(--papel) calc(100% - 640px),color-mix(in srgb,var(--low) 75%,#fff) 100%);min-height:100vh}
+:root[data-tema="claro"] .firma{padding-bottom:28px}
 :root[data-tema="claro"] dialog.hoja{--ink:#fff;--ink2:rgba(255,255,255,.88);--ink3:rgba(255,255,255,.7);--glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.13);
   --line:rgba(255,255,255,.16);--fg:255,255,255;--bg:0,0,0;--gold-t:var(--gold);--acc-t:var(--acc);color:var(--ink)}
 /* portada de día: cielo de mañana, letra oscura y vidrio claro; abajo se funde con el papel de la página */
