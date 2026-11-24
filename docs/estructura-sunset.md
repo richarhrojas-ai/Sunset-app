@@ -4,7 +4,7 @@ Resumen para llevar a un chat nuevo. Describe cómo está armada la app, qué de
 
 ## 1. Qué es
 App personal de uso diario (PWA, móvil y tablet) para el Sistema Sunset: 52 semanas al año, 7 colores, 49 palabras (7 dimensiones × 7 palabras).
-Cada semana tiene un color, un título, una frase (hook), una historia, un @ por día (lunes a sábado) y una autoevaluación de 3 palabras principales.
+Cada semana tiene un color, un título, una frase (hook), una historia, un @ por día (lunes a sábado), tres preguntas de reflexión el sábado y una autoevaluación de 3 palabras principales (3 preguntas esenciales cada una).
 Además funciona como diario: registro por día, ánimo, gratitud, intención semanal, buscador, diario en documento, recordatorio.
 
 ## 2. Stack y despliegue
@@ -35,22 +35,20 @@ Cada año nuevo = una planilla nueva; la app une los años y la semana 1 de un a
 ## 5. Modelo de datos (todo lo del usuario)
 `state.entries[clave] = { v: valor, t: milisegundos }`. Al sincronizar gana la entrada más reciente por clave.
 Claves por semana (`AAAA/wN/...`):
-- `a/Palabra` 5 respuestas (1–5) · `c/Palabra` comentario
-- `d0..d6` registro del día (0 = domingo) · `g0..g6` gratitud · `m0..m6` ánimo 1–5 · `p0..p6` cumplimiento 0–100
-- `funciono`, `intencion` (cierre) · `AAAA/w0/intencion` (intención inicial del primer año)
+- `a/Palabra` respuestas (1–5, una por pregunta) · `c/Palabra` «Lo que me llevo de…»
+- `d0..d6` registro del día (0 = domingo) · `g0..g6` gratitud · `m0..m6` ánimo 1–5
+- `sab0..sab2` respuestas a las preguntas de reflexión del sábado
+- `funciono`, `intencion` (cierre) · `nota` (nota posterior de una semana cerrada) · `AAAA/w0/intencion` (intención inicial del primer año)
 Sincronización: `POST /api/sync` fusiona con lo guardado (escritura condicional, reintentos); copia diaria automática (`backups/AAAA-MM-DD`);
 restaurar copias con deshacer; exportar/importar JSON y planilla CSV.
 
 ## 6. Pantalla, de arriba abajo
-1. **Portada**: paisaje del color de la semana, logo, fecha, franja de 7 íconos (al tocar uno aparece la dimensión, la palabra, qué es la dimensión y su pregunta central; «Abrir» muestra la ficha completa: explicación, sus 7 palabras por color y las preguntas de la palabra), tarjeta de vidrio con la frase del día y el control de cumplimiento, semana y árbol, navegación entre semanas, firma.
-2. Barra de atajos fija (Hoy, Semana, Mi año, Buscar) con el ícono de modo Auto · Día · Noche al final.
-3. Versículo de la semana (el @ del lunes, fijo) · «Esta semana quiero…» (intención de la semana anterior) · enlace a la agenda de Google.
-4. **Domingo**: título, frase de la semana destacada, historia (en Hoy, el domingo, la historia se ve completa como vistazo general de la semana).
-5. **Lunes a sábado**: 6 tarjetas, cada una con su matiz; título en negrita arriba, frase centrada, botón «Registro, ánimo y gratitud» abajo. Hoy se escribe en la tarjeta; los otros días se abren en una pantalla grande.
-6. «Hace un año» (si hay datos de esa semana el año anterior).
-7. **Autoevaluación**: 3 palabras principales, 3 preguntas esenciales cada una (9 por semana, repartidas de lunes a viernes), escala de 1 a 5 con palabras (Nunca a Siempre), cierre del sábado con resultado, tendencia y «Lo que me llevo de…».
-8. **Cierre**: maestría del color (automática), ánimo de la semana (7 barras), qué funcionó, intención.
-9. Plegables: Progreso del año (flores), Ánimo del año (árboles que se pintan), Tablero de maestría (49 palabras), Diario/agenda/recordatorio, Respaldo y sincronización.
+1. **Portada**: paisaje del color de la semana, logo, fecha, franja de 7 íconos con el nombre de su dimensión debajo (al tocar uno aparece la dimensión, la palabra, qué es la dimensión y su pregunta central; «Abrir» muestra la ficha completa), «● Semana verde» y las fechas, número de semana discreto, nombre común y científico del árbol, flechas de semana y firma. En el celular la portada es compacta.
+2. Barra de atajos fija: Hoy · Semana · Mi año · Buscar, con el ícono de modo Auto · Día · Noche al final.
+3. **Hoy** (la app abre aquí): frase del día, «Tu semana» (intención, las 3 palabras con su avance, días tocables), preguntas de hoy (lunes a viernes), registro, gratitud, ánimo, agenda y versículo. El sábado: preguntas de reflexión con respuesta oculta, lo pendiente de a una y el cierre de cada palabra (resultado, tendencia, «Lo que me llevo de…»). El domingo: la historia de la semana y la preparación. Flechas para recorrer días anteriores.
+4. **Semana**: versículo, «Esta semana quiero…», agenda, domingo con su historia, lunes a sábado (6 tarjetas, cada una con su matiz), «Hace un año», autoevaluación (3 palabras × 3 preguntas, escala con palabras, tendencia y frase de cierre) y cierre (maestría del color, ánimo de la semana, qué funcionó, intención).
+5. **Mi año**: meta del 70 % de días con registro, progreso del año (flores), ánimo del año (árboles), tablero de maestría (49 palabras), diario/agenda/recordatorio, respaldo y sincronización.
+6. Al pie de todas las vistas: logo mediano, «Sunset» y «Soluciones Prácticas».
 
 ## 7. Reglas del sistema
 - Rotación: cada semana usa una columna de color; sus 7 palabras están «en juego» y 3 son las principales (se evalúan).
@@ -63,9 +61,9 @@ restaurar copias con deshacer; exportar/importar JSON y planilla CSV.
 - En pantalla las palabras abreviadas de la planilla se muestran completas (Ahorro de Tiempo, Equipo de Auxilio, Vida Cristiana); las claves guardadas usan la palabra original.
 
 ## 8. Diseño
-- Estilo crepúsculo: violeta de medianoche → ámbar; cada color tiene su propio cielo (variables `--bg-top/mid/low/warm`) y su gama de tonos; tarjetas de vidrio; brillo dorado `#FFD700/#F0A830`.
+- Estilo crepúsculo: violeta de medianoche → ámbar (de noche el final de la página vuelve al tono de arriba); cada color tiene su propio cielo (variables `--bg-top/mid/low/warm`) y su gama de tonos; tarjetas de vidrio; brillo dorado `#FFD700/#F0A830`.
 - Tipografía Jost fina con mucho espacio entre letras; título del logo en Nunito; firma en Dancing Script.
-- Íconos de línea blanca (7 dimensiones), un árbol fijo por color (jacarandá, flamboyán, lapacho, etc.), logo propio.
+- Íconos de línea blanca (7 dimensiones), un árbol fijo por color con nombre común y científico (lapachos, jacarandá, flamboyán, timbó, algarrobo negro), modo día y noche. Logo: sol con franjas y árbol de bronce con la misma copa que los paisajes (`tools/tree-render.js`).
 - Cada día de la semana toma un matiz distinto dentro de la gama del color de la semana.
 
 ## 9. Calidad

@@ -8,7 +8,7 @@ Dashboard semanal del Sistema Sunset (Richarh Rojas), de 2027 en adelante. Uso p
 public/                       Lo único que se publica en la web
   index.html, css/, js/       La app (js/app.js = lógica, js/tree.js = árboles del progreso)
   images/trees/               Paisaje de cada color: <Color>-wide.webp y <Color>-tall.webp
-  images/logo.png, icons/     Logo e íconos de la app instalada
+  images/logo-grande.webp, icons/  Logo (cabecera, entrada y pie) e íconos de la app instalada
   sw.js, manifest.webmanifest Instalación como app y uso sin conexión
 content/planillas/            Una planilla por año: sunset-contenido-AAAA.xlsx (NO se publica)
 netlify/content/data.mjs      Contenido generado desde las planillas (NO se publica, lo lee el servidor)
@@ -64,8 +64,7 @@ cursiva. Los colores de cada semana (`accent` / `mid`) están en `public/js/tree
 - **Las siete palabras** (cabecera): una por dimensión, con su ícono de línea. Las tres principales de la semana brillan y
   llevan la marca "Principal". Tocar una principal abre la autoevaluación con esa palabra; tocar una de las otras abre una
   ficha con sus preguntas y la semana en que se evalúa. El marco dorado se desliza hasta la palabra elegida.
-- **Frase de hoy** (vidrio, a la izquierda del árbol en la vista Semana): el @ del día. El antiguo control de cumplimiento
-  se quitó; los valores ya guardados (`AAAA/wN/pD`) se conservan y siguen saliendo en la planilla CSV y el diario.
+- **Frase de hoy** (vidrio, a la izquierda del árbol en la vista Semana): el @ del día.
 - Los íconos se generan con `python3 tools/make_icons.py` (símbolos `d-0` a `d-6`).
 - Al tocar un ícono aparece la palabra con el concepto de su dimensión (qué es y su pregunta central), los mismos del libro (`DIM_CONCEPTS` en `public/js/app.js`). «Abrir» muestra la ficha completa de la dimensión (`DIM_ABOUT`), sus 7 palabras y las preguntas de la palabra.
 

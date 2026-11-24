@@ -1,7 +1,7 @@
 // Service worker: guarda la app para abrirla sin conexión.
 // Red primero (así siempre ves la última versión publicada), caché si no hay red.
 // Nunca se guarda /api/: el contenido y los registros viajan con la clave y se guardan en la app.
-const CACHE = 'sunset-v105';
+const CACHE = 'sunset-v106';
 const SHELL = [
   './',
   'index.html',
@@ -11,8 +11,7 @@ const SHELL = [
   'manifest.webmanifest',
   'icons/icon-192.png',
   'icons/icon-512.png',
-  'images/logo.png',
-  'images/logo-grande.png',
+  'images/logo-grande.webp',
   'images/trees/Lila-wide.webp',
   'images/trees/Lila-tall.webp',
   'images/trees/Lila-wide-day.webp',

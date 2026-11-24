@@ -134,12 +134,13 @@
   // ── Estado ──
   // Todo lo que registra el usuario vive en entries[clave] = { v: valor, t: milisegundos }.
   // Claves (por año y semana):
-  //   AAAA/wN/a/Palabra   respuestas [5 valores de 1 a 5 o null]
-  //   AAAA/wN/c/Palabra   comentario sobre la palabra
-  //   AAAA/wN/d0..d6      registro del día (0 = domingo)
-  //   AAAA/wN/p0..p6      cumplimiento del día (0 a 100), del control deslizante
+  //   AAAA/wN/a/Palabra   respuestas [un valor de 1 a 5 o null por pregunta]
+  //   AAAA/wN/c/Palabra   «Lo que me llevo de…» (frase de cierre de la palabra)
+  //   AAAA/wN/d0..d6      registro del día (0 = domingo) · g0..g6 gratitud · m0..m6 ánimo 1 a 5
+  //   AAAA/wN/sab0..sab2  respuestas a las tres preguntas de reflexión del sábado
   //   AAAA/wN/funciono    ¿qué funcionó? ¿qué mejorar?
   //   AAAA/wN/intencion   intención para la próxima semana
+  //   AAAA/wN/nota        nota posterior (lo único que se escribe en una semana cerrada)
   // Al sincronizar, por cada clave gana la entrada más reciente.
   let state = { entries: {}, welcomed: false };
   try {
@@ -1477,10 +1478,9 @@
         const rec = String(getV(k(YY, w, 'd' + d), '')).trim();
         const grat = String(getV(k(YY, w, 'g' + d), '')).trim();
         const mood = getV(k(YY, w, 'm' + d), null);
-        const pct = getV(k(YY, w, 'p' + d), null);
-        if (!rec && !grat && mood == null && pct == null) continue;
+        if (!rec && !grat && mood == null) continue;
         const date = dateOf(YY, w, d);
-        const meta = [mood != null ? 'Ánimo ' + mood + '/5 (' + MOOD_NAMES[mood - 1] + ')' : '', pct != null ? 'Cumplimiento ' + pct + '%' : ''].filter(Boolean).join(' · ');
+        const meta = mood != null ? 'Ánimo ' + mood + '/5 (' + MOOD_NAMES[mood - 1] + ')' : '';
         lines.push({ h: WEEKDAYS[d] + ' ' + date.getDate() + ' de ' + MONTHS[date.getMonth()], meta: meta, text: rec, grat: grat });
       }
       const notes = [];
@@ -1602,7 +1602,7 @@
   // ¿Hay algo registrado ese día? (registro, gratitud, ánimo o cumplimiento)
   function dayHasEntry(YY, w, d) {
     return !!String(getV(k(YY, w, 'd' + d), '')).trim() || !!String(getV(k(YY, w, 'g' + d), '')).trim()
-      || getV(k(YY, w, 'm' + d), null) != null || getV(k(YY, w, 'p' + d), null) != null;
+      || getV(k(YY, w, 'm' + d), null) != null;
   }
 
   // Racha amable: de los últimos 7 días (hoy incluido), cuántos tienen algo registrado. Nunca castiga.
@@ -2278,10 +2278,8 @@
     let days = 0;
     for (let d = 0; d < 7; d++) if (dayHasEntry(YY, w, d)) days++;
     const total = w === 0 ? (wk.dias || []).length : 7;
-    const pv = [0, 1, 2, 3, 4, 5, 6].map((d) => getV(k(YY, w, 'p' + d), null)).filter((v) => v != null);
     const b1 = block('Tu semana');
     b1.appendChild(el('p', 'sum-big', days + ' de ' + total + ' días con registro'));
-    if (pv.length) b1.appendChild(el('p', null, 'Cumplimiento promedio: ' + Math.round(pv.reduce((s, v) => s + v, 0) / pv.length) + ' %'));
     // Ánimo
     const m = weekMood(YY, w);
     const b2 = block('Ánimo');
@@ -2589,8 +2587,8 @@
     const cell = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
     const head = ['Año', 'Semana', 'Fechas', 'Color'];
     WEEKDAYS.forEach((d) => head.push('Registro ' + d));
-    for (let i = 1; i <= 3; i++) head.push('Palabra ' + i, 'Respuestas ' + i, '% ' + i, 'Comentario ' + i);
-    head.push('% semana', 'Cumplimiento (D L M X J V S)', 'Ánimo (D L M X J V S)', 'Gratitud', 'Maestría del color', 'Qué funcionó / mejorar', 'Intención');
+    for (let i = 1; i <= 3; i++) head.push('Palabra ' + i, 'Respuestas ' + i, '% ' + i, 'Lo que me llevo ' + i);
+    head.push('% semana', 'Ánimo (D L M X J V S)', 'Gratitud', 'Reflexiones del sábado', 'Maestría del color', 'Qué funcionó / mejorar', 'Intención', 'Nota posterior');
     const rows = [head];
     YEARS.forEach(function (YY) {
       allWeeks(YY).forEach(function (wk) {
@@ -2600,11 +2598,17 @@
         // La introducción no tiene autoevaluación: sus columnas de palabras quedan vacías.
         if (w === 0) row.push('', '', '', '', '', '', '', '', '', '', '', '');
         (w === 0 ? [] : activeWords(YY, w)).forEach(function (a) {
-          row.push(a.word, getAnswers(YY, w, a.word).map((v) => v || '-').join(' '),
+          row.push(wordName(a.word), getAnswers(YY, w, a.word).map((v) => v || '-').join(' '),
             Math.round(wordScore(YY, w, a.word) * 100), getV(k(YY, w, 'c/' + a.word), ''));
         });
-        row.push(Math.round(weekScore(YY, w) * 100), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'p' + d), null); return v == null ? '-' : v; }).join(' '), [0, 1, 2, 3, 4, 5, 6].map((d) => { const v = getV(k(YY, w, 'm' + d), null); return v == null ? '-' : v; }).join(' '), [0, 1, 2, 3, 4, 5, 6].map((d) => getV(k(YY, w, 'g' + d), '')).filter(Boolean).join(' | '), (function () { const cm = colorMastery(YY, wk.col); return cm.complete ? cm.leader.word : ''; })(),
-          getV(k(YY, w, 'funciono'), ''), getV(k(YY, w, 'intencion'), ''));
+        const days7 = [0, 1, 2, 3, 4, 5, 6];
+        const reflex = [0, 1, 2].map((i) => String(getV(k(YY, w, 'sab' + i), '')).trim()).filter(Boolean).join(' | ');
+        row.push(Math.round(weekScore(YY, w) * 100),
+          days7.map((d) => { const v = getV(k(YY, w, 'm' + d), null); return v == null ? '-' : v; }).join(' '),
+          days7.map((d) => getV(k(YY, w, 'g' + d), '')).filter(Boolean).join(' | '),
+          reflex,
+          (function () { const cm = colorMastery(YY, wk.col); return cm.complete ? wordName(cm.leader.word) : ''; })(),
+          getV(k(YY, w, 'funciono'), ''), getV(k(YY, w, 'intencion'), ''), getV(k(YY, w, 'nota'), ''));
         rows.push(row);
       });
     });
