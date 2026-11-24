@@ -388,7 +388,7 @@
     });
     let minX = Infinity, maxX = -Infinity;
     tips.forEach(function (t) { minX = Math.min(minX, t[0]); maxX = Math.max(maxX, t[0]); });
-    const domeCx = (minX + maxX) / 2, domeRx = (maxX - minX) / 2, domeH = scale * 0.6;
+    const domeCx = (minX + maxX) / 2, domeRx = (maxX - minX) / 2, domeH = scale * 0.78;   // cúpula algo más alta: el árbol crece hacia arriba
     const lift = function (x) { const u = (x - domeCx) / domeRx; return domeH * Math.sqrt(Math.max(0, 1 - u * u)); };
     tips.forEach(function (t) {
       const room = lift(t[0]) * (0.7 + rand() * 0.3);
@@ -427,7 +427,7 @@
       }
     }
     bx0 /= dpr; bx1 /= dpr; by0 /= dpr;
-    const fit = Math.min(1.7, (R * 1.82) / (bx1 - bx0), (base - (cy - R * 0.8)) / (base - by0));
+    const fit = Math.min(1.8, (R * 1.84) / (bx1 - bx0), (base - (cy - R * 0.88)) / (base - by0));
     const mid = (bx0 + bx1) / 2;
     ctx.save();
     ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();   // por seguridad; con el encaje no corta nada
@@ -448,6 +448,21 @@
       ctx.quadraticCurveTo(cx + sx * reach * 0.45, y0 + w0 * 0.9, x0, y0 + w0 / 2);
       ctx.closePath();
       ctx.fill();
+    });
+    // Raíces hacia el frente: cortas y gruesas, bajan hacia quien mira desde la base del tronco y se afinan.
+    ctx.strokeStyle = BARK; ctx.lineCap = 'round';
+    [[-1, 0.17, 0.065], [0.15, 0.04, 0.08], [1, 0.19, 0.06]].forEach(function (r) {
+      const sx = r[0], x0 = cx + sx * R * 0.03, y0 = base - R * 0.03;
+      const x1 = cx + sx * R * r[1], y1 = base + R * r[2];
+      const mx = x0 + (x1 - x0) * 0.45, my = y0 + (y1 - y0) * 0.75;
+      [[1, R * 0.05], [0.65, R * 0.032], [0.35, R * 0.016]].forEach(function (seg) {
+        const t = 1 - seg[0];   // dibuja desde el inicio hasta una fracción, cada vez más fino
+        ctx.lineWidth = seg[1];
+        ctx.beginPath(); ctx.moveTo(x0, y0);
+        const ex = x0 + (x1 - x0) * (1 - t * 0), ey = y0 + (y1 - y0);
+        ctx.quadraticCurveTo(mx, my, x0 + (ex - x0) * (seg[0] === 1 ? 0.55 : seg[0] === 0.65 ? 0.82 : 1), y0 + (ey - y0) * (seg[0] === 1 ? 0.55 : seg[0] === 0.65 ? 0.82 : 1));
+        ctx.stroke();
+      });
     });
   }
 
