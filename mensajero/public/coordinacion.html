@@ -48,6 +48,13 @@ thead th[aria-sort="ascending"]::after{content:" ↑"}
 .pct i{display:inline-block;width:70px;height:8px;border-radius:4px;background:var(--line);overflow:hidden;position:relative}
 .pct i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--p);background:var(--gold);border-radius:0 4px 4px 0}
 .bajo{color:var(--alert);font-weight:600}
+.reems{display:grid;gap:2px}
+.reems .f{display:grid;grid-template-columns:minmax(140px,1fr) 24px minmax(160px,1.3fr) 70px minmax(120px,1.4fr);gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.reems .f small{display:block;color:var(--ink3);font-size:12.5px}
+.reems .fl{color:var(--gold-ink);text-align:center}
+.reems .n{text-align:right;font-variant-numeric:tabular-nums;font-size:15px}
+.reems .fe{color:var(--ink2);font-size:13px}
+@media(max-width:820px){.reems .f{grid-template-columns:1fr 24px 1fr 50px}.reems .fe{grid-column:1/-1}}
 .barras{display:grid;gap:8px}
 .barras div{display:grid;grid-template-columns:150px 1fr 60px;gap:10px;align-items:center;font-size:14px}
 .barras .b{height:14px;border-radius:0 4px 4px 0;background:var(--gold);min-width:2px}
@@ -91,6 +98,7 @@ thead th[aria-sort="ascending"]::after{content:" ↑"}
     <div class="card"><h2>Mensajes de oyentes por canal</h2><div class="barras" id="canales"></div></div>
   </section>
   <section class="card tabla"><h2>Por locutor y programa</h2><table id="tabla"></table></section>
+  <section class="card"><h2>Reemplazos</h2><p class="muted" id="reem-nota"></p><div class="reems" id="reems"></div></section>
   <section class="grid2">
     <div class="card"><h2>Mensajes por tema (promedio por programa al aire)</h2><div class="barras" id="temas"></div></div>
     <div class="card"><h2>Días de la semana (promedio de mensajes)</h2><div class="barras" id="diasem"></div></div>
@@ -154,6 +162,12 @@ function ejemplo() {
       filas.push(normalizar({locutor: loc, programa: prog, horario: 'de ' + d + ' a ' + h, modalidad_programa: 'vivo', fecha: f.toISOString().slice(0, 10), dia: dias[i], semana: w[1], tema: w[2], color: w[3],
         al_aire: aire, modalidad_dia: aire ? (graba ? 'grabado' : 'vivo') : '', entrevista: aire && r() < .07 ? 1 : 0, reemplazo: '',
         ...ms, mensajes: Object.values(ms).reduce((a, b) => a + b, 0), preparacion_semana: prepSem[w[1]]})); } }
+  // reemplazos del ejemplo: en diciembre, José no sale y lo cubren Diego y Rosa; además, algunos días sueltos durante el año
+  const fila0 = (loc, prog, f) => { const w = semDe(f); return normalizar({locutor: loc, programa: prog, horario: '', modalidad_programa: '', fecha: f.toISOString().slice(0, 10), dia: dias[f.getDay()], semana: w[1], tema: w[2], color: w[3],
+    al_aire: 1, modalidad_dia: '', entrevista: 0, reemplazo: 'sí', sms: 0, whatsapp: 0, youtube: 0, instagram: 0, facebook: 0, mensajes: 0, preparacion_semana: ''}); };
+  for (let f = new Date(2027, 11, 1); f <= fin; f.setDate(f.getDate() + 1)) if ([1,2,3,4,5].includes(f.getDay()) && r() < .75) filas.push(fila0(r() < .6 ? 'Diego Acosta' : 'Rosa Giménez', 'Noche de Paz', new Date(f)));
+  const sueltos = [['Carmen Duarte', 'Despertar'], ['Ana Gómez', 'Café y Palabra'], ['Laura Villalba', 'Mujer Hoy'], ['Pedro Ramírez', 'Deporte Total'], ['Juan Pérez', 'Raíces'], ['María López', 'Salud y Vida']];
+  for (let k = 0; k < 26; k++) { const [q, pr] = sueltos[Math.floor(r() * sueltos.length)]; const f = new Date(2027, Math.floor(r() * 12), 1 + Math.floor(r() * 27)); if (f <= fin && f.getDay() !== 0) filas.push(fila0(q, pr, f)); }
   porArchivo = new Map(L.map(([loc]) => [loc, filas.filter(x => x.locutor === loc)]));
   armarMeses(); pintar(); $('archivos').textContent = 'Ejemplo con datos inventados: 12 locutores y 15 programas, del 1 de enero al 20 de diciembre.';
 }
@@ -169,7 +183,7 @@ function resumen(rs) { // por locutor + programa
   for (const f of rs) { const k = f.locutor + '|' + f.programa; let o = g.get(k);
     if (!o) g.set(k, o = {locutor: f.locutor, programa: f.programa, horario: f.horario, previstos: 0, aire: 0, vivo: 0, grab: 0, ent: 0, reem: 0, msgs: 0, prep: new Map(), ult: ''});
     o.previstos++; if (f.al_aire) { o.aire++; f.modalidad_dia === 'grabado' ? o.grab++ : o.vivo++; if (f.fecha > o.ult) o.ult = f.fecha; }
-    o.ent += f.entrevista; if (f.reemplazo) o.reem++; o.msgs += f.mensajes; o.prep.set(f.semana, f.preparacion_semana); }
+    o.ent += f.entrevista; o.msgs += f.mensajes; o.prep.set(f.semana, f.preparacion_semana); }
   return [...g.values()].map(o => ({...o, pct: o.previstos ? Math.round(o.aire / o.previstos * 100) : 0, prepProm: o.prep.size ? Math.round([...o.prep.values()].reduce((a, b) => a + b, 0) / o.prep.size) : 0,
     msgsDia: o.aire ? +(o.msgs / o.aire).toFixed(1) : 0}));
 }
@@ -177,7 +191,7 @@ function resumen(rs) { // por locutor + programa
 function pintar() {
   const hay = filas.length > 0; $('vacio').hidden = hay; $('panel').hidden = !hay; $('bajar').hidden = !hay; if (!hay) return;
   if (!$('archivos').textContent.startsWith('Ejemplo')) $('archivos').textContent = `${porArchivo.size} locutor${porArchivo.size === 1 ? '' : 'es'} cargado${porArchivo.size === 1 ? '' : 's'}: ${[...porArchivo.keys()].join(', ')}.`;
-  const m = $('mes').value, rs = m === 'all' ? filas : filas.filter(f => f.mes === +m), R = resumen(rs);
+  const m = $('mes').value, rsT = m === 'all' ? filas : filas.filter(f => f.mes === +m), rs = rsT.filter(f => !f.reemplazo), reems = rsT.filter(f => f.reemplazo), R = resumen(rs);
   const tot = k => R.reduce((a, o) => a + o[k], 0), locs = new Set(R.map(o => o.locutor)).size, hasta = filas.reduce((a, f) => f.fecha > a ? f.fecha : a, '');
   const pctT = tot('previstos') ? Math.round(tot('aire') / tot('previstos') * 100) : 0, prepT = R.length ? Math.round(R.reduce((a, o) => a + o.prepProm, 0) / R.length) : 0;
   $('kpis').innerHTML = [[locs, 'Locutores', R.length + ' programas'], [pctT + ' %', 'Días al aire', tot('aire') + ' de ' + tot('previstos') + ' previstos'],
@@ -192,6 +206,7 @@ function pintar() {
     else if (o.pct < 75) m.push(`${o.pct} % de días al aire (${o.aire} de ${o.previstos})`);
     if (o.prepProm < 60) m.push(`preparación ${o.prepProm} %`);
     if (o.aire && o.grab / o.aire > .3) m.push(`${Math.round(o.grab / o.aire * 100)} % de programas grabados`);
+    const cub = reems.filter(f => f.programa === o.programa).length; if (m.length && cub) m.push(`lo cubrieron ${cub} ${cub === 1 ? 'vez' : 'veces'}`);
     if (m.length) al.push(`<b>${esc(o.locutor)}</b> · ${esc(o.programa)}: ${m.join('; ')}.`); }
   $('alertas').innerHTML = al.length ? al.map(x => `<li>${x}</li>`).join('') : '<li class="ok">Todo en orden en este período.</li>';
   // canales
@@ -205,15 +220,26 @@ function pintar() {
   barras('temas', prom('tema'), true);
   const od = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']; barras('diasem', prom('dia').sort((a, b) => od.indexOf(a[0]) - od.indexOf(b[0])), false);
   // tabla
-  const cols = [['locutor','Locutor'],['programa','Programa'],['horario','Horario'],['pct','Al aire'],['vivo','En vivo'],['grab','Grabados'],['ent','Entrevistas'],['reem','Reemplazos'],['msgs','Mensajes'],['msgsDia','Mens./día'],['prepProm','Preparación']];
+  const cols = [['locutor','Locutor'],['programa','Programa'],['horario','Horario'],['pct','Al aire'],['vivo','En vivo'],['grab','Grabados'],['ent','Entrevistas'],['msgs','Mensajes'],['msgsDia','Mens./día'],['prepProm','Preparación']];
   R.sort((a, b) => { const x = a[orden.col], y = b[orden.col]; return (typeof x === 'string' ? x.localeCompare(y, 'es') : x - y) * (orden.asc ? 1 : -1); });
   $('tabla').innerHTML = `<thead><tr>${cols.map(([k, n]) => `<th data-col="${k}"${orden.col === k ? ` aria-sort="${orden.asc ? 'ascending' : 'descending'}"` : ''}>${n}</th>`).join('')}</tr></thead><tbody>${R.map(o => `<tr>
     <td>${esc(o.locutor)}</td><td>${esc(o.programa)}</td><td>${esc(o.horario)}</td>
     <td title="${o.aire} de ${o.previstos} días previstos"><span class="pct ${o.pct < 75 ? 'bajo' : ''}"><i style="--p:${o.pct}%"></i>${o.pct} %</span></td>
-    <td>${o.vivo}</td><td>${o.grab}</td><td>${o.ent}</td><td>${o.reem}</td><td>${o.msgs.toLocaleString('es-PY')}</td><td>${o.msgsDia}</td><td class="${o.prepProm < 60 ? 'bajo' : ''}">${o.prepProm} %</td></tr>`).join('')}</tbody>`;
+    <td>${o.vivo}</td><td>${o.grab}</td><td>${o.ent}</td><td>${o.msgs.toLocaleString('es-PY')}</td><td>${o.msgsDia}</td><td class="${o.prepProm < 60 ? 'bajo' : ''}">${o.prepProm} %</td></tr>`).join('')}</tbody>`;
+  // reemplazos: quién cubrió qué programa, cuántas veces y cuándo
+  const duenio = new Map(); for (const f of filas) if (!f.reemplazo && !duenio.has(f.programa)) duenio.set(f.programa, f.locutor);
+  const gr = new Map(); for (const f of reems) { const k = f.locutor + '|' + f.programa; const o = gr.get(k) || {quien: f.locutor, prog: f.programa, fechas: []}; o.fechas.push(f.fecha); gr.set(k, o); }
+  const lista = [...gr.values()].sort((a, b) => b.fechas.length - a.fechas.length);
+  const fc = d => { const [, mm, dd] = d.split('-'); return `${+dd} ${MESES[+mm - 1].slice(0, 3).toLowerCase()}`; };
+  const porProg = new Map(); for (const f of reems) porProg.set(f.programa, (porProg.get(f.programa) || 0) + 1);
+  const masCub = [...porProg].sort((a, b) => b[1] - a[1])[0];
+  $('reem-nota').textContent = reems.length ? `${reems.length} reemplazo${reems.length === 1 ? '' : 's'} en el período, ${lista.length} ${lista.length === 1 ? 'combinación' : 'combinaciones'} de quién cubrió a quién.${masCub ? ` El programa que más se cubrió: ${masCub[0]} (${masCub[1]} ${masCub[1] === 1 ? 'vez' : 'veces'}).` : ''}` : 'No hubo reemplazos en este período.';
+  $('reems').innerHTML = lista.map(o => { const fs = o.fechas.sort(), ver = fs.slice(0, 6).map(fc).join(', ') + (fs.length > 6 ? ` y ${fs.length - 6} más` : '');
+    return `<div class="f"><div>${esc(o.quien)}<small>reemplazó</small></div><div class="fl">→</div><div>${esc(o.prog)}<small>${duenio.has(o.prog) ? 'de ' + esc(duenio.get(o.prog)) : 'programa sin datos cargados'}</small></div>
+      <div class="n">${fs.length} ${fs.length === 1 ? 'vez' : 'veces'}</div><div class="fe">${ver}</div></div>`; }).join('');
   // horario «de HH:MM a HH:MM» → minutos
   const hm = t => { const m = /(\d{1,2}):(\d{2})\D+(\d{1,2}):(\d{2})/.exec(t || ''); if (!m) return null; const a = +m[1] * 60 + +m[2]; let b = +m[3] * 60 + +m[4]; if (b <= a) b += 1440; return [a, b]; };
-  const progs = new Map(); for (const f of filas) { const k = f.locutor + '|' + f.programa; const o = progs.get(k) || {locutor: f.locutor, programa: f.programa, horario: f.horario, dias: new Set()}; o.dias.add(f.dia); progs.set(k, o); }
+  const progs = new Map(); for (const f of filas) { if (f.reemplazo) continue; const k = f.locutor + '|' + f.programa; const o = progs.get(k) || {locutor: f.locutor, programa: f.programa, horario: f.horario, dias: new Set()}; o.dias.add(f.dia); progs.set(k, o); }
   const P = [...progs.values()].map(o => ({...o, r: hm(o.horario)})).filter(o => o.r);
   // mensajes por franja horaria del programa (según su hora de inicio)
   const franja = r => { const h = Math.floor((r[0] % 1440) / 60); return h < 5 ? 'Noche' : h < 11 ? 'Mañana' : h < 14 ? 'Mediodía' : h < 19 ? 'Tarde' : 'Noche'; };
@@ -224,11 +250,11 @@ function pintar() {
   const hs = new Map(); for (const o of P) hs.set(o.locutor, (hs.get(o.locutor) || 0) + (o.r[1] - o.r[0]) / 60 * o.dias.size);
   barras('horas', [...hs].map(([k, v]) => [k, +v.toFixed(1)]), true);
   // cómo viene el año: total de la radio por mes y una barrita por mes para cada programa
-  const ms = [...new Set(filas.map(f => f.mes))].sort((a, b) => a - b), porMes = ms.map(mm => resumen(filas.filter(f => f.mes === mm)));
+  const ms = [...new Set(filas.map(f => f.mes))].sort((a, b) => a - b), porMes = ms.map(mm => resumen(filas.filter(f => f.mes === mm && !f.reemplazo)));
   const pctDe = R2 => { const pr = R2.reduce((a, o) => a + o.previstos, 0); return pr ? Math.round(R2.reduce((a, o) => a + o.aire, 0) / pr * 100) : 0; };
   $('evo-total').innerHTML = Array.from({length: 12}, (_, mm) => { const j2 = ms.indexOf(mm), p = j2 < 0 ? null : pctDe(porMes[j2]);
     return `<div title="${MESES[mm]}${p === null ? ': sin datos' : ': ' + p + ' % de días al aire'}">${p === null ? '' : p + '%'}<i style="height:${p === null ? 0 : Math.max(2, p)}%"></i><span>${MESES[mm].slice(0, 3)}</span></div>`; }).join('');
-  const claves = resumen(filas).sort((a, b) => a.locutor.localeCompare(b.locutor, 'es') || a.programa.localeCompare(b.programa, 'es'));
+  const claves = resumen(filas.filter(f => !f.reemplazo)).sort((a, b) => a.locutor.localeCompare(b.locutor, 'es') || a.programa.localeCompare(b.programa, 'es'));
   $('evo').innerHTML = claves.map(o => { const serie = Array.from({length: 12}, (_, mm) => { const j2 = ms.indexOf(mm); const x = j2 < 0 ? null : porMes[j2].find(y => y.locutor === o.locutor && y.programa === o.programa); return x ? x.pct : null; });
     const v = serie.filter(x => x !== null), ult = v.slice(-3), ant = v.slice(-6, -3), avg = a => a.reduce((x, y) => x + y, 0) / (a.length || 1), dif = ult.length && ant.length ? avg(ult) - avg(ant) : 0;
     const ten = dif > 4 ? '↑ mejorando' : dif < -4 ? '↓ bajando' : '→ estable';

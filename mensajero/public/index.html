@@ -1697,10 +1697,13 @@ function datosCSV() {
   for (const id of progs()) conProg(id, () => { const c = cfgPrograma();
     for (const w of sem) { const prep = prepPct(w);
       for (let i = 0; i < 7; i++) { const f = fechaDia(w, i); if (f > hoyD || f.getFullYear() !== DATA.anio || !diasEn(f).includes(i) || i < (w.desde || 0)) continue;
-        const aire = !!get(key(w, 'aire'+i)), o = msgsDe(w, i), r = get(keyBase(w, 'reem'+i));
+        const aire = !!get(key(w, 'aire'+i)), o = msgsDe(w, i);
         filas.push([loc, c.nombre, horarioTxt(c), c.modo, `${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,'0')}-${String(f.getDate()).padStart(2,'0')}`, DIAS[i], w.n, TEMA_TXT[w.tema] || w.tema, w.color,
-          aire ? 1 : 0, aire ? modoDe(w, i) : '', get(key(w, 'ent'+i)) ? 1 : 0, typeof r === 'string' ? (r || 'sí') : '',
+          aire ? 1 : 0, aire ? modoDe(w, i) : '', get(key(w, 'ent'+i)) ? 1 : 0, '',
           +o.sms || 0, +o.wa || 0, +o.yt || 0, +o.ig || 0, +o.fb || 0, totalMsgs(o), prep]); } } });
+  // reemplazos: una fila propia por cada día que el locutor cubrió otro programa (son del locutor, no de uno de sus programas)
+  for (const w of sem) for (let i = 0; i < 7; i++) { const r = get(keyBase(w, 'reem'+i)), f = fechaDia(w, i); if (typeof r !== 'string' || f > hoyD || f.getFullYear() !== DATA.anio) continue;
+    filas.push([loc, r || '(sin indicar)', '', '', `${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,'0')}-${String(f.getDate()).padStart(2,'0')}`, DIAS[i], w.n, TEMA_TXT[w.tema] || w.tema, w.color, 1, '', 0, 'sí', 0, 0, 0, 0, 0, 0, '']); }
   return '\ufeff' + filas.map(f => f.map(q).join(',')).join('\r\n');
 }
 async function bajarArchivo(nombre, blob) {

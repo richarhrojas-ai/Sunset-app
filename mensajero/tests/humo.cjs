@@ -222,16 +222,16 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
 
   // ── datos para coordinación y panel del director ──
   p = await b.newPage({viewport: {width: 390, height: 844}, acceptDownloads: true});
-  await p.addInitScript(() => { if (!sessionStorage.z) { sessionStorage.z = 1; localStorage.setItem('mensajero:entries', JSON.stringify({'cfg/firma': {v: 'Juan Pérez', t: 1}, 'cfg/programa': {v: {nombre: 'Prueba', desde: '07:00', hasta: '08:00', modo: 'vivo', dias: [1,2,3,4,5]}, t: 1}, '2027/w2/aire1': {v: true, t: 1}, '2027/w2/msg1': {v: {wa: 3}, t: 1}})); } });
+  await p.addInitScript(() => { if (!sessionStorage.z) { sessionStorage.z = 1; localStorage.setItem('mensajero:entries', JSON.stringify({'cfg/firma': {v: 'Juan Pérez', t: 1}, 'cfg/programa': {v: {nombre: 'Prueba', desde: '07:00', hasta: '08:00', modo: 'vivo', dias: [1,2,3,4,5]}, t: 1}, '2027/w2/aire1': {v: true, t: 1}, '2027/w2/msg1': {v: {wa: 3}, t: 1}, '2027/w2/reem3': {v: 'Noche de Paz', t: 1}})); } });
   await p.clock.install({time: new Date('2027-01-12T10:00:00')}); await p.goto(URL); await p.waitForTimeout(300);
   const [dl] = await Promise.all([p.waitForEvent('download'), p.evaluate(() => document.getElementById('bajar-datos').click())]);
   const csv = require('fs').readFileSync(await dl.path(), 'utf8');
-  ok(dl.suggestedFilename() === 'mensajero-2027-juan-perez.csv' && csv.includes('locutor,programa,horario') && csv.includes('Juan Pérez,Prueba,de 07:00 a 08:00,vivo,2027-01-04,Lunes,2') && csv.split('\n').length === 9, 'descargar mis datos: planilla CSV con una fila por día del programa');
+  ok(dl.suggestedFilename() === 'mensajero-2027-juan-perez.csv' && csv.includes('locutor,programa,horario') && csv.includes('Juan Pérez,Prueba,de 07:00 a 08:00,vivo,2027-01-04,Lunes,2') && csv.split('\n').length === 10 && csv.includes('Juan Pérez,Noche de Paz,,,2027-01-06,Miércoles,2') && csv.includes(',1,,0,sí,'), 'descargar mis datos: una fila por día del programa y una por cada reemplazo');
   await p.close();
   p = await b.newPage({viewport: {width: 1280, height: 900}}); p.errores = []; p.on('pageerror', e => p.errores.push(e.message));
   await p.goto('file://' + path.resolve(__dirname, '../public/coordinacion.html')); await p.waitForTimeout(200);
   await p.click('#ejemplo'); await p.waitForTimeout(400);
-  ok((await p.textContent('#kpis')).includes('Locutores12') && await p.$$eval('#tabla tbody tr', x => x.length) === 15 && p.errores.length === 0, 'panel de coordinación: ejemplo con 12 locutores y 15 programas, sin errores');
+  ok((await p.textContent('#kpis')).includes('Locutores12') && await p.$$eval('#tabla tbody tr', x => x.length) === 15 && await p.$$eval('#reems .f', x => x.length) > 0 && (await p.textContent('#reems')).includes('Noche de Paz') && p.errores.length === 0, 'panel de coordinación: ejemplo con 12 locutores, 15 programas y sus reemplazos, sin errores');
   await p.close();
 
   // ── sobre Mensajero: sin filas «por completar» ──
