@@ -366,9 +366,11 @@
     off.width = off.height = Math.round(S * dpr);
     const o = off.getContext('2d');
     o.scale(dpr, dpr);
-    const form = Object.assign({}, FORMS.leafy, { thick: 1.45 });
+    // Tronco más largo hacia abajo: la copa queda cerca del centro (donde el sol es más ancho) y la base,
+    // cerca del borde inferior.
+    const form = Object.assign({}, FORMS.leafy, { thick: 1.45, trunkK: 1.55 });
     const rand = rng(11);
-    const base = cy + R * 0.7;   // el árbol se apoya más arriba: la copa queda cerca del centro, donde el sol es más ancho
+    const base = cy + R * 0.9;
     const scale = R * 0.3;
     const tips = growTree(o, rand, cx, base, scale, form, BARK);
     // Copa con el mismo método que los árboles de los paisajes (hojas que nacen de cada punta, cúpula suave
@@ -436,7 +438,7 @@
 
     // Raíces: se afinan hacia la punta y salen apenas del sol, con una curva suave.
     ctx.fillStyle = BARK;
-    [[-1, 0.86, 0.05, 0.05], [1, 0.84, 0.05, 0.055], [-1, 0.52, 0.035, 0.03], [1, 0.56, 0.035, 0.035]].forEach(function (r) {
+    [[-1, 0.5, 0.045, 0.035], [1, 0.48, 0.045, 0.04], [-1, 0.3, 0.03, 0.02], [1, 0.33, 0.03, 0.025]].forEach(function (r) {
       const sx = r[0], reach = R * r[1], w0 = R * r[2], drop = R * r[3];
       const x0 = cx + sx * R * 0.05, y0 = base - R * 0.01;
       const x1 = cx + sx * reach, y1 = base + drop;
