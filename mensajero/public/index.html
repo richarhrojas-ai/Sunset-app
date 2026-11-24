@@ -1517,6 +1517,7 @@ function bloqueResumen(w) {
     ${r.accion ? `<div class="accion"><b>Para esta semana</b>${conCitas(r.accion)}</div>` : ''}`;
 }
 // «Para el locutor»: un solo bloque con el desarrollo del subtema, la nota y cómo hacerlo a tu estilo (antes eran dos y se repetían)
+const MODALIDAD_TXT = 'En vivo o grabado: tu programa tiene una modalidad (la elegís en «Mi programa»). Si un día sale distinto, por ejemplo lo grabaste, tocá «Grabado» en la barra del día: así el informe del mes cuenta bien y los mensajes de oyentes solo se piden en los días en vivo.';
 function paraLocutor(w, i) {
   const b = BLOQUE[i], st = b === null ? null : w.subtemas[b], x = ideasDia(w, i);
   return `<details class="loc"><summary>Para el locutor</summary><div class="in">
@@ -1524,7 +1525,8 @@ function paraLocutor(w, i) {
     <div class="estilo"><b>A tu estilo</b>
       <p><b>${i === 6 ? 'Lo que tiene que quedar' : 'La idea central'}:</b> ${conCitas(x.central)}</p>
       <ul>${x.tecnicas.map(t => `<li>${esc(t)}</li>`).join('')}<li>${esc(x.corto)}</li></ul>
-      <p class="muted">${esc(BASICO)}</p></div>
+      <p class="muted">${esc(BASICO)}</p>
+      <p class="muted">${esc(MODALIDAD_TXT)}</p></div>
     </div></details>`;
 }
 // ideas para que cada locutor adapte el guion a su estilo: se mantiene lo básico y se cambia la forma
@@ -1807,9 +1809,9 @@ function pintarPrograma() {
           <label class="pg-campo pg-nombre"><span>Tu nombre</span><input id="pg-firma" value="${esc(firma)}" placeholder="Por ejemplo: Juan Pérez" autocomplete="name" maxlength="40"></label>
           <label class="pg-campo pg-nombre"><span>Nombre del programa</span><input id="pg-nombre" list="pg-lista" value="${esc(c.nombre)}" placeholder="Escribí el nombre" autocomplete="off"></label>
           <datalist id="pg-lista">${PROGRAMAS.map(p => `<option value="${esc(p)}">`).join('')}</datalist>
-          <label class="pg-campo"><span>Empieza</span><input id="pg-desde" type="time" value="${esc(c.desde)}"></label>
-          <label class="pg-campo"><span>Termina</span><input id="pg-hasta" type="time" value="${esc(c.hasta)}"></label>
-          <label class="pg-campo pg-modo"><span>Modalidad</span><select id="pg-modo"><option value="vivo"${c.modo === 'vivo' ? ' selected' : ''}>En vivo (grabado solo algunos días)</option><option value="grabado"${c.modo === 'grabado' ? ' selected' : ''}>Siempre grabado</option></select></label>
+          <label class="pg-campo"><span>Hora de inicio</span><input id="pg-desde" type="time" value="${esc(c.desde)}"></label>
+          <label class="pg-campo"><span>Hora de fin</span><input id="pg-hasta" type="time" value="${esc(c.hasta)}"></label>
+          <label class="pg-campo pg-modo"><span>Modalidad</span><select id="pg-modo"><option value="vivo"${c.modo === 'vivo' ? ' selected' : ''}>En vivo</option><option value="grabado"${c.modo === 'grabado' ? ' selected' : ''}>Grabado</option></select></label>
         </div>
         <div class="pg-campo pg-nombre"><span>Días al aire</span>
           <div class="dias-chips" role="group" aria-label="Días al aire">${DIAS.map((d, i) => `<button type="button" data-dia="${i}" aria-pressed="false">${d.slice(0, 3)}</button>`).join('')}</div>
