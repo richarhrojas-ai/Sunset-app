@@ -212,10 +212,13 @@ const zona = document.body;
 zona.addEventListener('dragover', e => { e.preventDefault(); $('vacio').classList.add('sobre'); });
 zona.addEventListener('dragleave', () => $('vacio').classList.remove('sobre'));
 zona.addEventListener('drop', e => { e.preventDefault(); $('vacio').classList.remove('sobre'); cargar([...e.dataTransfer.files].filter(f => /\.csv$/i.test(f.name))); });
-$('bajar').onclick = () => { const cab = Object.keys(filas[0]).filter(k => k !== 'mes');
+$('bajar').onclick = async () => { const cab = Object.keys(filas[0]).filter(k => k !== 'mes');
   const q = v => { const t = String(v ?? ''); return /[",\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
   const csv = '\ufeff' + [cab, ...filas.map(f => cab.map(k => f[k]))].map(r => r.map(q).join(',')).join('\r\n');
-  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8'})); a.download = 'mensajero-2027-consolidado.csv'; a.click(); };
+  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'}), nombre = 'mensajero-2027-consolidado.csv';
+  // dentro del visor de claude.ai la descarga pasa por su capacidad «downloads»; en el servidor, un enlace común
+  if (window.claude?.use) { const dl = await window.claude.use('downloads').catch(() => null); if (dl) { try { await dl.save({filename: nombre, data: blob}); } catch {} return; } }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nombre; a.click(); };
 armarMeses();
 </script>
 </body>
