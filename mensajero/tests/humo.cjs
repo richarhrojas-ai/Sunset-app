@@ -71,6 +71,8 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok((await p.textContent('#s-prog')).includes('de 20:00 a 22:00') && await p.inputValue('#pg-nombre') === 'Mi programa nuevo', 'nombre libre del programa y horario a la vista');
   ok(await p.getAttribute('#dias a.yv', 'href') === 'https://www.bible.com/es/bible/146/PRO.12.10.RVC', 'versículo con enlace a YouVersion (RVC)');
   ok(/^\d{2}:\d{2}$/.test(await p.textContent('#reloj')), 'reloj en la portada');
+  await p.evaluate(() => document.getElementById('s-marco').open = true);
+  ok(await p.$$eval('#marco a.cita', x => x.length) >= 1 && (await p.getAttribute('#marco .marco-cab a.yv', 'href')).startsWith('https://www.bible.com/es/bible/146/'), 'historia bíblica: citas con enlace y botón «Ir a la Biblia»');
   await p.click('#dias [data-copiar="dia"]'); await p.waitForTimeout(80);
   let t = await texto(p);
   ok(/3\. .*← TU PUNTO DE HOY/.test(t), 'guion copiado marca «TU PUNTO DE HOY»');

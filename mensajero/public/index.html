@@ -82,12 +82,13 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .bar .in::-webkit-scrollbar{display:none}
 /* reloj: en la portada y, al bajar, fijo en la barra de atajos para tener la hora durante el programa */
 .glass-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.reloj{flex:none;font-size:calc(24px*var(--fz,1));font-weight:300;letter-spacing:.03em;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
-.reloj-bar{display:none;position:absolute;z-index:1;right:8px;top:50%;transform:translateY(-50%);padding:5px 11px;border-radius:999px;background:var(--gold);color:#2a1a08;font-weight:600;font-size:calc(14px*var(--fz,1));font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.reloj{flex:none;font-size:calc(36px*var(--fz,1));font-weight:300;letter-spacing:.03em;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.reloj-bar{display:none;position:absolute;z-index:1;right:8px;top:50%;transform:translateY(-50%);padding:4px 12px;border-radius:999px;background:var(--gold);color:#2a1a08;font-weight:600;font-size:calc(19px*var(--fz,1));font-variant-numeric:tabular-nums;letter-spacing:.02em}
 .bar.con-reloj .reloj-bar{display:block}
-.bar.con-reloj .in{margin-right:max(78px,calc((100% - 860px)/2))}
+.bar.con-reloj .in{margin-right:max(92px,calc((100% - 860px)/2))}
 .glass-top .tema{min-width:0}
-@media(max-width:560px){.glass-top .tema{letter-spacing:.12em;font-size:calc(11.5px*var(--fz,1))}.reloj{font-size:calc(21px*var(--fz,1))}}
+@media(max-width:560px){.glass-top .tema{letter-spacing:.12em;font-size:calc(11.5px*var(--fz,1))}.reloj{font-size:calc(32px*var(--fz,1))}}
+@media(max-width:560px){:root[data-tema="claro"] .hero-glass .tema{font-size:calc(10.5px*var(--fz,1));letter-spacing:.07em;padding:4px 9px;white-space:nowrap}}
 .bar a{flex:none;text-decoration:none;color:var(--ink3);font-size:calc(12.5px*var(--fz,1));letter-spacing:.09em;text-transform:uppercase;padding:15px 10px 13px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 .bar a:hover{color:var(--ink)}
 .bar a.on{color:var(--ink);border-bottom-color:var(--gold-t)}
@@ -355,6 +356,9 @@ details.loc .in p b{color:var(--ink)}
 .ref-fila{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 a.yv{flex:none;font-size:calc(11.5px*var(--fz,1));letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink2);border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:rgba(var(--fg),.05)}
 a.yv:hover{color:var(--ink);background:rgba(var(--fg),.1)}
+a.cita{color:inherit;text-decoration:underline;text-decoration-color:var(--gold-t);text-decoration-thickness:1.5px;text-underline-offset:3px}
+a.cita:hover{color:var(--gold-t)}
+.marco-cab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
 .vers-base .vtxt{font-size:calc(18.5px*var(--fz,1));font-style:italic;color:var(--ink)}
 .vers-base .acc{display:flex;gap:6px;flex-wrap:wrap;max-width:380px}
 .vers-base ul{list-style:none;display:grid;gap:4px;font-size:calc(15px*var(--fz,1));color:var(--ink2)}
@@ -995,10 +999,10 @@ function render() {
 
   // marco
   const m = w.marco;
-  $('marco').innerHTML = m ? `<div><h4>Historia bíblica</h4><h5>${esc(m.historiaTitulo)}</h5><p>${esc(m.historia)}</p></div>
+  $('marco').innerHTML = m ? `<div><h4>Historia bíblica</h4><div class="marco-cab"><h5>${conCitas(m.historiaTitulo)}</h5>${botonBiblia(primeraCita(m.historiaTitulo))}</div><p>${conCitas(m.historia)}</p></div>
     <div><h4>Marco teórico</h4><p>${esc(m.teorico)}</p><p class="kicker" style="margin-top:6px;letter-spacing:.1em;text-transform:none">${esc(m.fuente)}</p></div>
-    <div><h4>Marco bíblico</h4><ul class="pts" style="justify-content:flex-start">${m.claves.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
-      <p style="margin-top:10px">${esc(m.contexto)}</p><p style="margin-top:8px;color:var(--ink)">${esc(m.conexion)}</p></div>`
+    <div><h4>Marco bíblico</h4><ul class="pts" style="justify-content:flex-start">${m.claves.map(c => `<li>${conCitas(c)}</li>`).join('')}</ul>
+      <p style="margin-top:10px">${conCitas(m.contexto)}</p><p style="margin-top:8px;color:var(--ink)">${conCitas(m.conexion)}</p></div>`
     : '<p>Esta semana todavía no tiene historia ni marcos en la planilla.</p>';
 
   // preparación
@@ -1047,14 +1051,14 @@ const historiaDe = w => { const H = DATA.historias || [], pref = HIST_TEMA[w.tem
 const textoHistoria = h => `${h.titulo}\n\n${h.texto}\n\n(Fuente: «Tejiendo vida en los corazones: La historia de Radio Mensajero 100.9 FM», Samuel Sosa, 2011, ${h.pagina})`;
 function renderHistorias() {
   const H = DATA.historias || [], w = sem[cur];
-  const tarjeta = (h, i) => `<details class="loc"><summary>${esc(h.titulo)}</summary><div class="in"><p>${esc(h.texto)}</p>
+  const tarjeta = (h, i) => `<details class="loc"><summary>${esc(h.titulo)}</summary><div class="in"><p>${conCitas(h.texto)}</p>
     <p class="muted" style="font-size:calc(13.5px*var(--fz,1))">${h.temas.map(t => HIST_TXT[t] || t).join(' · ')} · Libro, ${esc(h.pagina)}</p>
     <div class="acciones copiar"><button class="btn mini" data-hist="${i}">Copiar</button></div></div></details>`;
   const ini = fechaDia(w, w.desde || 0), fin = fechaDia(w, 6), aniv = new Date(DATA.anio, ANIVERSARIO.mes, ANIVERSARIO.dia);
   const h = aniv >= ini && aniv <= fin ? H[0] : historiaDe(w);   // semana del aniversario: la historia del origen de la radio
   $('historias').innerHTML = H.length ? `
     ${aniv >= ini && aniv <= fin ? `<div class="especial"><b>Esta semana: aniversario de Mensajero · ${DATA.anio - ANIVERSARIO.desde} años</b><span>El ${ANIVERSARIO.dia} de marzo. Es un buen momento para contar una historia de la radio.</span></div>` : ''}
-    ${h ? `<div><h4>Historia de esta semana</h4><div class="vers-base"><b style="font-size:calc(17px*var(--fz,1))">${esc(h.titulo)}</b><p>${esc(h.texto)}</p>
+    ${h ? `<div><h4>Historia de esta semana</h4><div class="vers-base"><b style="font-size:calc(17px*var(--fz,1))">${esc(h.titulo)}</b><p>${conCitas(h.texto)}</p>
       <p class="muted" style="font-size:calc(13.5px*var(--fz,1))">Libro «Tejiendo vida en los corazones», Samuel Sosa, 2011, ${esc(h.pagina)}</p>
       <div class="acciones copiar"><button class="btn mini" data-hist="${H.indexOf(h)}">Copiar</button></div></div></div>` : ''}
     <div><h4>Todas las historias (${H.length})</h4><div style="display:grid;gap:8px">${H.map(tarjeta).join('')}</div></div>
@@ -1346,6 +1350,13 @@ function enlaceBiblia(ref) {
   const vs = (m[3] || '').replace(/\s/g, '').replace(/[,-]$/, '');
   return `${BIBLIA}${libro}.${m[2]}${vs ? '.' + vs : ''}.RVC`;
 }
+// cualquier cita «Libro cap:vers» dentro de un texto pasa a ser un enlace a YouVersion (el texto ya viene escapado)
+const RX_CITA = /((?:[123] )?[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+) (\d{1,3}):(\d{1,3}(?:[-–]\d{1,3})?(?:, ?\d{1,3}(?:[-–]\d{1,3})?)*)(?!:)/g;
+const esLibro = n => !!LIBROS_USFM[n.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()];
+const conCitas = t => esc(t).replace(RX_CITA, (m, libro, cap, vs) => esLibro(libro)
+  ? `<a class="cita" href="${enlaceBiblia(`${libro} ${cap}:${vs.replace(/–/g, '-')}`)}" target="_blank" rel="noopener" title="Leer en la Biblia (YouVersion)">${m}</a>` : m);
+const primeraCita = t => { RX_CITA.lastIndex = 0; let m; while ((m = RX_CITA.exec(t))) if (esLibro(m[1])) return `${m[1]} ${m[2]}:${m[3].replace(/–/g, '-')}`; return null; };
+const botonBiblia = (ref, txt = 'Ir a la Biblia') => ref ? `<a class="yv" href="${enlaceBiblia(ref)}" target="_blank" rel="noopener">${txt} <span aria-hidden="true">↗</span></a>` : '';
 function bloqueVersiculo(w, i, conPuntos) {
   const d = w.dias[i];
   return `<div class="vers-base"><div class="ref-fila"><span class="ref">${esc(d.ref)}</span><a class="yv" href="${enlaceBiblia(d.ref)}" target="_blank" rel="noopener" aria-label="Leer ${esc(d.ref)} en la Biblia (YouVersion)">Leer en la Biblia <span aria-hidden="true">↗</span></a></div><p class="vtxt">${esc(d.texto)}</p>
@@ -1385,13 +1396,13 @@ function bloqueResumen(w) {
   const r = resumenDe(w);
   return `<h3>${esc(r.titulo)}</h3>
     ${r.dato.texto ? `<div class="dato"><b>Dato para abrir</b><p>${esc(r.dato.texto)}</p><cite>${esc(r.dato.fuente)}</cite></div>` : ''}
-    <ol class="ideas">${r.ideas.map((x, k) => `<li><div><b>Subtema ${k+1} · ${esc(w.subtemas[k].titulo)}</b><span>${esc(x)}</span></div></li>`).join('')}</ol>
-    ${r.accion ? `<div class="accion"><b>Para esta semana</b>${esc(r.accion)}</div>` : ''}`;
+    <ol class="ideas">${r.ideas.map((x, k) => `<li><div><b>Subtema ${k+1} · ${esc(w.subtemas[k].titulo)}</b><span>${conCitas(x)}</span></div></li>`).join('')}</ol>
+    ${r.accion ? `<div class="accion"><b>Para esta semana</b>${conCitas(r.accion)}</div>` : ''}`;
 }
 function paraLocutor(w, b) {
   const s = w.subtemas[b];
-  return `<details class="loc"><summary>Para el locutor</summary><div class="in"><p>${esc(s.desarrollo)}</p>
-    ${s.nota ? `<div class="nota"><b>Nota</b>${esc(s.nota)}</div>` : ''}
+  return `<details class="loc"><summary>Para el locutor</summary><div class="in"><p>${conCitas(s.desarrollo)}</p>
+    ${s.nota ? `<div class="nota"><b>Nota</b>${conCitas(s.nota)}</div>` : ''}
     </div></details>`;
 }
 // ideas para que cada locutor adapte el guion a su estilo: se mantiene lo básico y se cambia la forma
@@ -1453,9 +1464,9 @@ function renderDias(w, hoyIdx) {
   const pie = (txt) => `<div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="dia">${txt}</button></div>`;
   let cuerpo;
   if (semanal) cuerpo = `${cab}<div class="kick">Tu programa de la semana</div>${introSemana(w)}${bloqueResumen(w)}${bloqueVersiculo(w, i, true)}
-      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${esc(w.historia)}</p></div></details>${bloqueFrase(w, i, true)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
+      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${conCitas(w.historia)}</p></div></details>${bloqueFrase(w, i, true)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
   else if (i === 0) cuerpo = `${cab}<div class="kick">Introducción de la semana</div>${introSemana(w)}${bloqueVersiculo(w, 0, true)}
-      <div class="hist"><b>Historia ilustrativa</b><p>${esc(w.historia)}</p></div>${bloqueFrase(w, 0)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
+      <div class="hist"><b>Historia ilustrativa</b><p>${conCitas(w.historia)}</p></div>${bloqueFrase(w, 0)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
   else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${bloqueFrase(w, 6)}${bloqueDeporte(d)}${bloqueIdeas(w, 6)}${pie('Copiar guion')}`;
   else { const b = BLOQUE[i], g = d.guion, primero = [1,3,5].includes(i) || !visibles.includes(i-1);
     cuerpo = `${cab}<div class="kick">${w.desde ? '' : `Subtema ${b+1} · `}${esc(w.subtemas[b].titulo)}</div>${primero ? paraLocutor(w, b) : ''}
@@ -1464,7 +1475,7 @@ function renderDias(w, hoyIdx) {
         <p class="puntos-ayuda">${esc(ayudaPuntos())}</p>
         ${d.puntos.map((p, k) => { const [tt, ex] = tituloPunto(p), q = g.puntos[k] || {}, tuyo = puntoFranja() === k;
           return `<details class="punto"${(puntoFranja() ?? 0) === k ? ' open' : ''}><summary><span>${k+1}</span><h4>${esc(tt)}${ex ? `<small>${esc(ex)}</small>` : ''}${tuyo ? '<em class="tuyo">Tu punto de hoy</em>' : ''}</h4></summary>
-          <div class="cuerpo"><p>${esc(q.desarrollo)}</p><dl><div><dt class="pr">Problemática</dt><dd>${esc(q.problema)}</dd></div><div><dt class="so">En la práctica</dt><dd>${esc(q.solucion)}</dd></div></dl></div></details>`; }).join('')}
+          <div class="cuerpo"><p>${conCitas(q.desarrollo)}</p><dl><div><dt class="pr">Problemática</dt><dd>${conCitas(q.problema)}</dd></div><div><dt class="so">En la práctica</dt><dd>${conCitas(q.solucion)}</dd></div></dl></div></details>`; }).join('')}
         ${bloqueFrase(w, i)}${bloqueDeporte(d)}${bloqueIdeas(w, i)}${pie('Copiar guion')}`
       : `${bloqueVersiculo(w, i, true)}<div class="vacio"><p class="muted">Este día todavía no tiene guion. Copiá el prompt de la semana: ya trae el tema, los subtemas, el valor y los versículos de cada día.</p>
         <div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="prompt">Copiar para IA</button></div></div>`}`; }
