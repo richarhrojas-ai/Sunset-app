@@ -368,7 +368,7 @@
     o.scale(dpr, dpr);
     const form = Object.assign({}, FORMS.leafy, { thick: 1.45 });
     const rand = rng(11);
-    const base = cy + R * 0.93;
+    const base = cy + R * 0.7;   // el árbol se apoya más arriba: la copa queda cerca del centro, donde el sol es más ancho
     const scale = R * 0.3;
     const tips = growTree(o, rand, cx, base, scale, form, BARK);
     // Copa con el mismo método que los árboles de los paisajes (hojas que nacen de cada punta, cúpula suave
@@ -425,7 +425,7 @@
       }
     }
     bx0 /= dpr; bx1 /= dpr; by0 /= dpr;
-    const fit = Math.min(1.25, (R * 1.62) / (bx1 - bx0), (base - (cy - R * 0.62)) / (base - by0));
+    const fit = Math.min(1.6, (R * 1.74) / (bx1 - bx0), (base - (cy - R * 0.74)) / (base - by0));
     const mid = (bx0 + bx1) / 2;
     ctx.save();
     ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();   // por seguridad; con el encaje no corta nada
@@ -436,7 +436,7 @@
 
     // Raíces: se afinan hacia la punta y salen apenas del sol, con una curva suave.
     ctx.fillStyle = BARK;
-    [[-1, 0.74, 0.045, 0.045], [1, 0.72, 0.045, 0.05], [-1, 0.46, 0.03, 0.025], [1, 0.5, 0.03, 0.03]].forEach(function (r) {
+    [[-1, 0.86, 0.05, 0.05], [1, 0.84, 0.05, 0.055], [-1, 0.52, 0.035, 0.03], [1, 0.56, 0.035, 0.035]].forEach(function (r) {
       const sx = r[0], reach = R * r[1], w0 = R * r[2], drop = R * r[3];
       const x0 = cx + sx * R * 0.05, y0 = base - R * 0.01;
       const x1 = cx + sx * reach, y1 = base + drop;
