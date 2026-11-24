@@ -3,6 +3,7 @@
 //   public/images/trees/<Color>-tall.webp   paisaje para celulares
 //   public/images/trees/<Color>-*-day.webp  las mismas, con cielo de día (modo día)
 //   public/images/logo.png                  logo de la cabecera
+//   public/images/logo-grande.png           logo de la firma al pie (más resolución)
 //   public/icons/*.png                      íconos de la app instalada
 //
 // Uso:  node tools/render_trees.cjs        (requiere playwright y python3 con Pillow)
@@ -54,6 +55,7 @@ const COL = { Negro: 0, Rojo: 1, Azul: 2, Lila: 3, Verde: 4, Amarillo: 5, Blanco
   const save = (rel, dataUrl) => fs.writeFileSync(path.join(TMP, rel), Buffer.from(dataUrl.split(',')[1], 'base64'));
 
   save('logo.png', await logo(216, 0));
+  save('logo-grande.png', await logo(480, 0));   // firma al pie de la página
   save('icon-192.png', await logo(192, 0.04));
   save('icon-512.png', await logo(512, 0.04));
   save('icon-maskable-512.png', await logo(512, 0.14));
@@ -67,9 +69,10 @@ from PIL import Image
 tmp, out = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
 (out / 'images' / 'trees').mkdir(parents=True, exist_ok=True)
 for p in sorted(tmp.glob('*-*.png')):
-    if p.name.startswith(('icon-', 'apple-')): continue
+    if p.name.startswith(('icon-', 'apple-', 'logo')): continue
     Image.open(p).convert('RGB').save(out / 'images' / 'trees' / (p.stem + '.webp'), 'WEBP', quality=82, method=6)
 shutil.copy(tmp / 'logo.png', out / 'images' / 'logo.png')
+shutil.copy(tmp / 'logo-grande.png', out / 'images' / 'logo-grande.png')
 for n in ('icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'):
     shutil.copy(tmp / n, out / 'icons' / n)
 `, TMP, OUT], { stdio: 'inherit' });
