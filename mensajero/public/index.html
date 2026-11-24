@@ -75,6 +75,7 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .nav #cal-btn{display:inline-flex;align-items:center;gap:7px;padding:0 16px;font-size:calc(12.5px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;font-weight:400}
 .nav #cal-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .nav #hoy,.nav #cal-btn{white-space:nowrap}
+.nav button[hidden]{display:none}
 @media(max-width:430px){.nav{gap:7px}.nav #hoy,.nav #cal-btn{padding:0 12px!important;letter-spacing:.05em;font-size:calc(11.5px*var(--fz,1))}}
 .temas .prox-f{display:block;font-size:calc(8.6px*var(--fz,1));line-height:1.1;letter-spacing:.02em;text-transform:uppercase;color:rgba(255,255,255,.72);white-space:nowrap;margin-top:-3px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .temas button.es-actual .prox-f{color:var(--gold-t)}
@@ -1119,7 +1120,7 @@ function render() {
   // semana activa: la de hoy; antes de que empiece el año, la primera (después de terminar, la última)
   const enAnio = hoyD >= dateOf(sem[0].inicio) && hoyD <= fechaDia(sem[sem.length - 1], 6), hoyI = semanaHoy(), enCurso = cur === hoyI;
   $('h-glass').classList.toggle('actual', enCurso); $('h-glass').classList.toggle('otra', !enCurso);
-  $('hoy').classList.toggle('llamar', !enCurso);
+  $('hoy').classList.toggle('llamar', !enCurso); $('hoy').hidden = enCurso;   // «Esta semana» solo aparece cuando estás viendo otra semana
   // en la semana activa las fechas van resaltadas; en las demás, simples
   $('h-meta').innerHTML = `<span>Semana <b>${w.n}</b></span><span class="${enCurso ? 'fechas-act' : ''}">${rango}</span><span><span class="dot"></span><b>${esc(w.color)}</b></span>`;
   $('h-subs').innerHTML = w.desde ? `<li><span>1</span><button data-ir="5">${esc(w.subtemas[2].titulo)}</button></li><li><span>2</span><button data-ir="6">${esc(resumenDe(w).titulo)}</button></li>`
