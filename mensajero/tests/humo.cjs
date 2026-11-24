@@ -55,7 +55,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(await p.$$eval('#dias details.punto[open]', x => x.length) === 1, 'sin franja: un solo punto abierto');
   ok(await p.$$eval('#dias .deporte', x => x.length) === 1, 'frase deportiva en la tarjeta');
   ok(await p.$$eval('#dias .frase-aire cite', x => x.length) === 1 && await p.$$eval('#dias details.loc .frase', x => x.length) === 0, 'frase célebre visible para el aire (ya no escondida en «Para el locutor»)');
-  ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return a.indexOf('deporte') > a.findIndex(c => c.includes('punto')); }), 'frase deportiva después de los puntos');
+  ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return a.indexOf('frases') > a.findIndex(c => c.includes('punto')); }), 'frase deportiva después de los puntos');
   await p.click('#dias [data-k="aire3"]'); await p.waitForTimeout(80);
   ok(await p.getAttribute('#dias [data-k="aire3"]', 'aria-pressed') === 'true', 'marcar «Al aire»');
 
@@ -100,7 +100,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
 
   // domingo y sábado
   await p.click('[data-vertodo]'); await p.click('#dias [data-d="0"]'); await p.waitForTimeout(80);
-  ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return a.indexOf('frase-aire') === -1 && a.indexOf('deporte') === a.indexOf('hist') + 1; }), 'domingo: frase deportiva después de la historia ilustrativa (sin frase célebre)');
+  ok(await p.evaluate(() => { const a = [...document.querySelectorAll('#dias article > *')].map(e => e.className); return document.querySelectorAll('#dias .frase-aire').length === 0 && a.indexOf('frases') === a.indexOf('hist') + 1; }), 'domingo: frase deportiva después de la historia ilustrativa (sin frase célebre)');
   const fraseDe = async d => { await p.click(`#dias [data-d="${d}"]`); await p.waitForTimeout(60); return p.$eval('#dias .frase-aire p', e => e.textContent); };
   const fr = [await fraseDe(1), await fraseDe(2), await fraseDe(3), await fraseDe(4), await fraseDe(5)];
   ok(new Set(fr).size === 5, 'lunes a viernes: cinco frases para el aire distintas');

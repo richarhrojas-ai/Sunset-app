@@ -219,6 +219,12 @@ details.valor dd{color:var(--ink2)}
 .pts li{font-size:calc(14px*var(--fz,1));padding:6px 12px;border-radius:999px;background:rgba(var(--fg),.08);border:1px solid var(--line);color:var(--ink2)}
 .deporte{margin:14px 0;padding:12px 14px;border-left:3px solid var(--acc,#e8c547);background:color-mix(in srgb,var(--ink3) 8%,transparent);border-radius:0 10px 10px 0}
 .deporte b{display:block;font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:4px}
+.frases{margin:16px 0 14px;border-radius:14px;border:1px solid var(--line);overflow:hidden;background:color-mix(in srgb,var(--gold) 6%,transparent)}
+.frases>.frase-aire,.frases>.deporte{margin:0;border-radius:0;background:none}
+.frases>.deporte{border-top:1px dashed var(--line)}
+.estilo{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);display:grid;gap:8px}
+.estilo>b{font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--gold-t)}
+.estilo ul{padding-left:18px;display:grid;gap:4px}
 .frase-aire{margin:14px 0 0;padding:12px 14px;border-left:3px solid var(--gold);background:color-mix(in srgb,var(--gold) 7%,transparent);border-radius:0 10px 10px 0}
 .frase-aire b{display:block;font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--gold-t);font-weight:500;margin-bottom:4px}
 .frase-aire p{margin:0;font-size:calc(17.5px*var(--fz,1));font-style:italic;color:var(--ink);line-height:1.5}
@@ -268,7 +274,7 @@ details.valor dd{color:var(--ink2)}
 .msgs-t .restar[aria-pressed="true"]{background:#ff6b6b;border-color:#ff6b6b;color:#2b0a0a;font-weight:500}
 .msgs.restando .msg-btn{border-color:#ff6b6b;background:rgba(255,107,107,.12)}
 .acciones.copiar{justify-content:flex-end;gap:6px}
-@media(max-width:560px){#dias .acciones.copiar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}#dias .acciones.copiar .btn{padding:0 6px}}
+@media(max-width:560px){#dias .acciones.copiar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}#dias .acciones.copiar .btn{padding:0 6px}}
 .acciones.copiar .btn{min-height:36px;color:var(--ink3);background:transparent;border-color:rgba(var(--fg),.18)}
 .acciones.copiar .btn:hover{color:var(--ink)}
 .chk.ent[aria-pressed="true"]{background:#9fd0ff;border-color:#9fd0ff;color:#0b1f33}
@@ -472,6 +478,7 @@ details.mi-nota summary::before{content:"✎";color:var(--gold-t);font-size:calc
 :is(details.mas,details.valor)>summary::after{content:"";width:14px;height:14px;background:currentColor;-webkit-mask:var(--chev-s) center/contain no-repeat;mask:var(--chev-s) center/contain no-repeat;transition:transform .2s}
 :is(details.mas,details.valor)[open]>summary::after{transform:rotate(180deg)}
 details.mi-nota[open] summary::before{content:"–"}
+.barra-dia details.mi-nota:not(.tiene)>summary{border-color:var(--gold-t);color:var(--gold-t);background:color-mix(in srgb,var(--gold) 12%,transparent);font-weight:500}
 details.mi-nota.tiene summary{color:var(--gold-t)}
 details.mi-nota textarea{min-height:72px;margin-top:6px;font-size:calc(15px*var(--fz,1))}
 .reg-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -1418,6 +1425,8 @@ function misNotas(w, i) {
 }
 // frase deportiva del día: original, sin autor; cierra la tarjeta del día para la audiencia de deportes
 const bloqueDeporte = d => d.deporte ? `<div class="deporte"><b>Frase deportiva</b><p>${esc(d.deporte)}</p></div>` : '';
+// las dos frases del día en un mismo recuadro
+const bloqueFrases = (w, i, d, semanal) => { const h = bloqueFrase(w, i, semanal) + bloqueDeporte(d); return h ? `<div class="frases">${h}</div>` : ''; };
 // frase célebre para usar al aire, una distinta por día: lunes y miércoles la primera del subtema, martes y jueves la segunda,
 // viernes la del subtema 3. Domingo y sábado no llevan (salvo el programa de un solo día, que usa la del subtema 1).
 const fraseDia = (w, i, semanal) => { if (semanal) return w.subtemas[0].frase; const b = BLOQUE[i]; if (b === null) return {texto: ''};
@@ -1489,10 +1498,15 @@ function bloqueResumen(w) {
     <ol class="ideas">${r.ideas.map((x, k) => `<li><div><b>Subtema ${k+1} · ${esc(w.subtemas[k].titulo)}</b><span>${conCitas(x)}</span></div></li>`).join('')}</ol>
     ${r.accion ? `<div class="accion"><b>Para esta semana</b>${conCitas(r.accion)}</div>` : ''}`;
 }
-function paraLocutor(w, b) {
-  const s = w.subtemas[b];
-  return `<details class="loc"><summary>Para el locutor</summary><div class="in"><p>${conCitas(s.desarrollo)}</p>
-    ${s.nota ? `<div class="nota"><b>Nota</b>${conCitas(s.nota)}</div>` : ''}
+// «Para el locutor»: un solo bloque con el desarrollo del subtema, la nota y cómo hacerlo a tu estilo (antes eran dos y se repetían)
+function paraLocutor(w, i) {
+  const b = BLOQUE[i], st = b === null ? null : w.subtemas[b], x = ideasDia(w, i);
+  return `<details class="loc"><summary>Para el locutor</summary><div class="in">
+    ${st ? `<p>${conCitas(st.desarrollo)}</p>${st.nota ? `<div class="nota"><b>Nota</b>${conCitas(st.nota)}</div>` : ''}` : ''}
+    <div class="estilo"><b>A tu estilo</b>
+      <p><b>${i === 6 ? 'Lo que tiene que quedar' : 'La idea central'}:</b> ${conCitas(x.central)}</p>
+      <ul>${x.tecnicas.map(t => `<li>${esc(t)}</li>`).join('')}<li>${esc(x.corto)}</li></ul>
+      <p class="muted">${esc(BASICO)}</p></div>
     </div></details>`;
 }
 // ideas para que cada locutor adapte el guion a su estilo: se mantiene lo básico y se cambia la forma
@@ -1525,13 +1539,6 @@ function ideasDia(w, i) {
     : `Si tenés poco tiempo: el dato, el versículo, ${puntoFranja() === null ? 'el punto que más te toque' : 'tu punto (el ' + (puntoFranja() + 1) + ')'} y su acción práctica.`;
   return { central, tecnicas, corto };
 }
-function bloqueIdeas(w, i) {
-  const x = ideasDia(w, i);
-  return `<details class="loc"><summary>Hacelo a tu estilo</summary><div class="in">
-    <p><b>${i === 6 ? 'Lo que tiene que quedar' : 'La idea central'}:</b> ${esc(x.central)}</p>
-    <ul>${x.tecnicas.map(t => `<li>${esc(t)}</li>`).join('')}<li>${esc(x.corto)}</li></ul>
-    <p class="muted">${esc(BASICO)}</p></div></details>`;
-}
 function textoIdeas(w, i) {
   const x = ideasDia(w, i);
   return `\n\nPARA HACERLO A TU ESTILO\n${i === 6 ? 'Lo que tiene que quedar' : 'Idea central'}: ${x.central}\n${x.tecnicas.map(t => '- ' + t).join('\n')}\n- ${x.corto}\n${BASICO}`;
@@ -1561,23 +1568,23 @@ function renderDias(w, hoyIdx) {
   $('dias-ayuda').hidden = !$('dias-ayuda').textContent;
   const cab = `<div class="dia-cab"><b>${DIAS[i]}${i === hoyIdx ? ' · hoy' : ''}</b><span>${f.toLocaleDateString('es-PY', {day: 'numeric', month: 'long', year: 'numeric'})}</span></div>${especialDe(w, i) ? `<div class="especial"><b>Especial · ${especialDe(w, i)}</b><span>${i === 0 ? 'Hoy el versículo acompaña la fecha; la introducción de la semana sigue igual.' : 'Hoy el versículo y el guion acompañan la fecha.'}</span></div>` : ''}${f.getMonth() === ANIVERSARIO.mes && f.getDate() === ANIVERSARIO.dia ? `<div class="especial"><b>Aniversario de Mensajero · ${f.getFullYear() - ANIVERSARIO.desde} años</b><span>Contá una historia de la radio: están en «Historias de Mensajero», abajo.</span></div>` : ''}${barraDia(w, i)}`;
   const tabs = semanal ? '' : `<div class="tabs" role="tablist" aria-label="Día" style="grid-template-columns:repeat(${visibles.length},minmax(0,1fr))">${visibles.map(k => { const fk = fechaDia(w, k);
-    return `<button role="tab" data-d="${k}" aria-selected="${k === i}" class="${k === hoyIdx ? 'hoy' : ''}"><b>${DIAS[k].slice(0, 3)}</b><small>${fk.getDate()}/${fk.getMonth()+1}${get(key(w, 'aire'+k)) ? ' ✓' : ''}</small></button>`; }).join('')}</div>`;
+    return `<button role="tab" data-d="${k}" aria-selected="${k === i}" class="${k === hoyIdx ? 'hoy' : ''}"><b>${DIAS[k].slice(0, 3)}</b><small>${fk.getDate()}-${(m => m[0].toUpperCase() + m.slice(1))(mesCorto(fk))}${get(key(w, 'aire'+k)) ? ' ✓' : ''}</small></button>`; }).join('')}</div>`;
   const pie = (txt) => `<div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="dia">${txt}</button></div>`;
   let cuerpo;
   if (semanal) cuerpo = `${cab}<div class="kick">Tu programa de la semana</div>${introSemana(w)}${bloqueResumen(w)}${bloqueVersiculo(w, i, true)}
-      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${conCitas(w.historia)}</p></div></details>${bloqueFrase(w, i, true)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
+      <details class="loc"><summary>Historia ilustrativa</summary><div class="in"><p>${conCitas(w.historia)}</p></div></details>${bloqueFrases(w, i, d, true)}${pie('Copiar guion')}`;
   else if (i === 0) cuerpo = `${cab}<div class="kick">Introducción de la semana</div>${introSemana(w)}${bloqueVersiculo(w, 0, true)}
-      <div class="hist"><b>Historia ilustrativa</b><p>${conCitas(w.historia)}</p></div>${bloqueFrase(w, 0)}${bloqueDeporte(d)}${pie('Copiar guion')}`;
-  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${bloqueFrase(w, 6)}${bloqueDeporte(d)}${bloqueIdeas(w, 6)}${pie('Copiar guion')}`;
-  else { const b = BLOQUE[i], g = d.guion, primero = [1,3,5].includes(i) || !visibles.includes(i-1);
-    cuerpo = `${cab}<div class="kick">${w.desde ? '' : `Subtema ${b+1} · `}${esc(w.subtemas[b].titulo)}</div>${primero ? paraLocutor(w, b) : ''}
+      <div class="hist"><b>Historia ilustrativa</b><p>${conCitas(w.historia)}</p></div>${bloqueFrases(w, 0, d)}${pie('Copiar guion')}`;
+  else if (i === 6) cuerpo = `${cab}<div class="kick">Resumen de la semana</div>${paraLocutor(w, 6)}${bloqueResumen(w)}${bloqueVersiculo(w, 6, false)}${bloqueFrases(w, 6, d)}${pie('Copiar guion')}`;
+  else { const b = BLOQUE[i], g = d.guion;
+    cuerpo = `${cab}<div class="kick">${w.desde ? '' : `Subtema ${b+1} · `}${esc(w.subtemas[b].titulo)}</div>${paraLocutor(w, i)}
       ${g ? `<h3>${esc(g.titulo)}</h3>${g.dato.texto ? `<div class="dato"><b>Dato para abrir</b><p>${esc(g.dato.texto)}</p><cite>${esc(g.dato.fuente)}</cite></div>` : ''}
         ${bloqueVersiculo(w, i, false)}
         <p class="puntos-ayuda">${esc(ayudaPuntos())}</p>
         ${d.puntos.map((p, k) => { const [tt, ex] = tituloPunto(p), q = g.puntos[k] || {}, tuyo = puntoFranja() === k;
           return `<details class="punto"${(puntoFranja() ?? 0) === k ? ' open' : ''}><summary><span>${k+1}</span><h4>${esc(tt)}${ex ? `<small>${esc(ex)}</small>` : ''}${tuyo ? '<em class="tuyo">Tu punto de hoy</em>' : ''}</h4></summary>
           <div class="cuerpo"><p>${conCitas(q.desarrollo)}</p><dl><div><dt class="pr">Problemática</dt><dd>${conCitas(q.problema)}</dd></div><div><dt class="so">En la práctica</dt><dd>${conCitas(q.solucion)}</dd></div></dl></div></details>`; }).join('')}
-        ${bloqueFrase(w, i)}${bloqueDeporte(d)}${bloqueIdeas(w, i)}${pie('Copiar guion')}`
+        ${bloqueFrases(w, i, d)}${pie('Copiar guion')}`
       : `${bloqueVersiculo(w, i, true)}<div class="vacio"><p class="muted">Este día todavía no tiene guion. Copiá el prompt de la semana: ya trae el tema, los subtemas, el valor y los versículos de cada día.</p>
         <div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="prompt">Copiar para IA</button></div></div>`}`; }
   $('dias').innerHTML = `${tabs}<article class="guion" role="tabpanel">${cuerpo}${bloqueMsgs(w, i)}</article>
