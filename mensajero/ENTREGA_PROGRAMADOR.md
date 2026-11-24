@@ -97,7 +97,7 @@ Los scripts son idempotentes: se pueden correr de nuevo sin duplicar cambios. Re
 - Tarjeta con tema, enfoque, color, número de semana y los tres subtemas; flechas y «Esta semana».
 
 ### Barra de atajos (fija)
-Mi semana · Preparación · Informes · Historia bíblica · Útiles. Al tocar uno, la sección se abre sola. Además, al pie de la tarjeta del día hay **accesos rápidos**: Historia bíblica, Preparación, Informes, Calendario, Números útiles y Buscar.
+Mi semana · Preparación · Informes · Historia bíblica · Útiles. Al tocar uno, la sección se abre sola. Además, al pie de la tarjeta del día hay **accesos rápidos**: Historia bíblica, Preparación, Informes, Calendario, Números útiles, Buscar y «Grilla de programación ↗» (abre la grilla pública de la radio).
 
 ### Ficha de la semana
 «Apoyamos al programa» (programa y locutor) y «Valor de Mensajero» con su guía interna plegable.
@@ -109,12 +109,12 @@ Una vez elegidos, la sección queda en una línea («Tu semana: lunes a viernes�
 
 ### Mi semana: la tarjeta del día
 Pestañas por día (día y fecha, por ejemplo «MIÉ · 3-Mar»). Cada tarjeta, en este orden:
-1. **Barra del día:** «Al aire», En vivo / Grabado y «+ Más» (Con entrevista, Reemplazo con el programa reemplazado). «Agregar nota» resaltado en dorado (nota personal del día, plegable).
+1. **Barra del día:** «Al aire», En vivo / Grabado y «+ Más» (Con entrevista, Reemplazo con el programa reemplazado). «Agregar nota» resaltado en dorado (nota personal del día, plegable), con «Adjuntar documento» (cualquier archivo de hasta 15 MB: guion de un invitado, afiche, PDF). Hoy el archivo se guarda en el dispositivo (IndexedDB `mensajero-adjuntos`) y su nombre en la nota (`…/vnN/adj`); en producción los adjuntos van al servidor con la sincronización. Los nombres salen en el guion copiado.
 2. **Subtema del día** y «Para el locutor» plegable, un solo bloque en todos los días: desarrollo del subtema, nota y «A tu estilo» (idea central del día, dos técnicas que rotan sobre 15 y cómo hacerlo con poco tiempo). Antes «Hacelo a tu estilo» iba aparte y se repetía con la nota.
 3. **Título del guion, «Dato para abrir»** con su fuente y **versículo** (cita y texto RVC) con el botón «Leer en la Biblia», que abre la cita en YouVersion (`https://www.bible.com/es/bible/146/LIBRO.cap.vers.RVC`; 146 es la RVC): la app si está instalada, si no la web. Además, toda cita «Libro cap:vers» dentro de los textos (historia bíblica, marco bíblico, «Para el locutor», puntos, historia ilustrativa, resumen e Historias de Mensajero) se convierte en enlace (`conCitas`), y la historia bíblica tiene su botón «Ir a la Biblia».
 4. **Tres puntos plegables** (número y título a la vista; adentro desarrollo, problemática y «En la práctica»). Según la **franja horaria** del programa (sale de su hora de inicio) se abre el punto que le toca: mañana → 1, mediodía y tarde → 2, noche → 3, marcado «Tu punto de hoy». Sin franja se abre el 1. Así la audiencia que escucha varios programas no oye lo mismo dos veces.
 5. **Frases del día**, en un solo recuadro: **Frase para el aire** (frase célebre con su autor, distinta cada día: lunes y miércoles la primera del subtema, martes y jueves la segunda —columnas «Frase Celebre 1b» y «2b»—, viernes la del subtema 3; domingo y sábado no llevan, salvo el programa de un solo día) y **frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
-6. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color, el agradecimiento «¡Gracias por acompañarnos!» para la audiencia que escribió, la **firma** abajo a la derecha después de la fecha: «nombre del locutor – nombre del programa» (el nombre lo escribe una vez en la hoja del flyer; el programa sale de «Mi preparación»), y estilo **Noche** o **Día**; arranca como la apariencia de la app; sin «100.9 FM» en la marca, porque la audiencia también está en las redes), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, y la nota del día). **Copiar para IA** (todo lo de la semana para generar un guion con IA) ya no está en la tarjeta del día: está en «Historia bíblica y marcos», porque se usa una vez por semana.
+6. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color, el agradecimiento «¡Gracias por acompañarnos!» para la audiencia que escribió, la **firma** abajo a la derecha, separada de la fecha por una línea corta: «nombre del locutor – nombre del programa» (el nombre lo escribe una vez en la hoja del flyer; el programa sale de «Mi preparación»), y estilo **Noche** o **Día**; arranca como la apariencia de la app; sin «100.9 FM» en la marca, porque la audiencia también está en las redes), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, y la nota del día). **Copiar para IA** (todo lo de la semana para generar un guion con IA) ya no está en la tarjeta del día: está en «Historia bíblica y marcos», porque se usa una vez por semana.
 7. **Mensajes de oyentes** (solo días en vivo): un cuadro con los logos de SMS, WhatsApp, YouTube, Instagram y Facebook. Cada toque suma 1 y, si el día no estaba marcado, lo marca «Al aire» solo (si hubo mensajes, salió al aire); «Restar» y luego el logo resta 1 y se apaga solo; el número se puede escribir; arriba, el total.
 
 Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilustrativa y frase deportiva. Sábado: repaso (dato, idea de cada subtema, acción de la semana), versículo, frase deportiva.
@@ -162,6 +162,7 @@ Prefijos: semana `2027/wN/`; programa 2 y 3 agregan `p2/` o `p3/` (el programa 1
 | `2027/wN/[pX/]mod0…6` | `vivo` \| `grabado` | Modalidad fijada del día |
 | `2027/wN/[pX/]msg0…6` | `{sms, wa, yt, ig, fb}` | Mensajes de oyentes |
 | `2027/wN/[pX/]vn0…6` | texto | Nota del día |
+| `2027/wN/[pX/]vn0…6/adj` | nombres | Adjuntos de la nota (el archivo, en IndexedDB del dispositivo) |
 | `2027/wN/[pX/]prep/<id>` · `2027/wN/prep/<id>` | bool | Tarea de preparación (Contenido sin prefijo) |
 | `2027/wN/[pX/]prepLista` | ids | Lista vigente al marcar |
 | `2027/wN/correccion` | fechas | Aperturas por coordinación |

@@ -128,8 +128,17 @@ dialog#cal[open]{display:block;overflow:auto}
 .bar.con-reloj .reloj-bar{display:block}
 .fold,h2.sec{scroll-margin-top:64px}
 .accesos{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
-.accesos button{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--fg),.05);color:var(--ink2);font-size:calc(12.5px*var(--fz,1));letter-spacing:.03em}
-.accesos button:hover{background:rgba(var(--fg),.1);color:var(--ink)}
+.accesos a{text-decoration:none}
+.adjuntos{list-style:none;display:grid;gap:6px;margin:8px 0}
+.adjuntos:empty{display:none}
+.adjuntos li{display:flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:10px;font-size:calc(13.5px*var(--fz,1));background:rgba(var(--fg),.04)}
+.adjuntos a{flex:1;min-width:0;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adjuntos small{color:var(--ink3)}
+.adjuntos button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);color:var(--ink2);flex:none}
+.adjuntar{display:inline-flex;align-items:center;gap:6px;margin:8px 0;cursor:pointer}
+.adjuntar svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.accesos :is(button,a){display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--fg),.05);color:var(--ink2);font-size:calc(12.5px*var(--fz,1));letter-spacing:.03em}
+.accesos :is(button,a):hover{background:rgba(var(--fg),.1);color:var(--ink)}
 .accesos svg{width:16px;height:16px;stroke:var(--gold-t);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .bar.con-reloj .in{margin-right:max(112px,calc((100% - 860px)/2))}
 .bar.con-reloj:has(.clima-bar:not([hidden])) .in{margin-right:max(180px,calc((100% - 860px)/2))}
@@ -981,8 +990,33 @@ const kPrep = (w, it) => it.g === 'Contenido' ? keyBase(w, 'prep/' + it.id) : ke
 const conProg = (id, fn) => { const antes = prog; prog = id; try { return fn(); } finally { prog = antes; } };
 const nombreProg = id => conProg(id, () => cfgPrograma().nombre) || `Programa ${progs().indexOf(id) + 1}`;
 
-const notaBox = (w, k, ph) => { const v = get(key(w, k)) || '';
-  return `<details class="mi-nota${v ? ' tiene' : ''}"${v ? ' open' : ''}><summary>${v ? 'Mi nota' : 'Agregar nota'}</summary>
+/* adjuntos de las notas: el archivo se guarda en este dispositivo (IndexedDB) y su nombre en la nota (clave «…/adj»). En producción van al servidor. */
+const ADJ_MAX = 15 * 1024 * 1024;
+let adjDB = null;
+const adjAbrir = () => adjDB || (adjDB = new Promise((ok, mal) => { try { const r = indexedDB.open('mensajero-adjuntos', 1);
+  r.onupgradeneeded = () => r.result.createObjectStore('adj', {keyPath: 'id', autoIncrement: true}).createIndex('nota', 'nota');
+  r.onsuccess = () => ok(r.result); r.onerror = () => mal(r.error); } catch (e) { mal(e); } }));
+const adjTx = async (modo, fn) => { const db = await adjAbrir(); return new Promise((ok, mal) => { const t = db.transaction('adj', modo), st = t.objectStore('adj'); const r = fn(st); t.oncomplete = () => ok(r?.result); t.onerror = () => mal(t.error); }); };
+const adjDe = nota => adjTx('readonly', st => st.index('nota').getAll(nota)).catch(() => []);
+const tamTxt = n => n > 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
+async function pintarAdjuntos() {
+  for (const ul of document.querySelectorAll('ul[data-adj]')) { const lista = await adjDe(ul.dataset.adj), ro = !!ul.parentElement.querySelector('textarea[readonly]');
+    for (const a of ul.querySelectorAll('a[data-url]')) URL.revokeObjectURL(a.href);
+    ul.innerHTML = lista.map(x => `<li><a href="${URL.createObjectURL(x.blob)}" data-url target="_blank" rel="noopener" download="${esc(x.nombre)}">${esc(x.nombre)}</a><small>${tamTxt(x.tam)}</small>${ro ? '' : `<button type="button" data-adj-del="${x.id}" aria-label="Quitar ${esc(x.nombre)}">×</button>`}</li>`).join(''); }
+}
+async function adjuntar(nota, files) {
+  for (const f of files) { if (f.size > ADJ_MAX) { avisar(`«${f.name}» pesa más de 15 MB`); continue; }
+    try { await adjTx('readwrite', st => st.add({nota, nombre: f.name, tam: f.size, tipo: f.type, blob: f, t: Date.now()})); } catch { avisar('No se pudo guardar el adjunto en este dispositivo'); return; } }
+  set(nota + '/adj', (await adjDe(nota)).map(x => x.nombre)); pintarAdjuntos(); avisar('Adjunto guardado');
+}
+document.addEventListener('change', e => { const i = e.target.closest('input[data-adj-in]'); if (i && i.files.length) { adjuntar(i.dataset.adjIn, [...i.files]); i.value = ''; } });
+document.addEventListener('click', async e => { const b = e.target.closest('[data-adj-del]'); if (!b) return; const ul = b.closest('ul[data-adj]');
+  if (!confirm('¿Quitar este adjunto?')) return; await adjTx('readwrite', st => st.delete(+b.dataset.adjDel)).catch(() => {});
+  set(ul.dataset.adj + '/adj', (await adjDe(ul.dataset.adj)).map(x => x.nombre)); pintarAdjuntos(); });
+const notaBox = (w, k, ph) => { const v = get(key(w, k)) || '', adj = get(key(w, k) + '/adj') || [];
+  return `<details class="mi-nota${v || adj.length ? ' tiene' : ''}"${v || adj.length ? ' open' : ''}><summary>${v || adj.length ? `Mi nota${adj.length ? ' · ' + adj.length + ' adjunto' + (adj.length > 1 ? 's' : '') : ''}` : 'Agregar nota'}</summary>
+    <ul class="adjuntos" data-adj="${key(w, k)}"></ul>
+    ${cerrada(w) ? '' : `<label class="btn mini adjuntar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5l-7.8 7.8a5 5 0 0 1-7.1-7.1l8.2-8.2a3.3 3.3 0 0 1 4.7 4.7l-8.2 8.2a1.7 1.7 0 0 1-2.4-2.4l7.6-7.6"/></svg>Adjuntar documento<input type="file" multiple hidden data-adj-in="${key(w, k)}"></label>`}
     <textarea id="n-${w.n}-${k.replace('/', '-')}" data-n="${k}"${cerrada(w) ? ' readonly' : ''} placeholder="${ph}" aria-label="Nota">${esc(v)}</textarea></details>`; };
 const fcorta = d => d.toLocaleDateString('es-PY', {day: 'numeric', month: 'short'}).replace('.', '');
 
@@ -1444,8 +1478,8 @@ function textoDia(w, i, semanal) {
 }
 // la nota del día acompaña al guion copiado
 function misNotas(w, i) {
-  const dia = (get(key(w, 'vn'+i)) || '').trim();
-  return dia ? `\n\nMIS NOTAS DEL ${DIAS[i].toUpperCase()}:\n${dia}` : '';
+  const dia = (get(key(w, 'vn'+i)) || '').trim(), adj = get(key(w, 'vn'+i) + '/adj') || [];
+  return (dia ? `\n\nMIS NOTAS DEL ${DIAS[i].toUpperCase()}:\n${dia}` : '') + (adj.length ? `\nAdjuntos: ${adj.join(', ')}` : '');
 }
 // frase deportiva del día: original, sin autor; cierra la tarjeta del día para la audiencia de deportes
 const bloqueDeporte = d => d.deporte ? `<div class="deporte"><b>Frase deportiva</b><p>${esc(d.deporte)}</p></div>` : '';
@@ -1575,7 +1609,8 @@ const ACCESOS = [['s-marco', 'Historia bíblica', '<path d="M12 6.5C10 5 7 4.5 3
   ['s-reg', 'Informes', '<path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/>'],
   ['cal', 'Calendario', '<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'],
   ['s-utiles', 'Números útiles', '<path d="M6.5 3.5h3l1.5 4-2 1.5a10 10 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2z"/>'],
-  ['s-buscar', 'Buscar', '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>']];
+  ['s-buscar', 'Buscar', '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>'],
+  ['grilla', 'Grilla de programación', '<rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M3.5 9h17M3.5 14h17M9 4v16M15 4v16"/>']];
 // ir a una sección: si es plegable, se abre
 function irA(id) { if (id === 'cal') return abrirCal(); const el = $(id); if (!el) return;
   if (el.tagName === 'DETAILS') el.open = true;
@@ -1615,7 +1650,8 @@ function renderDias(w, hoyIdx) {
         <div class="acciones copiar"><button class="btn mini" data-flyer>Flyer</button><button class="btn mini" data-copiar="prompt">Copiar para IA</button></div></div>`}`; }
   $('dias').innerHTML = `${tabs}<article class="guion" role="tabpanel">${cuerpo}${bloqueMsgs(w, i)}</article>
     <div style="margin-top:14px;text-align:center"><button class="ver-todo" data-vertodo>${verTodo ? 'Ver solo mis días' : 'Ver toda la semana'}</button></div>
-    <nav class="accesos" aria-label="Accesos rápidos">${ACCESOS.map(([id, t, ico]) => `<button type="button" data-ira="${id}"><svg viewBox="0 0 24 24" aria-hidden="true">${ico}</svg>${t}</button>`).join('')}</nav>`;
+    <nav class="accesos" aria-label="Accesos rápidos">${ACCESOS.map(([id, t, ico]) => id === 'grilla' ? `<a href="${GRILLA}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true">${ico}</svg>${t} ↗</a>` : `<button type="button" data-ira="${id}"><svg viewBox="0 0 24 24" aria-hidden="true">${ico}</svg>${t}</button>`).join('')}</nav>`;
+  pintarAdjuntos();
 }
 /* flyer del versículo para redes: 1080×1350 con la escena y el color de la semana */
 function cargarImg(src) { return new Promise((ok, mal) => { const im = new Image(); im.onload = () => ok(im); im.onerror = mal; im.src = src; }); }
@@ -1644,15 +1680,17 @@ async function hacerFlyer(w, i, modo = 'noche') {
   ctx.letterSpacing = '0px';
   // texto del versículo: achica la letra hasta que entre
   let tam = 54, ls;
-  do { ctx.font = `italic 300 ${tam}px Jost, sans-serif`; ls = lineas(ctx, `“${d.texto}”`, 900); tam -= 2; } while (ls.length * tam * 1.38 > 430 && tam > 30);
-  const alto = tam * 1.38, y0 = 745 + (430 - ls.length * alto) / 2;
+  do { ctx.font = `italic 300 ${tam}px Jost, sans-serif`; ls = lineas(ctx, `“${d.texto}”`, 900); tam -= 2; } while (ls.length * tam * 1.38 > 400 && tam > 30);
+  const alto = tam * 1.38, y0 = 740 + (400 - ls.length * alto) / 2;
   ctx.fillStyle = tinta; ls.forEach((l, k) => ctx.fillText(l, W/2, y0 + k * alto));
   ctx.fillStyle = oro; ctx.font = '500 34px Jost, sans-serif'; ctx.letterSpacing = '6px';
-  ctx.fillText(d.ref.toUpperCase(), W/2, 1215);
+  ctx.fillText(d.ref.toUpperCase(), W/2, 1180);
   ctx.letterSpacing = '2px'; ctx.fillStyle = suave; ctx.font = '400 24px Jost, sans-serif';
   const f = fechaDia(w, i).toLocaleDateString('es-PY', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'});
-  ctx.fillText(f.toUpperCase(), W/2, 1262);
-  if (firma) { ctx.textAlign = 'right'; ctx.fillStyle = tinta; ctx.letterSpacing = '1px'; let tf = 32; do { ctx.font = `italic 400 ${tf}px Jost, sans-serif`; tf -= 2; } while (ctx.measureText(firma).width > W - 128 && tf > 20); ctx.fillText(firma, W - 64, 1312); ctx.textAlign = 'center'; }
+  ctx.fillText(f.toUpperCase(), W/2, 1224);
+  // la firma va separada de la fecha: una línea corta y más aire
+  if (firma) { ctx.strokeStyle = suave; ctx.globalAlpha = .5; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(W - 64 - 120, 1268); ctx.lineTo(W - 64, 1268); ctx.stroke(); ctx.globalAlpha = 1; }
+  if (firma) { ctx.textAlign = 'right'; ctx.fillStyle = tinta; ctx.letterSpacing = '1px'; let tf = 32; do { ctx.font = `italic 400 ${tf}px Jost, sans-serif`; tf -= 2; } while (ctx.measureText(firma).width > W - 128 && tf > 20); ctx.fillText(firma, W - 64, 1310); ctx.textAlign = 'center'; }
   ctx.letterSpacing = '0px';
   try { const logo = await cargarImg(document.querySelector('.logo img').src); ctx.drawImage(logo, 60, 60, 84, 84); } catch {}
   ctx.textAlign = 'left'; ctx.fillStyle = tinta; ctx.font = '800 34px Nunito, sans-serif'; ctx.fillText('MENSAJERO', 160, 100);

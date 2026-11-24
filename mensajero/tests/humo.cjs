@@ -72,6 +72,9 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   await p.click('#dias [data-k="aire3"]'); await p.waitForTimeout(80);
   ok(await p.getAttribute('#dias [data-k="aire3"]', 'aria-pressed') === 'true', 'marcar «Al aire»');
 
+  ok(await p.getAttribute('#dias .accesos a', 'href') === 'https://mensajerofm.org/grilla/publica.php', 'acceso rápido a la grilla de programación');
+  await p.click('#dias details.mi-nota summary'); await p.setInputFiles('#dias input[data-adj-in]', {name: 'guion-invitado.pdf', mimeType: 'application/pdf', buffer: Buffer.from('%PDF-1.4 prueba')}); await p.waitForTimeout(400);
+  ok((await p.textContent('#dias ul[data-adj]')).includes('guion-invitado.pdf') && await p.evaluate(() => Object.entries(JSON.parse(localStorage.getItem('mensajero:entries'))).some(([k, v]) => k.endsWith('/adj') && v.v.includes('guion-invitado.pdf'))), 'nota del día: adjuntar un documento (queda en la nota)');
   ok(await p.$$eval('#dias .accesos button', x => x.length) === 6, 'tarjeta del día: accesos rápidos (historia bíblica, preparación, informes, calendario, útiles, buscar)');
   await p.click('#dias .accesos [data-ira="s-reg"]'); await p.waitForTimeout(150);
   ok(await p.evaluate(() => document.getElementById('s-reg').open), 'acceso rápido abre «Mis informes del mes»');
