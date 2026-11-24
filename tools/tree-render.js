@@ -334,6 +334,14 @@
     if (opts.background) { ctx.fillStyle = opts.background; ctx.fillRect(0, 0, S, S); }
     const cx = S / 2, cy = S * 0.46, R = S * 0.42;
 
+    // Halo suave alrededor del sol: da un borde limpio y luminoso.
+    const halo = ctx.createRadialGradient(cx, cy, R * 0.96, cx, cy, R * 1.1);
+    halo.addColorStop(0, 'rgba(248,178,92,0.55)');
+    halo.addColorStop(0.45, 'rgba(248,178,92,0.18)');
+    halo.addColorStop(1, 'rgba(248,178,92,0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath(); ctx.arc(cx, cy, R * 1.1, 0, Math.PI * 2); ctx.fill();
+
     // Sol: degradé arriba y franjas separadas por líneas oscuras abajo.
     ctx.save();
     ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();
@@ -348,6 +356,9 @@
     });
     ctx.restore();
 
+    // La copa queda dentro del círculo (sin hojas sueltas en el borde, que se veían pixeladas).
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();
     // Árbol de bronce con la misma arquitectura que los paisajes (tronco corto, copa ancha en cúpula
     // y costados redondeados), en tonos de bronce.
     const form = Object.assign({}, FORMS.leafy, { thick: 1.45 });
@@ -397,6 +408,7 @@
     leaves.sort(function (a, b) { return a[4] - b[4]; }).forEach(function (l) {
       drawLeaf(ctx, l[0], l[1], l[2], shades[Math.min(4, Math.floor(l[4] * 5))], l[3]);
     });
+    ctx.restore();
     // Raíces largas que se extienden fuera del círculo.
     ctx.strokeStyle = '#55301A';
     [[-1, 0.85, 0.06], [1, 0.82, 0.06], [-1, 0.55, 0.04], [1, 0.6, 0.04]].forEach(function (r) {
