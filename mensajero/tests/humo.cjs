@@ -113,8 +113,8 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   const src0 = await p.getAttribute('#flyer-img', 'src'); await p.click('#flyer [data-fmodo="dia"]'); await p.waitForTimeout(1500);
   ok(await p.getAttribute('#flyer [data-fmodo="dia"]', 'aria-pressed') === 'true' && await p.getAttribute('#flyer-img', 'src') !== src0 && (await p.getAttribute('#flyer-bajar', 'download')).endsWith('-dia.png'), 'flyer en modo día');
   await p.click('#flyer [data-fmodo="noche"]'); await p.waitForTimeout(800);
-  const src1 = await p.getAttribute('#flyer-img', 'src'); await p.fill('#flyer-firma', 'Manuel Báez'); await p.waitForTimeout(1500);
-  ok(await p.getAttribute('#flyer-img', 'src') !== src1 && await p.evaluate(() => JSON.parse(localStorage.getItem('mensajero:entries'))['cfg/firma'].v) === 'Manuel Báez', 'flyer con la firma del locutor, guardada en el dispositivo');
+  const src1 = await p.getAttribute('#flyer-img', 'src'); await p.fill('#flyer-firma', 'Juan Pérez'); await p.waitForTimeout(1500);
+  ok(await p.getAttribute('#flyer-img', 'src') !== src1 && await p.evaluate(() => JSON.parse(localStorage.getItem('mensajero:entries'))['cfg/firma'].v) === 'Juan Pérez', 'flyer con la firma del locutor, guardada en el dispositivo');
   await p.evaluate(() => document.getElementById('flyer').close());
 
   // registro, informe, preparación
