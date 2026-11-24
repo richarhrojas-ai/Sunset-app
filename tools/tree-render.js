@@ -156,8 +156,9 @@
     }
     // Tronco de árbol viejo: grueso, con base ensanchada, raíces y corteza.
     const lean = (rand() - 0.5) * 0.12;
-    const top = [x + Math.sin(lean) * len, y - Math.cos(lean) * len];
-    const ctrl = [x - len * 0.07 + (rand() - 0.5) * len * 0.08, y - len * 0.5];
+    const tl = len * (form.trunkK || 1);   // alto del tronco (el logo lo usa más largo)
+    const top = [x + Math.sin(lean) * tl, y - Math.cos(lean) * tl];
+    const ctrl = [x - len * 0.07 + (rand() - 0.5) * len * 0.08, y - tl * 0.5];
     const thick = form.thick || 1;   // el logo usa un tronco algo más grueso
     const baseW = len * 0.44 * thick, topW = len * 0.25 * thick;
     const at = function (t) {
@@ -365,7 +366,7 @@
     off.width = off.height = Math.round(S * dpr);
     const o = off.getContext('2d');
     o.scale(dpr, dpr);
-    const form = Object.assign({}, FORMS.leafy, { thick: 1.5 });
+    const form = Object.assign({}, FORMS.leafy, { thick: 1.5, trunkK: 2.25 });
     const rand = rng(11);
     const base = cy + R * 0.93;
     const scale = R * 0.3;
@@ -404,7 +405,7 @@
       }
     }
     bx0 /= dpr; bx1 /= dpr; by0 /= dpr;
-    const fit = Math.min(1.25, (R * 1.62) / (bx1 - bx0), (base - (cy - R * 0.62)) / (base - by0));
+    const fit = Math.min(1.25, (R * 1.62) / (bx1 - bx0), (base - (cy - R * 0.74)) / (base - by0));
     const mid = (bx0 + bx1) / 2;
     ctx.save();
     ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();   // por seguridad; con el encaje no corta nada
