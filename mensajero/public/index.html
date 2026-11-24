@@ -86,6 +86,13 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .reloj-bar{display:none;position:absolute;z-index:1;right:8px;top:50%;transform:translateY(-50%);padding:4px 12px;border-radius:999px;background:var(--gold);color:#2a1a08;font-weight:600;font-size:calc(19px*var(--fz,1));font-variant-numeric:tabular-nums;letter-spacing:.02em}
 .bar.con-reloj .reloj-bar{display:block}
 .bar.con-reloj .in{margin-right:max(92px,calc((100% - 860px)/2))}
+.bar.con-reloj:has(.clima-bar:not([hidden])) .in{margin-right:max(140px,calc((100% - 860px)/2))}
+.hora-clima{flex:none;display:grid;justify-items:end;gap:4px}
+.clima{display:inline-flex;align-items:center;gap:5px;font-size:calc(14px*var(--fz,1));color:var(--ink2);font-variant-numeric:tabular-nums}
+.clima svg,.clima-bar svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.clima-bar{display:inline-flex;align-items:center;gap:3px;margin-left:8px;padding-left:8px;border-left:1px solid rgba(42,26,8,.3);font-size:.85em}
+.clima-bar svg{width:15px;height:15px}
+.clima[hidden],.clima-bar[hidden]{display:none}
 .glass-top .tema{min-width:0}
 @media(max-width:560px){.glass-top .tema{letter-spacing:.12em;font-size:calc(11.5px*var(--fz,1))}.reloj{font-size:calc(32px*var(--fz,1))}}
 @media(max-width:560px){:root[data-tema="claro"] .hero-glass .tema{font-size:calc(10.5px*var(--fz,1));letter-spacing:.07em;padding:4px 9px;white-space:nowrap}}
@@ -194,6 +201,8 @@ details.valor dd{color:var(--ink2)}
 .modo button{min-height:34px;padding:0 12px;font-size:calc(11.5px*var(--fz,1));letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
 .modo button[aria-pressed="true"]{background:rgba(var(--fg),.16);color:var(--ink);font-weight:500}
 .modo button.vivo[aria-pressed="true"]{background:#ff6b6b;color:#2b0a0a}
+.flyer-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.flyer-modo button[aria-pressed="true"]{background:var(--gold);color:#2a1a08}
 .msgs{flex-basis:100%;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:rgba(var(--bg),.14)}
 .msgs-t{display:flex;align-items:center;justify-content:space-between;font-size:calc(12px*var(--fz,1));letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
 .msgs-t b{color:var(--ink);font-size:calc(14px*var(--fz,1));letter-spacing:.04em}
@@ -575,7 +584,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   <div class="temas" id="temas" role="group" aria-label="Temas del año"></div>
   <div class="hero-body">
     <div class="hero-glass">
-      <div class="glass-top"><div class="tema" id="h-tema"></div><time class="reloj" id="reloj" title="Hora actual"></time></div>
+      <div class="glass-top"><div class="tema" id="h-tema"></div><div class="hora-clima"><time class="reloj" id="reloj" title="Hora actual"></time><span class="clima" id="clima" hidden></span></div></div>
       <h1 class="enfoque" id="h-enfoque"></h1>
       <div class="meta" id="h-meta"></div>
       <ol class="subs" id="h-subs"></ol>
@@ -589,13 +598,13 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   </div>
 </header>
 
-<nav class="bar" aria-label="Atajos"><time class="reloj-bar" id="reloj-bar" title="Hora actual"></time><div class="in">
+<nav class="bar" aria-label="Atajos"><span class="reloj-bar"><time id="reloj-bar" title="Hora actual"></time><span class="clima-bar" id="clima-bar" hidden></span></span><div class="in">
   <a href="#s-ficha">Ficha</a><a href="#s-dias">Mi semana</a><a href="#s-prep">Preparación</a><a href="#s-reg">Informes</a><a href="#s-buscar">Buscar</a><a href="#s-utiles">Útiles</a>
 </div></nav>
 
 <dialog class="hoja" id="hoja" aria-labelledby="hoja-t"></dialog>
 <dialog class="hoja" id="biblio" aria-labelledby="biblio-t"></dialog>
-<dialog class="copia" id="flyer" aria-labelledby="flyer-t"><h2 id="flyer-t" class="kicker">Flyer del versículo</h2>
+<dialog class="copia" id="flyer" aria-labelledby="flyer-t"><div class="flyer-cab"><h2 id="flyer-t" class="kicker">Flyer del versículo</h2><div class="modo flyer-modo" role="group" aria-label="Estilo del flyer"><button type="button" data-fmodo="noche" aria-pressed="true">Noche</button><button type="button" data-fmodo="dia" aria-pressed="false">Día</button></div></div>
   <img id="flyer-img" alt="Flyer del versículo del día" style="width:100%;border-radius:12px;margin:10px 0;display:block">
   <p class="muted" style="font-size:calc(13.5px*var(--fz,1));margin-bottom:10px">Si el botón no descarga, mantené presionada la imagen para guardarla.</p>
   <div class="acciones"><a class="btn prim" id="flyer-bajar" download="versiculo.png" style="display:inline-grid;place-items:center;text-decoration:none">Descargar</a>
@@ -1489,43 +1498,49 @@ function lineas(ctx, texto, ancho) {
   for (const p of texto.split(/\s+/)) { const t = l ? l + ' ' + p : p; if (ctx.measureText(t).width > ancho && l) { out.push(l); l = p; } else l = t; }
   if (l) out.push(l); return out;
 }
-async function hacerFlyer(w, i) {
-  const p = PAL[w.color] || PAL.Lila, d = w.dias[i], W = 1080, H = 1350;
+// modo: 'noche' (escena original, letra clara) o 'dia' (luz de mañana, fondo claro y letra oscura)
+async function hacerFlyer(w, i, modo = 'noche') {
+  const dia = modo === 'dia', p0 = PAL[w.color] || PAL.Lila, p = dia ? diurna(p0) : p0, d = w.dias[i], W = 1080, H = 1350;
+  const fondo = dia ? '#fbfaf8' : p.h3, tinta = dia ? '#1f1a2b' : '#ffffff', oro = dia ? '#7a5600' : '#FFD700', suave = dia ? 'rgba(31,26,43,.68)' : 'rgba(255,255,255,.7)';
   const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
-  try { await document.fonts.load('italic 300 50px Jost'); await document.fonts.load('500 30px Jost'); await document.fonts.load('800 34px Nunito'); } catch {}
-  ctx.fillStyle = p.h3; ctx.fillRect(0, 0, W, H);
+  try { await document.fonts.load('italic 300 50px Jost'); await document.fonts.load('italic 500 50px Jost'); await document.fonts.load('500 30px Jost'); await document.fonts.load('800 34px Nunito'); } catch {}
+  ctx.fillStyle = fondo; ctx.fillRect(0, 0, W, H);
   const svg = escena(w.tema, p).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="760" ');
   try { ctx.drawImage(await cargarImg('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)), 0, 0, W, 760); } catch {}
-  const g = ctx.createLinearGradient(0, 380, 0, 820); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, p.h3);
-  ctx.fillStyle = g; ctx.fillRect(0, 380, W, 440);
+  const g = ctx.createLinearGradient(0, 360, 0, 690); g.addColorStop(0, dia ? 'rgba(251,250,248,0)' : 'rgba(0,0,0,0)'); g.addColorStop(1, fondo);
+  ctx.fillStyle = g; ctx.fillRect(0, 360, W, 400);
   ctx.textAlign = 'center';
-  ctx.fillStyle = '#FFD700'; ctx.font = '500 26px Jost, sans-serif'; ctx.letterSpacing = '8px';
-  ctx.fillText('EDIFICANDO UNA CULTURA', W/2, 600);
+  // agradecimiento para quienes escribieron al programa (el flyer se comparte con la audiencia)
+  ctx.fillStyle = oro; ctx.font = 'italic 500 50px Jost, sans-serif'; ctx.letterSpacing = '1px';
+  ctx.fillText('¡Gracias por acompañarnos!', W/2, 668);
   ctx.letterSpacing = '0px';
   // texto del versículo: achica la letra hasta que entre
   let tam = 54, ls;
-  do { ctx.font = `italic 300 ${tam}px Jost, sans-serif`; ls = lineas(ctx, `“${d.texto}”`, 900); tam -= 2; } while (ls.length * tam * 1.38 > 470 && tam > 30);
-  const alto = tam * 1.38, y0 = 700 + (470 - ls.length * alto) / 2;
-  ctx.fillStyle = '#ffffff'; ls.forEach((l, k) => ctx.fillText(l, W/2, y0 + k * alto));
-  ctx.fillStyle = '#FFD700'; ctx.font = '500 34px Jost, sans-serif'; ctx.letterSpacing = '6px';
+  do { ctx.font = `italic 300 ${tam}px Jost, sans-serif`; ls = lineas(ctx, `“${d.texto}”`, 900); tam -= 2; } while (ls.length * tam * 1.38 > 430 && tam > 30);
+  const alto = tam * 1.38, y0 = 745 + (430 - ls.length * alto) / 2;
+  ctx.fillStyle = tinta; ls.forEach((l, k) => ctx.fillText(l, W/2, y0 + k * alto));
+  ctx.fillStyle = oro; ctx.font = '500 34px Jost, sans-serif'; ctx.letterSpacing = '6px';
   ctx.fillText(d.ref.toUpperCase(), W/2, 1215);
-  ctx.letterSpacing = '2px'; ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.font = '400 24px Jost, sans-serif';
+  ctx.letterSpacing = '2px'; ctx.fillStyle = suave; ctx.font = '400 24px Jost, sans-serif';
   const f = fechaDia(w, i).toLocaleDateString('es-PY', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'});
   ctx.fillText(f.toUpperCase(), W/2, 1262);
   ctx.letterSpacing = '0px';
   try { const logo = await cargarImg(document.querySelector('.logo img').src); ctx.drawImage(logo, 60, 60, 84, 84); } catch {}
-  ctx.textAlign = 'left'; ctx.fillStyle = '#fff'; ctx.font = '800 34px Nunito, sans-serif'; ctx.fillText('MENSAJERO', 160, 100);
-  ctx.fillStyle = 'rgba(255,255,255,.75)'; ctx.font = '400 22px Jost, sans-serif'; ctx.fillText('100.9 FM · Suena bien, hace bien', 160, 134);
+  ctx.textAlign = 'left'; ctx.fillStyle = tinta; ctx.font = '800 34px Nunito, sans-serif'; ctx.fillText('MENSAJERO', 160, 100);
+  ctx.fillStyle = suave; ctx.font = '400 22px Jost, sans-serif'; ctx.fillText('100.9 FM · Suena bien, hace bien', 160, 134);
   return cv;
 }
-async function abrirFlyer(w, i) {
-  avisar('Armando el flyer…');
-  const cv = await hacerFlyer(w, i), url = cv.toDataURL('image/png'), f = fechaDia(w, i);
-  const nombre = `versiculo-${DATA.anio}-${String(f.getMonth()+1).padStart(2, '0')}-${String(f.getDate()).padStart(2, '0')}.png`;
+let flyerModo = null;   // noche o día: arranca como la apariencia de la app y se puede cambiar en la hoja del flyer
+async function abrirFlyer(w, i, modo) {
+  flyerModo = modo || flyerModo || (esClaro() ? 'dia' : 'noche');
+  if (!$('flyer').open) avisar('Armando el flyer…');
+  const cv = await hacerFlyer(w, i, flyerModo), url = cv.toDataURL('image/png'), f = fechaDia(w, i);
+  for (const b of document.querySelectorAll('#flyer [data-fmodo]')) { b.setAttribute('aria-pressed', b.dataset.fmodo === flyerModo); b.onclick = () => abrirFlyer(w, i, b.dataset.fmodo); }
+  const nombre = `versiculo-${DATA.anio}-${String(f.getMonth()+1).padStart(2, '0')}-${String(f.getDate()).padStart(2, '0')}${flyerModo === 'dia' ? '-dia' : ''}.png`;
   $('flyer-img').src = url; $('flyer-bajar').href = url; $('flyer-bajar').download = nombre;
   const share = $('flyer-compartir'); share.hidden = !(navigator.canShare);
   share.onclick = async () => { try { const b = await (await fetch(url)).blob(); const file = new File([b], nombre, {type: 'image/png'});
-    if (navigator.canShare({files: [file]})) await navigator.share({files: [file], text: `${w.dias[i].ref} · Mensajero 100.9 FM`}); } catch {} };
+    if (navigator.canShare({files: [file]})) await navigator.share({files: [file], text: `¡Gracias por acompañarnos! ${w.dias[i].ref} · Mensajero 100.9 FM`}); } catch {} };
   $('flyer-bajar').onclick = async (e) => {
     // dentro del visor de claude.ai la descarga pasa por su capacidad «downloads»
     if (!window.claude?.use) return;
@@ -1535,7 +1550,7 @@ async function abrirFlyer(w, i) {
     try { await dl.save({filename: nombre, data: await (await fetch(url)).blob()}); }
     catch (err) { if (err?.code !== 'declined') avisar('No se pudo descargar: mantené presionada la imagen'); }
   };
-  $('flyer').showModal();
+  if (!$('flyer').open) $('flyer').showModal();
 }
 $('flyer-x').onclick = () => $('flyer').close();
 
@@ -1611,6 +1626,27 @@ pintarApariencia();
 function tic() { const d = new Date(), t = d.toLocaleTimeString('es-PY', {hour: '2-digit', minute: '2-digit', hour12: false});
   for (const id of ['reloj', 'reloj-bar']) if ($(id).textContent !== t) { $(id).textContent = t; $(id).dateTime = t; } }
 tic(); setInterval(tic, 1000);
+// clima junto a la hora: Open-Meteo (gratis, sin clave), en Raúl Arsenio Oviedo (Tres Palmas), cada 15 minutos.
+// Sin conexión o si el servicio falla, simplemente no se muestra.
+const CLIMA_URL = 'https://api.open-meteo.com/v1/forecast?latitude=-25.19&longitude=-55.60&current=temperature_2m,weather_code,is_day&timezone=America%2FAsuncion';
+const ICO_CLIMA = {sol: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>',
+  luna: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+  solnube: '<path d="M8 4v1.5M3.5 8.5H5M4.8 5.3l1 1M11.2 5.3l-1 1"/><path d="M5.6 11.5a3 3 0 1 1 5.4-2.3"/><path d="M8 20h9a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6 1.6A2.7 2.7 0 0 0 8 20z"/>',
+  nube: '<path d="M7 19h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 2A3 3 0 0 0 7 19z"/>',
+  lluvia: '<path d="M7 15h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 2A3 3 0 0 0 7 15z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/>',
+  tormenta: '<path d="M7 14h10a4 4 0 0 0 0-8 6 6 0 0 0-11.5 2A3 3 0 0 0 7 14z"/><path d="M12.5 15l-2 3.5h3l-2 3.5"/>',
+  niebla: '<path d="M4 9h16M3 13h18M5 17h14"/>'};
+const climaDe = (c, dia) => c === 0 ? [dia ? 'sol' : 'luna', 'Despejado'] : c <= 2 ? [dia ? 'solnube' : 'nube', 'Parcialmente nublado'] : c === 3 ? ['nube', 'Nublado']
+  : c <= 48 ? ['niebla', 'Niebla'] : c <= 57 ? ['lluvia', 'Llovizna'] : c <= 67 ? ['lluvia', 'Lluvia'] : c <= 77 ? ['nube', 'Nublado'] : c <= 82 ? ['lluvia', 'Chaparrones'] : ['tormenta', 'Tormenta'];
+async function clima() {
+  try {
+    const r = await fetch(CLIMA_URL), j = await r.json(), c = j.current; if (!r.ok || typeof c?.temperature_2m !== 'number') throw 0;
+    const [ico, desc] = climaDe(c.weather_code, c.is_day !== 0), t = Math.round(c.temperature_2m) + '°', svg = `<svg viewBox="0 0 24 24" aria-hidden="true">${ICO_CLIMA[ico]}</svg>`;
+    $('clima').innerHTML = `${svg}<span>${t}</span>`; $('clima').title = $('clima').ariaLabel = `${desc}, ${t} en Raúl Arsenio Oviedo`;
+    $('clima-bar').innerHTML = `${svg}${t}`; $('clima').hidden = $('clima-bar').hidden = false;
+  } catch { $('clima').hidden = $('clima-bar').hidden = true; }
+}
+clima(); setInterval(clima, 15 * 60 * 1000);
 if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => document.querySelector('.bar').classList.toggle('con-reloj', !e.isIntersecting)).observe($('reloj'));
 
 /* mi programa: define qué tareas se sugieren */

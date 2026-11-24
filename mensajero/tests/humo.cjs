@@ -102,6 +102,9 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   // flyer
   await p.click('#dias [data-flyer]'); await p.waitForTimeout(1500);
   ok((await p.getAttribute('#flyer-img', 'src') || '').startsWith('data:image/png'), 'flyer del versículo generado');
+  const src0 = await p.getAttribute('#flyer-img', 'src'); await p.click('#flyer [data-fmodo="dia"]'); await p.waitForTimeout(1500);
+  ok(await p.getAttribute('#flyer [data-fmodo="dia"]', 'aria-pressed') === 'true' && await p.getAttribute('#flyer-img', 'src') !== src0 && (await p.getAttribute('#flyer-bajar', 'download')).endsWith('-dia.png'), 'flyer en modo día');
+  await p.click('#flyer [data-fmodo="noche"]'); await p.waitForTimeout(800);
   await p.evaluate(() => document.getElementById('flyer').close());
 
   // registro, informe, preparación
@@ -172,6 +175,18 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   await p.click('#next'); await p.waitForTimeout(80);
   ok((await p.textContent('#h-meta')).includes('Semana 2') && (await p.textContent('#h-meta')).includes('Lila'), 'la semana del 3 de enero es la 2, lila');
   ok(p.errores.length === 0, 'semana 1 sin errores de JavaScript' + (p.errores.length ? ' → ' + p.errores.join(' | ') : ''));
+  await p.close();
+
+  // ── clima junto a la hora (servicio simulado; sin conexión no se muestra) ──
+  p = await b.newPage({viewport: {width: 390, height: 844}});
+  await p.route('https://api.open-meteo.com/**', r => r.fulfill({contentType: 'application/json', headers: {'access-control-allow-origin': '*'}, body: JSON.stringify({current: {temperature_2m: 27.6, weather_code: 2, is_day: 1}})}));
+  await p.goto(URL); await p.waitForTimeout(500);
+  ok(await p.isVisible('#clima') && (await p.textContent('#clima')).includes('28°') && (await p.getAttribute('#clima', 'title')).includes('Parcialmente nublado'), 'clima junto a la hora');
+  await p.close();
+  p = await b.newPage({viewport: {width: 390, height: 844}});
+  await p.route('https://api.open-meteo.com/**', r => r.abort());
+  await p.goto(URL); await p.waitForTimeout(500);
+  ok(!(await p.isVisible('#clima')), 'sin conexión, el clima no se muestra');
   await p.close();
 
   // ── sobre Mensajero: sin filas «por completar» ──
