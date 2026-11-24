@@ -11,6 +11,7 @@
 
 
 **Para empezar (10 minutos):**
+
 1. Abrir el prototipo en el celular y en la computadora, y recorrerlo: es la referencia de cómo tiene que quedar.
 2. Leer §5 (la app, de arriba abajo), §6 (reglas), §7 (datos del usuario), §8 y §9 (arquitectura y tareas de producción).
 3. Correr la prueba: `cd mensajero && node tests/humo.cjs` (necesita Playwright con Chromium). Tiene que decir «Todo en orden».
@@ -38,7 +39,7 @@ El guion **es una base, no un libreto**: el locutor mantiene el versículo tal c
 | Guiones de lunes a sábado (título, dato con fuente, 3 puntos con desarrollo, problemática y práctica; sábado = repaso) | 314 | listo, con revisión teológica y datos verificados |
 | Frases célebres verificadas | 260 (3 por semana + una segunda para los subtemas 1 y 2) | listo |
 | Frases deportivas (originales, sin autor) | 366 | listo |
-| Historia bíblica y marcos (por tema y ronda) | 52 | listo |
+| Historia bíblica y marcos (por tema y ronda) | 53 | listo |
 | Guía de los 5 valores | 5 | listo |
 | Hoja «Mensajero» (información institucional) | datos para la audiencia completos | contactos por área y organigrama quedan sin cargar (§11) |
 | Números útiles para la audiencia | 6 nacionales + 8 de salud en la zona | listo, a reconfirmar cada tanto |
