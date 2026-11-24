@@ -92,6 +92,7 @@ Los scripts son idempotentes: se pueden correr de nuevo sin duplicar cambios. Re
 - **Calendario por mes** (botón «Calendario» junto a «Esta semana»; siempre en versión clara, con los colores de modo día, también de noche): las semanas que tocan el mes, cada una con su color de fondo, ícono, tema, enfoque, número y sus siete días (los de otro mes atenuados, hoy en dorado, fechas especiales con un punto); flechas de mes; tocar una semana lleva a ella.
 - Bajo cada ícono de tema, en letra muy chica, **las fechas de su próxima semana** (la que está en curso o la siguiente; al terminar el año, la última).
 - **Semana activa vs. otra semana:** el dorado significa siempre «semana activa» (la de hoy; antes de que empiece el año, la primera; al terminar, la última). En la activa, la tarjeta del tema lleva borde dorado, sus fechas van resaltadas en dorado y el ícono de su tema va en dorado. En otra semana, la tarjeta queda con su borde simple y las fechas sin resaltar; el ícono del tema que se está viendo lleva un aro blanco simple y el botón «Esta semana» se marca para volver.
+- **Mi programa (en «Mis días al aire»), un solo paso:** nombre del locutor, nombre del programa (libre, con sugerencias de los programas de la serie), hora de inicio y de fin, modalidad y días al aire. Sin esos datos la semana no se muestra y el aviso dice qué falta; con «Listo» queda una línea de resumen («Juan Pérez · lunes a viernes · de 07:20 a 08:30 · En vivo») con «Editar». Al agregar otro programa se piden los mismos datos (el nombre del locutor ya está). La duración y la franja se calculan del horario; el nombre del locutor firma los flyers.
 - **Siete íconos de temas**, en una sola franja de vidrio con el nombre corto debajo (sin cortes con guion; el tema de la semana en dorado). Al tocar uno se abre la hoja del tema: arriba su escena con la paleta de su color (de día o de noche según la apariencia), el nombre y cuántas semanas tiene; abajo cada semana con su número en un círculo del color, las fechas, el título y los tres subtemas (activa resaltada, próxima marcada, pasadas atenuadas). En modo claro la hoja es clara.
 - Tarjeta con tema, enfoque, color, número de semana y los tres subtemas; flechas y «Esta semana».
 
@@ -119,7 +120,7 @@ Pestañas por día (día y fecha, por ejemplo «MIÉ · 3-Mar»). Cada tarjeta, 
 Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilustrativa y frase deportiva. Sábado: repaso (dato, idea de cada subtema, acción de la semana), versículo, frase deportiva.
 
 ### Grupos del final
-- **Mi trabajo:** *Mi preparación* (programa: nombre libre —con sugerencias de los programas de la serie—, hora de inicio y de fin, y modalidad; la duración y la franja se calculan del horario: antes de las 11 mañana, 11-14 mediodía, 14-19 tarde, desde las 19 o de madrugada noche; lista de tareas elegidas de una biblioteca de 18 tareas agrupadas: se sugieren 6 básicas y cada uno puede sumar hasta 10; porcentaje) y *Mis informes del mes* (un solo mes elegido: días al aire, en vivo y grabados, entrevistas, mensajes por canal y la preparación con niveles Excelente/Buena/Regular/Baja; botones «Copiar informe del mes» y «Copiar informe de preparación»).
+- **Mi trabajo:** *Mi preparación* (solo la lista para marcar: tareas elegidas de una biblioteca de 18 agrupadas; se sugieren 6 básicas y cada uno puede sumar hasta 10; porcentaje) y *Mis informes del mes* (un solo mes elegido: días al aire, en vivo y grabados, entrevistas, mensajes por canal y la preparación con niveles Excelente/Buena/Regular/Baja; botones «Copiar informe del mes» y «Copiar informe de preparación»).
 - **La serie 2027:** *Historia bíblica y marcos* y *Buscar*; las 53 semanas por color con barra de días al aire están al pie del **Calendario** («El año completo») (sin distinguir tildes ni mayúsculas; lleva a la semana).
 - **Para la audiencia:** *Números útiles* (6 nacionales: 911, 141 SEME —021 141 desde celular—, 132 Bomberos, 155 salud mental, 137 SOS Mujer y WhatsApp 0961 137 137, 147 Fono Ayuda niñez; más 8 de «Salud en la zona»; tocar llama; copiar para leer al aire), *Sobre Mensajero e historias* (hoja «Mensajero» y, debajo, las Historias de Mensajero; las filas vacías no se muestran; la programación no se copia en la app: un botón abre la grilla de la radio, https://mensajerofm.org/grilla/publica.php (pública, sin clave)).
 
@@ -168,7 +169,7 @@ Prefijos: semana `2027/wN/`; programa 2 y 3 agregan `p2/` o `p3/` (el programa 1
 | `cfg/[pX/]historial` | `[{desde, dias}]` | Cambios de días al aire |
 | `cfg/[pX/]prep` · `cfg/[pX/]prepManual` | ids · bool | Lista de tareas elegida |
 | `cfg/programas` · `cfg/activo` | ids · id | Programas del locutor y el activo |
-| `cfg/firma` | texto | Nombre del locutor para firmar los flyers (del locutor, no de un programa) |
+| `cfg/firma` | texto | Nombre del locutor (se pide en «Mi programa»; firma los flyers; es del locutor, no de un programa) |
 
 Fuera de `entries` y solo del dispositivo: `localStorage["mensajero:apariencia"]` (`auto` \| `oscuro` \| `claro`).
 

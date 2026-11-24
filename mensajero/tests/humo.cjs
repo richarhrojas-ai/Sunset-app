@@ -14,6 +14,13 @@ async function abrir(b, {w = 390, h = 844, fecha = '2027-03-03T10:00:00'} = {}) 
   await p.goto(URL); await p.waitForTimeout(300);
   return p;
 }
+// completa «Mi programa» (nombre del locutor, del programa, horario y días) y toca «Listo»
+async function configurar(p, {dias = '1,2,3,4,5,6', nombre = 'Programa de prueba', desde = '09:00', hasta = '10:00'} = {}) {
+  if (await p.$('[data-dias-editar]')) await p.click('[data-dias-editar]');
+  await p.fill('#pg-firma', 'Juan Pérez'); await p.fill('#pg-nombre', nombre); await p.fill('#pg-desde', desde); await p.fill('#pg-hasta', hasta);
+  await p.$eval('#pg-hasta', e => e.dispatchEvent(new Event('change', {bubbles: true})));
+  await p.click(`[data-preset="${dias}"]`); await p.waitForTimeout(80); await p.click('[data-dias-listo]'); await p.waitForTimeout(200);
+}
 const texto = p => p.evaluate(() => document.getElementById('copia-txt').value);
 const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close());
 
@@ -53,7 +60,9 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   ok(await p.textContent('#h-tema') === sem0, 'flechas y «Esta semana» vuelven a la semana actual');
 
   // días al aire y tarjeta del día
-  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
+  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(150);
+  ok(await p.evaluate(() => document.getElementById('semana').hidden) && (await p.textContent('#pg-falta')).includes('tu nombre'), 'sin nombre, programa y horario la semana no se muestra');
+  await configurar(p);
   ok(await p.$$eval('#dias [role=tab]', x => x.length) === 6, 'lunes a sábado: seis pestañas de día');
   ok(await p.$$eval('#dias details.punto', x => x.length) === 3, 'miércoles: tres puntos plegables');
   ok(await p.$$eval('#dias details.punto[open]', x => x.length) === 1, 'sin franja: un solo punto abierto');
@@ -86,10 +95,9 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
 
   // franja horaria → un punto por programa
   await p.evaluate(() => document.getElementById('s-prep').open = true);
-  await p.fill('#pg-nombre', 'Mi programa nuevo'); await p.$eval('#pg-nombre', e => e.dispatchEvent(new Event('change', {bubbles: true})));
-  await p.fill('#pg-desde', '20:00'); await p.fill('#pg-hasta', '22:00'); await p.$eval('#pg-hasta', e => e.dispatchEvent(new Event('change', {bubbles: true}))); await p.click('#s-prep summary'); await p.click('#s-prep summary'); await p.waitForTimeout(150);
+  await configurar(p, {nombre: 'Mi programa nuevo', desde: '20:00', hasta: '22:00'});
   ok(await p.$eval('#dias details.punto[open] summary span', e => e.textContent) === '3', 'horario de 20:00 a 22:00: franja noche, se abre el punto 3');
-  ok((await p.textContent('#s-prog')).includes('de 20:00 a 22:00') && await p.inputValue('#pg-nombre') === 'Mi programa nuevo', 'nombre libre del programa y horario a la vista');
+  ok((await p.textContent('#s-prog')).includes('de 20:00 a 22:00') && (await p.textContent('#s-prog')).includes('Mi programa nuevo') && (await p.textContent('#s-prog')).includes('Juan Pérez'), 'nombre libre del programa, locutor y horario a la vista');
   ok(await p.getAttribute('#dias a.yv', 'href') === 'https://www.bible.com/es/bible/146/PRO.12.10.RVC', 'versículo con enlace a YouVersion (RVC)');
   ok(/^\d{2}:\d{2}$/.test(await p.textContent('#reloj')), 'reloj en la portada');
   await p.evaluate(() => document.getElementById('s-marco').open = true);
@@ -126,8 +134,8 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   const src0 = await p.getAttribute('#flyer-img', 'src'); await p.click('#flyer [data-fmodo="dia"]'); await p.waitForTimeout(1500);
   ok(await p.getAttribute('#flyer [data-fmodo="dia"]', 'aria-pressed') === 'true' && await p.getAttribute('#flyer-img', 'src') !== src0 && (await p.getAttribute('#flyer-bajar', 'download')).endsWith('-dia.png'), 'flyer en modo día');
   await p.click('#flyer [data-fmodo="noche"]'); await p.waitForTimeout(800);
-  const src1 = await p.getAttribute('#flyer-img', 'src'); await p.fill('#flyer-firma', 'Juan Pérez'); await p.waitForTimeout(1500);
-  ok(await p.getAttribute('#flyer-img', 'src') !== src1 && await p.evaluate(() => JSON.parse(localStorage.getItem('mensajero:entries'))['cfg/firma'].v) === 'Juan Pérez', 'flyer con la firma del locutor, guardada en el dispositivo');
+  const src1 = await p.getAttribute('#flyer-img', 'src'); await p.fill('#flyer-firma', 'Ana Gómez'); await p.waitForTimeout(1500);
+  ok(await p.getAttribute('#flyer-img', 'src') !== src1 && await p.evaluate(() => JSON.parse(localStorage.getItem('mensajero:entries'))['cfg/firma'].v) === 'Ana Gómez', 'flyer con la firma del locutor, guardada en el dispositivo');
   await p.evaluate(() => document.getElementById('flyer').close());
 
   // registro, informe, preparación
@@ -178,19 +186,19 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
 
   // ── fechas especiales ──
   p = await abrir(b, {fecha: '2027-03-26T10:00:00'});
-  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
+  await configurar(p);
   ok((await p.textContent('#dias .especial b') || '').includes('Viernes Santo') && (await p.textContent('#dias .vers-base .ref')).includes('1 Pedro 2:24'), 'Viernes Santo: aviso de especial y versículo propio');
   await p.click('[data-vertodo]'); await p.click('#dias [data-d="0"]'); await p.waitForTimeout(80);
   ok(await p.$$eval('#dias .especial', x => x.length) === 0, 'el domingo anterior no es especial');
   await p.close();
   p = await abrir(b, {fecha: '2027-12-25T10:00:00'});
-  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
+  await configurar(p);
   ok((await p.textContent('#dias .especial b') || '').includes('Navidad') && (await p.textContent('#dias .vers-base .ref')).includes('Lucas 2:10-11'), 'Navidad: aviso de especial y Lucas 2:10-11');
   await p.close();
 
   // ── semana 1: solo viernes 1 y sábado 2 de enero ──
   p = await abrir(b, {fecha: '2027-01-01T10:00:00'});
-  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
+  await configurar(p);
   ok((await p.textContent('#h-meta')).includes('Semana 1') && (await p.textContent('#h-meta')).includes('Azul'), '1 de enero: semana 1, azul');
   ok(await p.$$eval('#dias [role=tab]', x => x.length) === 2 && (await p.textContent('#dias .especial b')).includes('Año Nuevo'), 'semana 1: solo viernes y sábado, con el aviso de Año Nuevo');
   await p.click('#dias [data-d="6"]'); await p.waitForTimeout(80);
@@ -220,7 +228,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
 
   // ── historias de Mensajero y aniversario ──
   p = await abrir(b, {fecha: '2027-03-25T10:00:00'});
-  await p.click('[data-preset="1,2,3,4,5,6"]'); await p.waitForTimeout(200);
+  await configurar(p);
   ok((await p.textContent('#dias')).includes('Aniversario de Mensajero · 28 años'), '25 de marzo: aviso de aniversario en la tarjeta del día');
   await p.evaluate(() => document.getElementById('s-mensajero').open = true);
   ok(await p.$$eval('#historias details.loc', x => x.length) === 24 && (await p.textContent('#historias')).includes('Historia de esta semana') && (await p.textContent('#historias')).includes('28 años'), 'historias de Mensajero: 24 aprobadas, la de la semana y el aniversario');

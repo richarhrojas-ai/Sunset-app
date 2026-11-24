@@ -450,6 +450,8 @@ dialog.copia textarea{min-height:260px;font-size:calc(14px*var(--fz,1));margin:1
 .programa select{min-height:40px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--bg),.25);color:var(--ink);font:inherit;font-size:calc(14.5px*var(--fz,1));padding:0 14px;display:inline-flex;align-items:center;gap:8px}
 .programa input[type=checkbox]{accent-color:var(--gold-t);width:16px;height:16px}
 .pg-campo{display:grid;gap:4px;flex:1 1 120px;min-width:0}
+.pg-falta{font-size:calc(13.5px*var(--fz,1));color:var(--gold-t)}
+.pg-falta.ok{color:var(--ink2)}
 .pg-campo>span{font-size:calc(11.5px*var(--fz,1));letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
 .pg-campo.pg-nombre,.pg-campo.pg-modo{flex-basis:100%}
 .pg-campo input{min-height:42px;border-radius:12px;border:1px solid var(--line);background:rgba(var(--bg),.25);color:var(--ink);font:inherit;font-size:calc(15px*var(--fz,1));padding:0 14px;width:100%}
@@ -707,7 +709,6 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   <div class="grupo">
   <details class="fold" id="s-prep"><summary><span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.2 1.2L7 5M3.5 12l1.2 1.2L7 11M3.5 18l1.2 1.2L7 17"/></svg></span>Mi preparación <span class="muted" id="prep-prog" style="font-size:.85em"></span> <span id="prep-pct" class="muted" style="letter-spacing:.1em"></span></summary>
     <div class="fold-body">
-      <div><h4>Mi programa</h4><div class="programa" id="programa"></div></div>
       <div class="plazo" id="plazo-prep"></div><div class="barra"><i id="prep-bar"></i></div><div class="prep" id="prep"></div>
       <div class="acciones"><button class="btn" id="abrir-biblio">Elegir de la biblioteca (18)</button></div></div></details>
   <details class="fold" id="s-reg"><summary><span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></svg></span>Mis informes del mes</summary><div class="fold-body">
@@ -818,7 +819,7 @@ const cfgPrograma = () => {
   if (!Array.isArray(c.dias)) c.dias = c.frec === 'semanal' ? [6] : c.frec === 'diario' ? [1, 2, 3, 4, 5] : [];   // [] = todavía no eligió
   c.dias = [...new Set(c.dias)].sort();
   c.frec = c.dias.length === 1 ? 'semanal' : 'diario';   // un solo día al aire = programa semanal
-  c.listo = c.dias.length > 0;
+  c.listo = c.dias.length > 0 && !!c.nombre.trim() && minutos(c.desde) !== null && minutos(c.hasta) !== null && !!(get('cfg/firma') || '').trim();
   return c;
 };
 // un punto por programa: según la franja, cada programa del día desarrolla un punto distinto y la audiencia no oye lo mismo dos veces
@@ -1780,37 +1781,56 @@ const PROGRAMAS = [...new Set(DATA.semanas.map(w => w.programa))];
 const resumenDias = d => { const k = d.join(','); return k === '1,2,3,4,5' ? 'lunes a viernes' : k === '1,2,3,4,5,6' ? 'lunes a sábado'
   : d.map(i => DIAS[i].toLowerCase()).join(', '); };
 let editandoDias = false;
+/* «Mis días al aire»: un solo paso para todo el programa. Nombre del locutor, nombre del programa, horario, modalidad y días;
+   sin esos datos la semana no se muestra. Ya completo, queda una línea de resumen con «Editar». */
+const faltanDe = c => [!(get('cfg/firma') || '').trim() && 'tu nombre', !c.nombre.trim() && 'el nombre del programa',
+  (minutos(c.desde) === null || minutos(c.hasta) === null) && 'el horario', !c.dias.length && 'los días'].filter(Boolean);
 function pintarPrograma() {
-  const c = cfgPrograma();
-  const ps = progs(), varios = ps.length > 1, nom = nombreProg(prog);
+  const c = cfgPrograma(), ps = progs(), varios = ps.length > 1, nom = nombreProg(prog);
+  if (!c.listo) editandoDias = true;
   const selector = varios ? `<div class="progs" role="tablist" aria-label="Mis programas">${ps.map(id => `<button type="button" role="tab" data-prog="${id}" aria-selected="${id === prog}">${esc(nombreProg(id))}</button>`).join('')}${ps.length < MAX_PROG ? '<button type="button" class="mas" data-prog-nuevo>+ Programa</button>' : ''}</div>` : '';
-  const pie = varios ? `<div class="prog-pie"><button type="button" class="link" data-ir-prep>Nombre y duración de «${esc(nom)}»</button>${prog !== 'p1' ? '<button type="button" class="btn mini" data-prog-quitar>Quitar este programa</button>' : ''}</div>`
+  const pie = varios ? (prog !== 'p1' ? `<div class="prog-pie"><span></span><button type="button" class="btn mini" data-prog-quitar>Quitar este programa</button></div>` : '')
     : c.listo ? `<div class="prog-pie"><span>¿Hacés más de un programa?</span><button type="button" class="btn mini" data-prog-nuevo>+ Agregar programa</button></div>` : '';
-  const titulo = varios ? 'Días al aire · ' + esc(nom) : 'Mis días al aire';
-  // ya configurado: una línea con «Cambiar días»; los botones de días solo aparecen al editar
-  $('s-prog').innerHTML = c.listo && !editandoDias ? `<div class="form">${selector}
-    <div class="dias-res"><div><h2>${titulo}</h2><p>Tu semana: <b>${resumenDias(c.dias)}</b>${horarioTxt(c) ? ` · <b>${horarioTxt(c)}</b>` : ''}</p></div><button type="button" class="btn mini" data-dias-editar>Cambiar días</button></div>${pie}</div>`
-    : `<div class="form">${selector}
-    <div><h2>${titulo}</h2><p>${c.listo ? `Tu semana muestra: <b>${resumenDias(c.dias)}</b>.` : 'Marcá los días que salís al aire y abajo aparece tu semana.'}</p></div>
-    <div class="dias-chips" role="group" aria-label="Días al aire">${DIAS.map((d, i) => `<button type="button" data-dia="${i}" aria-pressed="${c.dias.includes(i)}">${d.slice(0, 3)}</button>`).join('')}</div>
-    <div class="dias-chips"><button type="button" class="btn mini" data-preset="1,2,3,4,5">Lunes a viernes</button><button type="button" class="btn mini" data-preset="1,2,3,4,5,6">Lunes a sábado</button>${c.listo ? '<button type="button" class="btn mini prim" data-dias-listo>Listo</button>' : ''}</div>${pie}</div>`;
+  const firma = (get('cfg/firma') || '').trim(), modoTxt = c.modo === 'grabado' ? 'Grabado' : 'En vivo';
+  if (!editandoDias) {
+    $('s-prog').dataset.form = '';
+    $('s-prog').innerHTML = `<div class="form">${selector}
+      <div class="dias-res"><div><h2>${esc(c.nombre)}</h2><p>${esc(firma)} · <b>${resumenDias(c.dias)}</b> · <b>${horarioTxt(c)}</b> · ${modoTxt}</p></div><button type="button" class="btn mini" data-dias-editar>Editar</button></div>${pie}</div>`;
+  } else {
+    // el formulario se dibuja una vez por programa; al tocar días o escribir solo se actualizan los botones y el aviso (no se pierde lo que se escribe)
+    if ($('s-prog').dataset.form !== prog) {
+      $('s-prog').dataset.form = prog;
+      const nuevo = prog !== 'p1' && !c.nombre;
+      $('s-prog').innerHTML = `<div class="form">${selector}
+        <div><h2>${nuevo ? 'Nuevo programa' : 'Mi programa'}</h2><p>Completá estos datos una vez: con ellos se arma tu semana, tus informes y la firma de tus flyers.</p></div>
+        <div class="programa">
+          <label class="pg-campo pg-nombre"><span>Tu nombre</span><input id="pg-firma" value="${esc(firma)}" placeholder="Por ejemplo: Juan Pérez" autocomplete="name" maxlength="40"></label>
+          <label class="pg-campo pg-nombre"><span>Nombre del programa</span><input id="pg-nombre" list="pg-lista" value="${esc(c.nombre)}" placeholder="Escribí el nombre" autocomplete="off"></label>
+          <datalist id="pg-lista">${PROGRAMAS.map(p => `<option value="${esc(p)}">`).join('')}</datalist>
+          <label class="pg-campo"><span>Empieza</span><input id="pg-desde" type="time" value="${esc(c.desde)}"></label>
+          <label class="pg-campo"><span>Termina</span><input id="pg-hasta" type="time" value="${esc(c.hasta)}"></label>
+          <label class="pg-campo pg-modo"><span>Modalidad</span><select id="pg-modo"><option value="vivo"${c.modo === 'vivo' ? ' selected' : ''}>En vivo (grabado solo algunos días)</option><option value="grabado"${c.modo === 'grabado' ? ' selected' : ''}>Siempre grabado</option></select></label>
+        </div>
+        <div class="pg-campo pg-nombre"><span>Días al aire</span>
+          <div class="dias-chips" role="group" aria-label="Días al aire">${DIAS.map((d, i) => `<button type="button" data-dia="${i}" aria-pressed="false">${d.slice(0, 3)}</button>`).join('')}</div>
+          <div class="dias-chips"><button type="button" class="btn mini" data-preset="1,2,3,4,5">Lunes a viernes</button><button type="button" class="btn mini" data-preset="1,2,3,4,5,6">Lunes a sábado</button></div></div>
+        <p class="pg-falta" id="pg-falta"></p>
+        <div class="acciones"><button type="button" class="btn prim" data-dias-listo>Listo</button></div>${pie}</div>`;
+    }
+    for (const b of $('s-prog').querySelectorAll('[data-dia]')) b.setAttribute('aria-pressed', c.dias.includes(+b.dataset.dia));
+    const f = faltanDe(c);
+    $('pg-falta').textContent = f.length ? 'Para ver tu semana falta: ' + f.join(', ') + '.' : 'Todo listo: tocá «Listo».';
+    $('pg-falta').classList.toggle('ok', !f.length);
+  }
   $('sem-prog').textContent = $('prep-prog').textContent = varios ? '· ' + nom : '';
   if (varios && prog !== 'p1') document.documentElement.dataset.prog = prog; else delete document.documentElement.dataset.prog;
-  // nombre libre (con sugerencias de los programas de la serie) y horario de inicio y fin.
-  // Los campos se dibujan al abrir o al cambiar de programa; mientras se completan no se repintan (se perdería lo que se está escribiendo)
-  if ($('programa').dataset.prog !== prog) $('programa').dataset.prog = prog, $('programa').innerHTML = `<label class="pg-campo pg-nombre"><span>Nombre del programa</span>
-      <input id="pg-nombre" list="pg-lista" value="${esc(c.nombre)}" placeholder="Escribí el nombre" autocomplete="off"></label>
-    <datalist id="pg-lista">${PROGRAMAS.map(p => `<option value="${esc(p)}">`).join('')}</datalist>
-    <label class="pg-campo"><span>Empieza</span><input id="pg-desde" type="time" value="${esc(c.desde)}"></label>
-    <label class="pg-campo"><span>Termina</span><input id="pg-hasta" type="time" value="${esc(c.hasta)}"></label>
-    <label class="pg-campo pg-modo"><span>Modalidad</span><select id="pg-modo" aria-label="Modalidad"><option value="vivo"${c.modo === 'vivo' ? ' selected' : ''}>En vivo (grabado solo algunos días)</option><option value="grabado"${c.modo === 'grabado' ? ' selected' : ''}>Siempre grabado</option></select></label>`;
   $('semana').hidden = !c.listo;
 }
-function cambiarProg(id) { prog = id; set('cfg/activo', id); diaSel = null; verTodo = false; render(); }
+function cambiarProg(id) { editandoDias = false; prog = id; set('cfg/activo', id); diaSel = null; verTodo = false; render(); }
 function nuevoProg() {
   const ps = progs(); if (ps.length >= MAX_PROG) return;
   const id = ['p2', 'p3'].find(x => !ps.includes(x)); set('cfg/programas', [...ps, id]); cambiarProg(id);
-  $('s-prog').scrollIntoView({behavior: 'smooth'}); avisar('Marcá los días de tu nuevo programa');
+  $('s-prog').scrollIntoView({behavior: 'smooth'}); avisar('Completá los datos de tu nuevo programa');
 }
 function quitarProg() {
   if (prog === 'p1' || !confirm(`¿Quitar «${nombreProg(prog)}» y todo lo marcado en él?`)) return;
@@ -1819,7 +1839,9 @@ function quitarProg() {
   set('cfg/programas', progs().filter(x => x !== id)); cambiarProg('p1');
 }
 function guardarPrograma(dias) {
-  const c = {nombre: $('pg-nombre').value.trim(), desde: $('pg-desde').value, hasta: $('pg-hasta').value, modo: $('pg-modo').value, dias: dias || cfgPrograma().dias};
+  const v = (id, x) => $(id) ? $(id).value.trim() : x, c0 = cfgPrograma();
+  if ($('pg-firma')) set('cfg/firma', $('pg-firma').value.trim());
+  const c = {nombre: v('pg-nombre', c0.nombre), desde: v('pg-desde', c0.desde), hasta: v('pg-hasta', c0.hasta), modo: v('pg-modo', c0.modo), dias: dias || c0.dias};
   if (dias) { const hoy = new Date(); hoy.setHours(0,0,0,0); const h = (get(ck('historial')) || []).filter(x => x.desde < +hoy);
     if (!h.length) h.push({desde: 0, dias: [...dias].sort()}); else h.push({desde: +hoy, dias: [...dias].sort()});
     set(ck('historial'), h); }
@@ -1966,24 +1988,23 @@ $('inf').onclick = e => { const m = e.target.closest('[data-mes]'); if (m) retur
   const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } };
 document.querySelectorAll('.reg-list').forEach(l => l.onclick = e => { const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } });
 $('copia-x').onclick = () => $('copia').close();
-$('programa').onchange = () => guardarPrograma();
 $('dias').onchange = e => { const s = e.target.closest('[data-reem-sel]'); if (!s) return; if (bloqueada()) return render();
   set(keyBase(sem[cur], 'reem'+s.dataset.reemSel), s.value); renderRegistro(+$('mes').value); };
 $('s-prog').onclick = e => {
   const g = e.target.closest('button[data-prog]'); if (g) return g.dataset.prog !== prog && cambiarProg(g.dataset.prog);
   if (e.target.closest('[data-prog-nuevo]')) return nuevoProg();
   if (e.target.closest('[data-prog-quitar]')) return quitarProg();
-  if (e.target.closest('[data-ir-prep]')) { $('s-prep').open = true; return $('s-prep').scrollIntoView({behavior: 'smooth'}); }
   if (e.target.closest('[data-dias-editar]')) { editandoDias = true; return pintarPrograma(); }
-  if (e.target.closest('[data-dias-listo]')) { editandoDias = false; return pintarPrograma(); }
+  if (e.target.closest('[data-dias-listo]')) { guardarPrograma(); const f = faltanDe(cfgPrograma());
+    if (f.length) { avisar('Falta: ' + f.join(', ')); return $('pg-falta').scrollIntoView({behavior: 'smooth', block: 'center'}); }
+    editandoDias = false; pintarPrograma(); return $('semana').scrollIntoView({behavior: 'smooth'}); }
   const d = e.target.closest('[data-dia]'), p = e.target.closest('[data-preset]'); if (!d && !p) return;
-  if (p) editandoDias = false;
   let dias = cfgPrograma().dias;
   if (p) dias = p.dataset.preset.split(',').map(Number);
   else { const i = +d.dataset.dia; dias = dias.includes(i) ? dias.filter(x => x !== i) : [...dias, i]; }
-  const antes = cfgPrograma().listo; guardarPrograma(dias);
-  if (!antes && dias.length) $('semana').scrollIntoView({behavior: 'smooth'});
+  guardarPrograma(dias);
 };
+$('s-prog').addEventListener('change', e => { if (e.target.closest('.programa')) guardarPrograma(); });
 $('abrir-biblio').onclick = abrirBiblio;
 $('prep').onclick = e => { const b = e.target.closest('button'); if (!b || bloqueada()) return;
   const k = kPrep(sem[cur], ITEMS.find(i => i.id === b.dataset.p)), v = !get(k); set(k, v); set(key(sem[cur], 'prepLista'), misItems().map(it => it.id)); b.setAttribute('aria-pressed', v); pintarPrep();
