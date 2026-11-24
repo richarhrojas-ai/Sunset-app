@@ -1434,7 +1434,7 @@
     const body = el('div', 'fold-body');
     body.appendChild(el('p', 'fold-hint', 'Tema de interés de la semana: ' + interest + '. ' + (interest === 'Relaciones'
       ? 'Aquí hablan tus propias ideas sobre las relaciones personales.'
-      : 'Aquí aprendes de autores reconocidos.') + ' Lo marcado «por verificar» conviene confirmarlo en su fuente antes de usarlo en público.'));
+      : 'Aquí aprendes de autores reconocidos.') + ' Cada elemento lleva su fuente; las citas bíblicas, en Reina-Valera 1960.'));
     set.forEach((i) => body.appendChild(resItem(i)));
     if (words.length) {
       const sub = el('details', 'res-sub');

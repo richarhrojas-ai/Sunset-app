@@ -1579,9 +1579,8 @@ export default {
    },
    {
     "k": "dato",
-    "t": "En un estudio de University College London, formar un hábito tomó en promedio 66 días, con una variación enorme: de 18 a 254.",
-    "s": "Lally y cols., 2009, European Journal of Social Psychology",
-    "v": 1
+    "t": "En un estudio del University College London, formar un hábito tomó unos 66 días como cifra central, con una variación enorme: de 18 a 254 días (el máximo es una proyección).",
+    "s": "Lally y cols., European Journal of Social Psychology, 2010"
    },
    {
     "k": "idea",
@@ -1603,8 +1602,7 @@ export default {
    {
     "k": "dato",
     "t": "Dormir menos de 7 horas de forma habitual se asocia con peor atención, ánimo y salud en adultos.",
-    "s": "Consenso de la American Academy of Sleep Medicine y la Sleep Research Society, 2015",
-    "v": 1
+    "s": "Consenso de la American Academy of Sleep Medicine y la Sleep Research Society, 2015"
    },
    {
     "k": "idea",
@@ -1620,9 +1618,8 @@ export default {
   "Provisión": [
    {
     "k": "frase",
-    "t": "Mi Dios suplirá todo lo que les falte, conforme a sus riquezas en gloria.",
-    "s": "Filipenses 4:19 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Mi Dios, pues, suplirá todo lo que os falta conforme a sus riquezas en gloria en Cristo Jesús.",
+    "s": "Filipenses 4:19 (RVR1960)"
    },
    {
     "k": "principio",
@@ -1671,8 +1668,7 @@ export default {
    {
     "k": "dato",
     "t": "En redes sociales, tener un amigo feliz a menos de 1,6 km aumentó cerca de un 25 % la probabilidad de ser feliz.",
-    "s": "Fowler y Christakis, BMJ, 2008",
-    "v": 1
+    "s": "Fowler y Christakis, BMJ, 2008"
    },
    {
     "k": "richarh",
@@ -1688,9 +1684,8 @@ export default {
   "Tiempo": [
    {
     "k": "frase",
-    "t": "Enséñanos de tal modo a contar nuestros días, que traigamos al corazón sabiduría.",
-    "s": "Salmo 90:12 (versión RVR1960; cotejar en RVC)",
-    "v": 1
+    "t": "Enséñanos de tal modo a contar nuestros días, Que traigamos al corazón sabiduría.",
+    "s": "Salmos 90:12 (RVR1960)"
    },
    {
     "k": "dato",
@@ -1711,9 +1706,8 @@ export default {
   "Sabiduría": [
    {
     "k": "frase",
-    "t": "Sabiduría ante todo: adquiere sabiduría; y sobre todas tus posesiones adquiere inteligencia.",
-    "s": "Proverbios 4:7 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Sabiduría ante todo; adquiere sabiduría; Y sobre todas tus posesiones adquiere inteligencia.",
+    "s": "Proverbios 4:7 (RVR1960)"
    },
    {
     "k": "principio",
@@ -1762,14 +1756,12 @@ export default {
    {
     "k": "dato",
     "t": "En el Estudio de Harvard sobre Desarrollo Adulto (más de 80 años), la calidad de las relaciones fue el mejor predictor de salud y felicidad en la vejez.",
-    "s": "Robert Waldinger y Marc Schulz, The Good Life (2023)",
-    "v": 1
+    "s": "Robert Waldinger y Marc Schulz, The Good Life (2023)"
    },
    {
     "k": "dato",
-    "t": "En parejas estables hubo cerca de 5 interacciones positivas por cada negativa.",
-    "s": "John Gottman, investigación de laboratorio (ratio 5:1)",
-    "v": 1
+    "t": "Durante los conflictos, las parejas estables mantuvieron cerca de 5 interacciones positivas por cada negativa.",
+    "s": "John Gottman, investigación de laboratorio (ratio 5:1)"
    },
    {
     "k": "richarh",
@@ -1796,13 +1788,12 @@ export default {
    {
     "k": "principio",
     "t": "Eficiencia es hacer las cosas bien; eficacia es hacer las cosas correctas.",
-    "s": "Peter Drucker, The Effective Executive (1967)"
+    "s": "Peter Drucker (frase atribuida; la idea está en The Effective Executive, 1967)"
    },
    {
     "k": "dato",
     "t": "Cerca del 20 % de los negocios nuevos en Estados Unidos cierra en el primer año y alrededor de la mitad antes del quinto.",
-    "s": "U.S. Bureau of Labor Statistics, Business Employment Dynamics",
-    "v": 1
+    "s": "U.S. Bureau of Labor Statistics, Business Employment Dynamics"
    },
    {
     "k": "principio",
@@ -1818,9 +1809,8 @@ export default {
   "Trabajo": [
    {
     "k": "frase",
-    "t": "Todo lo que hagan, háganlo de buena gana, como para el Señor y no para los hombres.",
-    "s": "Colosenses 3:23 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Y todo lo que hagáis, hacedlo de corazón, como para el Señor y no para los hombres.",
+    "s": "Colosenses 3:23 (RVR1960)"
    },
    {
     "k": "principio",
@@ -1829,9 +1819,8 @@ export default {
    },
    {
     "k": "dato",
-    "t": "Tras una interrupción, volver al foco completo tarda en promedio unos 23 minutos.",
-    "s": "Gloria Mark, University of California Irvine",
-    "v": 1
+    "t": "Tras una interrupción, retomar la tarea que se estaba haciendo tarda en promedio unos 23 minutos.",
+    "s": "Gloria Mark, University of California Irvine"
    },
    {
     "k": "recordar",
@@ -1843,8 +1832,7 @@ export default {
    {
     "k": "dato",
     "t": "Las personas tienen círculos de relación en capas: unas 5 muy cercanas, 15 de confianza, 50 amigos y 150 conocidos significativos.",
-    "s": "Robin Dunbar, capas de relación (número de Dunbar)",
-    "v": 1
+    "s": "Robin Dunbar, capas de relación (número de Dunbar)"
    },
    {
     "k": "richarh",
@@ -1865,15 +1853,13 @@ export default {
   "Amigos": [
    {
     "k": "frase",
-    "t": "En todo tiempo ama el amigo; y es como un hermano en tiempo de angustia.",
-    "s": "Proverbios 17:17 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "En todo tiempo ama el amigo, Y es como un hermano en tiempo de angustia.",
+    "s": "Proverbios 17:17 (RVR1960)"
    },
    {
     "k": "dato",
     "t": "Tener relaciones sociales sólidas se asoció con un 50 % más de probabilidad de supervivencia, un efecto comparable a dejar de fumar.",
-    "s": "Julianne Holt-Lunstad y cols., PLoS Medicine, 2010 (meta-análisis de 148 estudios)",
-    "v": 1
+    "s": "Julianne Holt-Lunstad y cols., PLoS Medicine, 2010 (meta-análisis de 148 estudios)"
    },
    {
     "k": "richarh",
@@ -1894,9 +1880,8 @@ export default {
    },
    {
     "k": "frase",
-    "t": "¡Mirad cuán bueno y cuán delicioso es habitar los hermanos juntos en armonía!",
-    "s": "Salmo 133:1 (versión RVR1960; cotejar en RVC)",
-    "v": 1
+    "t": "¡Mirad cuán bueno y cuán delicioso es Habitar los hermanos juntos en armonía!",
+    "s": "Salmos 133:1 (RVR1960)"
    },
    {
     "k": "richarh",
@@ -1923,8 +1908,7 @@ export default {
    {
     "k": "dato",
     "t": "En el estudio Aristóteles de Google (2015), el factor que más distinguió a los equipos eficaces fue la seguridad psicológica.",
-    "s": "Google, Project Aristotle",
-    "v": 1
+    "s": "Google, Project Aristotle"
    },
    {
     "k": "recordar",
@@ -1968,8 +1952,7 @@ export default {
    {
     "k": "dato",
     "t": "Las pérdidas duelen más que lo que alegran las ganancias equivalentes, aproximadamente el doble.",
-    "s": "Kahneman y Tversky, teoría de las perspectivas (1979)",
-    "v": 1
+    "s": "Kahneman y Tversky, teoría de las perspectivas (1979); estimación de Tversky y Kahneman (1992)"
    },
    {
     "k": "autor",
@@ -2028,8 +2011,7 @@ export default {
    {
     "k": "dato",
     "t": "Las 4 conductas que más dañan una pareja son la crítica, el desprecio, la actitud defensiva y el bloqueo; el desprecio es la más destructiva.",
-    "s": "John Gottman, los «cuatro jinetes»",
-    "v": 1
+    "s": "John Gottman, los «cuatro jinetes»"
    },
    {
     "k": "autor",
@@ -2100,8 +2082,7 @@ export default {
    {
     "k": "dato",
     "t": "La motivación intrínseca (hacerlo por gusto) favorece la creatividad más que la presión externa.",
-    "s": "Teresa Amabile, investigación sobre creatividad",
-    "v": 1
+    "s": "Teresa Amabile, investigación sobre creatividad"
    },
    {
     "k": "recordar",
@@ -2112,15 +2093,13 @@ export default {
   "Humilde": [
    {
     "k": "frase",
-    "t": "Con los humildes está la sabiduría.",
-    "s": "Proverbios 11:2 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Cuando viene la soberbia, viene también la deshonra; Mas con los humildes está la sabiduría.",
+    "s": "Proverbios 11:2 (RVR1960)"
    },
    {
     "k": "dato",
     "t": "Las personas con menos habilidad en un área tienden a sobreestimar su desempeño en ella.",
-    "s": "Kruger y Dunning, 1999 (efecto Dunning-Kruger)",
-    "v": 1
+    "s": "Kruger y Dunning, 1999 (efecto Dunning-Kruger)"
    },
    {
     "k": "principio",
@@ -2151,9 +2130,8 @@ export default {
    },
    {
     "k": "frase",
-    "t": "No nos cansemos de hacer el bien, porque a su tiempo cosecharemos si no nos desanimamos.",
-    "s": "Gálatas 6:9 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "No nos cansemos, pues, de hacer bien; porque a su tiempo segaremos, si no desmayamos.",
+    "s": "Gálatas 6:9 (RVR1960)"
    },
    {
     "k": "recordar",
@@ -2164,9 +2142,8 @@ export default {
   "Valiente": [
    {
     "k": "frase",
-    "t": "Esfuérzate y sé valiente; no temas ni desmayes, porque el Señor tu Dios estará contigo dondequiera que vayas.",
-    "s": "Josué 1:9 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes, porque Jehová tu Dios estará contigo en dondequiera que vayas.",
+    "s": "Josué 1:9 (RVR1960)"
    },
    {
     "k": "autor",
@@ -2187,9 +2164,8 @@ export default {
   "Alegre": [
    {
     "k": "frase",
-    "t": "El corazón alegre constituye buen remedio; el espíritu triste seca los huesos.",
-    "s": "Proverbios 17:22 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "El corazón alegre constituye buen remedio; Mas el espíritu triste seca los huesos.",
+    "s": "Proverbios 17:22 (RVR1960)"
    },
    {
     "k": "autor",
@@ -2211,8 +2187,7 @@ export default {
    {
     "k": "dato",
     "t": "La OMS recomienda a los adultos entre 150 y 300 minutos semanales de actividad aeróbica moderada.",
-    "s": "Organización Mundial de la Salud, Directrices de actividad física, 2020",
-    "v": 1
+    "s": "Organización Mundial de la Salud, Directrices de actividad física, 2020"
    },
    {
     "k": "autor",
@@ -2239,13 +2214,12 @@ export default {
    {
     "k": "autor",
     "t": "La inteligencia emocional (reconocer emociones propias y ajenas) pesa tanto como la cognitiva en el éxito de las relaciones.",
-    "s": "Daniel Goleman, Inteligencia emocional (1995)"
+    "s": "Daniel Goleman, Inteligencia emocional (1995); tesis popular, discutida por la investigación posterior"
    },
    {
     "k": "dato",
     "t": "El aislamiento social y la soledad se asocian con un aumento de la mortalidad comparable a otros factores de riesgo conocidos.",
-    "s": "Holt-Lunstad y cols., Perspectives on Psychological Science, 2015",
-    "v": 1
+    "s": "Holt-Lunstad y cols., Perspectives on Psychological Science, 2015"
    },
    {
     "k": "idea",
@@ -2277,8 +2251,7 @@ export default {
    {
     "k": "frase",
     "t": "Cada uno llevará su propia carga.",
-    "s": "Gálatas 6:5 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "s": "Gálatas 6:5 (RVR1960)"
    },
    {
     "k": "recordar",
@@ -2305,8 +2278,7 @@ export default {
    {
     "k": "autor",
     "t": "Cada persona tiene un lenguaje principal para sentirse amada: palabras, tiempo, regalos, servicio o contacto (la evidencia científica es limitada, pero la idea es útil para conversar).",
-    "s": "Gary Chapman, Los cinco lenguajes del amor (1992)",
-    "v": 1
+    "s": "Gary Chapman, Los cinco lenguajes del amor (1992)"
    },
    {
     "k": "recordar",
@@ -2317,21 +2289,18 @@ export default {
   "Integridad": [
    {
     "k": "frase",
-    "t": "El que camina en integridad anda confiado; mas el que pervierte sus caminos será quebrantado.",
-    "s": "Proverbios 10:9 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "El que camina en integridad anda confiado; Mas el que pervierte sus caminos será quebrantado.",
+    "s": "Proverbios 10:9 (RVR1960)"
    },
    {
     "k": "principio",
     "t": "Integridad es coherencia entre lo que piensas, dices y haces.",
-    "s": "Idea atribuida a Mahatma Gandhi (atribución por confirmar)",
-    "v": 1
+    "s": ""
    },
    {
-    "k": "dato",
-    "t": "La mayoría de las personas hace pequeñas trampas que puede justificar, sin verse a sí misma como tramposa.",
-    "s": "Dan Ariely, Por qué mentimos… en especial a nosotros mismos (2012)",
-    "v": 1
+    "k": "idea",
+    "t": "Las trampas pequeñas, las que uno puede justificar, no se sienten como trampas: por eso la integridad se juega en lo pequeño.",
+    "s": "Idea basada en Mazar, Amir y Ariely, Journal of Marketing Research, 2008 (trabajos de Ariely han sido cuestionados: tómalo como idea, no como dato firme)"
    },
    {
     "k": "recordar",
@@ -2343,8 +2312,7 @@ export default {
    {
     "k": "dato",
     "t": "Quienes llevaron un diario de gratitud semanal reportaron mayor bienestar y más optimismo que los grupos de comparación.",
-    "s": "Emmons y McCullough, Journal of Personality and Social Psychology, 2003",
-    "v": 1
+    "s": "Emmons y McCullough, Journal of Personality and Social Psychology, 2003"
    },
    {
     "k": "principio",
@@ -2353,9 +2321,8 @@ export default {
    },
    {
     "k": "frase",
-    "t": "Den gracias a Dios en todo, porque esta es su voluntad para ustedes en Cristo Jesús.",
-    "s": "1 Tesalonicenses 5:18 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Dad gracias en todo, porque esta es la voluntad de Dios para con vosotros en Cristo Jesús.",
+    "s": "1 Tesalonicenses 5:18 (RVR1960)"
    },
    {
     "k": "recordar",
@@ -2367,8 +2334,7 @@ export default {
    {
     "k": "dato",
     "t": "El desprecio (burla, sarcasmo, gesto de desdén) es el mejor predictor de divorcio entre los «cuatro jinetes».",
-    "s": "John Gottman, investigación sobre parejas",
-    "v": 1
+    "s": "John Gottman, investigación sobre parejas"
    },
    {
     "k": "principio",
@@ -2394,9 +2360,8 @@ export default {
   "Disciplina": [
    {
     "k": "frase",
-    "t": "El que ama la instrucción ama la sabiduría; pero el que aborrece la reprensión es ignorante.",
-    "s": "Proverbios 12:1 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "El que ama la instrucción ama la sabiduría; Mas el que aborrece la reprensión es ignorante.",
+    "s": "Proverbios 12:1 (RVR1960)"
    },
    {
     "k": "principio",
@@ -2406,8 +2371,7 @@ export default {
    {
     "k": "dato",
     "t": "El famoso estudio del malvavisco sugería que esperar predecía el éxito; una réplica de 2018 halló un efecto mucho menor, ligado al contexto familiar.",
-    "s": "Mischel, 1972; Watts, Duncan y Quan, 2018",
-    "v": 1
+    "s": "Mischel, 1972; Watts, Duncan y Quan, 2018"
    },
    {
     "k": "recordar",
@@ -2418,15 +2382,13 @@ export default {
   "Solidaridad": [
    {
     "k": "frase",
-    "t": "Lleven los unos las cargas de los otros, y cumplan así la ley de Cristo.",
-    "s": "Gálatas 6:2 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Sobrellevad los unos las cargas de los otros, y cumplid así la ley de Cristo.",
+    "s": "Gálatas 6:2 (RVR1960)"
    },
    {
     "k": "dato",
     "t": "Gastar dinero en otros aumentó la felicidad más que gastarlo en uno mismo.",
-    "s": "Dunn, Aknin y Norton, Science, 2008",
-    "v": 1
+    "s": "Dunn, Aknin y Norton, Science, 2008"
    },
    {
     "k": "richarh",
@@ -2448,14 +2410,12 @@ export default {
    {
     "k": "principio",
     "t": "Intenciones de implementación: «si ocurre X, entonces haré Y» aumenta de forma importante el cumplimiento de metas.",
-    "s": "Peter Gollwitzer, 1999; Gollwitzer y Sheeran, 2006",
-    "v": 1
+    "s": "Peter Gollwitzer, 1999; Gollwitzer y Sheeran, 2006"
    },
    {
     "k": "frase",
-    "t": "Ve a la hormiga, perezoso; mira sus caminos y sé sabio.",
-    "s": "Proverbios 6:6 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Ve a la hormiga, oh perezoso, Mira sus caminos, y sé sabio;",
+    "s": "Proverbios 6:6 (RVR1960)"
    },
    {
     "k": "recordar",
@@ -2466,9 +2426,8 @@ export default {
   "Diligencia": [
    {
     "k": "frase",
-    "t": "¿Has visto hombre diligente en su obra? Delante de los reyes estará.",
-    "s": "Proverbios 22:29 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "¿Has visto hombre solícito en su trabajo? Delante de los reyes estará.",
+    "s": "Proverbios 22:29 (RVR1960)"
    },
    {
     "k": "principio",
@@ -2511,15 +2470,13 @@ export default {
   "Indumentaria": [
    {
     "k": "dato",
-    "t": "Quienes se ponen una bata que creían de médico mejoraron su atención; la ropa influye en cómo pensamos (cognición «enroupada»).",
-    "s": "Adam y Galinsky, Journal of Experimental Social Psychology, 2012",
-    "v": 1
+    "t": "En un experimento de 2012, quienes se pusieron una bata que creían de médico mejoraron su atención. Una réplica de 2019 no lo confirmó, aunque la idea general (lo que vestimos influye en cómo pensamos) tiene cierto respaldo.",
+    "s": "Adam y Galinsky, 2012; Burns y cols., 2019; Horton, Adam y Galinsky, 2023"
    },
    {
     "k": "frase",
-    "t": "Fuerza y honor son su vestidura, y se ríe de lo por venir.",
-    "s": "Proverbios 31:25 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Fuerza y honor son su vestidura; Y se ríe de lo por venir.",
+    "s": "Proverbios 31:25 (RVR1960)"
    },
    {
     "k": "idea",
@@ -2546,8 +2503,7 @@ export default {
    {
     "k": "frase",
     "t": "Dadme un punto de apoyo y moveré el mundo.",
-    "s": "Arquímedes (según Pappo de Alejandría)",
-    "v": 1
+    "s": "Arquímedes (según Pappo de Alejandría)"
    },
    {
     "k": "recordar",
@@ -2563,9 +2519,8 @@ export default {
    },
    {
     "k": "dato",
-    "t": "Tras una interrupción, recuperar el foco completo tarda unos 23 minutos.",
-    "s": "Gloria Mark, University of California Irvine",
-    "v": 1
+    "t": "Tras una interrupción, retomar la tarea que se estaba haciendo tarda en promedio unos 23 minutos.",
+    "s": "Gloria Mark, University of California Irvine"
    },
    {
     "k": "principio",
@@ -2574,9 +2529,8 @@ export default {
    },
    {
     "k": "frase",
-    "t": "Aprovechen bien el tiempo, porque los días son malos.",
-    "s": "Efesios 5:16 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Aprovechando bien el tiempo, porque los días son malos.",
+    "s": "Efesios 5:16 (RVR1960)"
    },
    {
     "k": "recordar",
@@ -2587,9 +2541,8 @@ export default {
   "Equipo Aux.": [
    {
     "k": "frase",
-    "t": "Mejores son dos que uno, porque tienen mejor paga de su trabajo; y cordón de tres dobleces no se rompe pronto.",
-    "s": "Eclesiastés 4:9-12 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Mejores son dos que uno; porque tienen mejor paga de su trabajo […] y cordón de tres dobleces no se rompe pronto.",
+    "s": "Eclesiastés 4:9-12 (RVR1960)"
    },
    {
     "k": "principio",
@@ -2599,8 +2552,7 @@ export default {
    {
     "k": "dato",
     "t": "Los equipos más eficaces de Google se distinguían por su seguridad psicológica: nadie temía equivocarse en voz alta.",
-    "s": "Google, Project Aristotle (2015)",
-    "v": 1
+    "s": "Google, Project Aristotle (2015)"
    },
    {
     "k": "recordar",
@@ -2616,9 +2568,8 @@ export default {
    },
    {
     "k": "frase",
-    "t": "Encomienda al Señor tus obras, y tus pensamientos serán afirmados.",
-    "s": "Proverbios 16:3 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Encomienda a Jehová tus obras, Y tus pensamientos serán afirmados.",
+    "s": "Proverbios 16:3 (RVR1960)"
    },
    {
     "k": "recordar",
@@ -2634,9 +2585,8 @@ export default {
    },
    {
     "k": "frase",
-    "t": "Los planes fracasan por falta de consejo; mas en la multitud de consejeros se afirman.",
-    "s": "Proverbios 15:22 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "Los pensamientos son frustrados donde no hay consejo; Mas en la multitud de consejeros se afirman.",
+    "s": "Proverbios 15:22 (RVR1960)"
    },
    {
     "k": "principio",
@@ -2675,8 +2625,7 @@ export default {
    {
     "k": "frase",
     "t": "La táctica es saber qué hacer cuando hay algo que hacer; la estrategia es saber qué hacer cuando no hay nada que hacer.",
-    "s": "Savielly Tartakower (atribuida)",
-    "v": 1
+    "s": "Savielly Tartakower (atribuida)"
    },
    {
     "k": "principio",
@@ -2698,14 +2647,12 @@ export default {
    {
     "k": "dato",
     "t": "Recordamos una experiencia sobre todo por su momento más intenso y por su final (regla pico-final).",
-    "s": "Daniel Kahneman, 1993",
-    "v": 1
+    "s": "Kahneman, Fredrickson y cols., 1993 (regla pico-final)"
    },
    {
     "k": "frase",
     "t": "He peleado la buena batalla, he acabado la carrera, he guardado la fe.",
-    "s": "2 Timoteo 4:7 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "s": "2 Timoteo 4:7 (RVR1960)"
    },
    {
     "k": "recordar",
@@ -2721,9 +2668,8 @@ export default {
    },
    {
     "k": "frase",
-    "t": "El prudente ve el mal y se esconde; mas los simples pasan y reciben el daño.",
-    "s": "Proverbios 22:3 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "El avisado ve el mal y se esconde; Mas los simples pasan y reciben el daño.",
+    "s": "Proverbios 22:3 (RVR1960)"
    },
    {
     "k": "richarh",
@@ -2744,9 +2690,8 @@ export default {
    },
    {
     "k": "frase",
-    "t": "El caballo se alista para el día de la batalla; mas del Señor es la victoria.",
-    "s": "Proverbios 21:31 (paráfrasis; cotejar en RVC)",
-    "v": 1
+    "t": "El caballo se alista para el día de la batalla; Mas Jehová es el que da la victoria.",
+    "s": "Proverbios 21:31 (RVR1960)"
    },
    {
     "k": "richarh",
@@ -2803,8 +2748,7 @@ export default {
     {
      "k": "dato",
      "t": "Intentar suprimir un pensamiento o una emoción suele intensificarlo después (efecto rebote).",
-     "s": "Daniel Wegner, 1987",
-     "v": 1
+     "s": "Daniel Wegner, 1987"
     }
    ],
    [
@@ -2927,15 +2871,13 @@ export default {
     },
     {
      "k": "frase",
-     "t": "El que quiera ser grande entre ustedes, que sea su servidor.",
-     "s": "Jesús, Marcos 10:43 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "El que quiera hacerse grande entre vosotros será vuestro servidor.",
+     "s": "Marcos 10:43 (RVR1960)"
     },
     {
      "k": "dato",
      "t": "En el estudio Aristóteles de Google, el factor que más distinguió a los mejores equipos fue la seguridad psicológica.",
-     "s": "Google, Project Aristotle (2015)",
-     "v": 1
+     "s": "Google, Project Aristotle (2015)"
     },
     {
      "k": "recordar",
@@ -2979,8 +2921,7 @@ export default {
     {
      "k": "dato",
      "t": "Equipos con seguridad psicológica aprenden más de sus errores porque los reportan en vez de esconderlos.",
-     "s": "Amy Edmondson, Administrative Science Quarterly, 1999",
-     "v": 1
+     "s": "Amy Edmondson, Administrative Science Quarterly, 1999"
     },
     {
      "k": "recordar",
@@ -3018,15 +2959,13 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Sin dirección sabia el pueblo cae; mas en la multitud de consejeros hay seguridad.",
-     "s": "Proverbios 11:14 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Donde no hay dirección sabia, caerá el pueblo; Mas en la multitud de consejeros hay seguridad.",
+     "s": "Proverbios 11:14 (RVR1960)"
     },
     {
      "k": "dato",
-     "t": "La mayoría de los empleados que renuncian lo hacen por la relación con su jefe más que por la empresa (idea muy difundida; confirmar la fuente antes de citarla).",
-     "s": "Encuestas de Gallup sobre gestión",
-     "v": 1
+     "t": "Según Gallup, el jefe explica al menos el 70 % de la variación en el compromiso de un equipo.",
+     "s": "Gallup, State of the American Manager (2015)"
     },
     {
      "k": "recordar",
@@ -3064,15 +3003,13 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Que cada uno busque no solo su propio bien, sino también el de los demás.",
-     "s": "Filipenses 2:4 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "No mirando cada uno por lo suyo propio, sino cada cual también por lo de los otros.",
+     "s": "Filipenses 2:4 (RVR1960)"
     },
     {
      "k": "dato",
-     "t": "Alrededor de dos de cada tres iniciativas de cambio en organizaciones no logran sus objetivos (cifra muy difundida de origen discutido).",
-     "s": "Atribuida a Kotter y a consultoras de gestión",
-     "v": 1
+     "t": "La famosa cifra de que el 70 % de los cambios en las organizaciones fracasa no tiene respaldo empírico: un análisis de sus fuentes no encontró evidencia válida.",
+     "s": "Mark Hughes, Journal of Change Management, 2011"
     },
     {
      "k": "recordar",
@@ -3107,9 +3044,8 @@ export default {
    [
     {
      "k": "frase",
-     "t": "Estén quietos, y sepan que yo soy Dios.",
-     "s": "Salmo 46:10 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Estad quietos, y conoced que yo soy Dios.",
+     "s": "Salmos 46:10 (RVR1960)"
     },
     {
      "k": "autor",
@@ -3119,8 +3055,7 @@ export default {
     {
      "k": "dato",
      "t": "Un metaanálisis halló evidencia moderada de que los programas de meditación mejoran la ansiedad, la depresión y el dolor.",
-     "s": "Goyal y cols., JAMA Internal Medicine, 2014",
-     "v": 1
+     "s": "Goyal y cols., JAMA Internal Medicine, 2014"
     },
     {
      "k": "recordar",
@@ -3158,9 +3093,8 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Lámpara es a mis pies tu palabra, y lumbrera a mi camino.",
-     "s": "Salmo 119:105 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Lámpara es a mis pies tu palabra, Y lumbrera a mi camino.",
+     "s": "Salmos 119:105 (RVR1960)"
     },
     {
      "k": "principio",
@@ -3187,8 +3121,7 @@ export default {
     {
      "k": "dato",
      "t": "Numerosos estudios asocian la práctica religiosa regular con mejor salud mental y mayor longevidad, aunque la relación es compleja.",
-     "s": "Harold Koenig, Handbook of Religion and Health",
-     "v": 1
+     "s": "Harold Koenig, Handbook of Religion and Health"
     },
     {
      "k": "recordar",
@@ -3200,13 +3133,12 @@ export default {
     {
      "k": "autor",
      "t": "El primer paso de la vida interior es dejar de huir de ti mismo: la soledad, bien vivida, es un lugar de encuentro.",
-     "s": "Henri Nouwen, Fuerza para ser fiel / El regreso del hijo pródigo"
+     "s": "Idea inspirada en Henri Nouwen (no es cita textual)"
     },
     {
      "k": "frase",
-     "t": "Acérquense a Dios, y él se acercará a ustedes.",
-     "s": "Santiago 4:8 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Acercaos a Dios, y él se acercará a vosotros.",
+     "s": "Santiago 4:8 (RVR1960)"
     },
     {
      "k": "principio",
@@ -3222,9 +3154,8 @@ export default {
    [
     {
      "k": "autor",
-     "t": "Dios no ha cambiado de idea sobre ti: sigue más interesado en tu carácter que en tu comodidad.",
-     "s": "Idea recurrente en C. S. Lewis, Mero cristianismo (1952)",
-     "v": 1
+     "t": "Dios no se conforma con arreglar la casa: quiere convertirla en un palacio para vivir en ella.",
+     "s": "C. S. Lewis, Mero cristianismo, libro IV (imagen tomada de George MacDonald)"
     },
     {
      "k": "idea",
@@ -3257,9 +3188,8 @@ export default {
     },
     {
      "k": "frase",
-     "t": "El que es fiel en lo muy poco, también es fiel en lo mucho.",
-     "s": "Jesús, Lucas 16:10 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "El que es fiel en lo muy poco, también en lo más es fiel.",
+     "s": "Lucas 16:10 (RVR1960)"
     },
     {
      "k": "recordar",
@@ -3280,9 +3210,8 @@ export default {
     },
     {
      "k": "frase",
-     "t": "El rico se enseñorea de los pobres, y el que toma prestado es siervo del que presta.",
-     "s": "Proverbios 22:7 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "El rico se enseñorea de los pobres, Y el que toma prestado es siervo del que presta.",
+     "s": "Proverbios 22:7 (RVR1960)"
     },
     {
      "k": "recordar",
@@ -3294,8 +3223,7 @@ export default {
     {
      "k": "dato",
      "t": "Las pérdidas duelen cerca del doble de lo que alegran las ganancias equivalentes (aversión a la pérdida).",
-     "s": "Daniel Kahneman y Amos Tversky, 1979",
-     "v": 1
+     "s": "Daniel Kahneman y Amos Tversky, 1979"
     },
     {
      "k": "autor",
@@ -3321,15 +3249,13 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Los pensamientos del diligente ciertamente tienden a la abundancia; mas todo el que se apresura, ciertamente va a la pobreza.",
-     "s": "Proverbios 21:5 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Los pensamientos del diligente ciertamente tienden a la abundancia; Mas todo el que se apresura alocadamente, de cierto va a la pobreza.",
+     "s": "Proverbios 21:5 (RVR1960)"
     },
     {
      "k": "dato",
      "t": "Ahorrar 100 al mes al 7 % anual durante 30 años da unos 120.000, de los cuales solo 36.000 son aportes tuyos; el resto lo pone el interés compuesto.",
-     "s": "Cálculo de interés compuesto",
-     "v": 1
+     "s": "Cálculo propio: aportes mensuales con interés compuesto mensual"
     },
     {
      "k": "recordar",
@@ -3372,9 +3298,8 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Los que deseen enriquecerse caen en tentación y lazo; porque el amor al dinero es raíz de todos los males.",
-     "s": "1 Timoteo 6:9-10 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Porque los que quieren enriquecerse caen en tentación y lazo […] porque raíz de todos los males es el amor al dinero.",
+     "s": "1 Timoteo 6:9-10 (RVR1960)"
     },
     {
      "k": "recordar",
@@ -3391,14 +3316,12 @@ export default {
     {
      "k": "dato",
      "t": "Gastar dinero en otros aumentó la felicidad más que gastarlo en uno mismo.",
-     "s": "Dunn, Aknin y Norton, Science, 2008",
-     "v": 1
+     "s": "Dunn, Aknin y Norton, Science, 2008"
     },
     {
      "k": "frase",
-     "t": "Honra al Señor con tus bienes y con las primicias de todos tus frutos.",
-     "s": "Proverbios 3:9 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Honra a Jehová con tus bienes, y con las primicias de todos tus frutos.",
+     "s": "Proverbios 3:9 (RVR1960)"
     },
     {
      "k": "recordar",
@@ -3421,9 +3344,8 @@ export default {
     },
     {
      "k": "frase",
-     "t": "El hierro con hierro se afila; y así el hombre afila el rostro de su amigo.",
-     "s": "Proverbios 27:17 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Hierro con hierro se aguza; Y así el hombre aguza el rostro de su amigo.",
+     "s": "Proverbios 27:17 (RVR1960)"
     },
     {
      "k": "recordar",
@@ -3444,9 +3366,8 @@ export default {
     },
     {
      "k": "dato",
-     "t": "Formar un hábito tomó en promedio 66 días, con una variación de 18 a 254.",
-     "s": "Lally y cols., 2009",
-     "v": 1
+     "t": "Formar un hábito tomó unos 66 días como cifra central, con una variación de 18 a 254 días.",
+     "s": "Lally y cols., European Journal of Social Psychology, 2010"
     },
     {
      "k": "recordar",
@@ -3467,9 +3388,8 @@ export default {
     },
     {
      "k": "frase",
-     "t": "No sean conformes a este siglo, sino transformados por la renovación de su entendimiento.",
-     "s": "Romanos 12:2 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "No os conforméis a este siglo, sino transformaos por medio de la renovación de vuestro entendimiento.",
+     "s": "Romanos 12:2 (RVR1960)"
     },
     {
      "k": "recordar",
@@ -3490,9 +3410,8 @@ export default {
     },
     {
      "k": "dato",
-     "t": "Quienes escriben sus metas y sus planes tienen más probabilidad de cumplirlas que quienes solo las piensan.",
-     "s": "Gail Matthews, Dominican University, 2015",
-     "v": 1
+     "t": "En un estudio de Gail Matthews (267 personas), quienes escribieron sus metas y rindieron cuentas a un amigo lograron más que quienes solo las pensaron. Es un estudio pequeño, sin publicación en revista científica.",
+     "s": "Gail Matthews, Dominican University of California, 2015"
     },
     {
      "k": "recordar",
@@ -3535,9 +3454,8 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Enséñanos a contar de tal modo nuestros días, que traigamos al corazón sabiduría.",
-     "s": "Salmo 90:12 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Enséñanos de tal modo a contar nuestros días, Que traigamos al corazón sabiduría.",
+     "s": "Salmos 90:12 (RVR1960)"
     },
     {
      "k": "recordar",
@@ -3549,7 +3467,7 @@ export default {
     {
      "k": "autor",
      "t": "El hombre que se acerca al final de su vida no se pregunta cuánto tuvo, sino si su vida tuvo sentido.",
-     "s": "Viktor Frankl, El hombre en busca de sentido (idea central)"
+     "s": "Idea inspirada en Viktor Frankl, El hombre en busca de sentido (no es cita textual)"
     },
     {
      "k": "principio",
@@ -3559,8 +3477,7 @@ export default {
     {
      "k": "dato",
      "t": "Para dominar una habilidad compleja se necesitan miles de horas de práctica, pero no un número mágico: importa la calidad de la práctica.",
-     "s": "Anders Ericsson, matiz sobre la «regla de las 10.000 horas»",
-     "v": 1
+     "s": "Anders Ericsson, matiz sobre la «regla de las 10.000 horas»"
     },
     {
      "k": "recordar",
@@ -3600,15 +3517,13 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Los planes se frustran por falta de consejo; mas con muchos consejeros se aprueban.",
-     "s": "Proverbios 15:22 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Los pensamientos son frustrados donde no hay consejo; Mas en la multitud de consejeros se afirman.",
+     "s": "Proverbios 15:22 (RVR1960)"
     },
     {
      "k": "autor",
      "t": "La táctica es saber qué hacer cuando hay algo que hacer; la estrategia es saber qué hacer cuando no hay nada que hacer.",
-     "s": "Savielly Tartakower (atribuida)",
-     "v": 1
+     "s": "Savielly Tartakower (atribuida)"
     },
     {
      "k": "recordar",
@@ -3629,9 +3544,8 @@ export default {
     },
     {
      "k": "dato",
-     "t": "Cerca del 80 % de los resultados suele venir del 20 % de las causas (principio de Pareto).",
-     "s": "Vilfredo Pareto; Richard Koch, El principio 80/20",
-     "v": 1
+     "t": "Cerca del 80 % de los resultados suele venir del 20 % de las causas (regla empírica, no una ley exacta).",
+     "s": "Vilfredo Pareto; Richard Koch, El principio 80/20"
     },
     {
      "k": "recordar",
@@ -3669,15 +3583,13 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Con dirección sabia harás la guerra; y en la multitud de consejeros está la victoria.",
-     "s": "Proverbios 24:6 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Porque con ingenio harás la guerra, Y en la multitud de consejeros está la victoria.",
+     "s": "Proverbios 24:6 (RVR1960)"
     },
     {
      "k": "dato",
      "t": "Los pronosticadores más precisos revisan sus predicciones con frecuencia y cambian de opinión cuando cambian los datos.",
-     "s": "Philip Tetlock, Superpronosticadores (2015)",
-     "v": 1
+     "s": "Philip Tetlock, Superpronosticadores (2015)"
     },
     {
      "k": "recordar",
@@ -3694,7 +3606,7 @@ export default {
     {
      "k": "autor",
      "t": "Eficiencia es hacer las cosas bien; eficacia es hacer las cosas correctas.",
-     "s": "Peter Drucker, The Effective Executive (1967)"
+     "s": "Peter Drucker (frase atribuida; la idea está en The Effective Executive, 1967)"
     },
     {
      "k": "idea",
@@ -3715,15 +3627,13 @@ export default {
     },
     {
      "k": "dato",
-     "t": "Quienes dividen una meta en pasos concretos con fechas tienen más probabilidad de cumplirla.",
-     "s": "Gollwitzer y Sheeran, 2006 (intenciones de implementación)",
-     "v": 1
+     "t": "Decidir de antemano cuándo, dónde y cómo vas a actuar («si pasa X, haré Y») aumenta la probabilidad de cumplir una meta.",
+     "s": "Gollwitzer y Sheeran, 2006 (intenciones de implementación)"
     },
     {
-     "k": "frase",
+     "k": "idea",
      "t": "Haz tus obras con consejo y prudencia, y encomiéndalas a Dios.",
-     "s": "Idea de Proverbios 16:3 y 20:18 (paráfrasis)",
-     "v": 1
+     "s": "Síntesis de Proverbios 16:3 y 20:18"
     },
     {
      "k": "recordar",
@@ -3763,9 +3673,8 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Ustedes son la luz del mundo; así alumbre su luz delante de los hombres.",
-     "s": "Mateo 5:14-16 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Vosotros sois la luz del mundo […] Así alumbre vuestra luz delante de los hombres, para que vean vuestras buenas obras.",
+     "s": "Mateo 5:14-16 (RVR1960)"
     },
     {
      "k": "principio",
@@ -3790,10 +3699,9 @@ export default {
      "s": "Lectura posible de Lucas 15"
     },
     {
-     "k": "autor",
+     "k": "frase",
      "t": "El perdón no cambia el pasado, pero ensancha el futuro.",
-     "s": "Idea de Lewis Smedes, Perdonar y olvidar (1984)",
-     "v": 1
+     "s": "Paul Boese (atribuida), Quote: The Weekly Digest, 1967"
     },
     {
      "k": "recordar",
@@ -3809,9 +3717,8 @@ export default {
     },
     {
      "k": "frase",
-     "t": "Todo lo que hagan, háganlo de corazón, como para el Señor y no para los hombres.",
-     "s": "Colosenses 3:23 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Y todo lo que hagáis, hacedlo de corazón, como para el Señor y no para los hombres.",
+     "s": "Colosenses 3:23 (RVR1960)"
     },
     {
      "k": "principio",
@@ -3827,9 +3734,8 @@ export default {
    [
     {
      "k": "autor",
-     "t": "Un cristiano no es perfecto; es alguien que sigue regresando a Dios cada día.",
-     "s": "Idea recurrente en C. S. Lewis, Mero cristianismo",
-     "v": 1
+     "t": "Después de cada caída, pide perdón, levántate y vuelve a intentarlo: muchas veces lo primero en que Dios nos ayuda es en volver a intentarlo.",
+     "s": "C. S. Lewis, Mero cristianismo, libro III («Fe»)"
     },
     {
      "k": "idea",
@@ -3849,16 +3755,14 @@ export default {
    ],
    [
     {
-     "k": "autor",
+     "k": "idea",
      "t": "Una fe viva produce obras de amor: el cristianismo se ve en cómo tratamos a los más pequeños.",
-     "s": "Mateo 25:35-40; Madre Teresa de Calcuta (idea)",
-     "v": 1
+     "s": "Idea basada en Mateo 25:35-40 y Santiago 2:17"
     },
     {
      "k": "frase",
-     "t": "Cada uno según el don que ha recibido, minístrelo a los otros.",
-     "s": "1 Pedro 4:10 (paráfrasis; cotejar en RVC)",
-     "v": 1
+     "t": "Cada uno según el don que ha recibido, minístrelo a los otros, como buenos administradores de la multiforme gracia de Dios.",
+     "s": "1 Pedro 4:10 (RVR1960)"
     },
     {
      "k": "principio",
