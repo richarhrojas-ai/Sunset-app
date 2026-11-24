@@ -1,0 +1,14 @@
+# Frases que el detector de la revisión teológica marca, ya revisadas y aceptadas (20 nov 2026).
+# Una por línea: el comienzo exacto de la frase. build_data.py deja de listarlas en content/revision_planilla.txt.
+# Semana 5 martes: aclara que prosperar en Josué no es riqueza
+En Josué, prosperar es cumplir con éxito la misión que Dios le dio
+# Semana 5 jueves: define prosperar como dar fruto a su tiempo
+Prosperar es dar fruto a su tiempo
+# Semana 24 martes: advierte contra la prosperidad prometida
+Prometer prosperidad segura a quien emprende
+# Semana 40 lunes: describe etiquetas falsas, no promete nada
+Vivir según las etiquetas que nos pusieron
+# Semana 45 jueves: problemática que el guion corrige con Génesis 2:15 y 3:17-19
+Ver el trabajo como una maldición
+# Semana 50 martes: principio de Proverbios sobre ser garante
+Prudencia antes de garantizar deudas ajenas

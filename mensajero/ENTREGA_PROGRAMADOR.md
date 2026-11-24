@@ -1,0 +1,289 @@
+# Edificando una Cultura 2027 · Entrega al programador
+
+**Mensajero 100.9 FM** · preparado el 20 de octubre de 2026 · dudas de contenido: Richarh Rojas
+
+> **La receta.** Nosotros hicimos la masa y la mezcla: el contenido de todo 2027, revisado, y un prototipo que ya funciona con ese contenido. El programador lo cocina: lo lleva a producción (archivos separados, servidor, sincronización, claves). Al salir del horno tiene que tener **el mismo sabor** (el contenido y las reglas de este documento, sin cambios) y **la misma terminación** (el diseño y el comportamiento del prototipo). Si algo de la receta no se puede hacer, se consulta antes de cambiarlo.
+
+- **Prototipo funcionando:** https://claude.ai/artifact/QqQ5Epdkk8f2r4Y3TPn9ps (es la referencia visual y de comportamiento)
+- **Repositorio:** `richarhrojas-ai/sunset-app`, rama `claude/mensajero-tema-macro`, carpeta `mensajero/`
+- **Prueba automática:** `node mensajero/tests/humo.cjs` (63 controles; hoy pasan todos)
+
+---
+
+## 1. Qué es y para quién
+
+Una app web instalable (PWA), para celular y computadora, que usan los locutores y la coordinación de Mensajero para **preparar, salir al aire y registrar** la serie *Edificando una Cultura* durante 2027.
+
+- **Locutores:** ven la semana, el guion de su día, lo adaptan a su estilo, marcan «Al aire», cuentan mensajes de oyentes y completan su preparación.
+- **Coordinación:** ve registros e informes; abre semanas cerradas con su clave.
+- **Audiencia (indirecta):** recibe el contenido al aire, los flyers en redes y los números útiles.
+
+El guion **es una base, no un libreto**: el locutor mantiene el versículo tal cual (RVC), la idea central y la fuente del dato; el resto lo adapta.
+
+## 2. Lo que ya está hecho (la masa)
+
+| Ingrediente | Cantidad | Estado |
+|---|---|---|
+| Semanas con tema, enfoque, 3 subtemas, valor, programa, historia | 52 | listo |
+| Versículos (RVC) con 3 puntos | 364 (domingo a sábado) | listo; 12 cambios sugeridos esperan decisión (§11) |
+| Guiones de lunes a sábado (título, dato con fuente, 3 puntos con desarrollo, problemática y práctica; sábado = repaso) | 312 | listo, con revisión teológica y datos verificados |
+| Frases célebres verificadas | 260 (3 por semana + una segunda para los subtemas 1 y 2) | listo |
+| Frases deportivas (originales, sin autor) | 364 | listo |
+| Historia bíblica y marcos (por tema y ronda) | 52 | listo |
+| Guía de los 5 valores | 5 | listo |
+| Hoja «Mensajero» (información institucional) | 29 ítems | **incompleta**: 17 por completar (§11) |
+| Números útiles para la audiencia | 6 | listo, a reconfirmar cada tanto |
+| Prototipo (un solo `index.html`) | 1 | funciona al 100% según la prueba de humo |
+
+Criterios con los que se escribió y revisó todo: `content/criterios_teologicos.md` (contexto bíblico, sin teología de la prosperidad, sin retribución, fe y salud mental, temas sensibles derivados a un profesional, sin posturas que dividan iglesias, falacias, datos con fuente, estilo).
+
+## 3. Ingredientes: la planilla
+
+Fuente de verdad: `content/planillas/Mensajero_TemasMacro_2027.xlsx`. **Nadie edita los datos a mano en la app**: se corrige la planilla (o el script que la llena) y se regenera.
+
+| Hoja | Una fila por | Columnas que lee la app |
+|---|---|---|
+| Temas Macro 2027 | semana (52) | Semana, Fecha inicio (Dom) dd/mm/aaaa, Color, Tema, Ronda, Enfoque, Subtema 1–3, Desarrollo 1–3, Nota Locutor 1–3, Frase Celebre 1–3 y 1b–2b («frase» — Autor), Historia Ilustrativa, Valor (ADN), Programa, Locutor, Versiculo Domingo…Sabado («Cita — texto»), 3 Puntos Domingo…Sabado (uno por línea) |
+| Guiones 2027 | día de lunes a sábado (312) | Semana, Dia, Titulo, Dato curioso, Fuente dato, Desarrollo 1–3, Problematica 1–3, Solucion 1–3. El sábado: Desarrollo 1–3 = idea de cada subtema y Solucion 1 = acción de la semana |
+| Frases Deportivas 2027 | día de domingo a sábado (364) | Semana, Dia, Deporte, Frase |
+| Historia y Marcos | tema + ronda | Tema, Ronda, Historia Biblica - Titulo / Texto, Marco Teorico - Afirmacion / Fuente, Marco Biblico - Versiculos clave (separados por \|) / Contexto / Conexion |
+| Guia de Valores ADN | valor (5) | Valor, Definicion aplicada, Como se nota en el contenido, Pregunta guia, Ejemplo de aplicacion |
+| Mensajero | ítem institucional | Seccion, Titulo, Texto, Para el aire (Sí/No) |
+
+### Forma del JSON que genera `tools/build_data.py`
+
+```text
+{ anio: 2027,
+  valores: { Orden: {definicion, contenido, pregunta, ejemplo}, … },
+  mensajero: [ {seccion, titulo, texto, aire} ],
+  semanas: [ { n, inicio "2027-01-03", color, tema, ronda, enfoque,
+      subtemas: [ {titulo, desarrollo, nota, frase:{texto, autor}} ×3 ],
+      historia, valor, programa, locutor,
+      dias: [ {ref, texto, puntos[3], deporte,
+               guion: null (domingo)
+                    | {titulo, dato:{texto, fuente}, puntos:[{desarrollo, problema, solucion}×3]}   (lunes a viernes)
+                    | {tipo:"resumen", titulo, dato, ideas[3], accion} } ×7 ],                       (sábado)
+      marco: {historiaTitulo, historia, teorico, fuente, claves[], contexto, conexion} } ] }
+```
+
+`dias[0]` es domingo y `dias[6]` sábado. Hoy el JSON va incrustado en `index.html` entre `/*DATA*/` y `/*/DATA*/` (unos 730 KB). En producción debe servirse aparte (§8).
+
+## 4. Cómo se prepara la masa (flujo de contenido)
+
+Orden para regenerar todo desde cero (desde `mensajero/`):
+
+1. `tools/guiones_<mes>_2027.py` (febrero a diciembre; enero ya está en la planilla) → escribe la hoja «Guiones 2027».
+2. `tools/revision_teologica_<mes>_2027.py` → correcciones teológicas, con su motivo.
+3. `tools/verificacion_datos_<mes>_2027.py` → datos verificados en su fuente.
+4. `tools/ajuste_temas_sensibles_2027.py` y `tools/versiculos_aplicados_2027.py` → ajustes y versículos aprobados.
+5. `tools/estilo_guiones_2027.py` → variación de arranques repetidos (`content/estilo_guiones_2027.json`).
+6. `tools/frases_2027.py`, `tools/frases_segundas_2027.py` (fuente `content/frases_2027_b.txt`) y `tools/frases_deportivas_2027.py` (fuente `content/frases_deportivas_2027.txt`).
+7. `python3 tools/build_data.py` → genera el JSON y escribe `content/revision_planilla.txt` (versículos repetidos, avisos y frases para revisión teológica; hoy: 0 repetidos, 0 avisos, 9 frases ya revisadas a mano).
+
+Los scripts son idempotentes: se pueden correr de nuevo sin duplicar cambios. Requisito: Python 3 con `openpyxl`.
+
+## 5. La app, de arriba abajo (la terminación)
+
+### Portada
+- **Escena ilustrada** del tema de la semana (SVG generado en código con la paleta del color). Cada tema tiene su propia luz, **no** el atardecer de Sunset: Vida Cristiana amanecer con la cruz; Crecimiento primera luz y lapacho en flor; Liderazgo mañana en la cordillera con bandera; Familia noche de luna con la casa encendida; Finanzas día con plantines y granero; Producción mediodía con surcos, alambrado y molino; Salud amanecer con una persona corriendo por el camino, el naranjo con frutas, el agua de la laguna y una palmera para la sombra. Los elementos principales van al centro (el celular recorta los costados) y por debajo de la fila de íconos (las pantallas anchas recortan arriba y abajo). En el celular, Finanzas, Familia y Salud suben 30 unidades (clase `sube`) para que la figura principal quede sobre la tarjeta del tema. La tarjeta es de vidrio semitransparente (poco desenfoque): el paisaje sigue detrás y se ve a través. En modo claro la escena usa la paleta `diurna(p)`: cielo de mañana con el tono de cada color.
+- Logo y dos botones redondos: **A** (tamaño de letra) y **◐** (apariencia: automática, oscura, clara). Las fechas de la semana van en la tarjeta, junto al número de semana y el color.
+- **Reloj en vivo** (hora del dispositivo, 24 h) arriba a la derecha de la tarjeta del tema, con el **clima** debajo (ícono y temperatura); al bajar, hora y clima quedan fijos en la barra de atajos, en una etiqueta amarilla grande, para tenerlos a la vista durante el programa. El clima viene de Open-Meteo (gratis, sin clave): `api.open-meteo.com/v1/forecast?latitude=-25.19&longitude=-55.60&current=temperature_2m,weather_code,is_day`, en Raúl Arsenio Oviedo, cada 15 minutos; si falla o no hay conexión, no se muestra. En producción conviene pasarlo por el servidor (una consulta compartida para todos y caché de 15 minutos).
+- **Resalte con el color de la semana** (`--resalte`): el programa que apoyamos, el valor, los días al aire y el día de hoy. En modo claro es el color de la semana oscurecido para que se lea.
+- **Calendario por mes** (botón «Calendario» junto a «Esta semana»; siempre en versión clara, con los colores de modo día, también de noche): las semanas que tocan el mes, cada una con su color de fondo, ícono, tema, enfoque, número y sus siete días (los de otro mes atenuados, hoy en dorado, fechas especiales con un punto); flechas de mes; tocar una semana lleva a ella.
+- Bajo cada ícono de tema, en letra muy chica, **las fechas de su próxima semana** (la que está en curso o la siguiente; al terminar el año, la última).
+- **Semana activa vs. otra semana:** el dorado significa siempre «semana activa» (la de hoy; antes de que empiece el año, la primera; al terminar, la última). En la activa, la tarjeta del tema lleva borde dorado, sus fechas van resaltadas en dorado y el ícono de su tema va en dorado. En otra semana, la tarjeta queda con su borde simple y las fechas sin resaltar; el ícono del tema que se está viendo lleva un aro blanco simple y el botón «Esta semana» se marca para volver.
+- **Mi programa (en «Mis días al aire»), un solo paso:** nombre del locutor, nombre del programa (libre, con sugerencias de los programas de la serie), hora de inicio y hora de fin, modalidad (En vivo o Grabado) y días al aire. Sin esos datos la semana no se muestra y el aviso dice qué falta; con «Listo» queda una línea de resumen («Juan Pérez · lunes a viernes · de 07:20 a 08:30 · En vivo») con «Editar». Al agregar otro programa («+ Agregar programa», hasta 3) se piden los mismos datos (el nombre del locutor ya está); arriba aparecen pestañas con el nombre de cada programa para cambiar entre ellos, cada uno con sus días, horario, marcas y preparación, y los informes del mes los suman con el detalle de cada uno. La explicación de la modalidad (qué hacer si un día sale distinto) está en «Para el locutor» → «A tu estilo». La duración y la franja se calculan del horario; el nombre del locutor firma los flyers.
+- **Siete íconos de temas**, en una sola franja de vidrio con el nombre corto debajo (sin cortes con guion; el tema de la semana en dorado). Al tocar uno se abre la hoja del tema: arriba su escena con la paleta de su color (de día o de noche según la apariencia), el nombre y cuántas semanas tiene; abajo cada semana con su número en un círculo del color, las fechas, el título y los tres subtemas (activa resaltada, próxima marcada, pasadas atenuadas). En modo claro la hoja es clara.
+- Tarjeta con tema, enfoque, color, número de semana y los tres subtemas; flechas y «Esta semana».
+
+### Barra de atajos (fija)
+Mi semana · Preparación · Informes · Historia bíblica · Útiles. Al tocar uno, la sección se abre sola. Además, al pie de la tarjeta del día hay **accesos rápidos**: Historia bíblica, Preparación, Informes, Calendario, Números útiles y Buscar.
+
+### Ficha de la semana
+«Apoyamos al programa» (programa y locutor) y «Valor de Mensajero» con su guía interna plegable.
+
+### Mis días al aire y varios programas
+Una vez elegidos, la sección queda en una línea («Tu semana: lunes a viernes» y el botón «Cambiar días»); los botones de días aparecen solo al editar.
+- El locutor marca sus días (lunes a viernes, lunes a sábado o los que elija). Un solo día = programa semanal: la tarjeta muestra introducción y resumen en un guion.
+- Hasta **3 programas** por locutor, cada uno con su color y sus propias marcas. Los cambios de días quedan en un historial con fecha, así los días pasados no cambian.
+
+### Mi semana: la tarjeta del día
+Pestañas por día (día y fecha, por ejemplo «MIÉ · 3-Mar»). Cada tarjeta, en este orden:
+1. **Barra del día:** «Al aire», En vivo / Grabado y «+ Más» (Con entrevista, Reemplazo con el programa reemplazado). «Agregar nota» resaltado en dorado (nota personal del día, plegable).
+2. **Subtema del día** y «Para el locutor» plegable, un solo bloque en todos los días: desarrollo del subtema, nota y «A tu estilo» (idea central del día, dos técnicas que rotan sobre 15 y cómo hacerlo con poco tiempo). Antes «Hacelo a tu estilo» iba aparte y se repetía con la nota.
+3. **Título del guion, «Dato para abrir»** con su fuente y **versículo** (cita y texto RVC) con el botón «Leer en la Biblia», que abre la cita en YouVersion (`https://www.bible.com/es/bible/146/LIBRO.cap.vers.RVC`; 146 es la RVC): la app si está instalada, si no la web. Además, toda cita «Libro cap:vers» dentro de los textos (historia bíblica, marco bíblico, «Para el locutor», puntos, historia ilustrativa, resumen e Historias de Mensajero) se convierte en enlace (`conCitas`), y la historia bíblica tiene su botón «Ir a la Biblia».
+4. **Tres puntos plegables** (número y título a la vista; adentro desarrollo, problemática y «En la práctica»). Según la **franja horaria** del programa (sale de su hora de inicio) se abre el punto que le toca: mañana → 1, mediodía y tarde → 2, noche → 3, marcado «Tu punto de hoy». Sin franja se abre el 1. Así la audiencia que escucha varios programas no oye lo mismo dos veces.
+5. **Frases del día**, en un solo recuadro: **Frase para el aire** (frase célebre con su autor, distinta cada día: lunes y miércoles la primera del subtema, martes y jueves la segunda —columnas «Frase Celebre 1b» y «2b»—, viernes la del subtema 3; domingo y sábado no llevan, salvo el programa de un solo día) y **frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
+6. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color, el agradecimiento «¡Gracias por acompañarnos!» para la audiencia que escribió, la **firma** abajo a la derecha después de la fecha: «nombre del locutor – nombre del programa» (el nombre lo escribe una vez en la hoja del flyer; el programa sale de «Mi preparación»), y estilo **Noche** o **Día**; arranca como la apariencia de la app; sin «100.9 FM» en la marca, porque la audiencia también está en las redes), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, y la nota del día). **Copiar para IA** (todo lo de la semana para generar un guion con IA) ya no está en la tarjeta del día: está en «Historia bíblica y marcos», porque se usa una vez por semana.
+7. **Mensajes de oyentes** (solo días en vivo): un cuadro con los logos de SMS, WhatsApp, YouTube, Instagram y Facebook. Cada toque suma 1 y, si el día no estaba marcado, lo marca «Al aire» solo (si hubo mensajes, salió al aire); «Restar» y luego el logo resta 1 y se apaga solo; el número se puede escribir; arriba, el total.
+
+Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilustrativa y frase deportiva. Sábado: repaso (dato, idea de cada subtema, acción de la semana), versículo, frase deportiva.
+
+### Grupos del final
+- **Mi trabajo:** *Mi preparación* (solo la lista para marcar: tareas elegidas de una biblioteca de 18 agrupadas; se sugieren 6 básicas y cada uno puede sumar hasta 10; porcentaje) y *Mis informes del mes* (un solo mes elegido: días al aire, en vivo y grabados, entrevistas, mensajes por canal y la preparación con niveles Excelente/Buena/Regular/Baja; botones «Copiar informe del mes» y «Copiar informe de preparación»).
+- **La serie 2027:** *Historia bíblica y marcos* y *Buscar*; las 53 semanas por color con barra de días al aire están al pie del **Calendario** («El año completo») (sin distinguir tildes ni mayúsculas; lleva a la semana).
+- **Para la audiencia:** *Números útiles* (6 nacionales: 911, 141 SEME —021 141 desde celular—, 132 Bomberos, 155 salud mental, 137 SOS Mujer y WhatsApp 0961 137 137, 147 Fono Ayuda niñez; más 8 de «Salud en la zona»; tocar llama; copiar para leer al aire), *Sobre Mensajero e historias* (hoja «Mensajero» y, debajo, las Historias de Mensajero; las filas vacías no se muestran; la programación no se copia en la app: un botón abre la grilla de la radio, https://mensajerofm.org/grilla/publica.php (pública, sin clave)).
+
+### Tamaño de letra
+Botón «A» junto a la fecha: Normal, Grande (115 %) y Muy grande (130 %) para el contenido (cada tamaño se multiplica por la variable `--fz`; no se usa `zoom`, que algunas tabletas ignoran) (no para la ilustración), guardado en cada dispositivo (`localStorage["mensajero:letra"]`). Los títulos con contenido (subtemas, ideas del repaso) van en minúscula normal y negrita, no en mayúsculas espaciadas.
+
+### Desplegables
+Todo lo que se abre lleva el mismo indicador: un círculo con una flecha a la derecha que gira al abrir (grupos del final, «Para el locutor», los tres puntos). Los desplegables chicos («Más», «Agregar nota», «Guía interna») son botones tipo píldora con borde.
+
+### Apariencia
+Automática (oscura en el celular, clara en la computadora: `min-width: 900px` y puntero fino), oscura o clara; se guarda en cada dispositivo. La ilustración de arriba y las hojas de tema quedan siempre oscuras. Paletas de los 7 colores en el objeto `PAL`; en claro, los dorados y colores de texto pasan a tonos legibles sobre blanco.
+
+### Diseño
+Tipografía Jost (peso 400 para el texto; letra mínima de 10,5 px y la mayoría de las etiquetas en 12–13 px; contraste de todo el texto ≥ 4,5:1 en oscuro y claro, medido sobre el fondo real), Nunito para «MENSAJERO», Dancing Script para «Suena bien, hace bien». Probado a 390 px y 1280 px sin desborde horizontal. Respeta «reducir movimiento».
+
+## 6. Reglas de negocio
+
+- **Semanas** de domingo a sábado; la 1 empieza el **3 de enero de 2027**. «Esta semana» contiene la fecha de hoy; antes del 3 de enero se abre la semana 1.
+- **Color y tema** salen de la planilla; no se calculan.
+- **Plazo de marcación:** la semana N se marca durante esa semana y la siguiente; al empezar la N+2 queda **cerrada**. Coordinación la abre con su clave y cada apertura queda registrada con fecha (`AAAA/wN/correccion`). Con la semana cerrada, ninguna marca, nota ni mensaje se puede cambiar.
+  - **Decisión del programador:** la radio deja en manos del programador si el cierre de semana con clave se mantiene, se ajusta o se quita, según cómo resuelva usuarios y sincronización (§11).
+- **Modalidad:** cada programa tiene una por defecto (En vivo / Siempre grabado) y cada día puede cambiarla. Al marcar «Al aire» o un mensaje, la modalidad de ese día queda fija aunque después cambie la del programa.
+- **Registro mensual:** un día al aire cuenta en el mes de su fecha. Muestra días al aire sobre días del mes, en vivo y grabados, entrevistas y mensajes por canal (solo si hubo). Los informes copiados terminan con «MENSAJES DE OYENTES».
+- **Preparación:** la lista que regía al marcar una semana se guarda con la semana (`prepLista`), así cambiar la lista no altera semanas pasadas. Las tareas de «Contenido» y los reemplazos son del locutor (sin prefijo de programa).
+- **Un punto por programa** según la franja (ver §5).
+- **Contenido protegido:** versículos RVC con permiso de la Sociedad Bíblica del Paraguay.
+
+## 7. Datos del usuario
+
+Esquema de Sunset: `entries[clave] = { v: valor, t: milisegundos }`. Al sincronizar **gana la entrada más reciente por clave**. Hoy todo se guarda en `localStorage["mensajero:entries"]`.
+
+Prefijos: semana `2027/wN/`; programa 2 y 3 agregan `p2/` o `p3/` (el programa 1 no lleva prefijo).
+
+| Clave | Valor | Qué es |
+|---|---|---|
+| `2027/wN/[pX/]aire0…6` | bool | Día al aire |
+| `2027/wN/[pX/]ent0…6` | bool | Con entrevista |
+| `2027/wN/reem0…6` | texto | Programa reemplazado (del locutor) |
+| `2027/wN/[pX/]mod0…6` | `vivo` \| `grabado` | Modalidad fijada del día |
+| `2027/wN/[pX/]msg0…6` | `{sms, wa, yt, ig, fb}` | Mensajes de oyentes |
+| `2027/wN/[pX/]vn0…6` | texto | Nota del día |
+| `2027/wN/[pX/]prep/<id>` · `2027/wN/prep/<id>` | bool | Tarea de preparación (Contenido sin prefijo) |
+| `2027/wN/[pX/]prepLista` | ids | Lista vigente al marcar |
+| `2027/wN/correccion` | fechas | Aperturas por coordinación |
+| `cfg/[pX/]programa` | `{nombre, desde, hasta, modo, dias}` (`desde`/`hasta` en «HH:MM»; datos viejos pueden traer `horas` y `franja`) | Configuración del programa |
+| `cfg/[pX/]historial` | `[{desde, dias}]` | Cambios de días al aire |
+| `cfg/[pX/]prep` · `cfg/[pX/]prepManual` | ids · bool | Lista de tareas elegida |
+| `cfg/programas` · `cfg/activo` | ids · id | Programas del locutor y el activo |
+| `cfg/firma` | texto | Nombre del locutor (se pide en «Mi programa»; firma los flyers; es del locutor, no de un programa) |
+
+Fuera de `entries` y solo del dispositivo: `localStorage["mensajero:apariencia"]` (`auto` \| `oscuro` \| `claro`).
+
+## 8. Cómo cocinarlo: arquitectura de producción
+
+Recomendación (mismo enfoque que Sunset, sin base de datos ni servicios externos):
+
+```text
+mensajero/
+  public/index.html            estructura
+  public/css/app.css           diseño (variables por color y modo claro)
+  public/js/app.js             estado, vistas, registro, informes, buscador
+  public/js/escenas.js         PAL, escena(), íconos
+  public/images/               logo, marca, íconos 192/512 (hoy el logo va en data URI dentro del HTML)
+  public/manifest.webmanifest, public/sw.js     PWA (red primero; subir la versión del caché en cada entrega)
+  netlify/functions/content.mjs   entrega el contenido con clave
+  netlify/functions/sync.mjs      guarda y fusiona entries {v,t} (Netlify Blobs)
+  netlify/lib/auth.mjs            valida la clave (comparación de tiempo constante)
+  netlify/content/data.mjs        generado por tools/build_data.py
+  tools/ · content/ · tests/
+```
+
+- **El contenido no va en `public/`:** solo por `/api/content` con clave; la app lo guarda en el dispositivo para usar sin conexión.
+- **Claves en variables de entorno** (por ejemplo `MENSAJERO_KEY`, cabecera `x-mensajero-key`). La **clave de coordinación** hoy está escrita en el código (`CLAVE_COORD`, provisoria) y debe pasar al servidor.
+- `build_data.py` debe escribir `netlify/content/data.mjs` en lugar de incrustar en `index.html`.
+- Las funciones de Sunset que se mencionan como modelo **no están en este repositorio** (solo `netlify.toml`); hay que escribirlas o traerlas del repositorio de Sunset.
+- **Seguridad:** en la raíz, `notion.js` tiene un token de Notion escrito en el código. Revocarlo, crear uno nuevo y leerlo desde una variable de entorno. No reutilizar ese archivo.
+
+## 9. Tareas para producción
+
+- [ ] Separar `index.html` en HTML, CSS y JS (§8), sin cambiar comportamiento.
+- [ ] Sacar el logo y la marca de data URI a `public/images/`.
+- [ ] `build_data.py` → `netlify/content/data.mjs`.
+- [ ] Funciones `content`, `sync`, `auth`; reemplazar `localStorage` por sincronización (con caché local para usar sin conexión).
+- [ ] Clave de coordinación en el servidor; registro de aperturas en el servidor.
+- [ ] Decidir usuarios (§11) y, si hay una clave por locutor, guardar el autor de cada marca.
+- [ ] Panel de coordinación conectado al servidor: el mismo panel de `public/coordinacion.html`, pero leyendo los datos sincronizados de todos los locutores en lugar de los archivos CSV (ver «10 ter»).
+- [ ] Respaldo: hoy los datos de cada locutor viven solo en su celular; con la sincronización quedan en el servidor y se recuperan al cambiar de teléfono.
+- [ ] Copias diarias, exportar e importar JSON.
+- [ ] PWA: subir `CACHE` en `sw.js` en cada entrega.
+- [ ] Pruebas: mantener `tests/humo.cjs` en verde; sumar pruebas de fusión de entries, conteo mensual en fin de mes y semana cerrada; accesibilidad (axe sin violaciones).
+- [ ] Sitio en Netlify y variables de entorno.
+
+## 10. Lista de aceptación (lo que tiene que salir del horno)
+
+La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 63 controles** apuntando a la nueva app, y además:
+
+- Mismo aspecto que el prototipo en celular (oscuro) y computadora (clara), en las 7 escenas.
+- Un locutor marca en el celular y lo ve en la computadora (sincronización), y viceversa, sin perder marcas cuando las dos editan (gana la más reciente por clave).
+- Sin conexión: abre la última semana descargada y guarda marcas que se suben al volver la conexión.
+- Una semana cerrada no se puede cambiar sin la clave de coordinación, que ya no está en el código del navegador.
+- El contenido no se puede descargar sin la clave.
+
+## 10 bis. Semana 1 y numeración (nov 2026)
+
+- **Igual que el calendario impreso:** la semana 1 es azul (Finanzas) y tiene solo dos días, el viernes 1 y el sábado 2 de enero. Las demás semanas pasan a ser 2-53, y la del 3 de enero es la 2 (lila).
+- **Dónde está:** el contenido de la semana 1 está en `content/semana_01_2027.json`. La planilla sigue numerada 1-52 desde el 3 de enero. `build_data.py` agrega la semana 1 al principio y le suma 1 al número de las demás.
+- **En los datos:** la semana 1 lleva `desde: 5`, el primer día con contenido. Los días anteriores están vacíos.
+- **En la app:** `activos(w)` y `misDe(w)` filtran esos días vacíos en las pestañas, en las cuentas «al aire», en el prompt y en el buscador. El encabezado muestra «1–2 ene».
+- **Para 2028:** si el año vuelve a empezar a mitad de semana, se repite el mismo esquema con `semana_01_2028.json`.
+
+## 10 ter. Datos para coordinación y panel del director (nov 2026)
+
+- **Desde la app del locutor:** en «Mis informes del mes», el botón «Descargar mis datos (planilla)» genera `mensajero-2027-<locutor>.csv` (UTF-8 con BOM, se abre en Excel). Una fila por programa y por día previsto, desde el 1 de enero hasta hoy, y una fila aparte por cada reemplazo (`programa` = el programa que cubrió, `reemplazo` = «sí», `al_aire` = 1; el horario va vacío). Así un reemplazo en un día sin programa propio no se pierde y no se cuenta dos veces si el locutor tiene dos programas. Columnas: `locutor, programa, horario, modalidad_programa, fecha, dia, semana, tema, color, al_aire, modalidad_dia, entrevista, reemplazo, sms, whatsapp, youtube, instagram, facebook, mensajes, preparacion_semana`.
+- **Panel del director:** `public/coordinacion.html`, una página aparte. Se cargan (o se arrastran) los archivos de todos los locutores; si un locutor manda uno nuevo, reemplaza al anterior. Los archivos no salen de la computadora. Trae «Ver ejemplo (12 locutores)» con datos inventados.
+- **Qué muestra, por mes o todo el año:** locutores y programas; % de días al aire sobre los previstos; mensajes de oyentes (total y por programa al aire); entrevistas y programas grabados; preparación promedio. «Para mirar» marca, una línea por programa: menos de 75 % al aire, preparación menor a 60 %, 14 días o más sin marcas, o más de 30 % de programas grabados. Además: mensajes por canal, por tema y por día de la semana; tabla por locutor y programa (se ordena tocando el encabezado); **reemplazos**: quién cubrió qué programa (y de quién es), cuántas veces y qué días, con el programa que más se cubrió; en «Para mirar», si a un programa con problemas lo cubrieron, se dice cuántas veces; mensajes por franja horaria (mañana, mediodía, tarde, noche, según la hora de inicio); horas al aire por semana de cada locutor; «Cómo viene el año»: barras del % al aire de toda la radio por mes y, por programa, una barrita por mes con el promedio del año y si viene mejorando, estable o bajando (últimos 3 meses contra los 3 anteriores); descarga del consolidado.
+- **En producción:** con la sincronización, el panel lee directo del servidor y no hacen falta los archivos; los umbrales de «Para mirar» conviene dejarlos configurables por coordinación.
+- **Informe del mes:** ahora dice el nombre del locutor y el horario de cada programa; en el mes en curso cuenta solo los días que ya pasaron («hasta hoy»).
+
+## 11. Decisiones pendientes (no son del programador, pero lo afectan)
+
+1. **Versículos:** resuelto el 23 oct 2026. Los 18 cambios están aplicados con `tools/versiculos_aplicados_2027.py`, que también reescribe el guion de esos días. Todos los textos están cotejados con la RVC publicada por las Sociedades Bíblicas Unidas (bible.com, versión 146, y sbuec.org).
+   - **Fechas especiales:** Año Nuevo (1 ene), Viernes Santo (26 mar), Domingo de Pascua (28 mar) y Navidad (25 dic) tienen versículo propio. La app los marca con un aviso «Especial» en la tarjeta del día y en el guion copiado (constante `ESPECIALES` en `index.html`, por fecha). Para 2028 hay que actualizar esas fechas.
+2. ~~Viernes Santo, Pascua y Navidad~~ **Resuelto el 23/10/2026:** llevan versículo propio como fechas especiales (ver punto 1). Reemplaza la decisión del 20/10 de seguir la serie.
+3. **Usuarios:** una clave para todo el equipo o una por locutor (necesaria si el registro debe decir quién hizo cada marca).
+4. **Hoja «Mensajero»:** completos los datos para la audiencia: historia breve, fundación, misión, visión, sitio web, Facebook, Instagram, WhatsApp, correo y cómo escuchar en línea (`tools/mensajero_hoja_2027.py`, 23 nov 2026). Los contactos por área y el organigrama quedan sin cargar por decisión de Richarh. La app oculta las filas vacías y las muestra solas si se cargan en la planilla.
+5. **Revisión teológica:** resuelta el 20 nov 2026.
+   - **Ajustadas:** tres frases. El punto «Todo lo que hace prospera» (semana 5) pasa a «Da fruto a su tiempo». El trabajo en Génesis 2:15 y 3:17-19 queda aclarado (semana 45). Éxodo 23:25 queda como promesa a Israel, no como garantía de no enfermar (semana 53).
+   - **Aceptadas:** las demás quedan en `content/revision_teologica_aceptadas.txt`, para que el informe solo avise frases nuevas.
+6. **Biblioteca de preparación:** revisada por Richarh el 23 nov 2026. Quedaron 18 tareas: las que se hacen juntas se unieron en una sola, así una marca cubre lo básico.
+   - **Tarea de contenido:** una sola cubre tema, guion, versículo, dato, frase e historia.
+   - **Otras unidas:** reflexión y devocional; las tres de entrevista; noticias y clima; música y cortinas; equipo y respaldo; marcar al aire y mensajes.
+   - **Quitadas:** «Grabación activada» y «Publicación en redes» (hay un encargado).
+   - **Nuevas:** el grupo «Audiencia y auspiciantes»: saludar por nombre a los oyentes y agradecer a un auspiciante con algo concreto.
+   - **Siempre en la sugerencia:** «Marcar al aire y mensajes» (constante `FIJAS`).
+   - **Programas semanales:** usan el versículo de su propio día.
+   - **Documento de la revisión:** `content/Biblioteca_preparacion_2027.docx`.
+7. **Historias de Mensajero:** sección nueva en «Para la audiencia», con historias del libro de Samuel Sosa (2011).
+   - **Datos:** `content/historias_mensajero_2027.json`. Hay 28 historias; la app muestra las 24 aprobadas. De las 6 sensibles, Richarh aprobó la 10 y la 23; las otras cuatro quedan fuera.
+   - **Historia de la semana:** se elige según el tema de la semana (`HIST_TEMA`).
+   - **Aniversario:** el 25 de marzo hay aviso en la tarjeta del día, y esa semana se destaca la historia del origen de la radio.
+   - **Documento completo:** `content/Historias_de_Mensajero.docx`.
+8. **Números útiles:** las seis emergencias nacionales (911, 141, 132, 155, 137, 147) y, desde el 23 nov 2026, «Salud en la zona», con 8 contactos que pasó Richarh: banco de sangre, campaña de cirugías, clínicas, hospital y sanatorios (constante `ZONA`). Reconfirmar todos antes de la salida y cada tanto.
+9. ~~Tres frases célebres con fuente parcial~~ **Resuelto el 20/10/2026:** Cervantes confirmada (II parte, cap. XVII); Spurgeon pasa a «Proverbio recogido por Charles H. Spurgeon»; Temple se mantiene con su definición completa (autor confirmado; el libro exacto, no).
+
+## 12. Archivos
+
+| Archivo | Para qué |
+|---|---|
+| `public/index.html` | Prototipo completo (contenido incrustado) |
+| `public/sw.js`, `public/manifest.webmanifest`, `public/images/` | PWA e imágenes |
+| `content/planillas/Mensajero_TemasMacro_2027.xlsx` | Fuente de verdad del contenido |
+| `content/criterios_teologicos.md` | Criterios de escritura y revisión |
+| `content/revision_teologica_2027.md`, `verificacion_datos_2027.md`, `frases_2027.md` | Informes de revisión |
+| `content/versiculos_sugeridos.md`, `Versiculos_a_corregir_2027.docx` | Registro de los cambios de versículo (todos decididos) |
+| `content/frases_deportivas_2027.txt`, `Frases_deportivas_2027.docx` | Frases deportivas (fuente y versión para revisar) |
+| `content/estilo_guiones_2027.json` | Pasada de estilo |
+| `tools/` | Scripts del flujo de contenido (§4) |
+| `tests/humo.cjs` | Prueba de humo |
+| `IDEA.md` | Por qué se tomó cada decisión de diseño y de contenido |
+
+## 13. Depuración hecha antes de la entrega
+
+- 44 líneas de CSS de pantallas anteriores que ya no se usaban (versículos en lista, subtemas en tarjetas, botones viejos) y tres variables sin uso.
+- Se quitaron del repositorio las capturas de prueba y el encargo técnico anterior (lo reemplaza este documento).
+- Escena de Producción y hoja de su tema: arreglado el problema de la tilde que mostraba la escena de Salud y 0 semanas.
+- Tamaño del prototipo: 928 KB, de los cuales 730 KB son el contenido del año, 92 KB la lógica, 38 KB el diseño y 60 KB los dos logos incrustados. En producción el contenido y los logos salen del HTML.

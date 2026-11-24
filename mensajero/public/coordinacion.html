@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel de coordinación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Panel del director de programación: junta los archivos «Descargar mis datos» de cada locutor y muestra el conjunto.
+   En producción lo alimenta el servidor (sincronización); este prototipo trabaja con los archivos CSV. */
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1f1a2b;--ink2:#4d4658;--ink3:#7a7385;--line:#e4dfd6;--gold:#e0a800;--gold-ink:#7a5600;
+  --s1:#fdf3d0;--s2:#f9e19a;--s3:#f0c64a;--s4:#d9a300;--s5:#9a7300;--alert:#b42318;--ok:#15803d}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15121c;--card:#1f1a28;--ink:#f3eff8;--ink2:#c9c2d4;--ink3:#9a92a8;--line:#352e42;--gold:#f0c040;--gold-ink:#f0c040;
+  --s1:#3a3016;--s2:#5a4818;--s3:#8a6c14;--s4:#c39a1c;--s5:#f0c64a;--alert:#ff8a80;--ok:#6fd08c}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Jost,system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:24px 16px 60px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:18px}
+h1{font-weight:400;font-size:28px;letter-spacing:.02em}
+h1 small{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink);font-weight:500}
+h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);font-weight:500;margin:0 0 10px}
+.barra{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button,.boton,select{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}
+.prim{background:var(--gold);border-color:var(--gold);color:#2a1a08;font-weight:500}
+.vacio{border:2px dashed var(--line);border-radius:18px;padding:40px 20px;text-align:center;color:var(--ink2);background:var(--card)}
+.vacio.sobre{border-color:var(--gold)}
+.vacio p{max-width:640px;margin:8px auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+.kpi b{display:block;font-size:30px;font-weight:400;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.kpi small{display:block;color:var(--ink2);font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+.alertas{list-style:none;display:grid;gap:6px}
+.alertas li{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}
+.alertas li::before{content:"!";flex:none;width:20px;height:20px;border-radius:50%;background:var(--alert);color:#fff;font-weight:600;font-size:12px;display:grid;place-items:center;margin-top:2px}
+.alertas li.ok::before{content:"✓";background:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+thead th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:500;cursor:pointer;user-select:none}
+thead th[aria-sort]::after{content:" ↓";color:var(--gold-ink)}
+thead th[aria-sort="ascending"]::after{content:" ↑"}
+.tabla{overflow-x:auto;margin-bottom:14px}
+.pct{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
+.pct i{display:inline-block;width:70px;height:8px;border-radius:4px;background:var(--line);overflow:hidden;position:relative}
+.pct i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--p);background:var(--gold);border-radius:0 4px 4px 0}
+.bajo{color:var(--alert);font-weight:600}
+.reems{display:grid;gap:2px}
+.reems .f{display:grid;grid-template-columns:minmax(140px,1fr) 24px minmax(160px,1.3fr) 70px minmax(120px,1.4fr);gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.reems .f small{display:block;color:var(--ink3);font-size:12.5px}
+.reems .fl{color:var(--gold-ink);text-align:center}
+.reems .n{text-align:right;font-variant-numeric:tabular-nums;font-size:15px}
+.reems .fe{color:var(--ink2);font-size:13px}
+@media(max-width:820px){.reems .f{grid-template-columns:1fr 24px 1fr 50px}.reems .fe{grid-column:1/-1}}
+.barras{display:grid;gap:8px}
+.barras div{display:grid;grid-template-columns:150px 1fr 60px;gap:10px;align-items:center;font-size:14px}
+.barras .b{height:14px;border-radius:0 4px 4px 0;background:var(--gold);min-width:2px}
+.barras .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.evo-total{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px;align-items:end;height:150px;padding-top:18px}
+.evo-total div{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:12.5px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.evo-total i{display:block;width:70%;max-width:46px;border-radius:4px 4px 0 0;background:var(--gold);margin:4px 0}
+.evo-total span{font-size:11.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
+.evo{display:grid;gap:2px}
+.evo .f{display:grid;grid-template-columns:minmax(150px,1.3fr) minmax(160px,2fr) 70px 110px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.evo .f small{display:block;color:var(--ink3);font-size:12.5px}
+.evo .sp{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:3px;align-items:end;height:28px}
+.evo .sp i{display:block;background:var(--gold);border-radius:2px 2px 0 0;min-height:2px}
+.evo .sp i.no{background:var(--line)}
+.evo .prom{text-align:right;font-variant-numeric:tabular-nums;font-size:15px}
+.evo .ten{font-size:13px;color:var(--ink2)}
+.evo .ten.baja{color:var(--alert)}
+.muted{color:var(--ink3);font-size:13.5px}
+.archivos{font-size:13px;color:var(--ink3);margin:-6px 0 14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1><small>Mensajero · Edificando una Cultura 2027</small>Panel de coordinación</h1>
+  <div class="barra">
+    <label class="boton prim" for="arch">Cargar archivos de locutores</label><input type="file" id="arch" accept=".csv,text/csv" multiple hidden>
+    <button id="ejemplo">Ver ejemplo (12 locutores)</button>
+    <select id="mes" aria-label="Período"></select>
+    <button id="bajar" hidden>Descargar consolidado</button>
+  </div>
+</header>
+<p class="archivos" id="archivos"></p>
+<div id="vacio" class="vacio"><b>Arrastrá acá los archivos de los locutores</b>
+  <p>Cada locutor descarga su planilla desde la app: «Mis informes del mes» → «Descargar mis datos (planilla)», y te la manda. Cargá todas juntas: el panel suma los días al aire, los mensajes de oyentes, las entrevistas y la preparación de cada programa.</p>
+  <p class="muted">Si un locutor manda una planilla nueva, reemplaza a la anterior. Los archivos no salen de esta computadora.</p></div>
+<main id="panel" hidden>
+  <section class="kpis" id="kpis"></section>
+  <section class="grid2">
+    <div class="card"><h2>Para mirar</h2><ul class="alertas" id="alertas"></ul></div>
+    <div class="card"><h2>Mensajes de oyentes por canal</h2><div class="barras" id="canales"></div></div>
+  </section>
+  <section class="card tabla"><h2>Por locutor y programa</h2><table id="tabla"></table></section>
+  <section class="card"><h2>Reemplazos</h2><p class="muted" id="reem-nota"></p><div class="reems" id="reems"></div></section>
+  <section class="grid2">
+    <div class="card"><h2>Mensajes por tema (promedio por programa al aire)</h2><div class="barras" id="temas"></div></div>
+    <div class="card"><h2>Días de la semana (promedio de mensajes)</h2><div class="barras" id="diasem"></div></div>
+  </section>
+  <section class="grid2">
+    <div class="card"><h2>Mensajes por franja horaria (promedio por programa al aire)</h2><div class="barras" id="franjas"></div></div>
+    <div class="card"><h2>Horas al aire por semana</h2><div class="barras" id="horas"></div></div>
+  </section>
+  <section class="card"><h2>Cómo viene el año · % de días al aire</h2>
+    <div class="evo-total" id="evo-total"></div>
+    <p class="muted" style="margin:14px 0 6px">Por programa: cada barrita es un mes (más alta = más días al aire). A la derecha, el promedio del año y si viene mejorando o bajando.</p>
+    <div class="evo" id="evo"></div></section>
+</main>
+</div>
+<script>
+const SEMANAS = [["2026-12-27",1,"Finanzas","Azul",5],["2027-01-03",2,"Crecimiento Personal","Lila",0],["2027-01-10",3,"Producción y Desarrollo","Verde",0],["2027-01-17",4,"Salud","Amarillo",0],["2027-01-24",5,"Vida Cristiana","Blanco",0],["2027-01-31",6,"Liderazgo","Negro",0],["2027-02-07",7,"Familia","Rojo",0],["2027-02-14",8,"Finanzas","Azul",0],["2027-02-21",9,"Crecimiento Personal","Lila",0],["2027-02-28",10,"Producción y Desarrollo","Verde",0],["2027-03-07",11,"Salud","Amarillo",0],["2027-03-14",12,"Vida Cristiana","Blanco",0],["2027-03-21",13,"Liderazgo","Negro",0],["2027-03-28",14,"Familia","Rojo",0],["2027-04-04",15,"Finanzas","Azul",0],["2027-04-11",16,"Crecimiento Personal","Lila",0],["2027-04-18",17,"Producción y Desarrollo","Verde",0],["2027-04-25",18,"Salud","Amarillo",0],["2027-05-02",19,"Vida Cristiana","Blanco",0],["2027-05-09",20,"Liderazgo","Negro",0],["2027-05-16",21,"Familia","Rojo",0],["2027-05-23",22,"Finanzas","Azul",0],["2027-05-30",23,"Crecimiento Personal","Lila",0],["2027-06-06",24,"Producción y Desarrollo","Verde",0],["2027-06-13",25,"Salud","Amarillo",0],["2027-06-20",26,"Vida Cristiana","Blanco",0],["2027-06-27",27,"Liderazgo","Negro",0],["2027-07-04",28,"Familia","Rojo",0],["2027-07-11",29,"Finanzas","Azul",0],["2027-07-18",30,"Crecimiento Personal","Lila",0],["2027-07-25",31,"Producción y Desarrollo","Verde",0],["2027-08-01",32,"Salud","Amarillo",0],["2027-08-08",33,"Vida Cristiana","Blanco",0],["2027-08-15",34,"Liderazgo","Negro",0],["2027-08-22",35,"Familia","Rojo",0],["2027-08-29",36,"Finanzas","Azul",0],["2027-09-05",37,"Crecimiento Personal","Lila",0],["2027-09-12",38,"Producción y Desarrollo","Verde",0],["2027-09-19",39,"Salud","Amarillo",0],["2027-09-26",40,"Vida Cristiana","Blanco",0],["2027-10-03",41,"Liderazgo","Negro",0],["2027-10-10",42,"Familia","Rojo",0],["2027-10-17",43,"Finanzas","Azul",0],["2027-10-24",44,"Crecimiento Personal","Lila",0],["2027-10-31",45,"Producción y Desarrollo","Verde",0],["2027-11-07",46,"Salud","Amarillo",0],["2027-11-14",47,"Vida Cristiana","Blanco",0],["2027-11-21",48,"Liderazgo","Negro",0],["2027-11-28",49,"Familia","Rojo",0],["2027-12-05",50,"Finanzas","Azul",0],["2027-12-12",51,"Crecimiento Personal","Lila",0],["2027-12-19",52,"Producción y Desarrollo","Verde",0],["2027-12-26",53,"Salud","Amarillo",0]];
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const CANALES = [['sms','SMS'],['whatsapp','WhatsApp'],['youtube','YouTube'],['instagram','Instagram'],['facebook','Facebook']];
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let filas = [], porArchivo = new Map(), orden = {col: 'pct', asc: false};
+
+/* CSV: comas, comillas dobles, BOM */
+function parseCSV(t) {
+  t = t.replace(/^\ufeff/, ''); const out = []; let f = [], c = '', q = false;
+  for (let i = 0; i < t.length; i++) { const ch = t[i];
+    if (q) { if (ch === '"') { if (t[i+1] === '"') { c += '"'; i++; } else q = false; } else c += ch; }
+    else if (ch === '"') q = true; else if (ch === ',') { f.push(c); c = ''; }
+    else if (ch === '\n' || ch === '\r') { if (ch === '\r' && t[i+1] === '\n') i++; f.push(c); out.push(f); f = []; c = ''; }
+    else c += ch; }
+  if (c || f.length) { f.push(c); out.push(f); }
+  const [cab, ...rs] = out; return rs.filter(r => r.length === cab.length).map(r => Object.fromEntries(cab.map((k, i) => [k, r[i]])));
+}
+const num = v => +v || 0;
+function normalizar(r) { const o = {...r}; for (const k of ['al_aire','entrevista','sms','whatsapp','youtube','instagram','facebook','mensajes','preparacion_semana','semana']) o[k] = num(r[k]); o.mes = +r.fecha.slice(5, 7) - 1; return o; }
+
+async function cargar(files) {
+  for (const f of files) { const rs = parseCSV(await f.text()).map(normalizar); if (!rs.length) continue;
+    porArchivo.set(rs[0].locutor || f.name, rs); }
+  filas = [...porArchivo.values()].flat(); armarMeses(); pintar();
+}
+
+/* ejemplo: 12 locutores ficticios, 15 programas, del 1 de enero al 20 de diciembre de 2027 */
+function ejemplo() {
+  let s = 11; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  const L = [['Juan Pérez',[['Mañana Contigo','06:00','07:00',[1,2,3,4,5,6]],['Tarde Viva','15:00','17:00',[1,2,3,4,5,6]]],.95],['Ana Gómez',[['Despertar','05:00','06:00',[1,2,3,4,5]]],.9],
+    ['Carlos Benítez',[['Deporte Total','11:00','12:00',[1,2,3,4,5]]],.88],['María López',[['Familia en Casa','09:00','11:00',[1,2,3,4,5]]],.97],['Pedro Ramírez',[['Voces del Campo','12:30','14:00',[1,2,3,4,5,6]]],.8],
+    ['Lucía Fernández',[['Mujer Hoy','14:00','15:00',[1,2,3,4,5]],['Sábado en Familia','09:00','11:00',[6]]],.92],['José Martínez',[['Noche de Paz','21:00','22:00',[1,2,3,4,5]]],.62],
+    ['Rosa Giménez',[['Raíces','17:00','18:00',[1,2,3,4,5]]],.9],['Diego Acosta',[['Jóvenes al Aire','19:00','20:00',[2,4]]],.85],['Laura Villalba',[['Salud y Vida','10:00','11:00',[1,3,5]]],.93],
+    ['Miguel Ortiz',[['Encuentro','08:00','09:00',[0]],['Sábado Joven','16:00','18:00',[6]]],.7],['Carmen Duarte',[['Café y Palabra','07:00','08:00',[1,2,3,4,5]]],.9]];
+  const ini = new Date(2027, 0, 1), fin = new Date(2027, 11, 20), dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const semDe = f => { let w = SEMANAS[0]; for (const x of SEMANAS) if (new Date(x[0] + 'T00:00') <= f) w = x; return w; };
+  const temaMult = {'Familia':1.4,'Salud':1.2,'Vida Cristiana':1.15,'Finanzas':1.1,'Liderazgo':.85,'Crecimiento Personal':1,'Producción y Desarrollo':.8};
+  filas = [];
+  for (const [loc, progs, cumple] of L) for (const [prog, d, h, ds] of progs) { const bajaDesde = loc === 'José Martínez' ? new Date(2027, 11, 1) : null; let prepSem = {};
+    for (let f = new Date(ini); f <= fin; f.setDate(f.getDate() + 1)) { const i = f.getDay(); if (!ds.includes(i)) continue;
+      const w = semDe(f), aire = (bajaDesde && f >= bajaDesde) ? 0 : (r() < cumple ? 1 : 0), m = temaMult[w[2]] || 1, base = prog.includes('Deporte') ? 4 : 8;
+      const ms = aire ? {sms: Math.floor(r()*2), whatsapp: Math.floor(r()*base*m), youtube: Math.floor(r()*2), instagram: Math.floor(r()*3*m), facebook: Math.floor(r()*4*m)} : {sms:0,whatsapp:0,youtube:0,instagram:0,facebook:0};
+      const graba = aire && r() < (loc === 'Miguel Ortiz' ? .5 : .08);
+      prepSem[w[1]] ??= Math.round(Math.min(100, Math.max(0, cumple * 100 - 15 + r() * 30)) / 10) * 10;
+      filas.push(normalizar({locutor: loc, programa: prog, horario: 'de ' + d + ' a ' + h, modalidad_programa: 'vivo', fecha: f.toISOString().slice(0, 10), dia: dias[i], semana: w[1], tema: w[2], color: w[3],
+        al_aire: aire, modalidad_dia: aire ? (graba ? 'grabado' : 'vivo') : '', entrevista: aire && r() < .07 ? 1 : 0, reemplazo: '',
+        ...ms, mensajes: Object.values(ms).reduce((a, b) => a + b, 0), preparacion_semana: prepSem[w[1]]})); } }
+  // reemplazos del ejemplo: en diciembre, José no sale y lo cubren Diego y Rosa; además, algunos días sueltos durante el año
+  const fila0 = (loc, prog, f) => { const w = semDe(f); return normalizar({locutor: loc, programa: prog, horario: '', modalidad_programa: '', fecha: f.toISOString().slice(0, 10), dia: dias[f.getDay()], semana: w[1], tema: w[2], color: w[3],
+    al_aire: 1, modalidad_dia: '', entrevista: 0, reemplazo: 'sí', sms: 0, whatsapp: 0, youtube: 0, instagram: 0, facebook: 0, mensajes: 0, preparacion_semana: ''}); };
+  for (let f = new Date(2027, 11, 1); f <= fin; f.setDate(f.getDate() + 1)) if ([1,2,3,4,5].includes(f.getDay()) && r() < .75) filas.push(fila0(r() < .6 ? 'Diego Acosta' : 'Rosa Giménez', 'Noche de Paz', new Date(f)));
+  const sueltos = [['Carmen Duarte', 'Despertar'], ['Ana Gómez', 'Café y Palabra'], ['Laura Villalba', 'Mujer Hoy'], ['Pedro Ramírez', 'Deporte Total'], ['Juan Pérez', 'Raíces'], ['María López', 'Salud y Vida']];
+  for (let k = 0; k < 26; k++) { const [q, pr] = sueltos[Math.floor(r() * sueltos.length)]; const f = new Date(2027, Math.floor(r() * 12), 1 + Math.floor(r() * 27)); if (f <= fin && f.getDay() !== 0) filas.push(fila0(q, pr, f)); }
+  porArchivo = new Map(L.map(([loc]) => [loc, filas.filter(x => x.locutor === loc)]));
+  armarMeses(); pintar(); $('archivos').textContent = 'Ejemplo con datos inventados: 12 locutores y 15 programas, del 1 de enero al 20 de diciembre.';
+}
+
+function armarMeses() {
+  const ms = [...new Set(filas.map(f => f.mes))].sort((a, b) => a - b), act = $('mes').value;
+  $('mes').innerHTML = '<option value="all">Todo el año</option>' + ms.map(m => `<option value="${m}">${MESES[m]}</option>`).join('');
+  $('mes').value = ms.includes(+act) ? act : (ms.length ? String(ms[ms.length - 1]) : 'all');
+}
+
+function resumen(rs) { // por locutor + programa
+  const g = new Map();
+  for (const f of rs) { const k = f.locutor + '|' + f.programa; let o = g.get(k);
+    if (!o) g.set(k, o = {locutor: f.locutor, programa: f.programa, horario: f.horario, previstos: 0, aire: 0, vivo: 0, grab: 0, ent: 0, reem: 0, msgs: 0, prep: new Map(), ult: ''});
+    o.previstos++; if (f.al_aire) { o.aire++; f.modalidad_dia === 'grabado' ? o.grab++ : o.vivo++; if (f.fecha > o.ult) o.ult = f.fecha; }
+    o.ent += f.entrevista; o.msgs += f.mensajes; o.prep.set(f.semana, f.preparacion_semana); }
+  return [...g.values()].map(o => ({...o, pct: o.previstos ? Math.round(o.aire / o.previstos * 100) : 0, prepProm: o.prep.size ? Math.round([...o.prep.values()].reduce((a, b) => a + b, 0) / o.prep.size) : 0,
+    msgsDia: o.aire ? +(o.msgs / o.aire).toFixed(1) : 0}));
+}
+
+function pintar() {
+  const hay = filas.length > 0; $('vacio').hidden = hay; $('panel').hidden = !hay; $('bajar').hidden = !hay; if (!hay) return;
+  if (!$('archivos').textContent.startsWith('Ejemplo')) $('archivos').textContent = `${porArchivo.size} locutor${porArchivo.size === 1 ? '' : 'es'} cargado${porArchivo.size === 1 ? '' : 's'}: ${[...porArchivo.keys()].join(', ')}.`;
+  const m = $('mes').value, rsT = m === 'all' ? filas : filas.filter(f => f.mes === +m), rs = rsT.filter(f => !f.reemplazo), reems = rsT.filter(f => f.reemplazo), R = resumen(rs);
+  const tot = k => R.reduce((a, o) => a + o[k], 0), locs = new Set(R.map(o => o.locutor)).size, hasta = filas.reduce((a, f) => f.fecha > a ? f.fecha : a, '');
+  const pctT = tot('previstos') ? Math.round(tot('aire') / tot('previstos') * 100) : 0, prepT = R.length ? Math.round(R.reduce((a, o) => a + o.prepProm, 0) / R.length) : 0;
+  $('kpis').innerHTML = [[locs, 'Locutores', R.length + ' programas'], [pctT + ' %', 'Días al aire', tot('aire') + ' de ' + tot('previstos') + ' previstos'],
+    [tot('msgs').toLocaleString('es-PY'), 'Mensajes de oyentes', (tot('aire') ? (tot('msgs') / tot('aire')).toFixed(1) : 0) + ' por programa al aire'],
+    [tot('ent'), 'Entrevistas', tot('grab') + ' programas grabados'], [prepT + ' %', 'Preparación promedio', 'datos al ' + hasta.split('-').reverse().join('/')]]
+    .map(([v, t, s]) => `<div class="card kpi"><span>${t}</span><b>${v}</b><small>${esc(s)}</small></div>`).join('');
+  // para mirar
+  const al = [];
+  for (const o of R) { const m = [];
+    const dSin = o.ult ? Math.round((new Date(hasta) - new Date(o.ult)) / 864e5) : 99;
+    if (dSin >= 14) m.push(dSin >= 99 ? 'sin marcas «al aire» en todo el período' : `sin marcas «al aire» hace ${dSin} días`);
+    else if (o.pct < 75) m.push(`${o.pct} % de días al aire (${o.aire} de ${o.previstos})`);
+    if (o.prepProm < 60) m.push(`preparación ${o.prepProm} %`);
+    if (o.aire && o.grab / o.aire > .3) m.push(`${Math.round(o.grab / o.aire * 100)} % de programas grabados`);
+    const cub = reems.filter(f => f.programa === o.programa).length; if (m.length && cub) m.push(`lo cubrieron ${cub} ${cub === 1 ? 'vez' : 'veces'}`);
+    if (m.length) al.push(`<b>${esc(o.locutor)}</b> · ${esc(o.programa)}: ${m.join('; ')}.`); }
+  $('alertas').innerHTML = al.length ? al.map(x => `<li>${x}</li>`).join('') : '<li class="ok">Todo en orden en este período.</li>';
+  // canales
+  const can = CANALES.map(([k, n]) => [n, rs.reduce((a, f) => a + f[k], 0)]), maxC = Math.max(1, ...can.map(x => x[1]));
+  $('canales').innerHTML = can.sort((a, b) => b[1] - a[1]).map(([n, v]) => `<div title="${n}: ${v} mensajes"><span>${n}</span><span class="b" style="width:${v / maxC * 100}%"></span><span class="v">${v.toLocaleString('es-PY')}</span></div>`).join('');
+  // temas y días: promedio de mensajes por programa al aire
+  const prom = clave => { const g = new Map(); for (const f of rs) if (f.al_aire) { const o = g.get(f[clave]) || [0, 0]; o[0] += f.mensajes; o[1]++; g.set(f[clave], o); }
+    return [...g].map(([k, [s, n]]) => [k, +(s / n).toFixed(1)]); };
+  const barras = (id, datos, ordenar) => { const mx = Math.max(1, ...datos.map(x => x[1])); if (ordenar) datos.sort((a, b) => b[1] - a[1]);
+    $(id).innerHTML = datos.map(([k, v]) => `<div title="${esc(k)}: ${v} mensajes por programa"><span>${esc(k)}</span><span class="b" style="width:${v / mx * 100}%"></span><span class="v">${v}</span></div>`).join(''); };
+  barras('temas', prom('tema'), true);
+  const od = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']; barras('diasem', prom('dia').sort((a, b) => od.indexOf(a[0]) - od.indexOf(b[0])), false);
+  // tabla
+  const cols = [['locutor','Locutor'],['programa','Programa'],['horario','Horario'],['pct','Al aire'],['vivo','En vivo'],['grab','Grabados'],['ent','Entrevistas'],['msgs','Mensajes'],['msgsDia','Mens./día'],['prepProm','Preparación']];
+  R.sort((a, b) => { const x = a[orden.col], y = b[orden.col]; return (typeof x === 'string' ? x.localeCompare(y, 'es') : x - y) * (orden.asc ? 1 : -1); });
+  $('tabla').innerHTML = `<thead><tr>${cols.map(([k, n]) => `<th data-col="${k}"${orden.col === k ? ` aria-sort="${orden.asc ? 'ascending' : 'descending'}"` : ''}>${n}</th>`).join('')}</tr></thead><tbody>${R.map(o => `<tr>
+    <td>${esc(o.locutor)}</td><td>${esc(o.programa)}</td><td>${esc(o.horario)}</td>
+    <td title="${o.aire} de ${o.previstos} días previstos"><span class="pct ${o.pct < 75 ? 'bajo' : ''}"><i style="--p:${o.pct}%"></i>${o.pct} %</span></td>
+    <td>${o.vivo}</td><td>${o.grab}</td><td>${o.ent}</td><td>${o.msgs.toLocaleString('es-PY')}</td><td>${o.msgsDia}</td><td class="${o.prepProm < 60 ? 'bajo' : ''}">${o.prepProm} %</td></tr>`).join('')}</tbody>`;
+  // reemplazos: quién cubrió qué programa, cuántas veces y cuándo
+  const duenio = new Map(); for (const f of filas) if (!f.reemplazo && !duenio.has(f.programa)) duenio.set(f.programa, f.locutor);
+  const gr = new Map(); for (const f of reems) { const k = f.locutor + '|' + f.programa; const o = gr.get(k) || {quien: f.locutor, prog: f.programa, fechas: []}; o.fechas.push(f.fecha); gr.set(k, o); }
+  const lista = [...gr.values()].sort((a, b) => b.fechas.length - a.fechas.length);
+  const fc = d => { const [, mm, dd] = d.split('-'); return `${+dd} ${MESES[+mm - 1].slice(0, 3).toLowerCase()}`; };
+  const porProg = new Map(); for (const f of reems) porProg.set(f.programa, (porProg.get(f.programa) || 0) + 1);
+  const masCub = [...porProg].sort((a, b) => b[1] - a[1])[0];
+  $('reem-nota').textContent = reems.length ? `${reems.length} reemplazo${reems.length === 1 ? '' : 's'} en el período, ${lista.length} ${lista.length === 1 ? 'combinación' : 'combinaciones'} de quién cubrió a quién.${masCub ? ` El programa que más se cubrió: ${masCub[0]} (${masCub[1]} ${masCub[1] === 1 ? 'vez' : 'veces'}).` : ''}` : 'No hubo reemplazos en este período.';
+  $('reems').innerHTML = lista.map(o => { const fs = o.fechas.sort(), ver = fs.slice(0, 6).map(fc).join(', ') + (fs.length > 6 ? ` y ${fs.length - 6} más` : '');
+    return `<div class="f"><div>${esc(o.quien)}<small>reemplazó</small></div><div class="fl">→</div><div>${esc(o.prog)}<small>${duenio.has(o.prog) ? 'de ' + esc(duenio.get(o.prog)) : 'programa sin datos cargados'}</small></div>
+      <div class="n">${fs.length} ${fs.length === 1 ? 'vez' : 'veces'}</div><div class="fe">${ver}</div></div>`; }).join('');
+  // horario «de HH:MM a HH:MM» → minutos
+  const hm = t => { const m = /(\d{1,2}):(\d{2})\D+(\d{1,2}):(\d{2})/.exec(t || ''); if (!m) return null; const a = +m[1] * 60 + +m[2]; let b = +m[3] * 60 + +m[4]; if (b <= a) b += 1440; return [a, b]; };
+  const progs = new Map(); for (const f of filas) { if (f.reemplazo) continue; const k = f.locutor + '|' + f.programa; const o = progs.get(k) || {locutor: f.locutor, programa: f.programa, horario: f.horario, dias: new Set()}; o.dias.add(f.dia); progs.set(k, o); }
+  const P = [...progs.values()].map(o => ({...o, r: hm(o.horario)})).filter(o => o.r);
+  // mensajes por franja horaria del programa (según su hora de inicio)
+  const franja = r => { const h = Math.floor((r[0] % 1440) / 60); return h < 5 ? 'Noche' : h < 11 ? 'Mañana' : h < 14 ? 'Mediodía' : h < 19 ? 'Tarde' : 'Noche'; };
+  const fr = new Map([['Mañana', [0, 0]], ['Mediodía', [0, 0]], ['Tarde', [0, 0]], ['Noche', [0, 0]]]);
+  for (const f of rs) if (f.al_aire) { const r = hm(f.horario); if (!r) continue; const o = fr.get(franja(r)); o[0] += f.mensajes; o[1]++; }
+  barras('franjas', [...fr].filter(([, [, n]]) => n).map(([k, [s2, n]]) => [k, +(s2 / n).toFixed(1)]), false);
+  // horas al aire por semana (según horario y días cargados)
+  const hs = new Map(); for (const o of P) hs.set(o.locutor, (hs.get(o.locutor) || 0) + (o.r[1] - o.r[0]) / 60 * o.dias.size);
+  barras('horas', [...hs].map(([k, v]) => [k, +v.toFixed(1)]), true);
+  // cómo viene el año: total de la radio por mes y una barrita por mes para cada programa
+  const ms = [...new Set(filas.map(f => f.mes))].sort((a, b) => a - b), porMes = ms.map(mm => resumen(filas.filter(f => f.mes === mm && !f.reemplazo)));
+  const pctDe = R2 => { const pr = R2.reduce((a, o) => a + o.previstos, 0); return pr ? Math.round(R2.reduce((a, o) => a + o.aire, 0) / pr * 100) : 0; };
+  $('evo-total').innerHTML = Array.from({length: 12}, (_, mm) => { const j2 = ms.indexOf(mm), p = j2 < 0 ? null : pctDe(porMes[j2]);
+    return `<div title="${MESES[mm]}${p === null ? ': sin datos' : ': ' + p + ' % de días al aire'}">${p === null ? '' : p + '%'}<i style="height:${p === null ? 0 : Math.max(2, p)}%"></i><span>${MESES[mm].slice(0, 3)}</span></div>`; }).join('');
+  const claves = resumen(filas.filter(f => !f.reemplazo)).sort((a, b) => a.locutor.localeCompare(b.locutor, 'es') || a.programa.localeCompare(b.programa, 'es'));
+  $('evo').innerHTML = claves.map(o => { const serie = Array.from({length: 12}, (_, mm) => { const j2 = ms.indexOf(mm); const x = j2 < 0 ? null : porMes[j2].find(y => y.locutor === o.locutor && y.programa === o.programa); return x ? x.pct : null; });
+    const v = serie.filter(x => x !== null), ult = v.slice(-3), ant = v.slice(-6, -3), avg = a => a.reduce((x, y) => x + y, 0) / (a.length || 1), dif = ult.length && ant.length ? avg(ult) - avg(ant) : 0;
+    const ten = dif > 4 ? '↑ mejorando' : dif < -4 ? '↓ bajando' : '→ estable';
+    return `<div class="f"><div>${esc(o.programa)}<small>${esc(o.locutor)}</small></div>
+      <div class="sp">${serie.map((x, mm) => `<i class="${x === null ? 'no' : ''}" style="height:${x === null ? 2 : Math.max(2, x)}%" title="${MESES[mm]}: ${x === null ? 'sin datos' : x + ' %'}"></i>`).join('')}</div>
+      <div class="prom">${o.pct} %</div><div class="ten ${dif < -4 ? 'baja' : ''}">${ten}</div></div>`; }).join('');
+}
+
+$('arch').onchange = e => cargar(e.target.files);
+$('ejemplo').onclick = ejemplo;
+$('mes').onchange = pintar;
+$('tabla').onclick = e => { const th = e.target.closest('th[data-col]'); if (!th) return; const c = th.dataset.col; orden = {col: c, asc: orden.col === c ? !orden.asc : ['locutor','programa','horario'].includes(c)}; pintar(); };
+const zona = document.body;
+zona.addEventListener('dragover', e => { e.preventDefault(); $('vacio').classList.add('sobre'); });
+zona.addEventListener('dragleave', () => $('vacio').classList.remove('sobre'));
+zona.addEventListener('drop', e => { e.preventDefault(); $('vacio').classList.remove('sobre'); cargar([...e.dataTransfer.files].filter(f => /\.csv$/i.test(f.name))); });
+$('bajar').onclick = async () => { const cab = Object.keys(filas[0]).filter(k => k !== 'mes');
+  const q = v => { const t = String(v ?? ''); return /[",\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
+  const csv = '\ufeff' + [cab, ...filas.map(f => cab.map(k => f[k]))].map(r => r.map(q).join(',')).join('\r\n');
+  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8'}), nombre = 'mensajero-2027-consolidado.csv';
+  // dentro del visor de claude.ai la descarga pasa por su capacidad «downloads»; en el servidor, un enlace común
+  if (window.claude?.use) { const dl = await window.claude.use('downloads').catch(() => null); if (dl) { try { await dl.save({filename: nombre, data: blob}); } catch {} return; } }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nombre; a.click(); };
+armarMeses();
+</script>
+</body>
+</html>
