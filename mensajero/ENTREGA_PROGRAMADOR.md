@@ -206,7 +206,8 @@ mensajero/
 - [ ] Funciones `content`, `sync`, `auth`; reemplazar `localStorage` por sincronización (con caché local para usar sin conexión).
 - [ ] Clave de coordinación en el servidor; registro de aperturas en el servidor.
 - [ ] Decidir usuarios (§11) y, si hay una clave por locutor, guardar el autor de cada marca.
-- [ ] Panel de coordinación: informes de todos los locutores por mes (hoy cada informe es del dispositivo).
+- [ ] Panel de coordinación conectado al servidor: el mismo panel de `public/coordinacion.html`, pero leyendo los datos sincronizados de todos los locutores en lugar de los archivos CSV (ver «10 ter»).
+- [ ] Respaldo: hoy los datos de cada locutor viven solo en su celular; con la sincronización quedan en el servidor y se recuperan al cambiar de teléfono.
 - [ ] Copias diarias, exportar e importar JSON.
 - [ ] PWA: subir `CACHE` en `sw.js` en cada entrega.
 - [ ] Pruebas: mantener `tests/humo.cjs` en verde; sumar pruebas de fusión de entries, conteo mensual en fin de mes y semana cerrada; accesibilidad (axe sin violaciones).
@@ -229,6 +230,14 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 63 
 - **En los datos:** la semana 1 lleva `desde: 5`, el primer día con contenido. Los días anteriores están vacíos.
 - **En la app:** `activos(w)` y `misDe(w)` filtran esos días vacíos en las pestañas, en las cuentas «al aire», en el prompt y en el buscador. El encabezado muestra «1–2 ene».
 - **Para 2028:** si el año vuelve a empezar a mitad de semana, se repite el mismo esquema con `semana_01_2028.json`.
+
+## 10 ter. Datos para coordinación y panel del director (nov 2026)
+
+- **Desde la app del locutor:** en «Mis informes del mes», el botón «Descargar mis datos (planilla)» genera `mensajero-2027-<locutor>.csv` (UTF-8 con BOM, se abre en Excel). Una fila por programa y por día previsto, desde el 1 de enero hasta hoy. Columnas: `locutor, programa, horario, modalidad_programa, fecha, dia, semana, tema, color, al_aire, modalidad_dia, entrevista, reemplazo, sms, whatsapp, youtube, instagram, facebook, mensajes, preparacion_semana`.
+- **Panel del director:** `public/coordinacion.html`, una página aparte. Se cargan (o se arrastran) los archivos de todos los locutores; si un locutor manda uno nuevo, reemplaza al anterior. Los archivos no salen de la computadora. Trae «Ver ejemplo (12 locutores)» con datos inventados.
+- **Qué muestra, por mes o todo el año:** locutores y programas; % de días al aire sobre los previstos; mensajes de oyentes (total y por programa al aire); entrevistas y programas grabados; preparación promedio. «Para mirar» marca, una línea por programa: menos de 75 % al aire, preparación menor a 60 %, 14 días o más sin marcas, o más de 30 % de programas grabados. Además: mensajes por canal, por tema y por día de la semana; tabla por locutor y programa (se ordena tocando el encabezado); evolución mensual en mapa de calor; descarga del consolidado.
+- **En producción:** con la sincronización, el panel lee directo del servidor y no hacen falta los archivos; los umbrales de «Para mirar» conviene dejarlos configurables por coordinación.
+- **Informe del mes:** ahora dice el nombre del locutor y el horario de cada programa; en el mes en curso cuenta solo los días que ya pasaron («hasta hoy»).
 
 ## 11. Decisiones pendientes (no son del programador, pero lo afectan)
 

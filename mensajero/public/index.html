@@ -393,7 +393,8 @@ details.fold>summary::-webkit-details-marker{display:none}
 .prog-pie button.link{color:var(--gold-t);text-decoration:underline;text-underline-offset:3px;font-size:calc(14px*var(--fz,1))}
 .chk.mini-chk.reem[aria-pressed="true"]{background:#e0b3ff;border-color:#e0b3ff;color:#2a0f3a}
 .reem-sel{min-height:36px;border-radius:999px;border:1px solid #e0b3ff;background:rgba(var(--bg),.25);color:var(--ink);font:inherit;font-size:calc(14px*var(--fz,1));padding:0 12px;max-width:100%}
-.tambien{flex-basis:100%;font-size:calc(13.5px*var(--fz,1));color:var(--ink3)}
+.tambien{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:calc(13.5px*var(--fz,1));color:var(--ink3)}
+.tambien .btn{border-color:var(--gold-t);color:var(--gold-t)}
 .dias-chips{display:flex;gap:4px;flex-wrap:wrap}
 .dias-chips button{min-width:44px;min-height:40px;border-radius:999px;border:1px solid var(--line);font-size:calc(12.5px*var(--fz,1));letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);background:rgba(var(--bg),.2)}
 .dias-chips button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold-t);color:#2a1a08;font-weight:500}
@@ -450,6 +451,8 @@ dialog.copia textarea{min-height:260px;font-size:calc(14px*var(--fz,1));margin:1
 .programa select{min-height:40px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--bg),.25);color:var(--ink);font:inherit;font-size:calc(14.5px*var(--fz,1));padding:0 14px;display:inline-flex;align-items:center;gap:8px}
 .programa input[type=checkbox]{accent-color:var(--gold-t);width:16px;height:16px}
 .pg-campo{display:grid;gap:4px;flex:1 1 120px;min-width:0}
+.exportar{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:grid;gap:8px;justify-items:start}
+.exportar p{font-size:calc(13.5px*var(--fz,1))}
 .pg-falta{font-size:calc(13.5px*var(--fz,1));color:var(--gold-t)}
 .pg-falta.ok{color:var(--ink2)}
 .pg-campo>span{font-size:calc(11.5px*var(--fz,1));letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
@@ -718,7 +721,8 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
     <p class="muted" style="font-size:calc(14px*var(--fz,1))" id="reg-anio"></p>
     <div id="reg-msgs"></div>
     <div><h4>Preparación</h4><div id="inf"></div></div>
-    <div class="acciones copiar"><button class="btn mini" id="copiar-informe">Copiar informe del mes</button><button class="btn mini" id="copiar-prep">Copiar informe de preparación</button></div></div></details>
+    <div class="acciones copiar"><button class="btn mini" id="copiar-informe">Copiar informe del mes</button><button class="btn mini" id="copiar-prep">Copiar informe de preparación</button></div>
+    <div class="exportar"><p class="muted">Para coordinación: un archivo con todo tu año (cada programa y cada día). Mandalo cuando te lo pidan; el director lo suma con los de los demás locutores.</p><button class="btn mini" id="bajar-datos">Descargar mis datos (planilla)</button></div></div></details>
   </div>
 
   <h3 class="grupo-t">La serie 2027</h3>
@@ -1196,9 +1200,10 @@ function diasEn(f) {
   const h = (get(ck('historial')) || []).filter(x => x.desde <= +f).sort((a, b) => b.desde - a.desde);
   return h.length ? h[0].dias : cfgPrograma().dias;
 }
-function diasDelMes(m) {   // cuántos días de mi programa caen en el mes, con los días que regían cada fecha
+const mesEnCurso = m => hoyD.getFullYear() === DATA.anio && hoyD.getMonth() === m;
+function diasDelMes(m) {   // cuántos días de mi programa caen en el mes hasta hoy (los que faltan no cuentan), con los días que regían cada fecha
   const fin = new Date(DATA.anio, m+1, 0).getDate(); let n = 0;
-  for (let d = 1; d <= fin; d++) { const f = new Date(DATA.anio, m, d); if (diasEn(f).includes(f.getDay())) n++; }
+  for (let d = 1; d <= fin; d++) { const f = new Date(DATA.anio, m, d); if (f > hoyD) break; if (diasEn(f).includes(f.getDay())) n++; }
   return n;
 }
 // reemplazos: del locutor, no de un programa (clave sin prefijo, valor = programa reemplazado)
@@ -1261,7 +1266,7 @@ function renderRegistro(m) {
   const filaF = (t, fn) => `<tr><th scope="row">${t}</th><td>${suma(fn, enSem)}</td><td>${suma(fn, enMes)}</td><td>${suma(fn, todo)}</td></tr>`;
   $('tiles').innerHTML = `<table class="tabla-reg"><thead><tr><th></th><th>Semana ${w.n}</th><th>${MESES[m]}</th><th>${DATA.anio}</th></tr></thead>
     <tbody>${fila('Días al aire', 'aire')}${filaF('En vivo', (s, i) => get(key(s, 'aire'+i)) && modoDe(s, i) === 'vivo')}${filaF('Grabados', (s, i) => get(key(s, 'aire'+i)) && modoDe(s, i) === 'grabado')}${fila('Entrevistas', 'ent')}${filaReem(w, m)}</tbody></table>${todosProgs(m)}
-    <p class="muted" style="font-size:calc(14px*var(--fz,1));margin-top:8px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)}: ${v.length} de ${total} días ${progs().length > 1 ? 'de «' + esc(nombreProg(prog)) + '»' : 'de tu programa'} al aire (${total ? Math.min(100, Math.round(v.length / total * 100)) : 0}%).</p>`;
+    <p class="muted" style="font-size:calc(14px*var(--fz,1));margin-top:8px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)}: ${v.length} de ${total} días${mesEnCurso(m) ? ' (hasta hoy)' : ''} ${progs().length > 1 ? 'de «' + esc(nombreProg(prog)) + '»' : 'de tu programa'} al aire (${total ? Math.min(100, Math.round(v.length / total * 100)) : 0}%).</p>`;
   $('reg-v').innerHTML = v.map(x => `<li><time>${fcorta(x.f)}</time><button data-i="${x.w.n-1}">${esc(x.txt)} <span class="muted">· semana ${x.w.n}</span></button></li>`).join('')
     || `<li class="muted" style="display:block">Ningún día marcado al aire en ${MESES[m]}.</li>`;
   const rs = reemplazos(enMesDe(m)).sort((a, b) => a.f - b.f);
@@ -1281,11 +1286,12 @@ function informeMes(m) {
   const rs = reemplazos(enMesDe(m)).sort((a, b) => a.f - b.f).map(x => fcorta(x.f) + (x.prog ? ' · ' + x.prog : ''));
   const prepTxt = cs.map(c => conProg(c.id, () => { const d = datosPrep(m); return d.ws.length ? `${varios ? c.nombre + ': ' : ''}${d.prom} % (al 100 %: ${d.completas} de ${d.ws.length})` : ''; })).filter(Boolean);
   const mes = MESES[m][0].toUpperCase() + MESES[m].slice(1), c1 = cs[0];
-  return [`INFORME ${mes.toUpperCase()} ${DATA.anio} · Edificando una Cultura`,
-    varios ? `Programas: ${cs.map(c => `${c.nombre} (${resumenDias(c.dias)})`).join(' · ')}` : (c1.nombre && cfgPrograma().nombre ? `Programa: ${c1.nombre}${horarioTxt(cfgPrograma()) ? ' (' + horarioTxt(cfgPrograma()) + ')' : ''}` : ''), '',
-    ...(varios ? [...cs.map(c => `${c.nombre}: ${c.aire} de ${c.total} días al aire (${c.pct}%) · ${c.ent} entrevista${c.ent === 1 ? '' : 's'}`),
+  const loc = (get('cfg/firma') || '').trim();
+  return [`INFORME ${mes.toUpperCase()} ${DATA.anio} · Edificando una Cultura`, loc ? `Locutor: ${loc}` : null,
+    varios ? `Programas: ${cs.map(c => `${c.nombre} (${resumenDias(c.dias)}${conProg(c.id, () => horarioTxt(cfgPrograma())) ? ', ' + conProg(c.id, () => horarioTxt(cfgPrograma())) : ''})`).join(' · ')}` : (c1.nombre && cfgPrograma().nombre ? `Programa: ${c1.nombre}${horarioTxt(cfgPrograma()) ? ' (' + horarioTxt(cfgPrograma()) + ')' : ''}` : ''), '',
+    ...(varios ? [...cs.map(c => `${c.nombre}: ${c.aire} de ${c.total} días al aire${mesEnCurso(m) ? ' hasta hoy' : ''} (${c.pct}%) · ${c.ent} entrevista${c.ent === 1 ? '' : 's'}`),
         `Total: ${cs.reduce((a, c) => a + c.aire, 0)} programas al aire · ${ents.length} entrevista${ents.length === 1 ? '' : 's'}`]
-      : [`Días al aire: ${c1.aire} de ${c1.total} (${c1.pct}%)`, `Entrevistas: ${ents.length}${ents.length ? ' (' + ents.join(', ') + ')' : ''}`]),
+      : [`Días al aire: ${c1.aire} de ${c1.total}${mesEnCurso(m) ? ' hasta hoy' : ''} (${c1.pct}%)`, `Entrevistas: ${ents.length}${ents.length ? ' (' + ents.join(', ') + ')' : ''}`]),
     ...cs.map(c => `${varios ? c.nombre + ': ' : ''}En vivo: ${c.aire - c.grab} · Grabados: ${c.grab}`),
     rs.length ? `Reemplazos: ${rs.length} (${rs.join('; ')})` : null,
     (c => c.length ? `Correcciones de coordinación: ${c.join('; ')}` : null)(sem.flatMap(w => (get(keyBase(w, 'correccion')) || []).filter(t => enMes(new Date(t))).map(t => `semana ${w.n} (${fcorta(new Date(t))})`))),
@@ -1496,13 +1502,13 @@ function bloqueMsgs(w, i) {
 // registro del día, siempre arriba de la tarjeta: al aire, entrevista y nota
 function barraDia(w, i) {
   const aire = !!get(key(w, 'aire'+i)), ent = !!get(key(w, 'ent'+i)), r = get(keyBase(w, 'reem'+i)), reem = typeof r === 'string';
-  const otros = progs().filter(id => id !== prog && conProg(id, () => cfgPrograma().dias.includes(i))).map(nombreProg);
+  const otros = progs().filter(id => id !== prog && conProg(id, () => cfgPrograma().dias.includes(i)));
   return `<div class="barra-dia"><div class="acc"><button class="chk mini-chk" data-k="aire${i}" aria-pressed="${aire}">${aire ? 'Al aire ✓' : 'Al aire'}</button>${barraModo(w, i)}</div>
     <details class="mas"${ent || reem ? ' open' : ''}><summary>${ent || reem ? [ent && 'Entrevista ✓', reem && 'Reemplazo ✓'].filter(Boolean).join(' · ') : 'Más'}</summary><div class="acc">
       <button class="chk mini-chk ent" data-k="ent${i}" aria-pressed="${ent}">${ent ? 'Con entrevista ✓' : 'Con entrevista'}</button>
       <button class="chk mini-chk reem" data-reem="${i}" aria-pressed="${reem}">${reem ? 'Reemplazo ✓' : 'Reemplazo'}</button></div>
     ${reem ? `<select class="reem-sel" data-reem-sel="${i}" aria-label="Programa que reemplazaste"><option value="">¿Qué programa reemplazaste?</option>${[...new Set([...PROGRAMAS, r].filter(Boolean))].map(x => `<option${x === r ? ' selected' : ''}>${esc(x)}</option>`).join('')}</select>` : ''}</details>
-    ${otros.length ? `<span class="tambien">Este día también: ${otros.map(esc).join(', ')}. Marcá cada programa en su pestaña.</span>` : ''}
+    ${otros.length ? `<div class="tambien"><span>Este día también:</span>${otros.map(id => `<button type="button" class="btn mini" data-prog-ir="${id}">${esc(nombreProg(id))} ›</button>`).join('')}</div>` : ''}
     ${notaBox(w, 'vn'+i, 'Lo que quieras anotar para este día: noticias, clima, avisos, invitados, pedidos de oración, ideas que surgen al aire…')}</div>`;
 }
 const subsSemana = w => w.desde ? [[`Viernes ${fechaDia(w, 5).getDate()}`, w.subtemas[2].titulo], [`Sábado ${fechaDia(w, 6).getDate()}`, resumenDe(w).titulo]]
@@ -1683,6 +1689,26 @@ async function abrirFlyer(w, i, modo) {
 }
 $('flyer-x').onclick = () => $('flyer').close();
 
+/* datos para coordinación: una fila por programa y por día al aire previsto, desde el inicio del año hasta hoy (CSV, se abre en Excel) */
+const CSV_COLS = ['locutor','programa','horario','modalidad_programa','fecha','dia','semana','tema','color','al_aire','modalidad_dia','entrevista','reemplazo','sms','whatsapp','youtube','instagram','facebook','mensajes','preparacion_semana'];
+function datosCSV() {
+  const loc = (get('cfg/firma') || '').trim(), filas = [CSV_COLS];
+  const q = v => { const t = String(v ?? ''); return /[",;\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
+  for (const id of progs()) conProg(id, () => { const c = cfgPrograma();
+    for (const w of sem) { const prep = prepPct(w);
+      for (let i = 0; i < 7; i++) { const f = fechaDia(w, i); if (f > hoyD || f.getFullYear() !== DATA.anio || !diasEn(f).includes(i) || i < (w.desde || 0)) continue;
+        const aire = !!get(key(w, 'aire'+i)), o = msgsDe(w, i), r = get(keyBase(w, 'reem'+i));
+        filas.push([loc, c.nombre, horarioTxt(c), c.modo, `${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,'0')}-${String(f.getDate()).padStart(2,'0')}`, DIAS[i], w.n, TEMA_TXT[w.tema] || w.tema, w.color,
+          aire ? 1 : 0, aire ? modoDe(w, i) : '', get(key(w, 'ent'+i)) ? 1 : 0, typeof r === 'string' ? (r || 'sí') : '',
+          +o.sms || 0, +o.wa || 0, +o.yt || 0, +o.ig || 0, +o.fb || 0, totalMsgs(o), prep]); } } });
+  return '\ufeff' + filas.map(f => f.map(q).join(',')).join('\r\n');
+}
+async function bajarArchivo(nombre, blob) {
+  // dentro del visor de claude.ai la descarga pasa por su capacidad «downloads»; en la app, un enlace común
+  if (window.claude?.use) { const dl = await window.claude.use('downloads').catch(() => null);
+    if (dl) { try { await dl.save({filename: nombre, data: blob}); } catch (err) { if (err?.code !== 'declined') avisar('No se pudo descargar'); } return; } }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nombre; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
 function copiar(texto) {
   const abrir = () => { $('copia-txt').value = texto; $('copia').showModal(); $('copia-txt').select(); };
   if (navigator.clipboard?.writeText) navigator.clipboard.writeText(texto).then(() => avisar('Copiado'), abrir); else abrir();
@@ -1947,6 +1973,9 @@ $('dias').onclick = e => {
   const w = sem[cur];
   if (e.target.closest('[data-vertodo]')) { verTodo = !verTodo; diaSel = null; return renderDias(w, hoyDe(w)); }
   const ira = e.target.closest('[data-ira]'); if (ira) return irA(ira.dataset.ira);
+  // con dos o más programas: pasar al otro sin subir hasta las pestañas, en el mismo día
+  const pi = e.target.closest('[data-prog-ir]'); if (pi) { const d0 = diaSel; cambiarProg(pi.dataset.progIr); if (cfgPrograma().dias.includes(d0)) { diaSel = d0; renderDias(sem[cur], hoyDe(sem[cur])); }
+    $('s-dias').scrollIntoView({block: 'start'}); return avisar(`Ahora: ${nombreProg(prog)}`); }
   const t = e.target.closest('[data-d]');
   if (t) { diaSel = +t.dataset.d; renderDias(w, hoyDe(w)); $('dias').querySelector(`[data-d="${diaSel}"]`).focus(); return; }
   if (e.target.closest('[data-flyer]')) return abrirFlyer(w, diaSel);
@@ -1985,6 +2014,8 @@ document.addEventListener('input', e => { const t = e.target.closest('textarea[d
 $('mes').onchange = e => { renderRegistro(+e.target.value); renderInforme(+e.target.value); };
 $('copiar-ia').onclick = () => copiar(promptSemana(sem[cur]));
 $('copiar-informe').onclick = () => copiar(informeMes(+$('mes').value));
+$('bajar-datos').onclick = () => { const loc = ((get('cfg/firma') || 'locutor').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-')) || 'locutor';
+  bajarArchivo(`mensajero-${DATA.anio}-${loc}.csv`, new Blob([datosCSV()], {type: 'text/csv;charset=utf-8'})); };
 $('copiar-prep').onclick = () => copiar(informePrep(+$('mes').value));
 $('inf').onclick = e => { const m = e.target.closest('[data-mes]'); if (m) return renderInforme(+m.dataset.mes);
   const b = e.target.closest('button[data-i]'); if (b) { ir(+b.dataset.i); scrollTo({top: 0, behavior: 'smooth'}); } };
