@@ -366,41 +366,55 @@
     off.width = off.height = Math.round(S * dpr);
     const o = off.getContext('2d');
     o.scale(dpr, dpr);
-    const form = Object.assign({}, FORMS.leafy, { thick: 1.5, trunkK: 2.25, depth: 7, lift: 1.1, spread: 0.82 });
+    const form = Object.assign({}, FORMS.leafy, { thick: 1.45 });
     const rand = rng(11);
     const base = cy + R * 0.93;
     const scale = R * 0.3;
     const tips = growTree(o, rand, cx, base, scale, form, BARK);
-    // Racimos: uno por cada punta final (las intermedias quedan como ramas que se ven entre racimos).
-    const ends = tips.filter(function (t) { return t[2] < scale * 0.5; });
-    const ys = ends.map(function (t) { return t[1]; }).sort(function (a, b) { return a - b; });
-    const yTop = ys[0], yBot = ys[ys.length - 1];
-    const clusters = ends.filter(function () { return rand() < 0.5; }).map(function (t) {
-      const up = (yBot - t[1]) / Math.max(1, yBot - yTop);          // 0 abajo, 1 arriba
-      return { x: t[0], y: t[1] - scale * 0.06, r: scale * (0.17 + rand() * 0.07 + up * 0.03), up: up };
-    });
-    // Hacia los bordes los racimos se achican: la silueta termina suave, sin discos sueltos a los costados.
-    let cx0 = Infinity, cx1 = -Infinity;
-    clusters.forEach(function (c) { cx0 = Math.min(cx0, c.x); cx1 = Math.max(cx1, c.x); });
-    const dmx = (cx0 + cx1) / 2, drx = Math.max(1, (cx1 - cx0) / 2);
-    clusters.forEach(function (c) { const u = Math.abs(c.x - dmx) / drx; c.r *= 1 - 0.4 * Math.max(0, u - 0.55) / 0.45; c.edge = u; });
-    clusters.sort(function (a, b) { return b.y - a.y; });               // de abajo hacia arriba
-    // Capas de follaje achatadas (como la copa de un flamboyán): sombra abajo, cuerpo y luz arriba,
-    // con un borde de hojitas en la parte superior para que la silueta no sea lisa.
-    const pad = function (c, dy, kx, ky, color) {
-      o.fillStyle = color;
-      o.beginPath(); o.ellipse(c.x, c.y + dy, c.r * kx, c.r * ky, 0, 0, Math.PI * 2); o.fill();
-    };
-    const kx = function (c) { return 1.25 - 0.3 * Math.max(0, (c.edge || 0) - 0.6); };
-    clusters.forEach(function (c) { pad(c, c.r * 0.12, kx(c) + 0.03, 0.6, '#3A200F'); });
-    clusters.forEach(function (c) { pad(c, 0, kx(c), 0.56, '#54301A'); });
-    clusters.forEach(function (c) {
-      for (let i = 0; i < 12; i++) {
-        const a = -Math.PI * (0.04 + 0.92 * rand());
-        const d = 0.85 + rand() * 0.2;
-        drawLeaf(o, c.x + Math.cos(a) * c.r * 1.2 * d, c.y + Math.sin(a) * c.r * 0.55 * d, c.r * (0.15 + rand() * 0.06),
-          c.up > 0.45 ? (rand() < 0.5 ? '#7E4B25' : '#6C3F1F') : '#5E3519', (rand() - 0.5) * 0.7);
+    // Copa con el mismo método que los árboles de los paisajes (hojas que nacen de cada punta, cúpula suave
+    // arriba y costados redondeados), en bronce y un poco menos densa para que se lea limpia.
+    const flowers = ['#5E3519', '#6C3F1F', '#7B4924', '#53301A'], deepLeaves = ['#3A200F', '#45260F'];
+    const leafR = function () { return scale * (0.055 + rand() * 0.06) * form.petal; };
+    const bl = [];
+    const dens = 0.75;
+    tips.forEach(function (t) {
+      const n = Math.round(form.bloom * dens * (0.6 + rand() * 0.8));
+      for (let i = 0; i < n; i++) {
+        const spread = Math.max(scale * 0.12, t[2] * 0.9);
+        bl.push([t[0] + (rand() - 0.5) * spread * 1.6, t[1] + (rand() - 0.5) * spread * 1.2 - spread * 0.2, leafR(), rand() < 0.2 ? deepLeaves[Math.floor(rand() * 2)] : flowers[Math.floor(rand() * 4)], rand() * Math.PI]);
       }
+    });
+    let minX = Infinity, maxX = -Infinity;
+    tips.forEach(function (t) { minX = Math.min(minX, t[0]); maxX = Math.max(maxX, t[0]); });
+    const domeCx = (minX + maxX) / 2, domeRx = (maxX - minX) / 2, domeH = scale * 0.6;
+    const lift = function (x) { const u = (x - domeCx) / domeRx; return domeH * Math.sqrt(Math.max(0, 1 - u * u)); };
+    tips.forEach(function (t) {
+      const room = lift(t[0]) * (0.7 + rand() * 0.3);
+      if (room < scale * 0.04) return;
+      const k = Math.min(24, Math.round(form.bloom * dens * 0.45 * room / (scale * 0.3)));
+      for (let i = 0; i < k; i++) {
+        bl.push([t[0] + (rand() - 0.5) * Math.max(scale * 0.17, t[2] * 1.3), t[1] - Math.pow(rand(), 0.85) * room, leafR(), rand() < 0.2 ? deepLeaves[0] : flowers[Math.floor(rand() * 4)], rand() * Math.PI]);
+      }
+    });
+    const sideTips = tips.filter(function (t) { return Math.abs((t[0] - domeCx) / domeRx) > 0.65; });
+    if (sideTips.length) {
+      const baseY = sideTips.reduce(function (a, t) { return a + t[1]; }, 0) / sideTips.length;
+      const shoulderCy = baseY - domeH * 0.3, shoulderRy = domeH * 0.55 + scale * 0.25;
+      const n = Math.round(tips.length * form.bloom * dens * 0.3);
+      for (let i = 0; i < n; i++) {
+        const left = rand() < 0.5, th = (rand() - 0.5) * 2.2, d = 0.78 + 0.22 * Math.sqrt(rand());
+        bl.push([domeCx + (left ? -1 : 1) * Math.cos(th) * domeRx * 1.02 * d, shoulderCy + Math.sin(th) * shoulderRy * d, leafR(), rand() < 0.25 ? deepLeaves[1] : flowers[Math.floor(rand() * 4)], rand() * Math.PI]);
+      }
+    }
+    // Las oscuras al fondo; luz de arriba: las hojas altas se aclaran apenas.
+    const deep = new Set(deepLeaves);
+    bl.sort(function (a, b) { return (deep.has(b[3]) ? 1 : 0) - (deep.has(a[3]) ? 1 : 0); });
+    let yHi = Infinity, yLo = -Infinity;
+    bl.forEach(function (b) { yHi = Math.min(yHi, b[1]); yLo = Math.max(yLo, b[1]); });
+    bl.forEach(function (b) {
+      const hi = Math.max(0, 1 - (b[1] - yHi) / Math.max(1, yLo - yHi));
+      const c = deep.has(b[3]) ? b[3] : mixHex(b[3], '#9A6234', hi * 0.35);
+      drawLeaf(o, b[0], b[1], b[2] * 1.15, c, b[4]);
     });
     // Medir y encajar: la copa entra en el ancho y la altura del sol, apoyada en la misma base.
     const px = o.getImageData(0, 0, off.width, off.height).data;
@@ -411,7 +425,7 @@
       }
     }
     bx0 /= dpr; bx1 /= dpr; by0 /= dpr;
-    const fit = Math.min(1.25, (R * 1.66) / (bx1 - bx0), (base - (cy - R * 0.8)) / (base - by0));
+    const fit = Math.min(1.25, (R * 1.62) / (bx1 - bx0), (base - (cy - R * 0.62)) / (base - by0));
     const mid = (bx0 + bx1) / 2;
     ctx.save();
     ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();   // por seguridad; con el encaje no corta nada
