@@ -24,7 +24,7 @@ try { document.documentElement.dataset.letra = localStorage.getItem('mensajero:l
   --ink:#fff;--ink2:rgba(var(--fg),.88);--ink3:rgba(var(--fg),.7);
   --glass:rgba(var(--fg),.08);--glass2:rgba(var(--fg),.13);--line:rgba(var(--fg),.16);
   --r:18px;
-  --fg:255,255,255;--bg:0,0,0;--gold-t:var(--gold);--acc-t:var(--acc);--papel:var(--h3);
+  --fg:255,255,255;--bg:0,0,0;--gold-t:var(--gold);--acc-t:var(--acc);--papel:var(--h3);--resalte:var(--acc);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -80,6 +80,14 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .bar .in{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;overflow-x:auto;padding:0 8px;scrollbar-width:none;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent);mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent)}
 .bar .in::-webkit-scrollbar{display:none}
+/* reloj: en la portada y, al bajar, fijo en la barra de atajos para tener la hora durante el programa */
+.glass-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.reloj{flex:none;font-size:calc(24px*var(--fz,1));font-weight:300;letter-spacing:.03em;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.reloj-bar{display:none;position:absolute;z-index:1;right:8px;top:50%;transform:translateY(-50%);padding:5px 11px;border-radius:999px;background:var(--gold);color:#2a1a08;font-weight:600;font-size:calc(14px*var(--fz,1));font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.bar.con-reloj .reloj-bar{display:block}
+.bar.con-reloj .in{margin-right:max(78px,calc((100% - 860px)/2))}
+.glass-top .tema{min-width:0}
+@media(max-width:560px){.glass-top .tema{letter-spacing:.12em;font-size:calc(11.5px*var(--fz,1))}.reloj{font-size:calc(21px*var(--fz,1))}}
 .bar a{flex:none;text-decoration:none;color:var(--ink3);font-size:calc(12.5px*var(--fz,1));letter-spacing:.09em;text-transform:uppercase;padding:15px 10px 13px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 .bar a:hover{color:var(--ink)}
 .bar a.on{color:var(--ink);border-bottom-color:var(--gold-t)}
@@ -142,7 +150,9 @@ dialog#hoja[open]{display:flex;flex-direction:column;overflow:hidden}
 .ficha{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:560px){.ficha{grid-template-columns:1fr}}
 .ficha .card h3{font-size:calc(12.5px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:6px}
-.ficha .big{font-size:calc(22px*var(--fz,1));font-weight:300;letter-spacing:.03em}
+.ficha .big{font-size:calc(22px*var(--fz,1));font-weight:400;letter-spacing:.03em;color:var(--resalte)}
+.ficha .card{border-top:3px solid var(--resalte)}
+.dias-res b,.dia-cab b{color:var(--resalte)}
 details.valor summary{list-style:none;cursor:pointer;font-size:calc(13px*var(--fz,1));letter-spacing:.08em;text-transform:uppercase;color:var(--acc-t);margin-top:10px}
 details.valor summary::-webkit-details-marker{display:none}
 details.valor dl{margin-top:10px;display:grid;gap:8px;font-size:calc(15px*var(--fz,1))}
@@ -342,6 +352,9 @@ details.loc .in p b{color:var(--ink)}
 .tabs button small{font-variant-numeric:tabular-nums}
 .vers-base{border-radius:16px;padding:18px;background:linear-gradient(160deg,color-mix(in srgb,var(--mid) 55%,transparent),color-mix(in srgb,var(--low) 22%,transparent));border:1px solid var(--line);display:grid;gap:8px}
 .vers-base .ref{text-align:left}
+.ref-fila{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+a.yv{flex:none;font-size:calc(11.5px*var(--fz,1));letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink2);border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:rgba(var(--fg),.05)}
+a.yv:hover{color:var(--ink);background:rgba(var(--fg),.1)}
 .vers-base .vtxt{font-size:calc(18.5px*var(--fz,1));font-style:italic;color:var(--ink)}
 .vers-base .acc{display:flex;gap:6px;flex-wrap:wrap;max-width:380px}
 .vers-base ul{list-style:none;display:grid;gap:4px;font-size:calc(15px*var(--fz,1));color:var(--ink2)}
@@ -363,7 +376,15 @@ dialog.copia textarea{min-height:260px;font-size:calc(14px*var(--fz,1));margin:1
 /* programa y biblioteca de preparación */
 .programa{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .programa select{min-height:40px;border-radius:999px;border:1px solid var(--line);background:rgba(var(--bg),.25);color:var(--ink);font:inherit;font-size:calc(14.5px*var(--fz,1));padding:0 14px;display:inline-flex;align-items:center;gap:8px}
-.programa input{accent-color:var(--gold-t);width:16px;height:16px}
+.programa input[type=checkbox]{accent-color:var(--gold-t);width:16px;height:16px}
+.pg-campo{display:grid;gap:4px;flex:1 1 120px;min-width:0}
+.pg-campo>span{font-size:calc(11.5px*var(--fz,1));letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.pg-campo.pg-nombre,.pg-campo.pg-modo{flex-basis:100%}
+.pg-campo input{min-height:42px;border-radius:12px;border:1px solid var(--line);background:rgba(var(--bg),.25);color:var(--ink);font:inherit;font-size:calc(15px*var(--fz,1));padding:0 14px;width:100%}
+.pg-campo input[type=time]{color-scheme:dark}
+:root[data-tema="claro"] .pg-campo input[type=time]{color-scheme:light}
+:root[data-tema="claro"] .reloj{color:#1f1a2b;font-weight:400}
+.pg-campo select{width:100%;border-radius:12px}
 .biblio{display:grid;gap:14px;padding:12px 16px 18px;overflow:auto}
 .biblio h4{font-size:calc(12px*var(--fz,1));letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:400;margin-bottom:6px}
 .biblio label{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;border:1px solid transparent;font-size:calc(15px*var(--fz,1));color:var(--ink2);cursor:pointer}
@@ -485,7 +506,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 
 /* ── MODO CLARO: portada con luz de mañana (diurna) y papel claro; las hojas de tema quedan oscuras ── */
 :root[data-tema="claro"]{--ink:#1f1a2b;--ink2:rgba(31,26,43,.88);--ink3:rgba(31,26,43,.7);--glass:#fff;--glass2:rgba(31,26,43,.06);--line:rgba(31,26,43,.13);
-  --fg:31,26,43;--bg:255,255,255;--gold-t:#8a6500;--acc-t:color-mix(in srgb,var(--acc) 38%,#2a1f3a);--papel:color-mix(in srgb,var(--low) 7%,#f7f5f2)}
+  --fg:31,26,43;--bg:255,255,255;--gold-t:#8a6500;--acc-t:color-mix(in srgb,var(--acc) 38%,#2a1f3a);--papel:color-mix(in srgb,var(--low) 7%,#f7f5f2);--resalte:color-mix(in srgb,var(--sw) 58%,#1f1a2b)}
 :root[data-tema="claro"] body,:root[data-tema="claro"][data-prog] body{background:var(--papel);background-image:none}
 :root[data-tema="claro"] dialog.hoja{--ink:#fff;--ink2:rgba(255,255,255,.88);--ink3:rgba(255,255,255,.7);--glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.13);
   --line:rgba(255,255,255,.16);--fg:255,255,255;--bg:0,0,0;--gold-t:var(--gold);--acc-t:var(--acc);color:var(--ink)}
@@ -505,7 +526,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"] .temas button[aria-current="true"] small{color:#6b4c00;font-weight:700}
 :root[data-tema="claro"] .hero-glass{text-shadow:0 0 10px rgba(255,255,255,.85),0 0 2px rgba(255,255,255,.6);background:rgba(255,255,255,.34);border-color:rgba(31,26,43,.1);box-shadow:0 8px 28px rgba(31,26,43,.1)}
 :root[data-tema="claro"] .hero-glass .enfoque{font-weight:350;color:#160f22}
-:root[data-tema="claro"] .hero-glass .tema{display:inline-block;font-weight:700;font-size:calc(12.5px*var(--fz,1));letter-spacing:.18em;color:#5a3f00;background:rgba(255,255,255,.72);padding:4px 10px;border-radius:999px;text-shadow:none}
+:root[data-tema="claro"] .hero-glass .tema{display:inline-block;font-weight:700;font-size:calc(12px*var(--fz,1));letter-spacing:.12em;color:#5a3f00;background:rgba(255,255,255,.72);padding:4px 10px;border-radius:999px;text-shadow:none}
 :root[data-tema="claro"] .hero-glass :is(.meta,.subs li){color:#1f1a2b}
 :root[data-tema="claro"] .dot{box-shadow:0 0 0 1px rgba(31,26,43,.25)}
 :root[data-tema="claro"] .nav button{background:rgba(255,255,255,.8);border-color:rgba(31,26,43,.14);color:var(--ink)}
@@ -550,7 +571,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   <div class="temas" id="temas" role="group" aria-label="Temas del año"></div>
   <div class="hero-body">
     <div class="hero-glass">
-      <div class="tema" id="h-tema"></div>
+      <div class="glass-top"><div class="tema" id="h-tema"></div><time class="reloj" id="reloj" title="Hora actual"></time></div>
       <h1 class="enfoque" id="h-enfoque"></h1>
       <div class="meta" id="h-meta"></div>
       <ol class="subs" id="h-subs"></ol>
@@ -564,7 +585,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   </div>
 </header>
 
-<nav class="bar" aria-label="Atajos"><div class="in">
+<nav class="bar" aria-label="Atajos"><time class="reloj-bar" id="reloj-bar" title="Hora actual"></time><div class="in">
   <a href="#s-ficha">Ficha</a><a href="#s-dias">Mi semana</a><a href="#s-prep">Preparación</a><a href="#s-reg">Informes</a><a href="#s-buscar">Buscar</a><a href="#s-utiles">Útiles</a>
 </div></nav>
 
@@ -705,7 +726,11 @@ const PRIORIDAD = ['registro','guion','reflexion','oyentes','noticias','musica',
 const FIJAS = ['registro'];
 const TAG_TXT = {diario: 'solo diarios', semanal: 'solo semanales', entrevista: 'con entrevistas (sumalas si las usás)', '2h': 'de 2 h o más', '3h': 'de 3 h'};
 const cfgPrograma = () => {
-  const c = {nombre: '', horas: 1, modo: 'vivo', franja: '', ...(get(ck('programa')) || {})};
+  const c = {nombre: '', horas: 1, modo: 'vivo', franja: '', desde: '', hasta: '', ...(get(ck('programa')) || {})};
+  if (minutos(c.desde) !== null) {   // con horario cargado, la duración y la franja se calculan solas
+    c.franja = franjaDe(c.desde);
+    if (minutos(c.hasta) !== null) c.horas = Math.max(1, Math.round(((minutos(c.hasta) - minutos(c.desde) + 1440) % 1440 || 1440) / 60));
+  }
   if (!Array.isArray(c.dias)) c.dias = c.frec === 'semanal' ? [6] : c.frec === 'diario' ? [1, 2, 3, 4, 5] : [];   // [] = todavía no eligió
   c.dias = [...new Set(c.dias)].sort();
   c.frec = c.dias.length === 1 ? 'semanal' : 'diario';   // un solo día al aire = programa semanal
@@ -714,10 +739,14 @@ const cfgPrograma = () => {
 };
 // un punto por programa: según la franja, cada programa del día desarrolla un punto distinto y la audiencia no oye lo mismo dos veces
 const FRANJAS = {manana: ['Mañana', 0], mediodia: ['Mediodía', 1], tarde: ['Tarde', 1], noche: ['Noche', 2]};
+// la franja sale de la hora de inicio: antes de las 11 mañana, de 11 a 14 mediodía, de 14 a 19 tarde, desde las 19 (o de madrugada) noche
+const minutos = t => { const m = /^(\d{1,2}):(\d{2})$/.exec(t || ''); return m ? +m[1] * 60 + +m[2] : null; };
+const franjaDe = desde => { const h = Math.floor(minutos(desde) / 60); return h < 5 ? 'noche' : h < 11 ? 'manana' : h < 14 ? 'mediodia' : h < 19 ? 'tarde' : 'noche'; };
+const horarioTxt = c => c.desde && c.hasta ? `de ${c.desde} a ${c.hasta}` : c.desde ? `desde las ${c.desde}` : '';
 const puntoFranja = () => FRANJAS[cfgPrograma().franja]?.[1] ?? null;
 const ayudaPuntos = () => { const k = puntoFranja();
   return k === null ? 'Tocá un punto para abrirlo. Con uno bien contado alcanza.'
-    : `Franja ${FRANJAS[cfgPrograma().franja][0].toLowerCase()}: tu punto es el ${k+1}. Los otros quedan para otros programas del día.`; };
+    : `Tu programa es de ${FRANJAS[cfgPrograma().franja][0].toLowerCase()}${cfgPrograma().desde ? ' (' + cfgPrograma().desde + ')' : ''}: tu punto es el ${k+1}. Los otros quedan para otros programas del día.`; };
 // modalidad: el programa tiene una por defecto (en vivo o grabado) y cada día puede cambiarla
 const modoDe = (w, i) => get(key(w, 'mod'+i)) || cfgPrograma().modo;
 const fijarModo = (w, i) => { if (!get(key(w, 'mod'+i))) set(key(w, 'mod'+i), modoDe(w, i)); };
@@ -891,7 +920,7 @@ const esClaro = () => document.documentElement.dataset.tema === 'claro';
 function pintarEscena() { const w = sem[cur], p = PAL[w.color] || PAL.Lila; $('scene').innerHTML = escena(w.tema, esClaro() ? diurna(p) : p); }
 function aplicarPaleta(p) {
   const r = document.documentElement.style;
-  for (const k of ['top','mid','low','warm','h1','h2','h3','acc']) r.setProperty('--'+k, p[k]);
+  for (const k of ['top','mid','low','warm','h1','h2','h3','acc','sw']) r.setProperty('--'+k, p[k]);
   document.querySelector('meta[name=theme-color]').content = p.top;
 }
 
@@ -1134,7 +1163,7 @@ function informeMes(m) {
   const prepTxt = cs.map(c => conProg(c.id, () => { const d = datosPrep(m); return d.ws.length ? `${varios ? c.nombre + ': ' : ''}${d.prom} % (al 100 %: ${d.completas} de ${d.ws.length})` : ''; })).filter(Boolean);
   const mes = MESES[m][0].toUpperCase() + MESES[m].slice(1), c1 = cs[0];
   return [`INFORME ${mes.toUpperCase()} ${DATA.anio} · Edificando una Cultura`,
-    varios ? `Programas: ${cs.map(c => `${c.nombre} (${resumenDias(c.dias)})`).join(' · ')}` : (c1.nombre && cfgPrograma().nombre ? `Programa: ${c1.nombre}` : ''), '',
+    varios ? `Programas: ${cs.map(c => `${c.nombre} (${resumenDias(c.dias)})`).join(' · ')}` : (c1.nombre && cfgPrograma().nombre ? `Programa: ${c1.nombre}${horarioTxt(cfgPrograma()) ? ' (' + horarioTxt(cfgPrograma()) + ')' : ''}` : ''), '',
     ...(varios ? [...cs.map(c => `${c.nombre}: ${c.aire} de ${c.total} días al aire (${c.pct}%) · ${c.ent} entrevista${c.ent === 1 ? '' : 's'}`),
         `Total: ${cs.reduce((a, c) => a + c.aire, 0)} programas al aire · ${ents.length} entrevista${ents.length === 1 ? '' : 's'}`]
       : [`Días al aire: ${c1.aire} de ${c1.total} (${c1.pct}%)`, `Entrevistas: ${ents.length}${ents.length ? ' (' + ents.join(', ') + ')' : ''}`]),
@@ -1301,9 +1330,25 @@ const fraseDia = (w, i, semanal) => { if (semanal) return w.subtemas[0].frase; c
   const st = w.subtemas[b]; return (i === 2 || i === 4) && st.frase2 ? st.frase2 : st.frase; };
 const bloqueFrase = (w, i, semanal) => { const f = fraseDia(w, i, semanal);
   return f.texto ? `<div class="frase-aire"><b>Frase para el aire</b><p>“${esc(f.texto)}”</p><cite>— ${esc(f.autor)}</cite></div>` : ''; };
+// enlace a la cita en YouVersion (bible.com), Reina Valera Contemporánea (versión 146): abre la app si está instalada, si no la web
+const LIBROS_USFM = {genesis:'GEN',exodo:'EXO',levitico:'LEV',numeros:'NUM',deuteronomio:'DEU',josue:'JOS',jueces:'JDG',rut:'RUT','1 samuel':'1SA','2 samuel':'2SA',
+  '1 reyes':'1KI','2 reyes':'2KI','1 cronicas':'1CH','2 cronicas':'2CH',esdras:'EZR',nehemias:'NEH',ester:'EST',job:'JOB',salmos:'PSA',salmo:'PSA',proverbios:'PRO',
+  eclesiastes:'ECC',cantares:'SNG',isaias:'ISA',jeremias:'JER',lamentaciones:'LAM',ezequiel:'EZK',daniel:'DAN',oseas:'HOS',joel:'JOL',amos:'AMO',abdias:'OBA',
+  jonas:'JON',miqueas:'MIC',nahum:'NAM',habacuc:'HAB',sofonias:'ZEP',hageo:'HAG',zacarias:'ZEC',malaquias:'MAL',mateo:'MAT',marcos:'MRK',lucas:'LUK',juan:'JHN',
+  hechos:'ACT',romanos:'ROM','1 corintios':'1CO','2 corintios':'2CO',galatas:'GAL',efesios:'EPH',filipenses:'PHP',colosenses:'COL','1 tesalonicenses':'1TH',
+  '2 tesalonicenses':'2TH','1 timoteo':'1TI','2 timoteo':'2TI',tito:'TIT',filemon:'PHM',hebreos:'HEB',santiago:'JAS','1 pedro':'1PE','2 pedro':'2PE',
+  '1 juan':'1JN','2 juan':'2JN','3 juan':'3JN',judas:'JUD',apocalipsis:'REV'};
+const BIBLIA = 'https://www.bible.com/es/bible/146/';
+function enlaceBiblia(ref) {
+  const m = String(ref).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().match(/^((?:\d )?[a-z ]+?)\s+(\d+)(?::([\d,\- ]+))?/);
+  const libro = m && LIBROS_USFM[m[1].trim()];
+  if (!libro) return BIBLIA + 'JHN.1.RVC';
+  const vs = (m[3] || '').replace(/\s/g, '').replace(/[,-]$/, '');
+  return `${BIBLIA}${libro}.${m[2]}${vs ? '.' + vs : ''}.RVC`;
+}
 function bloqueVersiculo(w, i, conPuntos) {
   const d = w.dias[i];
-  return `<div class="vers-base"><span class="ref">${esc(d.ref)}</span><p class="vtxt">${esc(d.texto)}</p>
+  return `<div class="vers-base"><div class="ref-fila"><span class="ref">${esc(d.ref)}</span><a class="yv" href="${enlaceBiblia(d.ref)}" target="_blank" rel="noopener" aria-label="Leer ${esc(d.ref)} en la Biblia (YouVersion)">Leer en la Biblia <span aria-hidden="true">↗</span></a></div><p class="vtxt">${esc(d.texto)}</p>
       ${conPuntos ? `<ul>${d.puntos.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
 </div>`;
 }
@@ -1551,6 +1596,11 @@ $('letra').onclick = () => { const n = ((+document.documentElement.dataset.letra
   pintarLetra(); avisar(`Tamaño de letra: ${LETRA[n]}`); };
 pintarLetra();
 pintarApariencia();
+// reloj en vivo (hora del dispositivo, 24 h)
+function tic() { const d = new Date(), t = d.toLocaleTimeString('es-PY', {hour: '2-digit', minute: '2-digit', hour12: false});
+  for (const id of ['reloj', 'reloj-bar']) if ($(id).textContent !== t) { $(id).textContent = t; $(id).dateTime = t; } }
+tic(); setInterval(tic, 1000);
+if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => document.querySelector('.bar').classList.toggle('con-reloj', !e.isIntersecting)).observe($('reloj'));
 
 /* mi programa: define qué tareas se sugieren */
 const PROGRAMAS = [...new Set(DATA.semanas.map(w => w.programa))];
@@ -1566,17 +1616,21 @@ function pintarPrograma() {
   const titulo = varios ? 'Días al aire · ' + esc(nom) : 'Mis días al aire';
   // ya configurado: una línea con «Cambiar días»; los botones de días solo aparecen al editar
   $('s-prog').innerHTML = c.listo && !editandoDias ? `<div class="form">${selector}
-    <div class="dias-res"><div><h2>${titulo}</h2><p>Tu semana: <b>${resumenDias(c.dias)}</b></p></div><button type="button" class="btn mini" data-dias-editar>Cambiar días</button></div>${pie}</div>`
+    <div class="dias-res"><div><h2>${titulo}</h2><p>Tu semana: <b>${resumenDias(c.dias)}</b>${horarioTxt(c) ? ` · <b>${horarioTxt(c)}</b>` : ''}</p></div><button type="button" class="btn mini" data-dias-editar>Cambiar días</button></div>${pie}</div>`
     : `<div class="form">${selector}
     <div><h2>${titulo}</h2><p>${c.listo ? `Tu semana muestra: <b>${resumenDias(c.dias)}</b>.` : 'Marcá los días que salís al aire y abajo aparece tu semana.'}</p></div>
     <div class="dias-chips" role="group" aria-label="Días al aire">${DIAS.map((d, i) => `<button type="button" data-dia="${i}" aria-pressed="${c.dias.includes(i)}">${d.slice(0, 3)}</button>`).join('')}</div>
     <div class="dias-chips"><button type="button" class="btn mini" data-preset="1,2,3,4,5">Lunes a viernes</button><button type="button" class="btn mini" data-preset="1,2,3,4,5,6">Lunes a sábado</button>${c.listo ? '<button type="button" class="btn mini prim" data-dias-listo>Listo</button>' : ''}</div>${pie}</div>`;
   $('sem-prog').textContent = $('prep-prog').textContent = varios ? '· ' + nom : '';
   if (varios && prog !== 'p1') document.documentElement.dataset.prog = prog; else delete document.documentElement.dataset.prog;
-  $('programa').innerHTML = `<select id="pg-nombre" aria-label="Programa"><option value="">Elegí tu programa</option>${PROGRAMAS.map(p => `<option${p === c.nombre ? ' selected' : ''}>${esc(p)}</option>`).join('')}</select>
-    <select id="pg-horas" aria-label="Duración">${[1,2,3].map(h => `<option value="${h}"${c.horas === h ? ' selected' : ''}>${h} hora${h > 1 ? 's' : ''}</option>`).join('')}</select>
-    <select id="pg-modo" aria-label="Modalidad"><option value="vivo"${c.modo === 'vivo' ? ' selected' : ''}>En vivo (grabado solo algunos días)</option><option value="grabado"${c.modo === 'grabado' ? ' selected' : ''}>Siempre grabado</option></select>
-    <select id="pg-franja" aria-label="Franja horaria"><option value="">Franja horaria (para repartir los puntos)</option>${Object.entries(FRANJAS).map(([v, [n]]) => `<option value="${v}"${c.franja === v ? ' selected' : ''}>${n}</option>`).join('')}</select>`;
+  // nombre libre (con sugerencias de los programas de la serie) y horario de inicio y fin.
+  // Los campos se dibujan al abrir o al cambiar de programa; mientras se completan no se repintan (se perdería lo que se está escribiendo)
+  if ($('programa').dataset.prog !== prog) $('programa').dataset.prog = prog, $('programa').innerHTML = `<label class="pg-campo pg-nombre"><span>Nombre del programa</span>
+      <input id="pg-nombre" list="pg-lista" value="${esc(c.nombre)}" placeholder="Escribí el nombre" autocomplete="off"></label>
+    <datalist id="pg-lista">${PROGRAMAS.map(p => `<option value="${esc(p)}">`).join('')}</datalist>
+    <label class="pg-campo"><span>Empieza</span><input id="pg-desde" type="time" value="${esc(c.desde)}"></label>
+    <label class="pg-campo"><span>Termina</span><input id="pg-hasta" type="time" value="${esc(c.hasta)}"></label>
+    <label class="pg-campo pg-modo"><span>Modalidad</span><select id="pg-modo" aria-label="Modalidad"><option value="vivo"${c.modo === 'vivo' ? ' selected' : ''}>En vivo (grabado solo algunos días)</option><option value="grabado"${c.modo === 'grabado' ? ' selected' : ''}>Siempre grabado</option></select></label>`;
   $('semana').hidden = !c.listo;
 }
 function cambiarProg(id) { prog = id; set('cfg/activo', id); diaSel = null; verTodo = false; render(); }
@@ -1592,7 +1646,7 @@ function quitarProg() {
   set('cfg/programas', progs().filter(x => x !== id)); cambiarProg('p1');
 }
 function guardarPrograma(dias) {
-  const c = {nombre: $('pg-nombre').value, horas: +$('pg-horas').value, modo: $('pg-modo').value, franja: $('pg-franja').value, dias: dias || cfgPrograma().dias};
+  const c = {nombre: $('pg-nombre').value.trim(), desde: $('pg-desde').value, hasta: $('pg-hasta').value, modo: $('pg-modo').value, dias: dias || cfgPrograma().dias};
   if (dias) { const hoy = new Date(); hoy.setHours(0,0,0,0); const h = (get(ck('historial')) || []).filter(x => x.desde < +hoy);
     if (!h.length) h.push({desde: 0, dias: [...dias].sort()}); else h.push({desde: +hoy, dias: [...dias].sort()});
     set(ck('historial'), h); }

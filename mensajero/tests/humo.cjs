@@ -65,8 +65,12 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
 
   // franja horaria → un punto por programa
   await p.evaluate(() => document.getElementById('s-prep').open = true);
-  await p.selectOption('#pg-franja', 'noche'); await p.waitForTimeout(150);
-  ok(await p.$eval('#dias details.punto[open] summary span', e => e.textContent) === '3', 'franja noche: se abre el punto 3');
+  await p.fill('#pg-nombre', 'Mi programa nuevo'); await p.$eval('#pg-nombre', e => e.dispatchEvent(new Event('change', {bubbles: true})));
+  await p.fill('#pg-desde', '20:00'); await p.fill('#pg-hasta', '22:00'); await p.$eval('#pg-hasta', e => e.dispatchEvent(new Event('change', {bubbles: true}))); await p.click('#s-prep summary'); await p.click('#s-prep summary'); await p.waitForTimeout(150);
+  ok(await p.$eval('#dias details.punto[open] summary span', e => e.textContent) === '3', 'horario de 20:00 a 22:00: franja noche, se abre el punto 3');
+  ok((await p.textContent('#s-prog')).includes('de 20:00 a 22:00') && await p.inputValue('#pg-nombre') === 'Mi programa nuevo', 'nombre libre del programa y horario a la vista');
+  ok(await p.getAttribute('#dias a.yv', 'href') === 'https://www.bible.com/es/bible/146/PRO.12.10.RVC', 'versículo con enlace a YouVersion (RVC)');
+  ok(/^\d{2}:\d{2}$/.test(await p.textContent('#reloj')), 'reloj en la portada');
   await p.click('#dias [data-copiar="dia"]'); await p.waitForTimeout(80);
   let t = await texto(p);
   ok(/3\. .*← TU PUNTO DE HOY/.test(t), 'guion copiado marca «TU PUNTO DE HOY»');
