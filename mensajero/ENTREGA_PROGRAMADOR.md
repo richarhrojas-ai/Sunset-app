@@ -1,12 +1,21 @@
 # Edificando una Cultura 2027 · Entrega al programador
 
-**Mensajero 100.9 FM** · preparado el 20 de octubre de 2026 · dudas de contenido: Richarh Rojas
+**Mensajero 100.9 FM** · versión final del 24 de noviembre de 2026 · dudas de contenido: Richarh Rojas
 
 > **La receta.** Nosotros hicimos la masa y la mezcla: el contenido de todo 2027, revisado, y un prototipo que ya funciona con ese contenido. El programador lo cocina: lo lleva a producción (archivos separados, servidor, sincronización, claves). Al salir del horno tiene que tener **el mismo sabor** (el contenido y las reglas de este documento, sin cambios) y **la misma terminación** (el diseño y el comportamiento del prototipo). Si algo de la receta no se puede hacer, se consulta antes de cambiarlo.
 
 - **Prototipo funcionando:** https://claude.ai/artifact/QqQ5Epdkk8f2r4Y3TPn9ps (es la referencia visual y de comportamiento)
+- **Panel de coordinación (prototipo):** https://claude.ai/artifact/JoCey1eKo54tBkW8244yDh, archivo `public/coordinacion.html` (§10 ter)
 - **Repositorio:** `richarhrojas-ai/sunset-app`, rama `claude/mensajero-tema-macro`, carpeta `mensajero/`
-- **Prueba automática:** `node mensajero/tests/humo.cjs` (63 controles; hoy pasan todos)
+- **Prueba automática:** `node mensajero/tests/humo.cjs` (89 controles; hoy pasan todos)
+
+
+**Para empezar (10 minutos):**
+1. Abrir el prototipo en el celular y en la computadora, y recorrerlo: es la referencia de cómo tiene que quedar.
+2. Leer §5 (la app, de arriba abajo), §6 (reglas), §7 (datos del usuario), §8 y §9 (arquitectura y tareas de producción).
+3. Correr la prueba: `cd mensajero && node tests/humo.cjs` (necesita Playwright con Chromium). Tiene que decir «Todo en orden».
+4. Para cambiar contenido: se edita la planilla y se corre `python3 tools/build_data.py content/planillas/Mensajero_TemasMacro_2027.xlsx` (§4); nunca se edita el JSON a mano.
+5. Lo que todavía depende de la radio está en §11 (sobre todo: una clave para todos o una por locutor).
 
 ---
 
@@ -15,7 +24,7 @@
 Una app web instalable (PWA), para celular y computadora, que usan los locutores y la coordinación de Mensajero para **preparar, salir al aire y registrar** la serie *Edificando una Cultura* durante 2027.
 
 - **Locutores:** ven la semana, el guion de su día, lo adaptan a su estilo, marcan «Al aire», cuentan mensajes de oyentes y completan su preparación.
-- **Coordinación:** ve registros e informes; abre semanas cerradas con su clave.
+- **Coordinación (director de programación):** junta los datos de todos los locutores en el panel de coordinación (días al aire, mensajes, entrevistas, reemplazos, preparación) y abre semanas cerradas con su clave.
 - **Audiencia (indirecta):** recibe el contenido al aire, los flyers en redes y los números útiles.
 
 El guion **es una base, no un libreto**: el locutor mantiene el versículo tal cual (RVC), la idea central y la fuente del dato; el resto lo adapta.
@@ -24,16 +33,19 @@ El guion **es una base, no un libreto**: el locutor mantiene el versículo tal c
 
 | Ingrediente | Cantidad | Estado |
 |---|---|---|
-| Semanas con tema, enfoque, 3 subtemas, valor, programa, historia | 52 | listo |
-| Versículos (RVC) con 3 puntos | 364 (domingo a sábado) | listo; 12 cambios sugeridos esperan decisión (§11) |
-| Guiones de lunes a sábado (título, dato con fuente, 3 puntos con desarrollo, problemática y práctica; sábado = repaso) | 312 | listo, con revisión teológica y datos verificados |
+| Semanas con tema, enfoque, 3 subtemas, valor, programa, historia | 53 (la 1 tiene solo el 1 y el 2 de enero) | listo |
+| Versículos (RVC) con 3 puntos | 366 (del 1 de enero de 2027 al 1 de enero de 2028) | listo, cotejados; fechas especiales con versículo propio |
+| Guiones de lunes a sábado (título, dato con fuente, 3 puntos con desarrollo, problemática y práctica; sábado = repaso) | 314 | listo, con revisión teológica y datos verificados |
 | Frases célebres verificadas | 260 (3 por semana + una segunda para los subtemas 1 y 2) | listo |
-| Frases deportivas (originales, sin autor) | 364 | listo |
+| Frases deportivas (originales, sin autor) | 366 | listo |
 | Historia bíblica y marcos (por tema y ronda) | 52 | listo |
 | Guía de los 5 valores | 5 | listo |
-| Hoja «Mensajero» (información institucional) | 29 ítems | **incompleta**: 17 por completar (§11) |
-| Números útiles para la audiencia | 6 | listo, a reconfirmar cada tanto |
+| Hoja «Mensajero» (información institucional) | datos para la audiencia completos | contactos por área y organigrama quedan sin cargar (§11) |
+| Números útiles para la audiencia | 6 nacionales + 8 de salud en la zona | listo, a reconfirmar cada tanto |
+| Historias de Mensajero (libro de Samuel Sosa, 2011) | 24 aprobadas | listo |
+| Biblioteca de preparación | 18 tareas | listo |
 | Prototipo (un solo `index.html`) | 1 | funciona al 100% según la prueba de humo |
+| Panel de coordinación (`coordinacion.html`) | 1 | prototipo con archivos CSV; en producción, conectado al servidor |
 
 Criterios con los que se escribió y revisó todo: `content/criterios_teologicos.md` (contexto bíblico, sin teología de la prosperidad, sin retribución, fe y salud mental, temas sensibles derivados a un profesional, sin posturas que dividan iglesias, falacias, datos con fuente, estilo).
 
@@ -94,7 +106,7 @@ Los scripts son idempotentes: se pueden correr de nuevo sin duplicar cambios. Re
 - **Semana activa vs. otra semana:** el dorado significa siempre «semana activa» (la de hoy; antes de que empiece el año, la primera; al terminar, la última). En la activa, la tarjeta del tema lleva borde dorado, sus fechas van resaltadas en dorado y el ícono de su tema va en dorado. En otra semana, la tarjeta queda con su borde simple y las fechas sin resaltar; el ícono del tema que se está viendo lleva un aro blanco simple y el botón «Esta semana» aparece (solo en ese caso; en la semana activa no se muestra) para volver.
 - **Mi programa (en «Mis días al aire»), un solo paso:** nombre del locutor, nombre del programa (libre, con sugerencias de los programas de la serie), hora de inicio y hora de fin, modalidad (En vivo o Grabado) y días al aire. Sin esos datos la semana no se muestra y el aviso dice qué falta; con «Listo» queda una línea de resumen («Juan Pérez · lunes a viernes · de 07:20 a 08:30 · En vivo») con «Editar». Al agregar otro programa («+ Agregar programa», hasta 3) se piden los mismos datos (el nombre del locutor ya está); arriba aparecen pestañas con el nombre de cada programa para cambiar entre ellos, cada uno con sus días, horario, marcas y preparación, y los informes del mes los suman con el detalle de cada uno. La explicación de la modalidad (qué hacer si un día sale distinto) está en «Para el locutor» → «A tu estilo». La duración y la franja se calculan del horario; el nombre del locutor firma los flyers.
 - **Siete íconos de temas**, en una sola franja de vidrio con el nombre corto debajo (sin cortes con guion; el tema de la semana en dorado). Al tocar uno se abre la hoja del tema: arriba su escena con la paleta de su color (de día o de noche según la apariencia), el nombre y cuántas semanas tiene; abajo cada semana con su número en un círculo del color, las fechas, el título y los tres subtemas (activa resaltada, próxima marcada, pasadas atenuadas). En modo claro la hoja es clara.
-- Tarjeta con tema, enfoque, color, número de semana y los tres subtemas; flechas y «Esta semana».
+- Tarjeta con tema, enfoque, color, número de semana y los tres subtemas; debajo, flechas, «Calendario» y, solo cuando se está viendo otra semana, «Esta semana» para volver.
 
 ### Barra de atajos (fija)
 Mi semana · Preparación · Informes · Historia bíblica · Útiles. Al tocar uno, la sección se abre sola. Además, al pie de la tarjeta del día hay **accesos rápidos**: Historia bíblica, Preparación, Informes, Calendario, Números útiles, Buscar y «Grilla de programación ↗» (abre la grilla pública de la radio).
@@ -102,10 +114,10 @@ Mi semana · Preparación · Informes · Historia bíblica · Útiles. Al tocar 
 ### Ficha de la semana
 «Apoyamos al programa» (programa y locutor) y «Valor de Mensajero» con su guía interna plegable.
 
-### Mis días al aire y varios programas
-Una vez elegidos, la sección queda en una línea («Tu semana: lunes a viernes» y el botón «Cambiar días»); los botones de días aparecen solo al editar.
-- El locutor marca sus días (lunes a viernes, lunes a sábado o los que elija). Un solo día = programa semanal: la tarjeta muestra introducción y resumen en un guion.
-- Hasta **3 programas** por locutor, cada uno con su color y sus propias marcas. Los cambios de días quedan en un historial con fecha, así los días pasados no cambian.
+### Mi programa (en «Mis días al aire») y varios programas
+- **Un solo paso:** nombre del locutor, nombre del programa, hora de inicio y de fin, modalidad y días al aire (ver §5, Portada). Sin esos datos la semana no se muestra. Ya completo, queda una línea de resumen con «Editar».
+- Un solo día al aire = programa semanal: la tarjeta muestra introducción y resumen en un guion.
+- Hasta **3 programas** por locutor, con pestañas para cambiar entre ellos; cada uno con sus marcas. En la tarjeta del día, si ese día hay otro programa, «Este día también: … ›» pasa a él sin subir. Los cambios de días quedan en un historial con fecha, así los días pasados no cambian.
 
 ### Mi semana: la tarjeta del día
 Pestañas por día (día y fecha, por ejemplo «MIÉ · 3-Mar»). Cada tarjeta, en este orden:
@@ -138,11 +150,11 @@ Tipografía Jost (peso 400 para el texto; letra mínima de 10,5 px y la mayoría
 
 ## 6. Reglas de negocio
 
-- **Semanas** de domingo a sábado; la 1 empieza el **3 de enero de 2027**. «Esta semana» contiene la fecha de hoy; antes del 3 de enero se abre la semana 1.
+- **Semanas** de domingo a sábado, numeradas como el calendario impreso: la **1** tiene solo el viernes 1 y el sábado 2 de enero de 2027 (azul, Finanzas) y la **2** empieza el domingo 3 (§10 bis). La semana activa contiene la fecha de hoy; antes del 1 de enero es la semana 1.
 - **Color y tema** salen de la planilla; no se calculan.
 - **Plazo de marcación:** la semana N se marca durante esa semana y la siguiente; al empezar la N+2 queda **cerrada**. Coordinación la abre con su clave y cada apertura queda registrada con fecha (`AAAA/wN/correccion`). Con la semana cerrada, ninguna marca, nota ni mensaje se puede cambiar.
   - **Decisión del programador:** la radio deja en manos del programador si el cierre de semana con clave se mantiene, se ajusta o se quita, según cómo resuelva usuarios y sincronización (§11).
-- **Modalidad:** cada programa tiene una por defecto (En vivo / Siempre grabado) y cada día puede cambiarla. Al marcar «Al aire» o un mensaje, la modalidad de ese día queda fija aunque después cambie la del programa.
+- **Modalidad:** cada programa tiene una por defecto (En vivo / Grabado) y cada día puede cambiarla. Al marcar «Al aire» o un mensaje, la modalidad de ese día queda fija aunque después cambie la del programa.
 - **Registro mensual:** un día al aire cuenta en el mes de su fecha. Muestra días al aire sobre días del mes, en vivo y grabados, entrevistas y mensajes por canal (solo si hubo). Los informes copiados terminan con «MENSAJES DE OYENTES».
 - **Preparación:** la lista que regía al marcar una semana se guarda con la semana (`prepLista`), así cambiar la lista no altera semanas pasadas. Las tareas de «Contenido» y los reemplazos son del locutor (sin prefijo de programa).
 - **Un punto por programa** según la franja (ver §5).
@@ -216,7 +228,7 @@ mensajero/
 
 ## 10. Lista de aceptación (lo que tiene que salir del horno)
 
-La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 63 controles** apuntando a la nueva app, y además:
+La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 89 controles** apuntando a la nueva app, y además:
 
 - Mismo aspecto que el prototipo en celular (oscuro) y computadora (clara), en las 7 escenas.
 - Un locutor marca en el celular y lo ve en la computadora (sincronización), y viceversa, sin perder marcas cuando las dos editan (gana la más reciente por clave).
@@ -271,6 +283,7 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 63 
 | Archivo | Para qué |
 |---|---|
 | `public/index.html` | Prototipo completo (contenido incrustado) |
+| `public/coordinacion.html` | Panel de coordinación del director (prototipo con CSV; §10 ter) |
 | `public/sw.js`, `public/manifest.webmanifest`, `public/images/` | PWA e imágenes |
 | `content/planillas/Mensajero_TemasMacro_2027.xlsx` | Fuente de verdad del contenido |
 | `content/criterios_teologicos.md` | Criterios de escritura y revisión |
@@ -279,6 +292,10 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 63 
 | `content/frases_deportivas_2027.txt`, `Frases_deportivas_2027.docx` | Frases deportivas (fuente y versión para revisar) |
 | `content/estilo_guiones_2027.json` | Pasada de estilo |
 | `tools/` | Scripts del flujo de contenido (§4) |
+| `content/semana_01_2027.json` | Semana 1 (1 y 2 de enero) |
+| `content/historias_mensajero_2027.json`, `Historias_de_Mensajero.docx` | Historias de Mensajero |
+| `content/Versiculos_flyers_2027.xlsx` | Planilla de versículos para los diseñadores de flyers |
+| `content/Biblioteca_preparacion_2027.docx`, `Analisis_uso_diario_2027.docx`, `Frases_celebres_2027.docx` | Revisiones hechas con Richarh |
 | `tests/humo.cjs` | Prueba de humo |
 | `IDEA.md` | Por qué se tomó cada decisión de diseño y de contenido |
 
@@ -287,4 +304,5 @@ La versión de producción se acepta cuando **`node tests/humo.cjs` pasa los 63 
 - 44 líneas de CSS de pantallas anteriores que ya no se usaban (versículos en lista, subtemas en tarjetas, botones viejos) y tres variables sin uso.
 - Se quitaron del repositorio las capturas de prueba y el encargo técnico anterior (lo reemplaza este documento).
 - Escena de Producción y hoja de su tema: arreglado el problema de la tilde que mostraba la escena de Salud y 0 semanas.
-- Tamaño del prototipo: 928 KB, de los cuales 730 KB son el contenido del año, 92 KB la lógica, 38 KB el diseño y 60 KB los dos logos incrustados. En producción el contenido y los logos salen del HTML.
+- Tamaño del prototipo: unos 980 KB, de los cuales 726 KB son el contenido del año y 60 KB los dos logos incrustados; el resto es lógica y diseño. En producción el contenido y los logos salen del HTML.
+- Noviembre 2026: análisis de uso diario y simulación de un año con dos programas; se unieron secciones (de 8 a 6), se quitaron registros sin uso («Días con notas», notas de producción, la migración de la semana 1) y se corrigió el conteo de días del mes en curso.
