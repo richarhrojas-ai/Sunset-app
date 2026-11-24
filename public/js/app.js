@@ -385,21 +385,28 @@
       const li = el('li');
       li.appendChild(el('span', 'sat-q', q));
       const key = k(YY, w, 'sab' + i);
-      const field = function () {
-        const f = noteField(key, 'Tu respuesta…', 1);
+      // La respuesta queda oculta: al lado de la pregunta, «Responder» o «Ver respuesta»; al abrirla, «Ocultar».
+      // Así la pantalla se puede mostrar o compartir sin dejar a la vista lo que uno escribió.
+      const has = () => !!String(getV(key, '')).trim();
+      const btn = el('button', 'sat-open');
+      btn.type = 'button';
+      let f = null;
+      const label = () => { btn.textContent = f ? 'Ocultar' : has() ? 'Ver respuesta' : 'Responder'; btn.setAttribute('aria-expanded', String(!!f)); };
+      btn.setAttribute('aria-label', q);
+      btn.addEventListener('click', function () {
+        if (f) { f.blur(); f.remove(); f = null; label(); return; }
+        f = noteField(key, 'Tu respuesta…', 1);
         f.classList.add('sat-a');
         f.setAttribute('aria-label', 'Respuesta: ' + q);
-        return f;
-      };
-      // Sin respuesta, solo un «Responder» discreto: la pregunta se lee limpia (y entra en una captura).
-      if (String(getV(key, '')).trim() || keyLocked(key)) li.appendChild(field());
-      else {
-        const open = el('button', 'sat-open', 'Responder');
-        open.type = 'button';
-        open.setAttribute('aria-label', 'Responder: ' + q);
-        open.addEventListener('click', function () { const f = field(); open.replaceWith(f); f.focus(); });
-        li.appendChild(open);
-      }
+        li.appendChild(f);
+        const fit = () => { f.style.height = 'auto'; f.style.height = f.scrollHeight + 'px'; };   // crece con el texto
+        f.addEventListener('input', fit);
+        fit();
+        label();
+        if (!f.readOnly) f.focus();
+      });
+      label();
+      li.appendChild(btn);
       ol.appendChild(li);
     });
     return ol;

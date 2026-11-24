@@ -89,7 +89,12 @@ test('sábado: las tres preguntas de reflexión se responden en Hoy y en la sema
   await p.locator('#hoyView .sat-list li textarea').first().fill('Pagué un café sin decir nada');
   await p.locator('#hoyView .sat-list li textarea').first().blur();
   await p.waitForTimeout(300);
+  await p.locator('#hoyView .sat-list li .sat-open').first().click();
+  assert.equal(await p.locator('#hoyView .sat-list li textarea').count(), 0, '«Ocultar» esconde la respuesta');
+  assert.equal(await p.locator('#hoyView .sat-list li .sat-open').first().textContent(), 'Ver respuesta');
   await goView(p, 'semana');
+  assert.equal(await p.locator('#days .card.day-6 .sat-list textarea').count(), 0, 'en la semana también empieza oculta');
+  await p.locator('#days .card.day-6 .sat-list .sat-open').first().click();
   assert.equal(await p.locator('#days .card.day-6 .sat-list textarea').first().inputValue(), 'Pagué un café sin decir nada');
   await p.click('#searchBtn'); await p.fill('#searchInput', 'café sin decir'); await p.waitForTimeout(300);
   assert.equal(await p.locator('.result').count(), 1, 'el buscador la encuentra');

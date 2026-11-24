@@ -751,8 +751,9 @@ h2.dq-label{margin-top:0;}
 /* Preguntas de reflexión del sábado con su respuesta */
 .sat-q{display:inline;}
 .sat-list .sat-a{display:block;}
-.sat-list .sat-a{margin-top:6px;min-height:38px;font-size:14px;}
+.sat-list .sat-a{margin-top:6px;min-height:0;padding:4px 10px;border:0;border-left:2px solid var(--wk);border-radius:0;background:transparent;font-size:14px;font-style:italic;color:var(--txt2);resize:none;overflow:hidden;}
+.sat-list .sat-a:focus{outline:none;border-left-color:var(--gold-ink);box-shadow:none;}
 .days .card .sat-list li .sat-a{font-size:14px;}
-.sat-open{display:inline;margin-left:8px;padding:0;background:none;border:0;border-bottom:1px solid var(--line2);font:inherit;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);cursor:pointer;}
+.sat-open{display:inline;margin-left:8px;padding:0;background:none;border:0;border-bottom:1px solid var(--line2);font:inherit;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);cursor:pointer;}
 .sat-open:hover{color:var(--ink);border-bottom-color:var(--wk);}
 .sat-open:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
