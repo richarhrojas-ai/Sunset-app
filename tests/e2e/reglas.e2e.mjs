@@ -82,12 +82,26 @@ test('sábado: lo pendiente de a una (con avance, teclas y «Anterior») y el ci
   assert.deepEqual(p.errors, []);
 });
 
+test('sábado: las tres preguntas de reflexión se responden en Hoy y en la semana', async () => {
+  const p = await openApp(env, { date: SAB });
+  assert.equal(await p.locator('#hoyView .sat-list li .sat-open').count(), 3, 'un «Responder» discreto por pregunta');
+  await p.locator('#hoyView .sat-list li .sat-open').first().click();
+  await p.locator('#hoyView .sat-list li textarea').first().fill('Pagué un café sin decir nada');
+  await p.locator('#hoyView .sat-list li textarea').first().blur();
+  await p.waitForTimeout(300);
+  await goView(p, 'semana');
+  assert.equal(await p.locator('#days .card.day-6 .sat-list textarea').first().inputValue(), 'Pagué un café sin decir nada');
+  await p.click('#searchBtn'); await p.fill('#searchInput', 'café sin decir'); await p.waitForTimeout(300);
+  assert.equal(await p.locator('.result').count(), 1, 'el buscador la encuentra');
+  assert.deepEqual(p.errors, []);
+});
+
 test('tendencia: cómo se movió la palabra desde la última vez que se evaluó', async () => {
   // Entorno se evalúa en las semanas internas 2 y 37 (visibles 3 y 38). Sábado de la 38.
   const ctx = await env.browser.newContext({ viewport: { width: 1180, height: 900 } });
   const p = await ctx.newPage();
   await p.addInitScript(() => {
-    const t = Date.now();
+    const t = Date.UTC(2027, 8, 18);   // fecha fija: más nueva que lo que otras pruebas dejaron en el servidor
     localStorage.setItem('sunset_v2', JSON.stringify({ entries: { '2027/w2/a/Entorno': { v: [3, 3, 3], t }, '2027/w37/a/Entorno': { v: [4, 4, 4], t } }, welcomed: true }));
   });
   await p.clock.install({ time: new Date('2027-09-18T10:00:00') });

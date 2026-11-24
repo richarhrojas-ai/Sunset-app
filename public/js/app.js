@@ -378,6 +378,33 @@
     return tab;
   }
 
+  // Las tres preguntas de reflexión del sábado, cada una con su respuesta corta (claves AAAA/wN/sab0..sab2).
+  function satList(YY, w, qs) {
+    const ol = el('ol', 'sat-list');
+    (qs || []).forEach(function (q, i) {
+      const li = el('li');
+      li.appendChild(el('span', 'sat-q', q));
+      const key = k(YY, w, 'sab' + i);
+      const field = function () {
+        const f = noteField(key, 'Tu respuesta…', 1);
+        f.classList.add('sat-a');
+        f.setAttribute('aria-label', 'Respuesta: ' + q);
+        return f;
+      };
+      // Sin respuesta, solo un «Responder» discreto: la pregunta se lee limpia (y entra en una captura).
+      if (String(getV(key, '')).trim() || keyLocked(key)) li.appendChild(field());
+      else {
+        const open = el('button', 'sat-open', 'Responder');
+        open.type = 'button';
+        open.setAttribute('aria-label', 'Responder: ' + q);
+        open.addEventListener('click', function () { const f = field(); open.replaceWith(f); f.focus(); });
+        li.appendChild(open);
+      }
+      ol.appendChild(li);
+    });
+    return ol;
+  }
+
   // Frase con firma: el guion «—» toma el color de la semana, sutil.
   function phraseInto(node, text) {
     node.textContent = '';
@@ -649,9 +676,7 @@
       card.classList.toggle('is-today', todayIndex() === d.day);
       card.appendChild(dayHead(d.day, d.label, d.icon));
       if (d.key === 'sabado') {
-        const ol = el('ol', 'sat-list');
-        (d.intro ? d.intro.preguntas : wk.sabado).forEach((q) => ol.appendChild(el('li', null, q)));
-        card.appendChild(ol);
+        card.appendChild(satList(Y, viewing, d.intro ? d.intro.preguntas : wk.sabado));
       } else {
         card.appendChild(phraseInto(el('p', 'card-text'), d.intro ? d.intro.texto : wk[d.key]));
       }
@@ -1251,6 +1276,7 @@
     let m;
     if ((m = rest.match(/^d(\d)$/))) return WEEKDAYS[Number(m[1])] + ' · Registro';
     if ((m = rest.match(/^g(\d)$/))) return WEEKDAYS[Number(m[1])] + ' · Gratitud';
+    if ((m = rest.match(/^sab(\d)$/))) return 'Sábado · reflexión ' + (Number(m[1]) + 1);
     if ((m = rest.match(/^c\/(.+)$/))) return 'Lo que me llevo de ' + wordName(m[1]);
     if (rest === 'funciono') return 'Cierre · Qué funcionó';
     if (rest === 'intencion') return 'Intención para la semana siguiente';
@@ -1458,6 +1484,10 @@
       const i = String(getV(k(YY, w, 'intencion'), '')).trim();
       if (f) notes.push({ label: 'Qué funcionó y qué mejorar', text: f });
       if (i) notes.push({ label: 'Intención para la semana siguiente', text: i });
+      (wk.sabado || []).forEach(function (q, i) {
+        const r = String(getV(k(YY, w, 'sab' + i), '')).trim();
+        if (r) notes.push({ label: q, text: r });
+      });
       const nt = String(getV(k(YY, w, 'nota'), '')).trim();
       if (nt) notes.push({ label: 'Nota posterior', text: nt });
       if (!lines.length && !notes.length) return;
@@ -2126,9 +2156,7 @@
     if (mode === 'domingo') phrase.appendChild(el('p', 'hoy-week-name', weekAt(Y, viewing).title || ''));
     if (mode !== 'sabado') phrase.appendChild(phraseInto(el('p'), ph.text));
     else {
-      const ol = el('ol', 'sat-list');
-      (weekAt(Y, viewing).sabado || []).forEach((q) => ol.appendChild(el('li', null, q)));
-      phrase.appendChild(ol);
+      phrase.appendChild(satList(Y, viewing, weekAt(Y, viewing).sabado || []));
     }
     box.appendChild(phrase);
     // El domingo se lee la historia de la semana, a la vista: es el vistazo general antes de empezar.

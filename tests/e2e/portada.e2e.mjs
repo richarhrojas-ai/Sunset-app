@@ -31,8 +31,8 @@ for (const width of [430, 1180]) {
 
 test('celular: el sábado se ven las 3 preguntas en la primera pantalla', async () => {
   const p = await openApp(env, { date: '2027-01-16T10:00:00', width: 430, height: 830 });
-  const ph = await box(p, '#hoyView .hoy-phrase');
-  assert.ok(ph.bottom <= 830, 'termina en ' + ph.bottom + ' px');
+  const last = await box(p, '#hoyView .sat-list li:last-child');
+  assert.ok(last.bottom <= 830, 'la tercera termina en ' + last.bottom + ' px');
 });
 
 test('celular: al tocar un ícono, el rótulo no aplasta la fila de íconos', async () => {
