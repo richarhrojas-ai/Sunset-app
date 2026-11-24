@@ -767,3 +767,8 @@ h2.dq-label{margin-top:0;}
 :root[data-theme="day"] .dim-name{color:var(--ink);text-shadow:0 0 4px rgba(255,255,255,.95),0 0 8px rgba(255,255,255,.7);}
 :root[data-theme="day"][data-sky="dark"] .dim-name{color:rgba(255,255,255,.88);text-shadow:0 1px 3px rgba(0,0,0,.75);}
 @media (max-width:520px){.dim{gap:4px;padding:10px 2px 8px;}.dim-name{font-size:9px;letter-spacing:0;}}
+/* Firma al final de la página: logo mediano, Sunset y Soluciones Prácticas, centrados */
+.foot-brand{display:flex;flex-direction:column;align-items:center;gap:2px;padding:36px 16px 44px;text-align:center;}
+.foot-logo{width:96px;height:96px;display:block;margin-bottom:6px;}
+.foot-word{font-family:'Nunito',var(--sans);font-size:24px;font-weight:800;letter-spacing:.3px;line-height:1.1;color:var(--ink);}
+.foot-slogan{font-size:10.5px;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--txt2);margin-top:4px;}
