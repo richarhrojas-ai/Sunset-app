@@ -29,6 +29,8 @@ button{font-family:inherit;color:inherit;}
 /* ── MARCO: degradé crepuscular de punta a punta ── */
 .frame{position:relative;max-width:1180px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;
   background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg-mid) 30%,var(--bg-low) 62%,color-mix(in srgb,var(--bg-low) 42%,var(--bg-warm)) 84%,var(--bg-warm) 100%);}
+/* De noche, el final de la página vuelve al tono de arriba (sin el ámbar del atardecer, que en algunos colores se veía mostaza). */
+:root:not([data-theme="day"]) .frame{background:linear-gradient(180deg,var(--bg-top) 0%,var(--bg-mid) 30%,var(--bg-low) 62%,var(--bg-mid) 84%,var(--bg-top) 100%);}
 @media (min-width:1181px){.frame{box-shadow:0 0 80px rgba(0,0,0,.45);}}
 
 /* ── PAISAJE ── */
