@@ -111,7 +111,7 @@ Pestañas por día. Cada tarjeta, en este orden:
 4. **Tres puntos plegables** (número y título a la vista; adentro desarrollo, problemática y «En la práctica»). Según la **franja horaria** del programa (sale de su hora de inicio) se abre el punto que le toca: mañana → 1, mediodía y tarde → 2, noche → 3, marcado «Tu punto de hoy». Sin franja se abre el 1. Así la audiencia que escucha varios programas no oye lo mismo dos veces.
 5. **Frase para el aire** (frase célebre con su autor, distinta cada día: lunes y miércoles la primera del subtema, martes y jueves la segunda —columnas «Frase Celebre 1b» y «2b»—, viernes la del subtema 3; domingo y sábado no llevan, salvo el programa de un solo día) y **frase deportiva** del día (al final del contenido; el domingo, después de la historia ilustrativa).
 6. **«Hacelo a tu estilo»:** idea central del día, dos técnicas que rotan sobre 15 y cómo hacerlo con poco tiempo.
-7. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color, el agradecimiento «¡Gracias por acompañarnos!» para la audiencia que escribió, y estilo **Noche** o **Día**; arranca como la apariencia de la app), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, y la nota del día). **Copiar para IA** (todo lo de la semana para generar un guion con IA) ya no está en la tarjeta del día: está en «Historia bíblica y marcos», porque se usa una vez por semana.
+7. Botones **Flyer** (imagen 1080×1350 del versículo con la escena y el color, el agradecimiento «¡Gracias por acompañarnos!» para la audiencia que escribió, la **firma del locutor** abajo a la derecha después de la fecha —su nombre, que escribe una vez en la hoja del flyer—, y estilo **Noche** o **Día**; arranca como la apariencia de la app; sin «100.9 FM» en la marca, porque la audiencia también está en las redes), **Copiar guion** (texto plano completo, con «← TU PUNTO DE HOY», la frase deportiva al final, y la nota del día). **Copiar para IA** (todo lo de la semana para generar un guion con IA) ya no está en la tarjeta del día: está en «Historia bíblica y marcos», porque se usa una vez por semana.
 8. **Mensajes de oyentes** (solo días en vivo): un cuadro con los logos de SMS, WhatsApp, YouTube, Instagram y Facebook. Cada toque suma 1 y, si el día no estaba marcado, lo marca «Al aire» solo (si hubo mensajes, salió al aire); «Restar» y luego el logo resta 1 y se apaga solo; el número se puede escribir; arriba, el total.
 
 Domingo: introducción de la semana, versículo con sus 3 puntos, historia ilustrativa y frase deportiva. Sábado: repaso (dato, idea de cada subtema, acción de la semana), versículo, frase deportiva.
@@ -166,6 +166,7 @@ Prefijos: semana `2027/wN/`; programa 2 y 3 agregan `p2/` o `p3/` (el programa 1
 | `cfg/[pX/]historial` | `[{desde, dias}]` | Cambios de días al aire |
 | `cfg/[pX/]prep` · `cfg/[pX/]prepManual` | ids · bool | Lista de tareas elegida |
 | `cfg/programas` · `cfg/activo` | ids · id | Programas del locutor y el activo |
+| `cfg/firma` | texto | Nombre del locutor para firmar los flyers (del locutor, no de un programa) |
 
 Fuera de `entries` y solo del dispositivo: `localStorage["mensajero:apariencia"]` (`auto` \| `oscuro` \| `claro`).
 

@@ -203,6 +203,7 @@ details.valor dd{color:var(--ink2)}
 .modo button.vivo[aria-pressed="true"]{background:#ff6b6b;color:#2b0a0a}
 .flyer-cab{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .flyer-modo button[aria-pressed="true"]{background:var(--gold);color:#2a1a08}
+.flyer-firma{margin-top:12px}
 .msgs{flex-basis:100%;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:rgba(var(--bg),.14)}
 .msgs-t{display:flex;align-items:center;justify-content:space-between;font-size:calc(12px*var(--fz,1));letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
 .msgs-t b{color:var(--ink);font-size:calc(14px*var(--fz,1));letter-spacing:.04em}
@@ -605,6 +606,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 <dialog class="hoja" id="hoja" aria-labelledby="hoja-t"></dialog>
 <dialog class="hoja" id="biblio" aria-labelledby="biblio-t"></dialog>
 <dialog class="copia" id="flyer" aria-labelledby="flyer-t"><div class="flyer-cab"><h2 id="flyer-t" class="kicker">Flyer del versículo</h2><div class="modo flyer-modo" role="group" aria-label="Estilo del flyer"><button type="button" data-fmodo="noche" aria-pressed="true">Noche</button><button type="button" data-fmodo="dia" aria-pressed="false">Día</button></div></div>
+  <label class="pg-campo flyer-firma"><span>Tu firma (tu nombre, abajo a la derecha del flyer)</span><input id="flyer-firma" maxlength="40" placeholder="Por ejemplo: Manuel Báez" autocomplete="name"></label>
   <img id="flyer-img" alt="Flyer del versículo del día" style="width:100%;border-radius:12px;margin:10px 0;display:block">
   <p class="muted" style="font-size:calc(13.5px*var(--fz,1));margin-bottom:10px">Si el botón no descarga, mantené presionada la imagen para guardarla.</p>
   <div class="acciones"><a class="btn prim" id="flyer-bajar" download="versiculo.png" style="display:inline-grid;place-items:center;text-decoration:none">Descargar</a>
@@ -1503,7 +1505,7 @@ async function hacerFlyer(w, i, modo = 'noche') {
   const dia = modo === 'dia', p0 = PAL[w.color] || PAL.Lila, p = dia ? diurna(p0) : p0, d = w.dias[i], W = 1080, H = 1350;
   const fondo = dia ? '#fbfaf8' : p.h3, tinta = dia ? '#1f1a2b' : '#ffffff', oro = dia ? '#7a5600' : '#FFD700', suave = dia ? 'rgba(31,26,43,.68)' : 'rgba(255,255,255,.7)';
   const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
-  try { await document.fonts.load('italic 300 50px Jost'); await document.fonts.load('italic 500 50px Jost'); await document.fonts.load('500 30px Jost'); await document.fonts.load('800 34px Nunito'); } catch {}
+  try { await document.fonts.load('italic 300 50px Jost'); await document.fonts.load('italic 500 50px Jost'); await document.fonts.load('italic 400 32px Jost'); await document.fonts.load('500 30px Jost'); await document.fonts.load('800 34px Nunito'); } catch {}
   ctx.fillStyle = fondo; ctx.fillRect(0, 0, W, H);
   const svg = escena(w.tema, p).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="760" ');
   try { ctx.drawImage(await cargarImg('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)), 0, 0, W, 760); } catch {}
@@ -1511,6 +1513,8 @@ async function hacerFlyer(w, i, modo = 'noche') {
   ctx.fillStyle = g; ctx.fillRect(0, 360, W, 400);
   ctx.textAlign = 'center';
   // agradecimiento para quienes escribieron al programa (el flyer se comparte con la audiencia)
+  // el locutor firma abajo a la derecha, después de la fecha: es quien agradece a su audiencia
+  const firma = (get('cfg/firma') || '').trim();
   ctx.fillStyle = oro; ctx.font = 'italic 500 50px Jost, sans-serif'; ctx.letterSpacing = '1px';
   ctx.fillText('¡Gracias por acompañarnos!', W/2, 668);
   ctx.letterSpacing = '0px';
@@ -1524,6 +1528,7 @@ async function hacerFlyer(w, i, modo = 'noche') {
   ctx.letterSpacing = '2px'; ctx.fillStyle = suave; ctx.font = '400 24px Jost, sans-serif';
   const f = fechaDia(w, i).toLocaleDateString('es-PY', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'});
   ctx.fillText(f.toUpperCase(), W/2, 1262);
+  if (firma) { ctx.textAlign = 'right'; ctx.fillStyle = tinta; ctx.font = 'italic 400 32px Jost, sans-serif'; ctx.letterSpacing = '1px'; ctx.fillText('— ' + firma, W - 64, 1312); ctx.textAlign = 'center'; }
   ctx.letterSpacing = '0px';
   try { const logo = await cargarImg(document.querySelector('.logo img').src); ctx.drawImage(logo, 60, 60, 84, 84); } catch {}
   ctx.textAlign = 'left'; ctx.fillStyle = tinta; ctx.font = '800 34px Nunito, sans-serif'; ctx.fillText('MENSAJERO', 160, 100);
@@ -1536,11 +1541,15 @@ async function abrirFlyer(w, i, modo) {
   if (!$('flyer').open) avisar('Armando el flyer…');
   const cv = await hacerFlyer(w, i, flyerModo), url = cv.toDataURL('image/png'), f = fechaDia(w, i);
   for (const b of document.querySelectorAll('#flyer [data-fmodo]')) { b.setAttribute('aria-pressed', b.dataset.fmodo === flyerModo); b.onclick = () => abrirFlyer(w, i, b.dataset.fmodo); }
+  const fi = $('flyer-firma'); if (document.activeElement !== fi) fi.value = get('cfg/firma') || '';
+  // se guarda mientras escribe y el flyer se rehace medio segundo después de la última tecla (solo con la hoja abierta)
+  fi.oninput = () => { set('cfg/firma', fi.value.trim()); clearTimeout(fi._t); fi._t = setTimeout(() => $('flyer').open && abrirFlyer(w, i), 500); };
+  fi.onchange = null;
   const nombre = `versiculo-${DATA.anio}-${String(f.getMonth()+1).padStart(2, '0')}-${String(f.getDate()).padStart(2, '0')}${flyerModo === 'dia' ? '-dia' : ''}.png`;
   $('flyer-img').src = url; $('flyer-bajar').href = url; $('flyer-bajar').download = nombre;
   const share = $('flyer-compartir'); share.hidden = !(navigator.canShare);
   share.onclick = async () => { try { const b = await (await fetch(url)).blob(); const file = new File([b], nombre, {type: 'image/png'});
-    if (navigator.canShare({files: [file]})) await navigator.share({files: [file], text: `¡Gracias por acompañarnos! ${w.dias[i].ref} · Mensajero`}); } catch {} };
+    if (navigator.canShare({files: [file]})) await navigator.share({files: [file], text: `¡Gracias por acompañarnos!${(get('cfg/firma') || '').trim() ? ' — ' + get('cfg/firma').trim() : ''} · ${w.dias[i].ref} · Mensajero`}); } catch {} };
   $('flyer-bajar').onclick = async (e) => {
     // dentro del visor de claude.ai la descarga pasa por su capacidad «downloads»
     if (!window.claude?.use) return;
