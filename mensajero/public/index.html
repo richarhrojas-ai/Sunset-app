@@ -77,7 +77,7 @@ h2.sec{font-size:calc(13px*var(--fz,1));letter-spacing:.1em;text-transform:upper
 .nav #hoy,.nav #cal-btn{white-space:nowrap}
 @media(max-width:430px){.nav{gap:7px}.nav #hoy,.nav #cal-btn{padding:0 12px!important;letter-spacing:.05em;font-size:calc(11.5px*var(--fz,1))}}
 .temas .prox-f{display:block;font-size:calc(8.6px*var(--fz,1));line-height:1.1;letter-spacing:.02em;text-transform:uppercase;color:rgba(255,255,255,.72);white-space:nowrap;margin-top:-3px;text-shadow:0 1px 3px rgba(0,0,0,.5)}
-.temas button[aria-current="true"] .prox-f{color:var(--gold-t)}
+.temas button.es-actual .prox-f{color:var(--gold-t)}
 @media(max-width:560px){.temas .prox-f{font-size:calc(7.6px*var(--fz,1));letter-spacing:0}}
 /* calendario por mes */
 /* el calendario va siempre claro, con los colores de modo día: de noche los tonos oscuros no se distinguían */
@@ -154,8 +154,17 @@ dialog#cal[open]{display:block;overflow:auto}
 .temas svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
 .temas small{font-size:calc(11.5px*var(--fz,1));line-height:1.15;letter-spacing:.01em;text-align:center;max-width:100%;text-shadow:0 1px 4px rgba(0,0,0,.5)}
 .temas button:hover .ic{background:rgba(255,255,255,.14);transform:translateY(-2px)}
-.temas button[aria-current="true"] .ic{border-color:var(--gold-t);background:rgba(255,215,0,.2);box-shadow:0 0 0 3px rgba(255,215,0,.16),0 0 16px rgba(255,215,0,.35)}
-.temas button[aria-current="true"] small{color:var(--gold-t);font-weight:600}
+.temas button.es-actual .ic{border-color:var(--gold-t);background:rgba(255,215,0,.2);box-shadow:0 0 0 3px rgba(255,215,0,.16),0 0 16px rgba(255,215,0,.35)}
+.temas button.es-actual small{color:var(--gold-t);font-weight:600}
+/* tema de la semana que se está viendo, si no es la actual: aro blanco punteado */
+.temas button[aria-current="true"]:not(.es-actual) .ic{border:2px dashed rgba(255,255,255,.85)}
+.temas button[aria-current="true"]:not(.es-actual) small{font-weight:600;color:#fff}
+.hero-glass.actual{border:2px solid var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.12)}
+.hero-glass.otra{border:2px dashed rgba(255,255,255,.5)}
+.estado-sem{display:inline-flex;align-items:center;padding:2px 9px;border-radius:999px;font-weight:600;letter-spacing:.08em}
+.estado-sem.actual{background:var(--gold);color:#2a1a08}
+.estado-sem.otra{border:1px dashed currentColor;color:var(--ink)}
+.nav #hoy.llamar{background:var(--gold);color:#2a1a08;border-color:var(--gold);font-weight:600}
 @media(max-width:560px){.temas{left:8px;right:8px;top:76px;padding:8px 2px 7px;gap:0;border-radius:18px}.temas .ic{width:38px;height:38px}.temas svg{width:19px;height:19px}.temas small{font-size:calc(9.4px*var(--fz,1));letter-spacing:-.01em}.temas button{gap:5px}}
 @media(max-width:380px){.temas small{font-size:calc(8.8px*var(--fz,1))}}
 
@@ -592,8 +601,12 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"] .temas small{text-shadow:none}
 :root[data-tema="claro"] .temas .ic{border-color:rgba(31,26,43,.14);background:rgba(255,255,255,.7)}
 :root[data-tema="claro"] .temas svg{stroke:#1f1a2b}
-:root[data-tema="claro"] .temas button[aria-current="true"] .ic{border-color:#c99400;background:#ffe27a;box-shadow:0 0 0 3px rgba(255,200,0,.22)}
-:root[data-tema="claro"] .temas button[aria-current="true"] small{color:#6b4c00;font-weight:700}
+:root[data-tema="claro"] .temas button.es-actual .ic{border-color:#c99400;background:#ffe27a;box-shadow:0 0 0 3px rgba(255,200,0,.22)}
+:root[data-tema="claro"] .temas button.es-actual small{color:#6b4c00;font-weight:700}
+:root[data-tema="claro"] .temas button[aria-current="true"]:not(.es-actual) .ic{border:2px dashed #1f1a2b}
+:root[data-tema="claro"] .temas button[aria-current="true"]:not(.es-actual) small{color:#1f1a2b}
+:root[data-tema="claro"] .hero-glass.actual{border-color:#c99400}
+:root[data-tema="claro"] .hero-glass.otra{border-color:rgba(31,26,43,.45)}
 :root[data-tema="claro"] .hero-glass{text-shadow:0 0 10px rgba(255,255,255,.85),0 0 2px rgba(255,255,255,.6);background:rgba(255,255,255,.34);border-color:rgba(31,26,43,.1);box-shadow:0 8px 28px rgba(31,26,43,.1)}
 :root[data-tema="claro"] .hero-glass .enfoque{font-weight:350;color:#160f22}
 :root[data-tema="claro"] .hero-glass .tema{display:inline-block;font-weight:700;font-size:calc(12px*var(--fz,1));letter-spacing:.12em;color:#5a3f00;background:rgba(255,255,255,.72);padding:4px 10px;border-radius:999px;text-shadow:none}
@@ -603,7 +616,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
 :root[data-tema="claro"] dialog#hoja{--ink:#1f1a2b;--ink2:rgba(31,26,43,.82);--ink3:rgba(31,26,43,.62);--line:rgba(31,26,43,.12);--fg:31,26,43;--gold-t:#7a5600;
   background:#fbfaf8;color:var(--ink)}
 :root[data-tema="claro"] .temas .prox-f{color:rgba(31,26,43,.66);text-shadow:none}
-:root[data-tema="claro"] .temas button[aria-current="true"] .prox-f{color:#6b4c00}
+:root[data-tema="claro"] .temas button.es-actual .prox-f{color:#6b4c00}
 :root[data-tema="claro"] .hoja-banner::after{background:linear-gradient(180deg,rgba(255,255,255,0) 25%,#fbfaf8 100%)}
 :root[data-tema="claro"] .hoja-tit{text-shadow:0 0 10px rgba(255,255,255,.9)}
 :root[data-tema="claro"] .hoja-tit .ic{background:rgba(255,255,255,.8);border-color:#c99400}
@@ -642,7 +655,7 @@ textarea{width:100%;min-height:96px;border-radius:12px;border:1px solid var(--li
   </div>
   <div class="temas" id="temas" role="group" aria-label="Temas del año"></div>
   <div class="hero-body">
-    <div class="hero-glass">
+    <div class="hero-glass" id="h-glass">
       <div class="glass-top"><div class="tema" id="h-tema"></div><div class="hora-clima"><time class="reloj" id="reloj" title="Hora actual"></time><span class="clima" id="clima" hidden></span></div></div>
       <h1 class="enfoque" id="h-enfoque"></h1>
       <div class="meta" id="h-meta"></div>
@@ -1066,7 +1079,11 @@ function render() {
   const rango = (ini.getMonth() === fin.getMonth() ? `${ini.getDate()}–${fin.getDate()} ${mes(fin)}` : `${ini.getDate()} ${mes(ini)} – ${fin.getDate()} ${mes(fin)}`) + (fin.getFullYear() !== DATA.anio ? ' ' + fin.getFullYear() : '');
   $('h-tema').textContent = TEMA_TXT[w.tema] || w.tema;
   $('h-enfoque').textContent = w.enfoque;
-  $('h-meta').innerHTML = `<span>Semana <b>${w.n}</b></span><span>${rango}</span><span><span class="dot"></span><b>${esc(w.color)}</b></span>`;
+  // dorado = semana en curso (en el cuadro y en su ícono); otra semana del mismo color se ve distinta para no confundirse
+  const enAnio = hoyD >= dateOf(sem[0].inicio) && hoyD <= fechaDia(sem[sem.length - 1], 6), hoyI = semanaHoy(), enCurso = enAnio && cur === hoyI;
+  $('h-glass').classList.toggle('actual', enCurso); $('h-glass').classList.toggle('otra', enAnio && !enCurso);
+  $('hoy').classList.toggle('llamar', enAnio && !enCurso);
+  $('h-meta').innerHTML = `${enCurso ? '<span class="estado-sem actual">● En curso</span>' : enAnio ? `<span class="estado-sem otra">${cur < hoyI ? 'Ya pasó' : cur === hoyI + 1 ? 'Semana próxima' : 'Más adelante'}</span>` : ''}<span>Semana <b>${w.n}</b></span><span>${rango}</span><span><span class="dot"></span><b>${esc(w.color)}</b></span>`;
   $('h-subs').innerHTML = w.desde ? `<li><span>1</span><button data-ir="5">${esc(w.subtemas[2].titulo)}</button></li><li><span>2</span><button data-ir="6">${esc(resumenDe(w).titulo)}</button></li>`
     : w.subtemas.map((s, i) => `<li><span>${i+1}</span><button data-ir="${[1,3,5][i]}">${esc(s.titulo)}</button></li>`).join('');
   const antes = hoyD < dateOf(sem[0].inicio);
@@ -1076,7 +1093,8 @@ function render() {
   document.title = `${w.enfoque} · Edificando una Cultura`;
 
   // íconos de los 7 temas en el cielo: el de la semana resaltado
-  $('temas').innerHTML = TEMAS.map(t => `<button data-t="${esc(t)}" aria-current="${t === w.tema}" aria-haspopup="dialog">
+  const temaHoy = enAnio ? sem[hoyI].tema : null;
+  $('temas').innerHTML = TEMAS.map(t => `<button data-t="${esc(t)}" aria-current="${t === w.tema}" class="${t === temaHoy ? 'es-actual' : ''}" aria-haspopup="dialog">
     <span class="ic">${icono(t)}</span><small>${esc(TEMA_CORTO[t] || t)}</small><span class="prox-f">${proximaDe(t)}</span></button>`).join('');
 
   // ficha

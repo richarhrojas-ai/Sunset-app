@@ -44,6 +44,10 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   await p.click('#cal-btn'); await p.waitForTimeout(100);
   ok(await p.$$eval('#cal #anio button', x => x.length) === 53, 'el año completo está dentro del calendario');
   await p.evaluate(() => document.getElementById('cal').close());
+  ok(await p.evaluate(() => document.getElementById('h-glass').classList.contains('actual')) && (await p.textContent('#h-meta')).includes('En curso') && await p.$$eval('#temas .es-actual', x => x.length === 1 && x[0].dataset.t === 'Produccion y Desarrollo'), 'semana en curso: cuadro e ícono en dorado, con «En curso»');
+  await p.click('#next'); await p.waitForTimeout(80);
+  ok(await p.evaluate(() => document.getElementById('h-glass').classList.contains('otra')) && (await p.textContent('#h-meta')).includes('Semana próxima') && await p.evaluate(() => document.getElementById('hoy').classList.contains('llamar')), 'otra semana: borde punteado, aviso y botón «Esta semana» resaltado');
+  await p.click('#hoy'); await p.waitForTimeout(80);
   const sem0 = await p.textContent('#h-tema');
   await p.click('#next'); await p.click('#hoy'); await p.waitForTimeout(80);
   ok(await p.textContent('#h-tema') === sem0, 'flechas y «Esta semana» vuelven a la semana actual');
