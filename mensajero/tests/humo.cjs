@@ -171,7 +171,7 @@ const cerrarCopia = p => p.evaluate(() => document.getElementById('copia').close
   // ── sobre Mensajero: sin filas «por completar» ──
   p = await abrir(b);
   await p.evaluate(() => document.getElementById('s-mensajero').open = true);
-  ok(!(await p.textContent('#mensajero')).includes('Por completar') && (await p.textContent('#mensajero')).includes('mensajero100.9fm') && await p.getAttribute('#mensajero a[href*="grilla"]', 'href') === 'https://mensajerofm.org/grilla/index.php', 'sobre Mensajero: sin filas vacías, con redes y el enlace a la grilla de programación');
+  ok(!(await p.textContent('#mensajero')).includes('Por completar') && (await p.textContent('#mensajero')).includes('mensajero100.9fm') && await p.getAttribute('#mensajero a[href*="grilla"]', 'href') === 'https://mensajerofm.org/grilla/publica.php', 'sobre Mensajero: sin filas vacías, con redes y el enlace a la grilla de programación');
   await p.close();
 
   // ── historias de Mensajero y aniversario ──

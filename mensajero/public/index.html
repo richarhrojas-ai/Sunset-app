@@ -986,7 +986,7 @@ function render() {
 }
 
 /* sobre Mensajero: hoja «Mensajero» de la planilla, más valores y programas que ya están en los datos */
-const GRILLA = 'https://mensajerofm.org/grilla/index.php';
+const GRILLA = 'https://mensajerofm.org/grilla/publica.php';   // pública, sin clave
 function renderMensajero() {
   const M = DATA.mensajero || [], secciones = [...new Set(M.map(x => x.seccion))];
   const item = (t, x, aire) => `<div class="inst-item"><b>${esc(t)}</b>${x ? `<p>${esc(x)}</p>` : '<p class="falta">Por completar en la planilla (hoja «Mensajero»)</p>'}
