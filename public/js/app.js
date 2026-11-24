@@ -1931,12 +1931,12 @@
         const nq = qCount(YY, a.word);
         for (let i = 0; i < nq; i++) bar.appendChild(el('i', i < n ? 'on' : ''));
         li.appendChild(bar);
-        li.appendChild(el('span', 'hoy-word-n', n ? n + '/' + nq + ' · ' + Math.round(wordScore(YY, w, a.word) * 100) + ' %' : '0/' + nq));
+        li.appendChild(el('span', 'hoy-word-n', n ? Math.round(wordScore(YY, w, a.word) * 100) + ' %' : '—'));
         li.setAttribute('aria-label', wordName(a.word) + ': ' + n + ' de ' + nq + ' preguntas respondidas');
         list.appendChild(li);
       });
       box.appendChild(list);
-      box.appendChild(el('p', 'hoy-week-note', answered + ' de ' + weekTotal(YY, w) + ' preguntas respondidas'));
+      list.setAttribute('aria-label', 'Avance de la semana: ' + answered + ' de ' + weekTotal(YY, w) + ' preguntas respondidas');
     }
     const days = el('div', 'hoy-days');
     days.setAttribute('role', 'group');
