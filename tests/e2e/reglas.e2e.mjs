@@ -42,6 +42,25 @@ test('Hoy: sábado de evaluación, días anteriores y domingo con la historia', 
   assert.deepEqual(p.errors, []);
 });
 
+test('sábado: evaluación de a una pregunta, con avance, teclas y «Anterior»', async () => {
+  const p = await openApp(env, { date: SAB, width: 1180 });
+  const ev = '#hoyView .hoy-eval';
+  const q1 = await p.textContent(ev + ' .ev-q');
+  const before = Number((await p.textContent(ev + ' .ev-count')).split(' ')[0]);
+  await p.locator(ev + ' .q-scale button').nth(3).click();
+  assert.equal(await p.textContent(ev + ' .ans-label'), 'Casi siempre', 'cada número con su palabra');
+  await p.waitForFunction((a) => document.querySelector('#hoyView .ev-q').textContent !== a, q1);
+  assert.equal(await p.textContent(ev + ' .ev-count'), (before + 1) + ' de 15', 'pasa sola a la siguiente');
+  await p.locator(ev + ' .q-scale button').first().focus();
+  await p.keyboard.press('5');
+  await p.waitForFunction((n) => document.querySelector('#hoyView .ev-count').textContent.startsWith(String(n)), before + 2);
+  await p.click(ev + ' .ev-link:first-child');
+  await p.click(ev + ' .ev-link:first-child');
+  assert.equal(await p.textContent(ev + ' .ev-q'), q1, '«Anterior» vuelve a la primera');
+  assert.equal(await p.locator(ev + ' .q-scale button[aria-pressed="true"]').textContent(), '4', 'con su respuesta marcada');
+  assert.deepEqual(p.errors, []);
+});
+
 test('semanas cerradas: se edita la actual y la anterior; las más viejas solo con nota posterior', async () => {
   const p = await openApp(env, { date: SAB, view: 'semana' });
   assert.equal(await p.textContent('#weekNum'), 'Semana 3');

@@ -694,28 +694,19 @@
     const word = openWord;
     const answers = getAnswers(Y, viewing, word);
     (Y.questions[word] || []).forEach(function (q, qi) {
-      const box = el('div', 'q');
-      box.appendChild(el('p', 'q-text', q));
-      const scale = el('div', 'q-scale');
-      for (let v = 1; v <= 5; v++) {
-        const b = el('button', null, String(v));
-        b.setAttribute('aria-pressed', String(answers[qi] === v));
-        b.setAttribute('aria-label', v + ' de 5');
-        b.disabled = weekLocked(Y, viewing);
-        b.addEventListener('click', function () {
-          setAnswer(Y, viewing, word, qi, v);
-          renderEvaluation();
-          renderClosing();
-          renderYear();
-          renderBoard();
-        });
-        scale.appendChild(b);
-      }
-      box.appendChild(scale);
-      const ends = el('div', 'q-ends');
-      ends.appendChild(el('span', null, 'Nunca'));
-      ends.appendChild(el('span', null, 'Siempre'));
-      box.appendChild(ends);
+      const box = el('div', 'q' + (answers[qi] != null ? ' is-done' : ''));
+      const txt = el('p', 'q-text');
+      txt.appendChild(el('span', 'q-num', (qi + 1) + ''));
+      txt.appendChild(document.createTextNode(q));
+      box.appendChild(txt);
+      box.appendChild(answerScale(answers[qi], weekLocked(Y, viewing), function (v) {
+        setAnswer(Y, viewing, word, qi, v);
+        box.classList.toggle('is-done', getAnswers(Y, viewing, word)[qi] != null);
+        renderEvaluation();
+        renderClosing();
+        renderYear();
+        renderBoard();
+      }));
       qs.appendChild(box);
     });
     qs.appendChild(noteField(k(Y, viewing, 'c/' + word), 'Comentario sobre ' + wordName(word) + '…', 3));
@@ -1616,34 +1607,65 @@
         box.appendChild(more);
         return;
       }
-      box.appendChild(el('p', 'dq-word', it.word + ' · pregunta ' + (it.qi + 1) + ' de 5'));
+      box.appendChild(el('p', 'dq-word', wordName(it.word) + ' · pregunta ' + (it.qi + 1) + ' de 5'));
       box.appendChild(el('p', 'dq-q', it.q));
-      const scale = el('div', 'q-scale');
-      scale.setAttribute('role', 'group');
-      scale.setAttribute('aria-label', 'Respuesta del 1 (nunca) al 5 (siempre)');
-      for (let v = 1; v <= 5; v++) {
-        const b = el('button', null, String(v));
-        b.type = 'button';
-        b.setAttribute('aria-label', v + ' de 5');
-        b.disabled = weekLocked(YY, w);
-        b.addEventListener('click', function () {
-          setAnswer(YY, w, it.word, it.qi, v);
-          justAnswered = true;
-          if (onAnswer) onAnswer();
-          paint();
-        });
-        scale.appendChild(b);
-      }
-      box.appendChild(scale);
-      const ends = el('div', 'q-ends');
-      ends.appendChild(el('span', null, 'Nunca'));
-      ends.appendChild(el('span', null, 'Siempre'));
-      box.appendChild(ends);
+      box.appendChild(answerScale(null, weekLocked(YY, w), function (v) {
+        setAnswer(YY, w, it.word, it.qi, v);
+        justAnswered = true;
+        if (onAnswer) onAnswer();
+        paint();
+      }));
     };
     paint();
     return box;
   }
   const refreshEval = function () { renderEvaluation(); renderClosing(); renderYear(); renderBoard(); };
+
+  // Escala de respuesta: cinco círculos chicos (la pregunta es lo importante) y, al lado, la palabra
+  // del valor elegido o del que se está por elegir, para no tener que recordar qué significa cada número.
+  const SCALE_WORDS = ['Nunca', 'Pocas veces', 'A veces', 'Casi siempre', 'Siempre'];
+  function answerScale(value, locked, onPick) {
+    const wrap = el('div', 'ans');
+    const scale = el('div', 'q-scale');
+    scale.setAttribute('role', 'group');
+    scale.setAttribute('aria-label', 'Respuesta del 1 (nunca) al 5 (siempre)');
+    const label = el('span', 'ans-label');
+    const show = (v, preview) => {
+      label.textContent = v ? SCALE_WORDS[v - 1] : 'Nunca · · · Siempre';
+      label.classList.toggle('is-set', !!v && !preview);
+    };
+    for (let v = 1; v <= 5; v++) {
+      const b = el('button', null, String(v));
+      b.type = 'button';
+      b.title = SCALE_WORDS[v - 1];
+      b.setAttribute('aria-label', v + ', ' + SCALE_WORDS[v - 1].toLowerCase());
+      b.setAttribute('aria-pressed', String(value === v));
+      b.disabled = !!locked;
+      b.addEventListener('mouseenter', () => show(v, true));
+      b.addEventListener('mouseleave', () => show(value));
+      b.addEventListener('click', function () {
+        value = value === v ? null : v;
+        scale.querySelectorAll('button').forEach((x, i) => x.setAttribute('aria-pressed', String(value === i + 1)));
+        show(value);
+        onPick(v);
+      });
+      scale.appendChild(b);
+    }
+    show(value);
+    wrap.appendChild(scale);
+    wrap.appendChild(label);
+    return wrap;
+  }
+  function dimIcon(d) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('class', 'ico dim-mini');
+    svg.setAttribute('aria-hidden', 'true');
+    const use = document.createElementNS(ns, 'use');
+    use.setAttribute('href', '#d-' + d);
+    svg.appendChild(use);
+    return svg;
+  }
 
   // Dictado por voz (si el navegador lo permite): agrega lo dictado al final del texto.
   function micButton(ta) {
@@ -1877,42 +1899,121 @@
   }
 
   // Sábado: todas las preguntas pendientes de la semana, para cerrar la autoevaluación sin salir de Hoy.
+  // Sábado: la evaluación de la semana, de a una pregunta. Arriba, el avance en 15 marcas (cinco por palabra);
+  // al empezar cada palabra, su dimensión con la pregunta central; al elegir, pasa sola a la siguiente;
+  // al terminar una palabra, su resultado («✓ Entorno · 84 %»).
+  // Con «Anterior» se vuelve para cambiar una respuesta; las teclas 1 a 5 también responden.
   function pendingBox(YY, w) {
     const box = el('section', 'hoy-eval');
-    const paint = function () {
-      box.textContent = '';
-      box.appendChild(el('h2', 'dq-label', 'Tu evaluación de la semana'));   // h2: las palabras van como h3 debajo
-      let pending = 0;
-      activeWords(YY, w).forEach(function (a) {
-        const answers = getAnswers(YY, w, a.word);
-        const qs = YY.questions[a.word] || [];
-        const open = qs.map((q, qi) => ({ q: q, qi: qi })).filter((x) => answers[x.qi] == null);
-        pending += open.length;
-        if (!open.length) return;
-        box.appendChild(el('h3', 'hoy-eval-word', wordName(a.word)));
-        open.forEach(function (x) {
-          const item = el('div', 'hoy-eval-q');
-          item.appendChild(el('p', 'dq-q', x.q));
-          const scale = el('div', 'q-scale');
-          scale.setAttribute('role', 'group');
-          scale.setAttribute('aria-label', 'Respuesta del 1 (nunca) al 5 (siempre)');
-          for (let v = 1; v <= 5; v++) {
-            const b = el('button', null, String(v));
-            b.type = 'button';
-            b.setAttribute('aria-label', v + ' de 5');
-            b.disabled = weekLocked(YY, w);
-            b.addEventListener('click', function () { setAnswer(YY, w, a.word, x.qi, v); refreshEval(); paint(); goal.replaceWith(goal = weekGoalBox(YY, w)); });
-            scale.appendChild(b);
-          }
-          item.appendChild(scale);
-          box.appendChild(item);
-        });
-      });
-      if (!pending) box.appendChild(el('p', 'dq-note', 'Respondiste las 15 preguntas. Mañana, domingo, miras la semana y escribes tu intención.'));
-      else box.insertBefore(el('p', 'dq-note', 'Te faltan ' + pending + '. Del 1 (nunca) al 5 (siempre).'), box.children[1]);
+    box.setAttribute('aria-label', 'Tu evaluación de la semana');
+    const words = activeWords(YY, w);
+    const items = [];
+    words.forEach((a) => (YY.questions[a.word] || []).forEach((q, qi) => items.push({ a: a, q: q, qi: qi })));
+    const answered = (it) => getAnswers(YY, w, it.a.word)[it.qi] != null;
+    const nextOpen = (from) => {
+      for (let i = 1; i <= items.length; i++) { const j = (from + i) % items.length; if (!answered(items[j])) return j; }
+      return -1;
     };
+    let cur = items.findIndex((it) => !answered(it));
+    let note = '';      // «Entorno completo · 80 %» al terminar una palabra
+    let timer = null;
+    const locked = weekLocked(YY, w);
     let goal = null;
     box.setGoal = (g) => { goal = g; };
+
+    const paint = function () {
+      box.textContent = '';
+      const head = el('div', 'ev-head');
+      head.appendChild(el('h2', 'dq-label', 'Tu evaluación de la semana'));
+      const done = items.filter(answered).length;
+      head.appendChild(el('span', 'ev-count', done + ' de ' + items.length));
+      box.appendChild(head);
+      const bar = el('div', 'ev-bar');
+      bar.setAttribute('aria-hidden', 'true');
+      items.forEach((it, i) => {
+        const m = el('i', (answered(it) ? 'on' : '') + (i === cur ? ' cur' : '') + (it.qi === 0 && i ? ' gap' : ''));
+        bar.appendChild(m);
+      });
+      box.appendChild(bar);
+      if (!items.length) return;
+
+      if (cur < 0) {
+        // Todo respondido: cierre amable con el resultado de cada palabra.
+        const end = el('div', 'ev-end');
+        end.appendChild(el('p', 'ev-end-title', 'Semana evaluada'));
+        const ul = el('ul', 'ev-end-list');
+        words.forEach((a) => {
+          const li = el('li');
+          li.appendChild(dimIcon(a.dim));
+          li.appendChild(el('span', null, wordName(a.word)));
+          li.appendChild(el('b', null, Math.round(wordScore(YY, w, a.word) * 100) + ' %'));
+          ul.appendChild(li);
+        });
+        end.appendChild(ul);
+        end.appendChild(el('p', 'dq-note', 'Mañana, domingo, miras la semana completa y escribes tu intención.'));
+        const again = el('button', 'dq-more', 'Revisar mis respuestas');
+        again.type = 'button';
+        again.addEventListener('click', () => { cur = 0; note = ''; paint(); });
+        end.appendChild(again);
+        box.appendChild(end);
+        return;
+      }
+
+      const it = items[cur];
+      const card = el('div', 'ev-card');
+      if (note) card.appendChild(el('p', 'ev-note', note));
+      const who = el('div', 'ev-word');
+      who.appendChild(dimIcon(it.a.dim));
+      const wt = el('div');
+      wt.appendChild(el('h3', 'ev-word-name', wordName(it.a.word)));
+      wt.appendChild(el('span', 'ev-word-dim', YY.dimensions[it.a.dim] + ' · ' + (it.qi + 1) + ' de 5'));
+      who.appendChild(wt);
+      card.appendChild(who);
+      if (it.qi === 0 && DIM_CONCEPTS[it.a.dim]) card.appendChild(el('p', 'ev-ask', DIM_CONCEPTS[it.a.dim][1]));
+      card.appendChild(el('p', 'ev-q', it.q));
+      const pick = function (v) {
+        setAnswer(YY, w, it.a.word, it.qi, v);
+        const now = getAnswers(YY, w, it.a.word)[it.qi];
+        card.querySelectorAll('.q-scale button').forEach((x, i) => x.setAttribute('aria-pressed', String(now === i + 1)));
+        refreshEval();
+        if (goal) goal.replaceWith(goal = weekGoalBox(YY, w));
+        clearTimeout(timer);
+        if (!answered(it)) { paint(); return; }   // tocó de nuevo el mismo valor: lo quitó
+        timer = setTimeout(function () {
+          const finishedWord = (YY.questions[it.a.word] || []).every((q, qi) => getAnswers(YY, w, it.a.word)[qi] != null);
+          note = finishedWord ? '✓ ' + wordName(it.a.word) + ' · ' + Math.round(wordScore(YY, w, it.a.word) * 100) + ' %' : '';
+          cur = nextOpen(cur);
+          paint();
+          const first = box.querySelector('.q-scale button');
+          if (first && box.contains(document.activeElement)) first.focus({ preventScroll: true });
+        }, 420);
+      };
+      card.appendChild(answerScale(getAnswers(YY, w, it.a.word)[it.qi], locked, pick));
+      const nav = el('div', 'ev-nav');
+      const prev = el('button', 'ev-link', '← Anterior');
+      prev.type = 'button';
+      prev.disabled = cur === 0;
+      prev.addEventListener('click', () => { clearTimeout(timer); note = ''; cur = Math.max(0, cur - 1); paint(); });
+      const skip = el('button', 'ev-link', answered(it) ? 'Siguiente →' : 'Saltar →');
+      skip.type = 'button';
+      skip.addEventListener('click', () => {
+        clearTimeout(timer); note = '';
+        const n = answered(it) ? (cur + 1 < items.length ? cur + 1 : nextOpen(cur)) : nextOpen(cur);
+        cur = n === cur ? cur : n;
+        paint();
+      });
+      nav.appendChild(prev);
+      nav.appendChild(skip);
+      card.appendChild(nav);
+      box.appendChild(card);
+      box.pick = locked ? null : pick;
+    };
+    // Teclas 1 a 5 cuando el foco está en la evaluación.
+    box.addEventListener('keydown', function (e) {
+      if (!box.pick || e.target.closest('input,textarea')) return;
+      const v = Number(e.key);
+      if (v >= 1 && v <= 5) { e.preventDefault(); box.pick(v); }
+    });
     paint();
     return box;
   }

@@ -186,13 +186,20 @@ main{padding:18px;display:flex;flex-direction:column;gap:20px;flex:1;}
 .chip-dim{font-size:10px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;opacity:.85;}
 .chip-pct{font-size:12px;font-weight:500;}
 .questions{margin-top:14px;display:flex;flex-direction:column;gap:12px;}
-.q{padding:14px 16px;background:var(--glass2);border-radius:14px;}
-.q-text{font-size:15px;line-height:1.6;margin-bottom:12px;}
-.q-scale{display:flex;gap:6px;}
-.q-scale button{flex:1;padding:9px 0;border-radius:10px;border:1px solid var(--line2);background:var(--glass2);font-size:14px;font-weight:400;cursor:pointer;color:var(--txt);}
+.q{padding:12px 16px;background:var(--glass2);border-radius:14px;border-left:3px solid transparent;transition:border-color .2s,opacity .2s;}
+.q.is-done{border-left-color:var(--wk);}
+.q-num{display:inline-block;min-width:1.6em;font-size:12px;font-weight:500;color:var(--txt3);}
+@media (min-width:700px){.q{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 22px;}.q .q-text{margin:0;}}
+.q-text{font-size:15.5px;line-height:1.6;margin-bottom:10px;}
+.ans{display:flex;flex-direction:column;align-items:flex-start;gap:5px;}
+.ans-label{font-size:11.5px;letter-spacing:.06em;color:var(--txt3);min-height:1.4em;}
+.ans-label.is-set{color:var(--txt);font-weight:500;}
+.q-scale{display:flex;gap:8px;}
+.q-scale button{flex:none;width:36px;height:36px;padding:0;border-radius:50%;border:1px solid var(--line2);background:transparent;font-size:13px;font-weight:400;cursor:pointer;color:var(--txt2);transition:background .15s,border-color .15s,transform .15s;}
+.q-scale button:active{transform:scale(.92);}
 .q-scale button:hover{border-color:var(--wk);}
 .q-scale button[aria-pressed="true"]{background:var(--wk);border-color:var(--wk);color:var(--on-wk);font-weight:500;}
-.q-ends{display:flex;justify-content:space-between;font-size:11.5px;letter-spacing:.06em;color:var(--txt3);margin-top:5px;}
+
 
 /* ── PLEGABLES ── */
 .fold{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);}
@@ -702,3 +709,30 @@ h2.dq-label{margin-top:0;}
   .today-btn{display:none;}   /* en el celular, «Hoy» ya está en la barra de atajos */
 }
 @media (max-width:380px){.jump{padding:7px 10px;}}
+
+/* Sábado en Hoy: evaluación de a una pregunta */
+.ev-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+.ev-count{font-size:12px;color:var(--txt2);}
+.ev-bar{display:flex;gap:3px;}
+.ev-bar i{flex:1;height:4px;border-radius:2px;background:var(--line);}
+.ev-bar i.gap{margin-left:6px;}
+.ev-bar i.on{background:var(--wk);}
+.ev-bar i.cur{box-shadow:0 0 0 1px var(--gold-ink);}
+.ev-card{display:flex;flex-direction:column;gap:10px;padding:6px 2px 2px;}
+.ev-note{margin:0;font-size:12.5px;color:var(--txt2);}
+.ev-word{display:flex;align-items:center;gap:12px;}
+.ev-word .dim-mini{width:34px;height:34px;color:var(--wk);flex:none;}
+.ev-word-name{margin:0;font-size:17px;font-weight:400;letter-spacing:.04em;color:var(--ink);}
+.ev-word-dim{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--txt2);}
+.ev-ask{margin:0;font-size:13.5px;font-style:italic;color:var(--gold-ink);}
+.ev-q{margin:2px 0 4px;font-size:18px;font-weight:300;line-height:1.5;color:var(--ink);}
+.ev-nav{display:flex;justify-content:space-between;margin-top:4px;}
+.ev-link{background:none;border:0;padding:6px 0;font:inherit;font-size:12.5px;letter-spacing:.06em;color:var(--txt2);cursor:pointer;}
+.ev-link:disabled{opacity:.35;cursor:default;}
+.ev-link:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px;}
+.ev-end-title{margin:4px 0 0;font-size:17px;color:var(--ink);}
+.ev-end-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+.ev-end-list li{display:flex;align-items:center;gap:10px;font-size:15px;}
+.ev-end-list .dim-mini{width:24px;height:24px;color:var(--wk);}
+.ev-end-list b{margin-left:auto;font-weight:500;color:var(--ink);}
+:root[data-theme="day"] .ev-q{font-weight:400;}
