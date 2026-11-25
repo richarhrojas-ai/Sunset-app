@@ -3,7 +3,7 @@
 Resumen para llevar a un chat nuevo. Describe cómo está armada la app, qué decisiones se tomaron y qué conviene copiar tal cual.
 
 ## 1. Qué es
-*Sun-set*: colocar la vida bajo la luz, un día a la vez, para llegar al atardecer como un árbol grande, floreciente y útil. Soluciones prácticas a problemas complicados, con un proceso lento y seguro de mejora continua.
+*Sun-set*: colocar la vida bajo la Luz, un día a la vez, para llegar al atardecer como un árbol grande, floreciente y útil. Soluciones prácticas a problemas complicados, con un proceso lento y seguro de mejora continua.
 
 App personal de uso diario (PWA, móvil y tablet) para el Sistema Sunset: 52 semanas al año, 7 colores, 49 palabras (7 dimensiones × 7 palabras).
 Cada semana tiene un color, un título, una frase (hook), una historia, un @ por día (lunes a sábado), tres preguntas de reflexión el sábado y una autoevaluación de 3 palabras principales (3 preguntas esenciales cada una).
