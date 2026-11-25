@@ -147,3 +147,8 @@ servidor reintenta y combina). En Netlify Blobs (almacén `sunset`):
 - `npm run test:todo`: las dos.
 
 La primera vez en una computadora nueva: `npm install` y `npx playwright install chromium`.
+
+## Calendario
+
+- **15 de diciembre de 2026:** congelado. Desde ahí solo se corrigen errores; las ideas nuevas se anotan y se deciden con la app en uso.
+- **1 de enero de 2027:** empieza el uso real, con la semana de introducción.
