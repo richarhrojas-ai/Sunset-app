@@ -3,6 +3,8 @@
 Resumen para llevar a un chat nuevo. Describe cómo está armada la app, qué decisiones se tomaron y qué conviene copiar tal cual.
 
 ## 1. Qué es
+*Sun-set*: colocar la vida bajo la luz, un día a la vez, para llegar al atardecer como un árbol grande, floreciente y útil. Soluciones prácticas a problemas complicados, con un proceso lento y seguro de mejora continua.
+
 App personal de uso diario (PWA, móvil y tablet) para el Sistema Sunset: 52 semanas al año, 7 colores, 49 palabras (7 dimensiones × 7 palabras).
 Cada semana tiene un color, un título, una frase (hook), una historia, un @ por día (lunes a sábado), tres preguntas de reflexión el sábado y una autoevaluación de 3 palabras principales (3 preguntas esenciales cada una).
 Además funciona como diario: registro por día, ánimo, gratitud, intención semanal, buscador, diario en documento, recordatorio.
@@ -48,7 +50,7 @@ restaurar copias con deshacer; exportar/importar JSON y planilla CSV.
 3. **Hoy** (la app abre aquí): frase del día, «Tu semana» (intención, las 3 palabras con su avance, días tocables), preguntas de hoy (lunes a viernes), registro, gratitud, ánimo, agenda y versículo. El sábado: preguntas de reflexión con respuesta oculta, lo pendiente de a una y el cierre de cada palabra (resultado, tendencia, «Lo que me llevo de…»). El domingo: la historia de la semana y la preparación. Flechas para recorrer días anteriores.
 4. **Semana**: versículo, «Esta semana quiero…», agenda, domingo con su historia, lunes a sábado (6 tarjetas, cada una con su matiz), «Hace un año», autoevaluación (3 palabras × 3 preguntas, escala con palabras, tendencia y frase de cierre) y cierre (maestría del color, ánimo de la semana, qué funcionó, intención).
 5. **Mi año**: meta del 70 % de días con registro, progreso del año (flores), ánimo del año (árboles), tablero de maestría (49 palabras), diario/agenda/recordatorio, respaldo y sincronización.
-6. Al pie de todas las vistas: logo mediano, «Sunset» y «Soluciones Prácticas».
+6. Al pie de todas las vistas: logo mediano, «Sunset», «Soluciones Prácticas» y la frase del sentido de Sunset (también en la bienvenida).
 
 ## 7. Reglas del sistema
 - Rotación: cada semana usa una columna de color; sus 7 palabras están «en juego» y 3 son las principales (se evalúan).
